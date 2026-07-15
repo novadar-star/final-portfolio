@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="experience.html" class="nav-link">Experience</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+    </div>
+  </nav>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-pill">Builder</span>
+      <span class="marquee-pill">Explorer</span>
+      <span class="marquee-pill">Coffee Lover</span>
+      <span class="marquee-pill">Thinker</span>
+      <span class="marquee-pill">Problem Solver</span>
+      <span class="marquee-pill">Curious Mind</span>
+      <span class="marquee-pill">Night Owl</span>
+      <span class="marquee-pill">Maker</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-pill">Builder</span>
+      <span class="marquee-pill">Explorer</span>
+      <span class="marquee-pill">Coffee Lover</span>
+      <span class="marquee-pill">Thinker</span>
+      <span class="marquee-pill">Problem Solver</span>
+      <span class="marquee-pill">Curious Mind</span>
+      <span class="marquee-pill">Night Owl</span>
+      <span class="marquee-pill">Maker</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main class="container hero-section fade-in">
+    <div class="status-pill">&#128205; San Francisco, CA</div>
+    <h1 class="hero-heading">
+      Hey there! I'm <span class="italic-accent">Alex</span>
+    </h1>
+    <div class="role-pill">Software Engineer</div>
+    <p class="hero-bio">
+      I build things for the web that feel good to use. I care about craft, 
+      clean code, and the little details that make software feel alive. When I'm 
+      not shipping features, you'll find me sketching ideas in a notebook or 
+      hunting down the best matcha latte in the city.
+    </p>
+
+    <!-- Abstract blob illustration -->
+    <div class="blob-container">
+      <svg viewBox="0 0 200 200" class="blob" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#8A9A5B" fill-opacity="0.15" d="M44.7,-76.4C58.8,-69.2,71.8,-58.1,79.6,-44.2C87.4,-30.3,90,-13.6,87.6,1.4C85.2,16.4,77.8,29.7,69.1,42.2C60.4,54.7,50.4,66.4,37.8,73.5C25.2,80.6,10,83.1,-4.4,79.8C-18.8,76.5,-32.4,67.4,-45.8,58.2C-59.2,49,-72.4,39.7,-78.8,26.8C-85.2,13.9,-84.8,-2.6,-80.1,-17.6C-75.4,-32.6,-66.4,-46.1,-54.4,-54.5C-42.4,-62.9,-27.4,-66.2,-12.4,-70.8C2.6,-75.4,30.6,-83.6,44.7,-76.4Z" transform="translate(100 100)" />
+      </svg>
+      <svg viewBox="0 0 200 200" class="blob blob-2" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#29B5E8" fill-opacity="0.08" d="M39.5,-65.3C52.9,-60.7,66.8,-53.5,74.4,-42.1C82,-30.7,83.3,-15.4,81.4,-1.1C79.5,13.2,74.4,26.3,66.5,37.3C58.6,48.3,47.9,57.1,35.8,63.5C23.7,69.9,10.2,73.9,-2.8,73.1C-15.8,72.3,-28.2,66.7,-40.8,60.1C-53.4,53.5,-66.2,45.9,-73.2,34.5C-80.2,23.1,-81.4,7.9,-78.5,-5.8C-75.6,-19.5,-68.6,-31.7,-59.1,-41.8C-49.6,-51.9,-37.6,-59.9,-25.1,-65.1C-12.6,-70.3,-0.1,-72.7,12.4,-72.3C24.9,-71.9,26.1,-69.9,39.5,-65.3Z" transform="translate(100 100)" />
+      </svg>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
