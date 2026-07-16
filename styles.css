@@ -325,15 +325,12 @@ a:focus-visible, button:focus-visible {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
 }
 
 .about-card {
-  padding: 20px;
-  background: var(--card);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  padding: 0 0 0 16px;
+  border-left: 2px solid var(--matcha-mid);
 }
 
 .about-card h3 {
@@ -341,7 +338,7 @@ a:focus-visible, button:focus-visible {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--matcha);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: -0.01em;
 }
 
@@ -386,17 +383,19 @@ a:focus-visible, button:focus-visible {
 }
 
 .service-card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0 0 16px;
+  border: none;
+  border-left: 2px solid var(--cyan-mid);
+  box-shadow: none;
+  transition: border-color 0.2s ease-out;
 }
 
 .service-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
+  transform: none;
+  box-shadow: none;
+  border-left-color: var(--cyan);
 }
 
 .service-icon {
@@ -473,10 +472,11 @@ a:focus-visible, button:focus-visible {
 }
 
 .stack-category {
-  padding: 16px;
-  background: var(--card);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+  padding: 0 0 0 16px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-left: 2px solid var(--border);
 }
 
 .stack-cat-title {
