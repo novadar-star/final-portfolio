@@ -925,7 +925,7 @@ a:focus-visible, button:focus-visible {
     grid-template-columns: 1fr;
     padding: 32px 0 24px;
     gap: 20px;
-    text-align: center;
+    text-align: left;
   }
 
   .hero-photo {
@@ -935,51 +935,49 @@ a:focus-visible, button:focus-visible {
   }
 
   .photo-frame {
-    aspect-ratio: 1/1;
-    border-radius: 50%;
+    aspect-ratio: 3/4;
+    border-radius: var(--radius-lg);
   }
 
   .photo-caption {
     justify-content: center;
   }
 
-  .small-label { text-align: center; }
+  .small-label { text-align: left; }
 
   .hero-heading {
     font-size: 1.7rem;
-    text-align: center;
+    text-align: left;
   }
 
   .hero-sub {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: left;
   }
 
   .hero-ctas {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  .section-label { text-align: center; }
+  .section-label { text-align: left; }
 
   .about-section { padding: 32px 0; }
-  .about-grid { gap: 20px; }
+  .about-grid { gap: 24px; }
 
   .services-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 28px;
   }
 
   .service-card {
-    padding: 0 0 0 14px;
+    padding: 4px 0 4px 16px;
   }
 
   .stack-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 22px;
   }
 
-  .stack-category { padding: 0 0 0 14px; }
+  .stack-category { padding: 4px 0 4px 16px; }
 
   .case-impact {
     display: grid;
@@ -1004,11 +1002,12 @@ a:focus-visible, button:focus-visible {
   .nav-links { gap: 12px; }
   .nav-link { font-size: 0.78rem; }
 
-  .contact-strip { text-align: center; }
+  .contact-strip { text-align: left; }
 
   .contact-links {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: 10px;
   }
 
@@ -1035,7 +1034,7 @@ a:focus-visible, button:focus-visible {
 
   .hero-ctas {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
   }
 
