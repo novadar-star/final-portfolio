@@ -314,6 +314,54 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ===========================
+   ABOUT SECTION
+   =========================== */
+
+.about-section {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.about-card {
+  padding: 20px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.about-card h3 {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--matcha);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.about-card p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.hero-sub-2 {
+  margin-top: -8px;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+/* ===========================
    WHAT I DO — SERVICES
    =========================== */
 
