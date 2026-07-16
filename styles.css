@@ -923,6 +923,18 @@ a:focus-visible, button:focus-visible {
   color: var(--text);
 }
 
+.project-link {
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out;
+  vertical-align: middle;
+}
+
+.project-link:hover {
+  opacity: 1;
+}
+
 .case-context {
   font-size: 0.78rem;
   color: var(--matcha);
