@@ -671,6 +671,88 @@ a:focus-visible, button:focus-visible {
 
 .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
+/* Timeline photos */
+.timeline-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.timeline-photo {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Remote tag */
+.remote-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  border-radius: var(--radius-pill);
+  margin-left: 6px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* How I Work section */
+.how-i-work {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.work-item {
+  padding: 0 0 0 16px;
+  border-left: 2px solid var(--cyan-mid);
+}
+
+.work-item h4 {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.work-item p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Hero currently line */
+.hero-currently {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: 20px;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .timeline-photos { grid-template-columns: 1fr; }
+  .timeline-photo { height: 160px; }
+  .work-grid { grid-template-columns: 1fr; }
+}
+
 /* ===========================
    TECH PILLS
    =========================== */
