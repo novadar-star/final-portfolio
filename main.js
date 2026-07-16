@@ -144,11 +144,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
 
   // ===========================
-  // Marquee pause on hover
+  // Marquee — seamless loop using measured width
   // ===========================
   const marquee = document.querySelector('.marquee');
   const track = document.querySelector('.marquee-track');
   if (marquee && track) {
+    // Measure half the track (one set of items)
+    const items = track.children;
+    const halfCount = items.length / 2;
+    let halfWidth = 0;
+    for (let i = 0; i < halfCount; i++) {
+      halfWidth += items[i].offsetWidth;
+    }
+    // Add gap between items (16px per gap)
+    halfWidth += halfCount * 16;
+
+    // Set CSS animation dynamically
+    track.style.animation = 'none';
+    const keyframes = `
+      @keyframes marquee-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-${halfWidth}px); }
+      }
+    `;
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = keyframes;
+    document.head.appendChild(styleSheet);
+
+    // Calculate speed: ~50px per second for consistent feel
+    const duration = halfWidth / 50;
+    track.style.animation = `marquee-scroll ${duration}s linear infinite`;
+
+    // Pause on hover
     marquee.addEventListener('mouseenter', () => {
       track.style.animationPlayState = 'paused';
     });

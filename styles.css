@@ -153,7 +153,6 @@ a:focus-visible, button:focus-visible {
   align-items: center;
   gap: 16px;
   width: max-content;
-  animation: scroll 22s linear infinite;
 }
 
 .marquee-pill {
@@ -165,11 +164,6 @@ a:focus-visible, button:focus-visible {
 }
 
 .marquee-dot { color: var(--matcha); font-size: 0.6rem; }
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
 
 /* ===========================
    HERO
