@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ===========================
   const toggle = document.querySelector('.theme-toggle');
   const icon = document.querySelector('.toggle-icon');
-  const savedTheme = localStorage.getItem('theme') || 'light';
+  const savedTheme = localStorage.getItem('theme') || 'dark';
 
   document.body.setAttribute('data-theme', savedTheme);
   updateIcon(savedTheme);
