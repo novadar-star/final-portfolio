@@ -397,6 +397,57 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ===========================
+   TECH STACK SECTION
+   =========================== */
+
+.stack-section {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stack-category {
+  padding: 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.stack-cat-title {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.stack-pill {
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  background: var(--matcha-soft);
+  color: var(--matcha);
+  border-radius: var(--radius-pill);
+}
+
+@media (max-width: 768px) {
+  .stack-grid { grid-template-columns: 1fr; }
+}
+
+/* ===========================
    CONTACT
    =========================== */
 
