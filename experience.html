@@ -3,83 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio — Experience</title>
+  <title>nova — experience</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-theme="light">
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="experience.html" class="nav-link active">Experience</a>
-      <a href="projects.html" class="nav-link">Projects</a>
+      <span class="nav-logo">nova.</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">home</a>
+        <a href="experience.html" class="nav-link active">experience</a>
+        <a href="projects.html" class="nav-link">projects</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <!-- Experience Section -->
-  <main class="container page-section fade-in">
-    <p class="eyebrow">Where I've been</p>
+  <main class="container page-section">
+    <span class="small-label">the path so far</span>
     <h1 class="page-heading">
-      My <span class="italic-accent">journey</span> so far
+      where i've <span class="italic-accent">learned</span>
     </h1>
 
     <div class="timeline">
-      <!-- Entry 1 -->
+      <!-- Eskwelabs -->
       <div class="timeline-entry">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-role">Senior Software Engineer</h3>
-          <p class="timeline-meta">Snowflake &middot; 2022 — Present</p>
-          <p class="timeline-desc">
-            Building data cloud infrastructure that scales to millions of queries. 
-            Working across the stack on query optimization and developer tooling 
-            that makes complex data feel approachable.
+        <div class="timeline-marker">
+          <span class="timeline-dot pulse"></span>
+          <span class="timeline-date">now</span>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <h3>AI Solutions Development Intern</h3>
+            <span class="company-tag">Eskwelabs</span>
+          </div>
+          <p class="timeline-period">May 2026 — present</p>
+          <p class="timeline-story">
+            Built a production Next.js 14 AI advisor platform — Google OAuth, 
+            Supabase with Row Level Security, three AI personas streaming Gemini 
+            responses. Got to do security testing against my own code, which was 
+            terrifying and fun. The kind of internship where you learn by doing 
+            things that scare you a little.
           </p>
+          <div class="timeline-tags">
+            <span class="tech-pill">Next.js 14</span>
+            <span class="tech-pill">Gemini</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">OAuth</span>
+          </div>
         </div>
       </div>
 
-      <!-- Entry 2 -->
+      <!-- AWS SBG -->
       <div class="timeline-entry">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-role">Software Engineer II</h3>
-          <p class="timeline-meta">Stripe &middot; 2020 — 2022</p>
-          <p class="timeline-desc">
-            Shipped payment flows used by thousands of businesses daily. 
-            Led a small team redesigning the merchant dashboard, reducing 
-            support tickets by 30%.
+        <div class="timeline-marker">
+          <span class="timeline-dot"></span>
+          <span class="timeline-date">2025</span>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <h3>President</h3>
+            <span class="company-tag">AWS Student Builder Group — Adamson</span>
+          </div>
+          <p class="timeline-period">Aug 2025 — present</p>
+          <p class="timeline-story">
+            Grew a cloud club to 120+ members. Ran hands-on workshops on S3, CloudFront, 
+            EC2 — actual deploy-it-yourself labs, not slide decks. Also serve as Executive 
+            Secretary for AWS Cloud Clubs Philippines, which means coordinating 40+ chapters 
+            and a lot of Google Docs.
           </p>
+          <div class="timeline-tags">
+            <span class="tech-pill">AWS</span>
+            <span class="tech-pill">Community</span>
+            <span class="tech-pill">Workshops</span>
+          </div>
         </div>
       </div>
 
-      <!-- Entry 3 -->
+      <!-- Tutorials Dojo -->
       <div class="timeline-entry">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-role">Frontend Engineer</h3>
-          <p class="timeline-meta">Notion &middot; 2018 — 2020</p>
-          <p class="timeline-desc">
-            Early-stage work on the editor experience. Built collaborative 
-            features and helped establish the component library that's still 
-            in use today.
-          </p>
+        <div class="timeline-marker">
+          <span class="timeline-dot"></span>
+          <span class="timeline-date">2026</span>
         </div>
-      </div>
-
-      <!-- Entry 4 -->
-      <div class="timeline-entry">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-role">Software Engineering Intern</h3>
-          <p class="timeline-meta">Google &middot; Summer 2017</p>
-          <p class="timeline-desc">
-            Built internal tooling for the Cloud team. First taste of 
-            working at scale — and the beginning of a serious coffee habit.
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <h3>IT Intern (Remote)</h3>
+            <span class="company-tag">Tutorials Dojo</span>
+          </div>
+          <p class="timeline-period">Jan — Feb 2026</p>
+          <p class="timeline-story">
+            Short sprint, clear deliverable: write a published article on Amazon Bedrock. 
+            Covered LLM-as-a-Judge methodology, prompt design, and model comparison. 
+            First time writing for an audience that isn't a classmate — learned a lot 
+            about making technical concepts readable.
           </p>
+          <div class="timeline-tags">
+            <span class="tech-pill">Amazon Bedrock</span>
+            <span class="tech-pill">Technical Writing</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Education & Certs -->
+    <section class="edu-section">
+      <span class="small-label">school + credentials</span>
+      <h2 class="section-subheading">education & certs</h2>
+      
+      <div class="edu-grid">
+        <div class="edu-item">
+          <h4>B.S. Computer Science</h4>
+          <p>Adamson University &middot; 2024–2028</p>
+          <p class="edu-note">DOST-SEI Scholar &middot; Dean's List Top 1</p>
+        </div>
+        <div class="edu-item">
+          <h4>Certifications</h4>
+          <div class="cert-list">
+            <span class="cert-pill">AWS Solutions Architect — Associate</span>
+            <span class="cert-pill">AWS AI Practitioner</span>
+            <span class="cert-pill">IT Specialist — Databases</span>
+            <span class="cert-pill">Harvard CS50x</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Heart react -->
+    <footer class="site-footer">
+      <p class="footer-credit">nova. 2025.</p>
+      <button class="heart-btn" aria-label="Like this site">
+        <span class="heart-icon">&#9829;</span>
+        <span class="heart-count">0</span>
+      </button>
+    </footer>
   </main>
 
   <script src="main.js"></script>

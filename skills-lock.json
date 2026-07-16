@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "interactive-portfolio": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "skillPath": "cli-tool/components/skills/creative-design/interactive-portfolio/SKILL.md",
+      "computedHash": "211aa900b0bfb9833bab025a313b02438ff911965df803b2c8135c5b5d653ec7"
+    },
+    "supabase": {
+      "source": "bobmatnyc/claude-mpm-skills",
+      "sourceType": "github",
+      "skillPath": "toolchains/platforms/backend/supabase/SKILL.md",
+      "computedHash": "4872155e52fd88d602dfd64928d2b8518643c80d5b1df06dafbc83f1da06c1ee"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "ce0af583006d2fd4731663adc50c0a5df1121f0d49a5bb9c308eca4ee295c60a"
+    },
+    "vercel-overview": {
+      "source": "bobmatnyc/claude-mpm-skills",
+      "sourceType": "github",
+      "skillPath": "toolchains/platforms/deployment/vercel-overview/SKILL.md",
+      "computedHash": "c8f1ddca456ddb26544a56c89d69fc24191491ac57f5ee96bc2c954f5126c14d"
+    }
+  }
+}

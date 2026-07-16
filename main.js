@@ -1,19 +1,66 @@
-// ===========================
-// Scroll Reveal Animation
-// ===========================
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Apply scroll-reveal class to timeline entries and project cards
-  const revealElements = document.querySelectorAll(
-    '.timeline-entry, .project-card'
+  // ===========================
+  // Dark mode toggle
+  // ===========================
+  const toggle = document.querySelector('.theme-toggle');
+  const icon = document.querySelector('.toggle-icon');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+
+  document.body.setAttribute('data-theme', savedTheme);
+  updateIcon(savedTheme);
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+  }
+
+  function updateIcon(theme) {
+    if (icon) {
+      icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
+    }
+  }
+
+  // ===========================
+  // Heart react — unlimited clicks
+  // ===========================
+  const heartBtn = document.querySelector('.heart-btn');
+  const heartCount = document.querySelector('.heart-count');
+
+  if (heartBtn) {
+    let count = parseInt(localStorage.getItem('heartCount') || '0', 10);
+    heartCount.textContent = count;
+    if (count > 0) heartBtn.classList.add('liked');
+
+    heartBtn.addEventListener('click', () => {
+      count++;
+      heartCount.textContent = count;
+      heartBtn.classList.add('liked');
+      localStorage.setItem('heartCount', count.toString());
+
+      // Pop animation
+      heartBtn.classList.remove('pop');
+      void heartBtn.offsetWidth;
+      heartBtn.classList.add('pop');
+    });
+  }
+
+  // ===========================
+  // Scroll reveal — Stagger List pattern (300-450ms, ease-out)
+  // ===========================
+  const targets = document.querySelectorAll(
+    '.timeline-entry, .project-case, .edu-item, .service-card, .proof-strip, .contact-strip, .hero-photo, .what-i-do'
   );
 
-  revealElements.forEach((el, i) => {
+  targets.forEach((el, i) => {
     el.classList.add('scroll-reveal');
-    el.style.transitionDelay = `${i * 0.08}s`;
+    el.style.transitionDelay = `${i * 0.07}s`;
   });
 
-  // Intersection Observer for scroll animations
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -23,27 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     },
-    {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px',
-    }
+    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
   );
 
-  document.querySelectorAll('.scroll-reveal').forEach((el) => {
-    observer.observe(el);
-  });
+  document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
 
   // ===========================
   // Marquee pause on hover
   // ===========================
-  const marqueeTrack = document.querySelector('.marquee-track');
-  if (marqueeTrack) {
-    const marquee = document.querySelector('.marquee');
+  const marquee = document.querySelector('.marquee');
+  const track = document.querySelector('.marquee-track');
+  if (marquee && track) {
     marquee.addEventListener('mouseenter', () => {
-      marqueeTrack.style.animationPlayState = 'paused';
+      track.style.animationPlayState = 'paused';
     });
     marquee.addEventListener('mouseleave', () => {
-      marqueeTrack.style.animationPlayState = 'running';
+      track.style.animationPlayState = 'running';
     });
   }
 });
