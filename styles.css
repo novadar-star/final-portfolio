@@ -87,7 +87,7 @@ a:focus-visible, button:focus-visible {
 .container {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 28px;
 }
 
 /* ===========================
@@ -108,7 +108,7 @@ a:focus-visible, button:focus-visible {
 .nav-inner {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1002,8 +1002,8 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 768px) {
-  .container { padding: 0 24px; }
-  .nav-inner { padding: 0 24px; }
+  .container { padding: 0 28px; }
+  .nav-inner { padding: 0 28px; }
 
   .hero {
     grid-template-columns: 1fr;
