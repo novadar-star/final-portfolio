@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ===========================
   // Heart react — global via Supabase
   // ===========================
-  const heartBtn = document.querySelector('.heart-btn');
+  const heartBtn = document.querySelector('.heart-float');
   const heartCount = document.querySelector('.heart-count');
 
   if (heartBtn && heartCount) {
