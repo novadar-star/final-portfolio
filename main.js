@@ -1,4 +1,65 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ===========================
+// Supabase config
+// ===========================
+const SUPABASE_URL = 'https://lbmplqohcuthpgrnljxy.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxibXBscW9oY3V0aHBncm5sanh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNzUwNzMsImV4cCI6MjA5OTc1MTA3M30.sRmRnyQAcuywBrtUqA6Nggac2Aj0Wvx3B7ViAHWWb7U';
+
+async function getHeartCount() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1&select=count`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    const data = await res.json();
+    return data[0]?.count || 0;
+  } catch (e) {
+    return parseInt(localStorage.getItem('heartCount') || '0', 10);
+  }
+}
+
+async function incrementHeart() {
+  try {
+    // Use RPC or PATCH to increment
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_heart`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
+    if (!res.ok) {
+      // Fallback: direct update with current count + 1
+      const current = await getHeartCount();
+      await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({ count: current + 1 })
+      });
+      return current + 1;
+    }
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    // Fallback to localStorage
+    let count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
+    localStorage.setItem('heartCount', count.toString());
+    return count;
+  }
+}
+
+// ===========================
+// DOM Ready
+// ===========================
+document.addEventListener('DOMContentLoaded', async () => {
   // ===========================
   // Dark mode toggle
   // ===========================
@@ -26,26 +87,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===========================
-  // Heart react — unlimited clicks
+  // Heart react — global via Supabase
   // ===========================
   const heartBtn = document.querySelector('.heart-btn');
   const heartCount = document.querySelector('.heart-count');
 
-  if (heartBtn) {
-    let count = parseInt(localStorage.getItem('heartCount') || '0', 10);
-    heartCount.textContent = count;
-    if (count > 0) heartBtn.classList.add('liked');
+  if (heartBtn && heartCount) {
+    // Load current count from Supabase
+    const initialCount = await getHeartCount();
+    heartCount.textContent = initialCount;
+    if (initialCount > 0) heartBtn.classList.add('liked');
 
-    heartBtn.addEventListener('click', () => {
-      count++;
-      heartCount.textContent = count;
+    heartBtn.addEventListener('click', async () => {
+      // Optimistic UI update
+      const displayed = parseInt(heartCount.textContent, 10) + 1;
+      heartCount.textContent = displayed;
       heartBtn.classList.add('liked');
-      localStorage.setItem('heartCount', count.toString());
 
       // Pop animation
       heartBtn.classList.remove('pop');
       void heartBtn.offsetWidth;
       heartBtn.classList.add('pop');
+
+      // Persist to Supabase
+      const actualCount = await incrementHeart();
+      if (actualCount && typeof actualCount === 'number') {
+        heartCount.textContent = actualCount;
+      }
     });
   }
 
