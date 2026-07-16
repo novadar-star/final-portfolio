@@ -33,29 +33,31 @@
       <!-- Project 1 — Featured -->
       <article class="project-case featured">
         <div class="case-visual">
-          <img src="pics/aws-community-day.png" alt="Zero-Touch Attendee Pipeline — n8n workflow" class="case-img">
+          <img src="pics/aws-community-day.png" alt="Zero-Touch Attendee Pipeline — n8n workflow demo" class="case-img">
         </div>
         <div class="case-content">
-          <span class="case-label">featured &middot; 2026</span>
+          <span class="case-label">workflow design &middot; 2026</span>
           <h2 class="case-title">Zero-Touch Attendee Pipeline</h2>
-          <p class="case-context">AWS Community Day Manila — 500+ registrants</p>
+          <p class="case-context">Practice build — event registration automation scenario</p>
           <p class="case-desc">
-            Built an event registration workflow: a webhook catches form submissions, 
-            checks for duplicates, routes attendees by tier (general / VIP / speaker), 
-            logs to Google Sheets, and sends personalized Gmail confirmations. 
+            Designed an end-to-end event registration workflow as a learning project: 
+            webhook trigger, duplicate detection, tier-based conditional routing 
+            (general / VIP / speaker), Google Sheets logging, and personalized Gmail 
+            confirmations. Built to practice multi-step automation design and 
+            conditional logic in n8n.
           </p>
           <div class="case-impact">
             <div class="impact-item">
+              <span class="impact-number">6</span>
+              <span class="impact-label">workflow nodes</span>
+            </div>
+            <div class="impact-item">
+              <span class="impact-number">3</span>
+              <span class="impact-label">routing tiers</span>
+            </div>
+            <div class="impact-item">
               <span class="impact-number">0</span>
               <span class="impact-label">manual steps</span>
-            </div>
-            <div class="impact-item">
-              <span class="impact-number">500+</span>
-              <span class="impact-label">registrants processed</span>
-            </div>
-            <div class="impact-item">
-              <span class="impact-number">5</span>
-              <span class="impact-label">workflow nodes</span>
             </div>
           </div>
           <div class="card-tags">
@@ -68,34 +70,37 @@
         </div>
       </article>
 
-      <!-- Project 2 -->
+      <!-- Project 2 — Lead Finder -->
       <article class="project-case">
         <div class="case-visual">
-          <img src="pics/aws-community-day.png" alt="AI Email Categorization — n8n workflow" class="case-img">
+          <img src="pics/lead-finder.png" alt="Google Maps Lead Scraper — n8n workflow" class="case-img">
         </div>
         <div class="case-content">
-          <span class="case-label">ai automation &middot; 2026</span>
-          <h2 class="case-title">AI Email Categorization</h2>
-          <p class="case-context">n8n + Gemini API — automated email triage</p>
+          <span class="case-label">automation &middot; 2026</span>
+          <h2 class="case-title">Google Maps Lead Scraper</h2>
+          <p class="case-context">n8n + Apify + Google Sheets — automated lead generation</p>
           <p class="case-desc">
-            An email triage pipeline — reads incoming emails, sends them to Google 
-            Gemini for categorization via raw HTTP requests.
+            A scheduled pipeline that scrapes business leads from Google Maps using 
+            an Apify actor, filters for qualified prospects, loops through results, 
+            and appends them to a Google Sheet. Includes a wait node to respect rate 
+            limits. Runs on a timer — no manual intervention needed.
           </p>
           <div class="case-impact">
             <div class="impact-item">
               <span class="impact-number">100%</span>
-              <span class="impact-label">automated triage</span>
+              <span class="impact-label">hands-free</span>
             </div>
             <div class="impact-item">
-              <span class="impact-number">1</span>
-              <span class="impact-label">undocumented bug fixed</span>
+              <span class="impact-number">6</span>
+              <span class="impact-label">nodes in pipeline</span>
             </div>
           </div>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
-            <span class="tech-pill">Gemini API</span>
-            <span class="tech-pill">HTTP Requests</span>
-            <span class="tech-pill">Debugging</span>
+            <span class="tech-pill">Apify</span>
+            <span class="tech-pill">Google Maps</span>
+            <span class="tech-pill">Google Sheets</span>
+            <span class="tech-pill">Scheduled Trigger</span>
           </div>
         </div>
       </article>
