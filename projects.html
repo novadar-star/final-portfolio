@@ -31,21 +31,20 @@
     </h1>
 
     <div class="projects-stack">
-      <!-- Project 1 — Featured -->
-      <article class="project-case featured">
-        <div class="case-visual">
-          <img src="pics/aws-community-day.png" alt="Zero-Touch Attendee Pipeline — n8n workflow demo" class="case-img">
+      <!-- PROJECT TYPE: n8n workflow — dark canvas, full bleed -->
+      <article class="project-case">
+        <div class="case-visual workflow-canvas">
+          <img src="pics/aws-community-day.png" alt="Zero-Touch Attendee Pipeline — n8n workflow demo" class="workflow-img">
         </div>
         <div class="case-content">
           <span class="case-label">workflow design &middot; 2026</span>
           <h2 class="case-title">Zero-Touch Attendee Pipeline <a href="https://docs.google.com/document/d/1s4WDRkYRHJuysxo0eQ_BCjjTQUJYzGKhTESu8Okrip0/edit?usp=sharing" target="_blank" class="project-link" aria-label="View documentation">&#128279;</a></h2>
-          <p class="case-context"> event registration automation scenario</p>
+          <p class="case-context">event registration automation scenario</p>
           <p class="case-desc">
             Designed an end-to-end event registration workflow as a learning project: 
             webhook trigger, duplicate detection, tier-based conditional routing 
             (general / VIP / speaker), Google Sheets logging, and personalized Gmail 
-            confirmations. Built to practice multi-step automation design and 
-            conditional logic in n8n.
+            confirmations.
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
@@ -57,10 +56,10 @@
         </div>
       </article>
 
-      <!-- Project 2 — Lead Finder -->
+      <!-- PROJECT TYPE: n8n workflow — dark canvas -->
       <article class="project-case">
-        <div class="case-visual">
-          <img src="pics/google-mpas-craper-leads.png" alt="Google Maps Lead Scraper — n8n workflow" class="case-img">
+        <div class="case-visual workflow-canvas">
+          <img src="pics/google-mpas-craper-leads.png" alt="Google Maps Lead Scraper — n8n workflow" class="workflow-img">
         </div>
         <div class="case-content">
           <span class="case-label">automation &middot; 2026</span>
@@ -69,8 +68,7 @@
           <p class="case-desc">
             A scheduled pipeline that scrapes business leads from Google Maps using 
             an Apify actor, filters for qualified prospects, loops through results, 
-            and appends them to a Google Sheet. Includes a wait node to respect rate 
-            limits.
+            and appends them to a Google Sheet.
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
@@ -82,7 +80,7 @@
         </div>
       </article>
 
-      <!-- Project 3 -->
+      <!-- PROJECT TYPE: web app — laptop mockup -->
       <article class="project-case">
         <div class="case-visual">
           <div class="device-laptop">
@@ -111,13 +109,14 @@
         </div>
       </article>
 
-      <!-- Project 4 -->
+      <!-- PROJECT TYPE: published article — editorial style -->
       <article class="project-case">
-        <div class="case-visual">
-          <img src="pics/llm-as-a-judge.png" alt="LLM-as-a-Judge Evaluation System" class="case-img">
+        <div class="case-visual article-frame">
+          <div class="article-badge">published on tutorials dojo</div>
+          <img src="pics/llm-as-a-judge.png" alt="LLM-as-a-Judge Evaluation System" class="article-img">
         </div>
         <div class="case-content">
-          <span class="case-label">published research &middot; 2026</span>
+          <span class="case-label">published &middot; 2026</span>
           <h2 class="case-title">LLM-as-a-Judge Evaluation System <a href="https://tutorialsdojo.com/amazon-bedrocks-llm-as-a-judge-automate-ai-evaluation-with-nova-lite-claude/" target="_blank" class="project-link" aria-label="Read article">&#128279;</a></h2>
           <p class="case-context">Tutorials Dojo — published article</p>
           <p class="case-desc">
@@ -136,7 +135,7 @@
         </div>
       </article>
 
-      <!-- Project 5 -->
+      <!-- PROJECT TYPE: web app — laptop mockup -->
       <article class="project-case">
         <div class="case-visual">
           <div class="device-laptop">
@@ -163,16 +162,30 @@
         </div>
       </article>
 
-      <!-- Project 6 — School Registrar -->
+      <!-- PROJECT TYPE: code-only — terminal aesthetic -->
       <article class="project-case">
+        <div class="case-visual code-block">
+          <div class="code-header">
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-path">~/school-registrar</span>
+          </div>
+          <div class="code-body">
+            <code>$ git clone novadar-star/school-registrar</code>
+            <code>$ npm install</code>
+            <code>$ npm run dev</code>
+            <code class="code-success">&#10003; server running on localhost:3000</code>
+          </div>
+        </div>
         <div class="case-content">
           <span class="case-label">academic project &middot; 2025</span>
           <h2 class="case-title">School Registrar System <a href="https://github.com/novadar-star/school-registrar" target="_blank" class="project-link" aria-label="View on GitHub">&#128279;</a></h2>
           <p class="case-context">Student record management system</p>
           <p class="case-desc">
             A registrar system for managing student records, enrollment, and academic 
-            data. Built as a hands-on project to learn database design, CRUD operations, 
-            and system architecture fundamentals.
+            data. Built to learn database design, CRUD operations, and system 
+            architecture fundamentals.
           </p>
           <div class="card-tags">
             <span class="tech-pill">GitHub</span>
