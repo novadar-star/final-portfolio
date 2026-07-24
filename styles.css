@@ -1467,20 +1467,21 @@ a:focus-visible, button:focus-visible {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   min-height: 44px;
-  background: var(--card);
-  border: 1.5px solid var(--border);
+  background: rgba(15, 20, 16, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  transition: transform 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease-out, border-color 0.2s ease-out;
 }
 
 .heart-float:hover {
   border-color: var(--blush);
   transform: scale(1.05);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.2);
 }
 
 .heart-float:active {
