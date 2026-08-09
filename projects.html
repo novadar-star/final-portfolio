@@ -64,7 +64,7 @@
         <div class="case-content">
           <span class="case-label">automation &middot; 2026</span>
           <h2 class="case-title">Google Maps Lead Scraper</h2>
-          <p class="case-context">n8n + Apify + Google Sheets — automated lead generation</p>
+          <p class="case-context">n8n · Apify · Google Sheets · automated lead generation</p>
           <p class="case-desc">
             A scheduled pipeline that scrapes business leads from Google Maps using 
             an Apify actor, filters for qualified prospects, loops through results, 
@@ -88,7 +88,7 @@
         <div class="case-content">
           <span class="case-label">automation &middot; 2026</span>
           <h2 class="case-title">GTM Signal-Based Outbound Pipeline <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" class="project-link" aria-label="View case study">&#128279;</a></h2>
-          <p class="case-context">n8n + Hunter.io + Gmail + Google Sheets — automated outbound</p>
+          <p class="case-context">n8n · Hunter.io · Gmail · automated outbound</p>
           <p class="case-desc">
             A signal-driven outbound pipeline: ingests GTM signals, searches for 
             job-related buying signals, scores leads, enriches contacts via Hunter, 
@@ -114,12 +114,15 @@
         <div class="case-content">
           <span class="case-label">ai automation &middot; 2026</span>
           <h2 class="case-title">AI Jobs Scraper & Resume Optimizer <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" class="project-link" aria-label="View case study">&#128279;</a></h2>
-          <p class="case-context">n8n + AI Agent + Google Drive + Slack — job search automation</p>
+          <p class="case-context">n8n · AI Agent · Google Drive · Slack</p>
           <p class="case-desc">
-            A Slack-triggered pipeline that scrapes job listings, runs an AI agent 
-            to analyze job requirements against your resume, searches existing docs 
-            in Google Drive for relevant experience, generates tailored resume 
-            recommendations, and drafts optimized application materials automatically.
+            A Slack-triggered pipeline that scrapes job listings and runs an AI agent 
+            to match requirements against your resume. The part that made this work: a 
+            custom JavaScript output parser that strips markdown fences, runs 
+            JSON.parse, falls back to regex extraction, and applies safe defaults — 
+            because AI JSON output is unreliable and this needed to run without 
+            breaking. Searches Google Drive for relevant experience, then drafts 
+            tailored application materials.
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
@@ -142,7 +145,7 @@
         <div class="case-content">
           <span class="case-label">production app &middot; 2026</span>
           <h2 class="case-title">Internal AI Advisor Platform <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" class="project-link" aria-label="View on GitHub">&#128279;</a></h2>
-          <p class="case-context">Eskwelabs — shipped to production team</p>
+          <p class="case-context">Eskwelabs · shipped to production team</p>
           <p class="case-desc">
             Full-stack Next.js 14 app with three AI advisor personas that pull context 
             from Google Docs and stream Gemini responses. Auth via Google OAuth with 
@@ -168,7 +171,7 @@
         <div class="case-content">
           <span class="case-label">community &middot; 2025</span>
           <h2 class="case-title">AWS SBG Adamson — Org Website (Proposed Design) <a href="https://awssbgadu.pages.dev/" target="_blank" class="project-link" aria-label="Visit site">&#128279;</a></h2>
-          <p class="case-context">AWS Student Builder Group — Adamson University</p>
+          <p class="case-context">AWS Student Builder Group · Adamson University</p>
           <p class="case-desc">
             Helped develop the branding, ui/ux of the official website for our 120+ member cloud community. 
             Built to showcase events, workshops, and member achievements. 
@@ -182,22 +185,8 @@
         </div>
       </article>
 
-      <!-- PROJECT TYPE: code-only — terminal aesthetic -->
+      <!-- PROJECT TYPE: code-only -->
       <article class="project-case">
-        <div class="case-visual code-block">
-          <div class="code-header">
-            <span class="code-dot"></span>
-            <span class="code-dot"></span>
-            <span class="code-dot"></span>
-            <span class="code-path">~/school-registrar</span>
-          </div>
-          <div class="code-body">
-            <code>$ git clone novadar-star/school-registrar</code>
-            <code>$ npm install</code>
-            <code>$ npm run dev</code>
-            <code class="code-success">&#10003; server running on localhost:3000</code>
-          </div>
-        </div>
         <div class="case-content">
           <span class="case-label">academic project &middot; 2025</span>
           <h2 class="case-title">School Registrar System <a href="https://github.com/novadar-star/school-registrar" target="_blank" class="project-link" aria-label="View on GitHub">&#128279;</a></h2>
