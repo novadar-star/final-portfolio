@@ -1,2 +1,21 @@
 {
+  "files.exclude": {
+    "**/.agents": true,
+    "**/.claude": true,
+    "**/.kiro": true,
+    "**/__pycache__": true
+  },
+  "search.exclude": {
+    "**/.agents": true,
+    "**/.claude": true,
+    "**/.kiro": true,
+    "**/__pycache__": true,
+    "**/skills-lock.json": true
+  },
+  "files.watcherExclude": {
+    "**/.agents/**": true,
+    "**/.claude/**": true,
+    "**/.kiro/**": true,
+    "**/__pycache__/**": true
+  }
 }
