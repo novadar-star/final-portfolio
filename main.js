@@ -118,6 +118,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ===========================
+  // Lazy video play — only load/play when in viewport
+  // ===========================
+  const videos = document.querySelectorAll('video.project-video');
+  if (videos.length) {
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    videos.forEach((v) => videoObserver.observe(v));
+  }
+
+  // ===========================
   // Scroll reveal — Stagger List pattern (300-450ms, ease-out)
   // ===========================
   const targets = document.querySelectorAll(
