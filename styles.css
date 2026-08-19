@@ -189,6 +189,7 @@ a:focus-visible, button:focus-visible {
   grid-template-columns: 1.2fr 0.8fr;
   gap: 40px;
   align-items: start;
+  text-align: left;
 }
 
 .small-label {
@@ -1156,16 +1157,20 @@ a:focus-visible, button:focus-visible {
   .container { padding: 0 24px; }
   .nav-inner { padding: 0 24px; }
 
+  .nav-avatar { width: 24px; height: 24px; }
+  .nav-logo { font-size: 0.9rem; gap: 6px; }
+
   .hero {
     grid-template-columns: 1fr;
     padding: 32px 0 24px;
     gap: 20px;
+    text-align: left;
   }
 
   .hero-photo {
     order: -1;
-    max-width: 160px;
-    margin: 0 auto;
+    max-width: 140px;
+    margin: 0;
   }
 
   .photo-frame {
@@ -1173,7 +1178,7 @@ a:focus-visible, button:focus-visible {
     border-radius: var(--radius-lg);
   }
 
-  .photo-caption { justify-content: center; }
+  .photo-caption { justify-content: flex-start; }
 
   .hero-heading { font-size: clamp(1.5rem, 5vw, 1.8rem); }
   .hero-sub { font-size: 0.88rem; }
@@ -1210,7 +1215,7 @@ a:focus-visible, button:focus-visible {
   .case-title { font-size: 1rem; }
   .case-desc { font-size: 0.84rem; }
 
-  .project-video { border-radius: 8px; }
+  .project-video { border-radius: 8px; max-height: 260px; }
 
   .timeline-entry {
     grid-template-columns: 28px 1fr;
@@ -1224,8 +1229,8 @@ a:focus-visible, button:focus-visible {
 
   .edu-grid { grid-template-columns: 1fr; }
 
-  .nav-links { gap: 12px; }
-  .nav-link { font-size: 0.8rem; }
+  .nav-links { gap: 10px; }
+  .nav-link { font-size: 0.78rem; }
 
   .page-heading {
     font-size: clamp(1.4rem, 4vw, 1.7rem);
@@ -1234,7 +1239,7 @@ a:focus-visible, button:focus-visible {
 
   .marquee-pill { font-size: 0.7rem; }
 
-  .footer-links { gap: 12px; }
+  .footer-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
   .footer-link { font-size: 0.76rem; min-height: 44px; display: inline-flex; align-items: center; }
 }
 
