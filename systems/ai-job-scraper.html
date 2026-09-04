@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="../pics/nova-photo.jpg">
+  <meta name="description" content="AI Job Scraper & Custom Output Parser — how a tutorial project became a reusable parser for handling broken LLM JSON output. Built by Darla Nova Sumanting.">
+  <title>AI Job Scraper &amp; Custom Output Parser · nova.</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+  <a href="#main-content" class="skip-link">skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo" aria-label="nova. — home">
+        <img src="../pics/nova-photo.jpg" alt="" class="nav-avatar" aria-hidden="true">
+        nova.
+      </a>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link">home</a>
+        <a href="../systems.html" class="nav-link active" aria-current="page">systems</a>
+        <a href="../about.html" class="nav-link">about</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <span class="toggle-icon" aria-hidden="true">&#9790;</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container system-detail" id="main-content">
+
+    <a href="../systems.html" class="back-link" aria-label="Back to all systems">
+      &larr; all systems
+    </a>
+
+    <!-- Header -->
+    <header class="system-detail-header">
+      <span class="system-detail-eyebrow">automation &middot; ai integration &middot; 2026</span>
+      <h1 class="system-detail-title">AI Job Scraper &amp;<br>Custom Output Parser</h1>
+      <p class="system-detail-desc">
+        started from a public n8n tutorial, then wrote a custom parser because the AI kept
+        sending back broken JSON. the parser is the part that actually matters.
+      </p>
+      <div class="system-detail-links">
+        <a
+          href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="detail-link"
+          aria-label="View case study (opens in new tab)"
+        >
+          case study &rarr;
+        </a>
+      </div>
+    </header>
+
+    <!-- Workflow image -->
+    <div class="system-detail-visual workflow-canvas" aria-label="AI Job Scraper workflow diagram in n8n">
+      <img
+        src="../pics/ai-research-workflow.png"
+        alt="n8n workflow showing the AI Job Scraper pipeline: Slack trigger, job scraping, AI matching, custom parser, and delivery nodes"
+        loading="eager"
+      >
+    </div>
+
+    <!-- Connector diagram — full interactive -->
+    <section class="connector-section" aria-labelledby="pipeline-label">
+      <span class="connector-section-label" id="pipeline-label">pipeline &mdash; tap a stage</span>
+      <div
+        class="connector"
+        id="detail-connector"
+        role="group"
+        aria-label="Interactive pipeline stages — tap each stage to see what happened there"
+      ></div>
+      <span class="connector-hint" aria-live="polite">tap any stage to expand the annotation</span>
+    </section>
+
+    <!-- Full story — six parts -->
+    <section aria-labelledby="story-label">
+      <span class="small-label" id="story-label">the full build</span>
+      <div class="story-grid">
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">problem</span>
+          <div class="story-body">
+            <p>
+              most n8n job scraper tutorials break the moment the LLM's output isn't
+              perfectly formatted JSON. the AI agents in these workflows have no error
+              handling — they just fail silently or crash the run.
+            </p>
+            <p>
+              that's fine for a demo. it's not fine for something you actually want to use
+              more than once.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">thinking</span>
+          <div class="story-body">
+            <p>
+              re-prompting and hoping the model sends cleaner output next time isn't a
+              strategy at scale. the problem isn't the model — it's that there's no fallback
+              when the format is wrong.
+            </p>
+            <p>
+              most people add a "format as JSON" instruction and call it done. that handles
+              maybe 70% of cases. the other 30% still fail silently.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">system</span>
+          <div class="story-body">
+            <p>
+              Trigger (Slack) &rarr; Scrape (job listings) &rarr; Match (AI agent against
+              resume context from Google Drive) &rarr; Parse (custom JS: fence-strip &rarr;
+              JSON.parse &rarr; regex fallback &rarr; safe defaults) &rarr; Draft (tailored
+              application materials) &rarr; Deliver (results back to Slack with match score)
+            </p>
+          </div>
+        </div>
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">build</span>
+          <div class="story-body">
+            <p>
+              built the parser as a Function node in n8n. the logic runs in four stages,
+              each one a fallback for the one before:
+            </p>
+
+            <pre class="story-code" aria-label="Custom output parser JavaScript — four-stage fallback logic"><code>// Stage 1: strip markdown fences if the model wrapped output in ```json ... ```
+let raw = $input.first().json.output ?? '';
+raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+
+// Stage 2: attempt a clean JSON.parse
+try {
+  return [{ json: JSON.parse(raw) }];
+} catch (_) {}
+
+// Stage 3: regex extraction — pull key-value pairs from malformed output
+const extracted = {};
+const kvPattern = /"(\w+)"\s*:\s*("(?:[^"\\]|\\.)*"|\d+|true|false|null)/g;
+let match;
+while ((match = kvPattern.exec(raw)) !== null) {
+  try { extracted[match[1]] = JSON.parse(match[2]); } catch (_) {}
+}
+if (Object.keys(extracted).length > 0) return [{ json: extracted }];
+
+// Stage 4: safe defaults — workflow continues rather than crashing
+return [{ json: { match_score: 0, summary: '', skills: [], error: 'parse_failed' } }];</code></pre>
+
+            <p>
+              later reused the same parser in a public webinar co-presentation —
+              which meant sanitizing a hardcoded API key from the workflow JSON before sharing.
+              that was a useful lesson about the gap between "works on my machine" and
+              "shareable artifact."
+            </p>
+          </div>
+        </div>
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">outcome</span>
+          <div class="story-body">
+            <p>
+              a reusable parser pattern that's now a standard Function node in every
+              AI-output workflow i build. the job scraper runs reliably on demand via Slack.
+            </p>
+            <p>
+              the parser has been reused in three other n8n projects since — the GTM outbound
+              pipeline, the attendee confirmation system, and a content categorization workflow.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-section scroll-reveal">
+          <span class="story-label">learning</span>
+          <div class="story-body">
+            <p>
+              the parser is more useful than the scraper. the scraper is a tutorial.
+              the parser is a solution to a real recurring problem.
+            </p>
+            <p>
+              that distinction — between following a pattern and solving a problem —
+              is the one i'm trying to build toward in everything i make.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation between systems -->
+    <div style="padding: 40px 0 0; border-top: 1px solid var(--hairline); margin-top: 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <a href="../systems.html" class="back-link" style="margin:0;" aria-label="Back to all systems">
+        &larr; all systems
+      </a>
+      <a href="../about.html" class="btn-ghost" style="font-size:0.82rem;">
+        about nova &rarr;
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <span class="nav-logo" aria-hidden="true">nova.</span>
+        <p class="footer-tagline">still the person who wrote a fallback for when the AI output isn't valid JSON.</p>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="mailto:darlanovasumanting06@gmail.com" class="footer-link">email</a>
+          <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="footer-link">linkedin</a>
+          <a href="https://github.com/novadar-star" target="_blank" rel="noopener noreferrer" class="footer-link">github</a>
+          <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="footer-link">resume</a>
+        </nav>
+        <p class="footer-credit">&copy; 2026 darla nova sumanting. manila, ph.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Floating heart -->
+  <button class="heart-float" aria-label="Like this site">
+    <span class="heart-icon" aria-hidden="true">&#9829;</span>
+    <span class="heart-count">0</span>
+  </button>
+
+  <script src="../projects.js"></script>
+  <script src="../main.js"></script>
+  <script>
+    // ===========================
+    // Render the full interactive connector diagram
+    // ===========================
+    (function () {
+      const project = getProject('ai-job-scraper');
+      if (!project) return;
+      const container = document.getElementById('detail-connector');
+      if (!container) return;
+
+      let openAnnotation = null;
+
+      project.connector.forEach(function (stage, i) {
+        const stageEl = document.createElement('div');
+        stageEl.className = 'connector-stage';
+
+        const node = document.createElement('div');
+        node.className = 'connector-node';
+        node.style.position = 'relative';
+
+        // Button
+        const btn = document.createElement('button');
+        btn.className = 'connector-stage-btn';
+        btn.textContent = stage.label;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', 'detail-ann-' + i);
+        btn.setAttribute('type', 'button');
+
+        // Annotation
+        const ann = document.createElement('div');
+        ann.className = 'connector-annotation';
+        ann.id = 'detail-ann-' + i;
+        ann.setAttribute('role', 'tooltip');
+        ann.textContent = stage.annotation;
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = ann.classList.contains('open');
+
+          if (openAnnotation && openAnnotation !== ann) {
+            openAnnotation.classList.remove('open');
+            openAnnotation.previousElementSibling.setAttribute('aria-expanded', 'false');
+          }
+
+          if (isOpen) {
+            ann.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            openAnnotation = null;
+          } else {
+            ann.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+            openAnnotation = ann;
+          }
+        });
+
+        node.appendChild(btn);
+        node.appendChild(ann);
+        stageEl.appendChild(node);
+
+        if (i < project.connector.length - 1) {
+          const wire = document.createElement('div');
+          wire.className = 'connector-wire';
+          wire.setAttribute('aria-hidden', 'true');
+          stageEl.appendChild(wire);
+        }
+
+        container.appendChild(stageEl);
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function () {
+        if (openAnnotation) {
+          openAnnotation.classList.remove('open');
+          openAnnotation.previousElementSibling.setAttribute('aria-expanded', 'false');
+          openAnnotation = null;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

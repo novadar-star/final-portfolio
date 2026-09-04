@@ -1,3 +1,15 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/experience",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/systems",
+      "permanent": true
+    }
+  ]
 }

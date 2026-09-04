@@ -4,238 +4,261 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
-  <meta name="description" content="Nova — curious builder, cloud community leader, and automation enthusiast based in Manila. Currently figuring things out one pipeline at a time.">
+  <meta name="description" content="Darla Nova Sumanting — builds automation systems and leads a 120-person AWS community at Adamson University. Manila, PH.">
   <meta property="og:title" content="nova.">
-  <meta property="og:description" content="hi, i'm nova. i build automations, lead cloud communities, and figure things out one pipeline at a time.">
+  <meta property="og:description" content="Darla Nova Sumanting builds automation systems and leads a 120-person AWS community at Adamson University.">
   <meta property="og:image" content="pics/nova-photo.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <title>nova.</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">
+  <a href="#main-content" class="skip-link">skip to main content</a>
+
   <!-- Navigation -->
-  <nav class="nav">
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="pics/nova-photo.jpg" alt="Nova" class="nav-avatar">
-        nova
+      <a href="index.html" class="nav-logo" aria-label="nova. — home">
+        <img src="pics/nova-photo.jpg" alt="" class="nav-avatar" aria-hidden="true">
+        nova.
       </a>
       <div class="nav-links">
-        <a href="index.html" class="nav-link active">home</a>
-        <a href="experience.html" class="nav-link">experience</a>
-        <a href="projects.html" class="nav-link">projects</a>
+        <a href="index.html" class="nav-link active" aria-current="page">home</a>
+        <a href="systems.html" class="nav-link">systems</a>
+        <a href="about.html" class="nav-link">about</a>
         <button class="theme-toggle" aria-label="Toggle dark mode">
-          <span class="toggle-icon">&#9790;</span>
+          <span class="toggle-icon" aria-hidden="true">&#9790;</span>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- Ticker -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span class="marquee-pill">n8n workflows</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">manila, ph</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">cloud community builder</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">aws certified x2</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">automation nerd</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">gmt+8</span>
-      <span class="marquee-dot">&middot;</span>
-      <!-- duplicate -->
-      <span class="marquee-pill">n8n workflows</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">manila, ph</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">cloud community builder</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">aws certified x2</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">automation nerd</span>
-      <span class="marquee-dot">&middot;</span>
-      <span class="marquee-pill">gmt+8</span>
-      <span class="marquee-dot">&middot;</span>
-    </div>
-  </div>
+  <main class="container" id="main-content">
 
-  <!-- Hero -->
-  <main class="container">
-    <section class="hero">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-name">
       <div class="hero-text">
-        <span class="small-label">manila, ph</span>
-        <h1 class="hero-heading">
-          hey, i'm <span class="italic-accent">darla nova</span> 🧘🏻‍♀️
+        <span class="hero-eyebrow">manila, ph &middot; gmt+8</span>
+
+        <h1 class="hero-name" id="hero-name">
+          Darla <span class="mark">"nova"</span> Sumanting
         </h1>
-        <p class="hero-sub">
-          i'm a curious person who happens to love exploring and building things that make life easier. 
-          right now that looks like designing automation workflows, tinkering with 
-          AI models, and leading a cloud community of 120+ people i genuinely 
-          care about.
+
+        <p class="hero-identity">
+          builds automation systems and leads a 120-person AWS cloud community
+          at Adamson University.
         </p>
-        <p class="hero-sub hero-sub-2">
-          when i'm not at my laptop, i'm nurturing my creativity through designing and reading fanfictions!
-        </p>
-        <p class="hero-currently">
-          <span class="caption-dot"></span>
-          currently: building automation workflows using n8n
-        </p>
+
+        <div class="status-block" role="status" aria-label="Current activity">
+          <span class="status-label">currently</span>
+          <span class="status-text">
+            <span class="status-dot" aria-hidden="true"></span>building automation workflows and co-running the AWS Cloud Club PH exec team
+          </span>
+        </div>
+
         <div class="hero-ctas">
-          <a href="projects.html" class="btn-primary">see what i've been building</a>
+          <a href="systems.html" class="btn-primary">see what i've built</a>
           <a href="mailto:darlanovasumanting06@gmail.com" class="btn-ghost">say hi &rarr;</a>
         </div>
       </div>
 
       <!-- Photo -->
-      <div class="hero-photo">
+      <div class="hero-photo" aria-hidden="true">
         <div class="photo-frame">
-          <img src="pics/nova-photo.jpg" alt="Nova">
+          <img src="pics/nova-photo.jpg" alt="Darla Nova Sumanting">
         </div>
-        <div class="photo-caption">
+        <p class="photo-caption">
           <span class="caption-dot"></span>
           probably thinking about workflows
+        </p>
+      </div>
+    </section>
+
+    <!-- Flagship project preview -->
+    <section class="flagship-preview" aria-labelledby="flagship-heading">
+      <span class="flagship-label" aria-hidden="true">flagship system</span>
+
+      <h2 class="flagship-title" id="flagship-heading">AI Job Scraper &amp; Custom Output Parser</h2>
+      <p class="flagship-desc">
+        started from a public n8n tutorial, then wrote a custom parser because the AI
+        kept sending back broken JSON. fence-stripping &rarr; JSON.parse &rarr;
+        regex fallback &rarr; safe defaults. the parser is now the part that actually matters.
+      </p>
+
+      <!-- Inline connector preview — static, non-interactive on homepage -->
+      <div class="connector" role="img" aria-label="Pipeline: Trigger → Scrape → Match → Parse → Draft → Deliver" id="flagship-connector"></div>
+
+      <div class="flagship-visual">
+        <img src="pics/ai-research-workflow.png" alt="AI Job Scraper workflow diagram in n8n" loading="lazy">
+      </div>
+
+      <a href="systems/ai-job-scraper.html" class="flagship-cta">
+        read the full build
+        <span class="flagship-cta-arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </section>
+
+    <!-- What I build -->
+    <section class="what-i-do" aria-labelledby="what-label">
+      <span class="section-label" id="what-label">things i find myself building a lot</span>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </div>
+          <h3>automations</h3>
+          <p>n8n workflows that handle the boring parts so people can focus on what actually matters.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>ai integrations</h3>
+          <p>connecting LLMs into real workflows — and writing the error handling for when they don't behave.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          </div>
+          <h3>cloud community</h3>
+          <p>3x AWS Certified and running a 120-person student community — mostly to make the confusing stuff less confusing for everyone.</p>
         </div>
       </div>
     </section>
 
-    <!-- About — the human stuff -->
-    <section class="about-section">
-      <h2 class="section-label">a little more about me</h2>
+    <!-- About — human stuff -->
+    <section class="about-section" aria-labelledby="about-label">
+      <span class="section-label" id="about-label">a little more about me</span>
       <div class="about-grid">
         <div class="about-card">
           <h3>what gets me excited</h3>
           <p>
-           indulging in niche anime and manga communities 
+            indulging in niche anime and manga communities. currently: reading fanfics and pretending that's not also
+            research into how people build dedicated followings online.
           </p>
         </div>
         <div class="about-card">
           <h3>where i am right now</h3>
           <p>
-            im a junior computer science student at Adamson University with a vision of making cloud computing 
-            accesible by leading AWS Student Builder Group at my campus.
+            junior CS student at Adamson University, DOST-SEI scholar, Dean's List Top 1.
+            also the president of the AWS Student Builder Group on campus and
+            Executive Secretary for AWS Cloud Club PH (40+ chapters nationwide).
           </p>
         </div>
         <div class="about-card">
-          <h3>what i believe</h3>
+          <h3>what i actually believe</h3>
           <p>
-            embrace cringeness and being a try-hard in pursuit of goals
+            embrace cringeness and being a try-hard in pursuit of goals — which is how
+            a tutorial-based job scraper turned into a custom output parser
+            i still use across every AI workflow i build.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- What I build — casual, not services -->
-    <section class="what-i-do">
-      <h2 class="section-label">things i find myself building a lot</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-          </div>
-          <h3>automations</h3>
-          <p>n8n workflows that handle the boring and repetitive parts so people can focus on what actually matters.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          </div>
-          <h3>ai integrations</h3>
-          <p>connecting LLMs (Gemini, Bedrock, Claude) into real workflows.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-          </div>
-          <h3>cloud</h3>
-          <p>3x AWS Certified (AWS SAA, AI practitioner, Cloud Practitioner) so i can keep delivering knowledge to my community.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tech I use — with icons -->
-    <section class="stack-section">
-      <h2 class="section-label">tools in my current rotation</h2>
+    <!-- Stack -->
+    <section class="stack-section" aria-labelledby="stack-label">
+      <span class="section-label" id="stack-label">tools in current rotation</span>
       <div class="stack-grid">
         <div class="stack-category">
-          <h4 class="stack-cat-title">automation</h4>
+          <span class="stack-cat-title">automation</span>
           <div class="stack-pills">
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/n8n/8FBF65" alt="">n8n</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/n8n/7AAF8C" alt="">n8n</span>
             <span class="stack-pill">Webhooks</span>
             <span class="stack-pill">API Integration</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/googlesheets/8FBF65" alt="">Google Sheets</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/googlesheets/7AAF8C" alt="">Google Sheets</span>
           </div>
         </div>
         <div class="stack-category">
-          <h4 class="stack-cat-title">ai / llm</h4>
+          <span class="stack-cat-title">ai / llm</span>
           <div class="stack-pills">
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/googlegemini/8FBF65" alt="">Google Gemini</span>
-            <span class="stack-pill">Kiro</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/googlegemini/7AAF8C" alt="">Gemini</span>
             <span class="stack-pill">Amazon Bedrock</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/anthropic/8FBF65" alt="">Claude</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/anthropic/7AAF8C" alt="">Claude</span>
             <span class="stack-pill">Prompt Engineering</span>
-            <span class="stack-pill">Vibe Coding</span>
           </div>
         </div>
         <div class="stack-category">
-          <h4 class="stack-cat-title">cloud & infra</h4>
+          <span class="stack-cat-title">cloud &amp; infra</span>
           <div class="stack-pills">
             <span class="stack-pill">AWS</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/supabase/8FBF65" alt="">Supabase</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/vercel/8FBF65" alt="">Vercel</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/github/8FBF65" alt="">GitHub</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/supabase/7AAF8C" alt="">Supabase</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/vercel/7AAF8C" alt="">Vercel</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/github/7AAF8C" alt="">GitHub</span>
           </div>
         </div>
         <div class="stack-category">
-          <h4 class="stack-cat-title">code</h4>
+          <span class="stack-cat-title">code</span>
           <div class="stack-pills">
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/python/8FBF65" alt="">Python</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/javascript/8FBF65" alt="">JavaScript</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/nextdotjs/8FBF65" alt="">Next.js</span>
-            <span class="stack-pill">HTML/CSS</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/python/7AAF8C" alt="">Python</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/javascript/7AAF8C" alt="">JavaScript</span>
+            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/nextdotjs/7AAF8C" alt="">Next.js</span>
             <span class="stack-pill">SQL</span>
           </div>
         </div>
-        <div class="stack-category">
-          <h4 class="stack-cat-title">client & admin</h4>
-          <div class="stack-pills">
-           
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/notion/8FBF65" alt="">Notion</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/slack/8FBF65" alt="">Slack</span>
-            <span class="stack-pill"><img class="pill-icon" src="https://cdn.simpleicons.org/google/8FBF65" alt="">Google Workspace</span>
-            <span class="stack-pill">Canva</span>
-            <span class="stack-pill">Loom</span>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- Footer — contact + credit -->
-    <footer class="site-footer">
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
-        <span class="nav-logo">nova.</span>
-        <p class="footer-tagline">building automations, one webhook at a time.</p>
-        <div class="footer-links">
+        <span class="nav-logo" aria-hidden="true">nova.</span>
+        <p class="footer-tagline">still the person who wrote a fallback for when the AI output isn't valid JSON.</p>
+        <nav class="footer-links" aria-label="Footer links">
           <a href="mailto:darlanovasumanting06@gmail.com" class="footer-link">email</a>
-          <a href="https://linkedin.com/in/darla-nova" target="_blank" class="footer-link">linkedin</a>
-          <a href="https://github.com/novadar-star" target="_blank" class="footer-link">github</a>
-          <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" class="footer-link">resume</a>
-        </div>
-        <p class="footer-credit">&copy; 2026 nova. manila, ph.</p>
+          <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="footer-link">linkedin</a>
+          <a href="https://github.com/novadar-star" target="_blank" rel="noopener noreferrer" class="footer-link">github</a>
+          <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="footer-link">resume</a>
+        </nav>
+        <p class="footer-credit">&copy; 2026 darla nova sumanting. manila, ph.</p>
       </div>
     </footer>
   </main>
 
   <!-- Floating heart -->
   <button class="heart-float" aria-label="Like this site">
-    <span class="heart-icon">&#9829;</span>
+    <span class="heart-icon" aria-hidden="true">&#9829;</span>
     <span class="heart-count">0</span>
   </button>
 
+  <script src="projects.js"></script>
   <script src="main.js"></script>
+  <script>
+    // Render flagship connector on homepage (static, no hover — full interaction is on the detail page)
+    (function () {
+      const flagship = getProject('ai-job-scraper');
+      if (!flagship) return;
+      const container = document.getElementById('flagship-connector');
+      if (!container) return;
+
+      flagship.connector.forEach((stage, i) => {
+        const stageEl = document.createElement('div');
+        stageEl.className = 'connector-stage';
+
+        const node = document.createElement('div');
+        node.className = 'connector-node';
+
+        const btn = document.createElement('span');
+        btn.className = 'connector-stage-btn';
+        btn.textContent = stage.label;
+        btn.style.cursor = 'default';
+        btn.style.pointerEvents = 'none';
+
+        node.appendChild(btn);
+        stageEl.appendChild(node);
+
+        if (i < flagship.connector.length - 1) {
+          const wire = document.createElement('div');
+          wire.className = 'connector-wire';
+          wire.setAttribute('aria-hidden', 'true');
+          stageEl.appendChild(wire);
+        }
+
+        container.appendChild(stageEl);
+      });
+    })();
+  </script>
 </body>
 </html>
