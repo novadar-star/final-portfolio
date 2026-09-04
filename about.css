@@ -286,17 +286,17 @@
 
 .about-gallery {
   position: sticky;
-  top: 60px; /* nav height */
+  top: 60px;
   height: calc(100vh - 60px);
   overflow: hidden;
-  padding: 0 0 0 32px;
-  cursor: none; /* custom cursor takes over */
+  padding: 0 0 0 16px;
+  cursor: none;
 }
 
 .gallery-track-wrap {
   height: 100%;
   overflow: hidden;
-  border-radius: 12px 0 0 12px;
+  border-radius: 8px 0 0 8px;
   position: relative;
 }
 
@@ -304,10 +304,9 @@
 .gallery-track {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px 0;
+  gap: 5px;
+  padding: 5px 0;
   will-change: transform;
-  /* Minimum height prevents the container collapsing before images load */
   min-height: 100%;
 }
 
@@ -318,20 +317,24 @@
 /* Individual photo items */
 .gallery-item {
   position: relative;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
   cursor: none;
-  background: var(--hairline); /* visible placeholder while image loads */
-  min-height: 120px;
+  background: var(--hairline);
+  /* Portrait strip — matches Miffy reference aesthetic */
+  width: 100%;
+  aspect-ratio: 3 / 4;
 }
 
 .gallery-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 0.4s ease, filter 0.4s ease;
-  filter: brightness(0.92);
+  filter: brightness(0.9);
 }
 
 .gallery-item:hover img {

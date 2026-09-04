@@ -7,41 +7,14 @@
 // paths are relative to the site root
 // ===========================
 const PHOTO_DATA = [
-  {
-    src: 'pics/nova-photo.jpg',
-    alt: 'Darla Nova Sumanting',
-    caption: 'somewhere in manila'
-  },
-  {
-    src: 'pics/cloud9-workshop.jpg',
-    alt: 'Cloud9 workshop',
-    caption: 'teaching cloud things'
-  },
-  {
-    src: 'pics/cloud9-team.jpg',
-    alt: 'Cloud9 team',
-    caption: 'the team ✦'
-  },
-  {
-    src: 'pics/aws-community-day.png',
-    alt: 'AWS Community Day',
-    caption: 'community day'
-  },
-  {
-    src: 'pics/ai-advisor.png',
-    alt: 'Internal AI advisor platform',
-    caption: 'building again'
-  },
-  {
-    src: 'pics/laptop-mockup.png',
-    alt: 'Laptop with project work',
-    caption: 'camera roll evidence'
-  },
-  {
-    src: 'pics/pic.jpg',
-    alt: 'Nova',
-    caption: 'outside the terminal'
-  },
+  { src: 'life/img1.png', alt: 'nova — life photo 1', caption: 'somewhere in manila' },
+  { src: 'life/img2.png', alt: 'nova — life photo 2', caption: 'camera roll evidence' },
+  { src: 'life/img3.jpg', alt: 'nova — life photo 3', caption: 'the team ✦' },
+  { src: 'life/img4.png', alt: 'nova — life photo 4', caption: 'community day' },
+  { src: 'life/img5.png', alt: 'nova — life photo 5', caption: 'building again' },
+  { src: 'life/img6.png', alt: 'nova — life photo 6', caption: 'outside the terminal' },
+  { src: 'life/img7.jpg', alt: 'nova — life photo 7', caption: 'one of the rare moments offline' },
+  { src: 'life/img8.jpg', alt: 'nova — life photo 8', caption: 'probably thinking about a project' },
 ];
 
 // ===========================
@@ -146,7 +119,7 @@ function initVerticalScroll(track) {
   for (let i = 0; i < halfCount; i++) {
     halfHeight += items[i].getBoundingClientRect().height;
   }
-  halfHeight += halfCount * 10; // gap
+  halfHeight += halfCount * 5; // gap
 
   if (halfHeight < 10) {
     // Images still haven't painted — retry once after a short delay
@@ -257,7 +230,7 @@ function initCursor() {
   let cursorX = -100;
   let cursorY = -100;
   let started = false;
-  const SMOOTHING = 0.12;
+  const SMOOTHING = 0.22;
 
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
