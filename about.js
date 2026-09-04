@@ -52,19 +52,23 @@ function buildGallery() {
   const track = document.getElementById('galleryTrack');
   if (!track) return;
 
-  // Remove loading="lazy" — images inside overflow:hidden
-  // with unknown height never trigger lazy load.
-  // Use eager loading so photos actually appear.
   const allPhotos = [...PHOTO_DATA, ...PHOTO_DATA]; // duplicate for infinite loop
+  const loadPromises = [];
 
   allPhotos.forEach(photo => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
 
     const img = document.createElement('img');
-    img.src = photo.src;
     img.alt = photo.alt;
-    img.loading = 'eager'; // critical fix — lazy fails inside hidden overflow
+    img.loading = 'eager';
+    // decode() ensures natural dimensions are ready before we measure
+    const p = new Promise(resolve => {
+      img.onload = () => img.decode ? img.decode().then(resolve).catch(resolve) : resolve();
+      img.onerror = resolve;
+    });
+    loadPromises.push(p);
+    img.src = photo.src;
 
     const caption = document.createElement('span');
     caption.className = 'gallery-caption';
@@ -76,30 +80,20 @@ function buildGallery() {
     track.appendChild(item);
   });
 
-  // Wait for images to load before measuring heights
-  // Use load event with a fallback timeout
-  waitForImages(track).then(() => {
-    if (isMobile()) {
-      initHorizontalScroll(track);
-    } else {
-      initVerticalScroll(track);
-    }
-  });
-}
-
-// Wait for all images in a container to load (or timeout after 3s)
-function waitForImages(container) {
-  const imgs = Array.from(container.querySelectorAll('img'));
-  const promises = imgs.map(img => {
-    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
-    return new Promise(resolve => {
-      img.addEventListener('load', resolve, { once: true });
-      img.addEventListener('error', resolve, { once: true }); // don't hang on broken images
+  // Wait for all images decoded, fallback after 4s
+  Promise.race([
+    Promise.all(loadPromises),
+    new Promise(resolve => setTimeout(resolve, 4000))
+  ]).then(() => {
+    // One more rAF to ensure layout is painted
+    requestAnimationFrame(() => {
+      if (isMobile()) {
+        initHorizontalScroll(track);
+      } else {
+        initVerticalScroll(track);
+      }
     });
   });
-  // Fallback: resolve after 3s regardless
-  const timeout = new Promise(resolve => setTimeout(resolve, 3000));
-  return Promise.race([Promise.all(promises), timeout]);
 }
 
 // ===========================
@@ -114,25 +108,28 @@ function initVerticalScroll(track) {
   const items = Array.from(track.querySelectorAll('.gallery-item'));
   const halfCount = PHOTO_DATA.length;
 
-  // Measure the true height of the first set after images load
+  // Measure true painted height of first set
   let halfHeight = 0;
   for (let i = 0; i < halfCount; i++) {
     halfHeight += items[i].getBoundingClientRect().height;
   }
   halfHeight += halfCount * 5; // gap
 
-  if (halfHeight < 10) {
-    // Images still haven't painted — retry once after a short delay
-    setTimeout(() => initVerticalScroll(track), 500);
+  if (halfHeight < 50) {
+    // Layout hasn't painted yet — retry
+    setTimeout(() => initVerticalScroll(track), 400);
     return;
   }
 
-  // Set the animation
-  const duration = halfHeight / 55; // px per second
+  // Fade the gallery in smoothly once we know it's ready
+  wrap.style.opacity = '0';
+  wrap.style.transition = 'opacity 0.6s ease';
+  requestAnimationFrame(() => { wrap.style.opacity = '1'; });
+
+  const duration = halfHeight / 55;
   track.style.setProperty('--scroll-distance', `-${halfHeight}px`);
   track.style.animation = `scrollUp ${duration}s linear infinite`;
 
-  // Hover pause
   let isManualScrolling = false;
   let manualScrollTimeout = null;
 
@@ -143,7 +140,6 @@ function initVerticalScroll(track) {
     if (!isManualScrolling) track.classList.remove('paused');
   });
 
-  // Manual wheel scroll
   wrap.addEventListener('wheel', e => {
     e.preventDefault();
     track.classList.add('paused');
@@ -153,7 +149,6 @@ function initVerticalScroll(track) {
     let currentY = matrix.m42;
     currentY -= e.deltaY * 0.6;
 
-    // Seamless loop clamping
     if (currentY < -halfHeight) currentY += halfHeight;
     if (currentY > 0) currentY -= halfHeight;
 
