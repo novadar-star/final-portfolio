@@ -87,11 +87,9 @@ function buildGallery() {
   ]).then(() => {
     // One more rAF to ensure layout is painted
     requestAnimationFrame(() => {
-      if (isMobile()) {
-        initHorizontalScroll(track);
-      } else {
-        initVerticalScroll(track);
-      }
+      // Both mobile and desktop use vertical scroll now.
+      // Mobile uses a fixed-height container; desktop uses sticky viewport height.
+      initVerticalScroll(track);
     });
   });
 }
@@ -121,10 +119,8 @@ function initVerticalScroll(track) {
     return;
   }
 
-  // Fade the gallery in smoothly once we know it's ready
-  wrap.style.opacity = '0';
-  wrap.style.transition = 'opacity 0.6s ease';
-  requestAnimationFrame(() => { wrap.style.opacity = '1'; });
+  // Fade the gallery in once we know it's ready
+  wrap.style.opacity = '1';
 
   const duration = halfHeight / 55;
   track.style.setProperty('--scroll-distance', `-${halfHeight}px`);

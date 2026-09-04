@@ -5,7 +5,7 @@
 
 /* ===========================
    LAYOUT — split screen
-   Left: content ~58%  Right: photo strip ~42%
+   Left: content  Right: photo strip
    =========================== */
 
 .about-main {
@@ -14,11 +14,12 @@
 
 .about-layout {
   display: grid;
-  grid-template-columns: 62% 38%;
+  grid-template-columns: 60fr 40fr;
   min-height: calc(100vh - 60px);
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 40px;
+  gap: 0;
 }
 
 /* ===========================
@@ -26,11 +27,10 @@
    =========================== */
 
 .about-content {
-  padding: 56px 48px 80px 0;
+  padding: 56px 52px 80px 0;
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  max-width: 620px;
+  gap: 44px;
 }
 
 /* Page header */
@@ -45,16 +45,16 @@
 }
 
 .about-heading {
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.05;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   color: var(--ink);
 }
 
 .about-tagline {
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   color: var(--ink-2);
   line-height: 1.65;
   max-width: 48ch;
@@ -65,14 +65,14 @@
 .about-intro {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .about-intro p {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--ink-2);
   line-height: 1.8;
-  max-width: 54ch;
+  max-width: 56ch;
 }
 
 /* ===========================
@@ -96,12 +96,12 @@
 .currently-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
 }
 
 .c-tag {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 500;
   padding: 5px 12px;
   border: 1px solid var(--hairline);
@@ -109,7 +109,8 @@
   color: var(--ink-2);
   background: transparent;
   cursor: default;
-  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, background 0.2s ease;
   user-select: none;
 }
 
@@ -120,14 +121,8 @@
   background: var(--green-dim);
 }
 
-/* Alternate hover rotations for variety */
-.c-tag:nth-child(even):hover {
-  transform: rotate(2deg) translateY(-2px);
-}
-
-.c-tag:nth-child(3n):hover {
-  transform: rotate(-1deg) translateY(-3px);
-}
+.c-tag:nth-child(even):hover  { transform: rotate(2deg)  translateY(-2px); }
+.c-tag:nth-child(3n):hover    { transform: rotate(-1deg) translateY(-3px); }
 
 /* ===========================
    TOOLKIT SECTION
@@ -136,7 +131,7 @@
 .toolkit-section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .toolkit-label {
@@ -150,22 +145,21 @@
 .toolkit-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 4px;
+  gap: 6px;
 }
 
-/* Each tool item */
 .tool-item {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 10px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--hairline);
   border-radius: 10px;
   cursor: default;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  min-width: 68px;
+  min-width: 64px;
 }
 
 .tool-item:hover {
@@ -175,8 +169,8 @@
 }
 
 .tool-icon-wrap {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,14 +182,14 @@
 }
 
 .tool-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   display: block;
 }
 
 .tool-name {
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   font-weight: 600;
   color: var(--ink-2);
   text-align: center;
@@ -203,11 +197,9 @@
   transition: color 0.2s ease;
 }
 
-.tool-item:hover .tool-name {
-  color: var(--green);
-}
+.tool-item:hover .tool-name { color: var(--green); }
 
-/* Tooltip — descriptor text, visible on hover */
+/* Tooltip */
 .tool-desc {
   position: absolute;
   bottom: calc(100% + 8px);
@@ -215,7 +207,7 @@
   transform: translateX(-50%) translateY(4px);
   background: var(--ink);
   color: var(--paper);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 500;
   padding: 4px 9px;
   border-radius: 6px;
@@ -224,10 +216,9 @@
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
-  z-index: 10;
+  z-index: 20;
 }
 
-/* Small arrow on tooltip */
 .tool-desc::after {
   content: '';
   position: absolute;
@@ -236,11 +227,6 @@
   transform: translateX(-50%);
   border: 4px solid transparent;
   border-top-color: var(--ink);
-}
-
-[data-theme="light"] .tool-desc {
-  background: var(--ink);
-  color: var(--paper);
 }
 
 .tool-item:hover .tool-desc {
@@ -259,13 +245,13 @@
 }
 
 .about-contact p {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: var(--ink-3);
   margin-bottom: 8px;
 }
 
 .about-email-link {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--green);
   text-decoration: none;
@@ -275,13 +261,11 @@
   transition: opacity 0.15s;
 }
 
-.about-email-link:hover {
-  opacity: 0.75;
-}
+.about-email-link:hover { opacity: 0.75; }
 
 /* ===========================
-   RIGHT — photo gallery strip
-   Infinite vertical scroll
+   RIGHT — photo gallery
+   Sticky vertical film strip, natural photo ratios
    =========================== */
 
 .about-gallery {
@@ -289,75 +273,91 @@
   top: 60px;
   height: calc(100vh - 60px);
   overflow: hidden;
-  padding: 0 0 0 16px;
-  cursor: none;
+  /* Padding on both sides so photos are not clipped at edges */
+  padding: 16px 0 16px 20px;
 }
 
 .gallery-track-wrap {
   height: 100%;
   overflow: hidden;
-  border-radius: 8px 0 0 8px;
+  /* No border-radius that clips right edge */
+  border-radius: 6px;
   position: relative;
+  /* Fade out at top and bottom for smooth entry/exit */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
 }
 
-/* The track scrolls upward infinitely */
+/* Opacity controlled by JS fade-in */
+.gallery-track-wrap {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
 .gallery-track {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 5px 0;
+  gap: 6px;
+  padding: 6px 0;
   will-change: transform;
-  min-height: 100%;
 }
 
 .gallery-track.paused {
   animation-play-state: paused !important;
 }
 
-/* Individual photo items */
+/* Individual photo items — natural ratio, no cropping */
 .gallery-item {
   position: relative;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
   flex-shrink: 0;
-  cursor: none;
-  background: var(--hairline);
-  /* Natural dimensions — portrait stays portrait, landscape stays landscape */
   width: 100%;
+  background: var(--hairline-2);
 }
 
 .gallery-item img {
   width: 100%;
-  height: auto;           /* preserve natural ratio */
+  height: auto;           /* natural ratio preserved */
   display: block;
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               filter 0.5s ease;
   filter: brightness(0.88);
-  /* Smooth rendering */
-  image-rendering: auto;
   will-change: transform;
 }
 
 .gallery-item:hover img {
-  transform: scale(1.03);
+  transform: scale(1.025);
   filter: brightness(1.05);
 }
 
-/* Caption — appears on hover */
+/* Caption on hover */
 .gallery-caption {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-size: 0.65rem;
+  bottom: 8px;
+  left: 8px;
+  font-size: 0.62rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.42);
   padding: 3px 8px;
   border-radius: 4px;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(3px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   letter-spacing: 0.03em;
@@ -371,7 +371,6 @@
 
 /* ===========================
    KEYFRAME — gallery scroll up
-   Defined here; duration set dynamically by JS
    =========================== */
 
 @keyframes scrollUp {
@@ -380,15 +379,11 @@
 }
 
 /* ===========================
-   CUSTOM CURSOR — nova sparkle
-   Desktop only. Hidden on touch via JS.
+   CUSTOM CURSOR
    =========================== */
 
-.about-page {
-  cursor: none;
-}
+.about-page { cursor: none; }
 
-/* Hide default cursor only on non-touch */
 .about-page a,
 .about-page button,
 .about-page .c-tag,
@@ -400,14 +395,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
-  mix-blend-mode: normal;
-  display: none; /* shown by JS after first mousemove */
+  transition: transform 0.1s ease-out, width 0.15s ease, height 0.15s ease;
+  display: none; /* JS shows after first mousemove */
 }
 
 .cursor-star {
@@ -415,25 +409,16 @@
   height: 100%;
   color: var(--green);
   opacity: 0.9;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  filter: drop-shadow(0 0 4px var(--green));
+  filter: drop-shadow(0 0 3px var(--green));
+  transition: transform 0.2s ease;
 }
 
-/* Cursor states — set by JS via data-state */
-.nova-cursor[data-state="hover"] {
-  width: 28px;
-  height: 28px;
-}
-
+.nova-cursor[data-state="hover"] { width: 26px; height: 26px; }
 .nova-cursor[data-state="hover"] .cursor-star {
-  animation: cursorPulse 0.6s ease infinite alternate;
+  animation: cursorPulse 0.55s ease infinite alternate;
 }
 
-.nova-cursor[data-state="photo"] {
-  width: 32px;
-  height: 32px;
-}
-
+.nova-cursor[data-state="photo"] { width: 30px; height: 30px; }
 .nova-cursor[data-state="photo"] .cursor-star {
   animation: cursorSpin 1.2s linear infinite;
   opacity: 1;
@@ -441,7 +426,7 @@
 
 @keyframes cursorPulse {
   from { transform: scale(1); }
-  to   { transform: scale(1.25); }
+  to   { transform: scale(1.3); }
 }
 
 @keyframes cursorSpin {
@@ -450,13 +435,12 @@
 }
 
 /* ===========================
-   ABOUT FOOTER override
-   Full-width on this page since layout is different
+   FOOTER
    =========================== */
 
 .about-footer .footer-inner {
-  max-width: 1200px;
-  padding: 0 32px;
+  max-width: 1280px;
+  padding: 0 40px;
 }
 
 /* ===========================
@@ -464,47 +448,50 @@
    =========================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .gallery-track {
-    animation: none !important;
-  }
-
-  .gallery-item img {
-    transition: none;
-  }
-
-  .gallery-caption {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-
+  .gallery-track            { animation: none !important; }
+  .gallery-item img         { transition: none; }
+  .gallery-caption          { transition: none; opacity: 1; transform: none; }
   .tool-item,
-  .tool-item:hover {
-    transform: none;
-    transition: none;
-  }
-
+  .tool-item:hover          { transform: none; transition: none; }
   .c-tag,
-  .c-tag:hover {
-    transform: none;
-    transition: none;
-  }
-
-  .cursor-star {
-    animation: none !important;
-    transition: none;
-  }
-
-  .nova-cursor {
-    display: none;
-  }
-
+  .c-tag:hover              { transform: none; transition: none; }
+  .cursor-star              { animation: none !important; }
+  .nova-cursor              { display: none !important; }
   .about-page,
   .about-page a,
   .about-page button,
   .about-page .c-tag,
-  .about-page .tool-item {
-    cursor: auto;
+  .about-page .tool-item    { cursor: auto; }
+  .gallery-track-wrap       { opacity: 1 !important; transition: none; }
+}
+
+/* ===========================
+   RESPONSIVE — 1440px+
+   =========================== */
+
+@media (min-width: 1440px) {
+  .about-layout {
+    max-width: 1400px;
+    padding: 0 60px;
+  }
+
+  .about-footer .footer-inner {
+    max-width: 1400px;
+    padding: 0 60px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE — 1280px
+   =========================== */
+
+@media (max-width: 1280px) {
+  .about-layout {
+    padding: 0 32px;
+  }
+
+  .about-footer .footer-inner {
+    padding: 0 32px;
   }
 }
 
@@ -514,78 +501,91 @@
 
 @media (max-width: 1024px) {
   .about-layout {
-    grid-template-columns: 55% 45%;
-    padding: 0 24px;
+    grid-template-columns: 58fr 42fr;
+    padding: 0 28px;
   }
 
   .about-content {
-    padding: 48px 32px 64px 0;
+    padding: 48px 36px 64px 0;
     gap: 36px;
   }
 
   .about-heading {
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  }
+
+  .about-footer .footer-inner {
+    padding: 0 28px;
   }
 }
 
 /* ===========================
    RESPONSIVE — 768px
-   Stack: content above, photos below
+   Single column, gallery below content
    =========================== */
 
 @media (max-width: 768px) {
   .about-layout {
     grid-template-columns: 1fr;
     padding: 0 24px;
+    min-height: auto;
   }
 
   .about-content {
-    padding: 40px 0 32px;
+    padding: 36px 0 28px;
     gap: 32px;
-    max-width: 100%;
   }
 
-  /* Gallery becomes a horizontal scroll strip on mobile */
+  /* Gallery: unstick, show as natural-height vertical strip */
   .about-gallery {
     position: static;
-    height: 260px;
+    height: auto;
+    max-height: 480px;
     overflow: hidden;
-    padding: 0;
-    border-radius: 10px;
-    margin-bottom: 48px;
+    padding: 0 0 40px 0;
   }
 
   .gallery-track-wrap {
-    border-radius: 10px;
-    height: 100%;
+    height: 480px;
+    border-radius: 8px;
+    /* Mask still works on mobile */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 6%,
+      black 94%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 6%,
+      black 94%,
+      transparent 100%
+    );
   }
 
-  /* On mobile, scroll horizontally instead */
+  /* Gallery track stays vertical on mobile — simpler and better looking */
   .gallery-track {
-    flex-direction: row;
-    height: 100%;
-    gap: 8px;
-    padding: 0 8px;
-    align-items: stretch;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 0;
+    height: auto;
+    align-items: unset;
   }
 
   .gallery-item {
-    width: 180px;
-    height: 100%;
-    flex-shrink: 0;
+    width: 100%;
+    height: auto;
   }
 
   .gallery-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: unset;
   }
 
-  .about-footer .footer-inner {
-    padding: 0 24px;
-  }
-
-  /* Restore default cursor on mobile */
+  /* Restore default cursor */
   .about-page,
   .about-page a,
   .about-page button,
@@ -594,8 +594,10 @@
     cursor: auto;
   }
 
-  .nova-cursor {
-    display: none !important;
+  .nova-cursor { display: none !important; }
+
+  .about-footer .footer-inner {
+    padding: 0 24px;
   }
 }
 
@@ -604,37 +606,43 @@
    =========================== */
 
 @media (max-width: 480px) {
-  .about-layout {
-    padding: 0 20px;
-  }
+  .about-layout { padding: 0 20px; }
 
   .about-content {
-    padding: 32px 0 24px;
+    padding: 28px 0 20px;
     gap: 28px;
   }
 
-  .about-heading {
-    font-size: 2rem;
-  }
+  .about-heading { font-size: 1.9rem; }
+
+  .about-intro p { font-size: 0.875rem; }
 
   .about-gallery {
-    height: 220px;
+    max-height: 380px;
   }
 
-  .gallery-item {
-    width: 150px;
-  }
+  .gallery-track-wrap { height: 380px; }
 
-  .toolkit-grid {
-    gap: 5px 3px;
-  }
+  .toolkit-grid { gap: 5px; }
 
   .tool-item {
-    min-width: 58px;
+    min-width: 56px;
     padding: 8px 10px;
   }
 
-  .about-footer .footer-inner {
-    padding: 0 20px;
-  }
+  .tool-name { font-size: 0.6rem; }
+
+  .about-footer .footer-inner { padding: 0 20px; }
+}
+
+/* ===========================
+   RESPONSIVE — 375px
+   =========================== */
+
+@media (max-width: 375px) {
+  .about-layout { padding: 0 16px; }
+  .about-heading { font-size: 1.7rem; }
+  .about-gallery { max-height: 320px; }
+  .gallery-track-wrap { height: 320px; }
+  .about-footer .footer-inner { padding: 0 16px; }
 }
