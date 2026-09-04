@@ -1,14 +1,4 @@
 // ===========================
-// nova. — main.js
-// Responsibilities:
-//   1. Dark mode toggle (persists to localStorage)
-//   2. Global heart counter (Supabase, localStorage fallback)
-//   3. Scroll reveal (IntersectionObserver, staggered)
-//   4. Lazy video play/pause on scroll
-// Removed: marquee (no longer used)
-// ===========================
-
-// ===========================
 // Supabase config
 // ===========================
 const SUPABASE_URL = 'https://lbmplqohcuthpgrnljxy.supabase.co';
@@ -31,6 +21,7 @@ async function getHeartCount() {
 
 async function incrementHeart() {
   try {
+    // Use RPC or PATCH to increment
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_heart`, {
       method: 'POST',
       headers: {
@@ -41,6 +32,7 @@ async function incrementHeart() {
       body: JSON.stringify({})
     });
     if (!res.ok) {
+      // Fallback: direct update with current count + 1
       const current = await getHeartCount();
       await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1`, {
         method: 'PATCH',
@@ -57,65 +49,31 @@ async function incrementHeart() {
     const data = await res.json();
     return data;
   } catch (e) {
-    const count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
+    // Fallback to localStorage
+    let count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
     localStorage.setItem('heartCount', count.toString());
     return count;
   }
 }
 
 // ===========================
-// Scroll reveal
-// Exposed as window.registerScrollReveal so systems.html
-// can call it after JS-rendering the project cards.
-// ===========================
-window.registerScrollReveal = function () {
-  const targets = document.querySelectorAll('.scroll-reveal:not(.reveal-registered)');
-
-  targets.forEach(function (el, i) {
-    el.classList.add('reveal-registered');
-    // Stagger delay capped at 350ms so the page doesn't feel sluggish
-    el.style.transitionDelay = Math.min(i * 0.06, 0.35) + 's';
-  });
-
-  const observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -24px 0px' }
-  );
-
-  document.querySelectorAll('.scroll-reveal.reveal-registered:not(.visible)').forEach(function (el) {
-    observer.observe(el);
-  });
-};
-
-// ===========================
 // DOM Ready
 // ===========================
-document.addEventListener('DOMContentLoaded', async function () {
-
+document.addEventListener('DOMContentLoaded', async () => {
   // ===========================
   // Dark mode toggle
   // ===========================
   const toggle = document.querySelector('.theme-toggle');
-  const icon   = document.querySelector('.toggle-icon');
-
-  // Honour saved preference, fall back to system preference, then dark
-  const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const savedTheme = localStorage.getItem('theme') || (systemDark ? 'dark' : 'light');
+  const icon = document.querySelector('.toggle-icon');
+  const savedTheme = localStorage.getItem('theme') || 'dark';
 
   document.body.setAttribute('data-theme', savedTheme);
   updateIcon(savedTheme);
 
   if (toggle) {
-    toggle.addEventListener('click', function () {
+    toggle.addEventListener('click', () => {
       const current = document.body.getAttribute('data-theme');
-      const next    = current === 'light' ? 'dark' : 'light';
+      const next = current === 'light' ? 'dark' : 'light';
       document.body.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       updateIcon(next);
@@ -124,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   function updateIcon(theme) {
     if (icon) {
-      // ☀ = sun (light mode active indicator), ☾ = crescent (dark mode active indicator)
       icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
     }
   }
@@ -132,24 +89,27 @@ document.addEventListener('DOMContentLoaded', async function () {
   // ===========================
   // Heart react — global via Supabase
   // ===========================
-  const heartBtn   = document.querySelector('.heart-float');
+  const heartBtn = document.querySelector('.heart-float');
   const heartCount = document.querySelector('.heart-count');
 
   if (heartBtn && heartCount) {
+    // Load current count from Supabase
     const initialCount = await getHeartCount();
     heartCount.textContent = initialCount;
     if (initialCount > 0) heartBtn.classList.add('liked');
 
-    heartBtn.addEventListener('click', async function () {
-      // Optimistic UI
+    heartBtn.addEventListener('click', async () => {
+      // Optimistic UI update
       const displayed = parseInt(heartCount.textContent, 10) + 1;
       heartCount.textContent = displayed;
       heartBtn.classList.add('liked');
 
+      // Pop animation
       heartBtn.classList.remove('pop');
-      void heartBtn.offsetWidth; // force reflow for animation restart
+      void heartBtn.offsetWidth;
       heartBtn.classList.add('pop');
 
+      // Persist to Supabase
       const actualCount = await incrementHeart();
       if (actualCount && typeof actualCount === 'number') {
         heartCount.textContent = actualCount;
@@ -158,16 +118,16 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   // ===========================
-  // Lazy video play — play only when in viewport
+  // Lazy video play — only load/play when in viewport
   // ===========================
   const videos = document.querySelectorAll('video.project-video');
   if (videos.length) {
     const videoObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
+      (entries) => {
+        entries.forEach((entry) => {
           const video = entry.target;
           if (entry.isIntersecting) {
-            video.play().catch(function () {});
+            video.play().catch(() => {});
           } else {
             video.pause();
           }
@@ -175,13 +135,73 @@ document.addEventListener('DOMContentLoaded', async function () {
       },
       { threshold: 0.25 }
     );
-    videos.forEach(function (v) { videoObserver.observe(v); });
+    videos.forEach((v) => videoObserver.observe(v));
   }
 
   // ===========================
-  // Initial scroll reveal registration
-  // (systems.html also calls this after rendering cards)
+  // Scroll reveal — Stagger List pattern (300-450ms, ease-out)
   // ===========================
-  window.registerScrollReveal();
+  const targets = document.querySelectorAll(
+    '.timeline-entry, .project-case, .edu-item, .service-card, .proof-strip, .contact-strip, .hero-photo, .what-i-do'
+  );
 
+  targets.forEach((el, i) => {
+    el.classList.add('scroll-reveal');
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+  );
+
+  document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+  // ===========================
+  // Marquee — seamless loop using measured width
+  // ===========================
+  const marquee = document.querySelector('.marquee');
+  const track = document.querySelector('.marquee-track');
+  if (marquee && track) {
+    // Measure half the track (one set of items)
+    const items = track.children;
+    const halfCount = items.length / 2;
+    let halfWidth = 0;
+    for (let i = 0; i < halfCount; i++) {
+      halfWidth += items[i].offsetWidth;
+    }
+    // Add gap between items (16px per gap)
+    halfWidth += halfCount * 16;
+
+    // Set CSS animation dynamically
+    track.style.animation = 'none';
+    const keyframes = `
+      @keyframes marquee-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-${halfWidth}px); }
+      }
+    `;
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = keyframes;
+    document.head.appendChild(styleSheet);
+
+    // Calculate speed: ~50px per second for consistent feel
+    const duration = halfWidth / 50;
+    track.style.animation = `marquee-scroll ${duration}s linear infinite`;
+
+    // Pause on hover
+    marquee.addEventListener('mouseenter', () => {
+      track.style.animationPlayState = 'paused';
+    });
+    marquee.addEventListener('mouseleave', () => {
+      track.style.animationPlayState = 'running';
+    });
+  }
 });
