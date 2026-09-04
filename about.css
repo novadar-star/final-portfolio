@@ -1,11 +1,9 @@
 /* ===========================
    about.css — nova. about me page
-   Page-specific only. Inherits tokens from styles.css.
    =========================== */
 
 /* ===========================
-   LAYOUT — split screen
-   Left: content  Right: photo strip
+   LAYOUT
    =========================== */
 
 .about-main {
@@ -14,12 +12,11 @@
 
 .about-layout {
   display: grid;
-  grid-template-columns: 60fr 40fr;
-  min-height: calc(100vh - 60px);
+  grid-template-columns: 62fr 38fr;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 40px;
-  gap: 0;
+  align-items: start;
 }
 
 /* ===========================
@@ -27,66 +24,72 @@
    =========================== */
 
 .about-content {
-  padding: 56px 52px 80px 0;
+  padding: 48px 48px 80px 0;
   display: flex;
   flex-direction: column;
-  gap: 44px;
+  gap: 36px;     /* tighter — sections feel compact, not drifting */
 }
 
-/* Page header */
+/* Page header — eyebrow + heading + tagline grouped tight */
+.about-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;      /* very tight so heading reads as one unit */
+}
+
 .about-eyebrow {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   font-weight: 600;
   color: var(--ink-3);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 12px;
 }
 
 .about-heading {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(2rem, 3.8vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.05;
-  margin-bottom: 14px;
   color: var(--ink);
+  margin: 0;
 }
 
 .about-tagline {
-  font-size: 0.93rem;
+  font-size: 0.88rem;
   color: var(--ink-2);
-  line-height: 1.65;
-  max-width: 48ch;
+  line-height: 1.6;
+  max-width: 50ch;
   font-style: italic;
+  margin-top: 10px;
 }
 
-/* Introduction paragraphs */
+/* Introduction */
 .about-intro {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.about-intro p {
-  font-size: 0.875rem;
-  color: var(--ink-2);
-  line-height: 1.8;
-  max-width: 56ch;
-}
-
-/* ===========================
-   CURRENTLY INTO — interactive tags
-   =========================== */
-
-.currently-section {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+.about-intro p {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  line-height: 1.78;
+  max-width: 58ch;
+}
+
+/* ===========================
+   CURRENTLY INTO
+   =========================== */
+
+.currently-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .currently-label {
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   font-weight: 600;
   color: var(--green);
   text-transform: uppercase;
@@ -96,14 +99,14 @@
 .currently-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
 }
 
 .c-tag {
   display: inline-block;
-  font-size: 0.73rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  padding: 5px 12px;
+  padding: 4px 11px;
   border: 1px solid var(--hairline);
   border-radius: 100px;
   color: var(--ink-2);
@@ -121,21 +124,21 @@
   background: var(--green-dim);
 }
 
-.c-tag:nth-child(even):hover  { transform: rotate(2deg)  translateY(-2px); }
-.c-tag:nth-child(3n):hover    { transform: rotate(-1deg) translateY(-3px); }
+.c-tag:nth-child(even):hover { transform: rotate(2deg)  translateY(-2px); }
+.c-tag:nth-child(3n):hover   { transform: rotate(-1deg) translateY(-3px); }
 
 /* ===========================
-   TOOLKIT SECTION
+   TOOLKIT
    =========================== */
 
 .toolkit-section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .toolkit-label {
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   font-weight: 600;
   color: var(--green);
   text-transform: uppercase;
@@ -145,7 +148,7 @@
 .toolkit-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .tool-item {
@@ -154,12 +157,12 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 10px 12px;
+  padding: 9px 11px;
   border: 1px solid var(--hairline);
   border-radius: 10px;
   cursor: default;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  min-width: 64px;
+  min-width: 60px;
 }
 
 .tool-item:hover {
@@ -169,17 +172,15 @@
 }
 
 .tool-icon-wrap {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
 }
 
-.tool-item:hover .tool-icon-wrap {
-  transform: translateY(-2px);
-}
+.tool-item:hover .tool-icon-wrap { transform: translateY(-2px); }
 
 .tool-icon {
   width: 20px;
@@ -189,7 +190,7 @@
 }
 
 .tool-name {
-  font-size: 0.63rem;
+  font-size: 0.6rem;
   font-weight: 600;
   color: var(--ink-2);
   text-align: center;
@@ -202,15 +203,15 @@
 /* Tooltip */
 .tool-desc {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 7px);
   left: 50%;
   transform: translateX(-50%) translateY(4px);
   background: var(--ink);
   color: var(--paper);
   font-size: 0.6rem;
   font-weight: 500;
-  padding: 4px 9px;
-  border-radius: 6px;
+  padding: 4px 8px;
+  border-radius: 5px;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -225,7 +226,7 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border: 4px solid transparent;
+  border: 3px solid transparent;
   border-top-color: var(--ink);
 }
 
@@ -236,7 +237,7 @@
 }
 
 /* ===========================
-   ABOUT CONTACT
+   CONTACT
    =========================== */
 
 .about-contact {
@@ -245,69 +246,57 @@
 }
 
 .about-contact p {
-  font-size: 0.83rem;
+  font-size: 0.82rem;
   color: var(--ink-3);
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
 .about-email-link {
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--green);
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   transition: opacity 0.15s;
 }
 
-.about-email-link:hover { opacity: 0.75; }
+.about-email-link:hover { opacity: 0.7; }
 
 /* ===========================
    RIGHT — photo gallery
-   Sticky vertical film strip, natural photo ratios
+   
+   KEY ARCHITECTURE:
+   - .about-gallery is position:sticky, clips to viewport height
+   - .gallery-track-wrap has NO fixed height, NO overflow:hidden
+   - .gallery-track scrolls via CSS animation
+   - The sticky container IS the clipping boundary
    =========================== */
 
 .about-gallery {
   position: sticky;
   top: 60px;
   height: calc(100vh - 60px);
-  overflow: hidden;
-  /* Padding on both sides so photos are not clipped at edges */
-  padding: 16px 0 16px 20px;
+  overflow: hidden;          /* THIS is the only clip — the sticky viewport */
+  padding: 0 0 0 20px;
 }
 
+/* Wrap: purely for the fade mask + border-radius, no height/overflow */
 .gallery-track-wrap {
   height: 100%;
-  overflow: hidden;
-  border-radius: 6px;
   position: relative;
-  /* Only fade at top — no bottom fade so the loop looks seamless */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 100%
-  );
-}
-
-/* Opacity controlled by JS fade-in */
-.gallery-track-wrap {
+  border-radius: 8px;
+  overflow: hidden;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
+  /* Top fade only — no bottom fade, that's what caused the cutoff illusion */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
 }
 
 .gallery-track {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 6px 0;
+  padding: 6px 0 0 0;
   will-change: transform;
 }
 
@@ -315,7 +304,7 @@
   animation-play-state: paused !important;
 }
 
-/* Individual photo items — natural ratio, no cropping */
+/* Photos — natural dimensions, no forced ratio */
 .gallery-item {
   position: relative;
   border-radius: 6px;
@@ -327,12 +316,11 @@
 
 .gallery-item img {
   width: 100%;
-  height: auto;           /* natural ratio preserved */
+  height: auto;
   display: block;
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               filter 0.5s ease;
   filter: brightness(0.88);
-  will-change: transform;
 }
 
 .gallery-item:hover img {
@@ -340,15 +328,15 @@
   filter: brightness(1.05);
 }
 
-/* Caption on hover */
+/* Caption */
 .gallery-caption {
   position: absolute;
   bottom: 8px;
   left: 8px;
   font-size: 0.62rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(0, 0, 0, 0.42);
+  color: rgba(255,255,255,0.92);
+  background: rgba(0,0,0,0.42);
   padding: 3px 8px;
   border-radius: 4px;
   backdrop-filter: blur(4px);
@@ -357,7 +345,6 @@
   transform: translateY(3px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
-  letter-spacing: 0.03em;
   white-space: nowrap;
 }
 
@@ -365,10 +352,6 @@
   opacity: 1;
   transform: translateY(0);
 }
-
-/* ===========================
-   KEYFRAME — gallery scroll up
-   =========================== */
 
 @keyframes scrollUp {
   0%   { transform: translateY(0); }
@@ -380,13 +363,10 @@
    =========================== */
 
 .about-page { cursor: none; }
-
 .about-page a,
 .about-page button,
 .about-page .c-tag,
-.about-page .tool-item {
-  cursor: none;
-}
+.about-page .tool-item { cursor: none; }
 
 .nova-cursor {
   position: fixed;
@@ -398,7 +378,7 @@
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease-out, width 0.15s ease, height 0.15s ease;
-  display: none; /* JS shows after first mousemove */
+  display: none;
 }
 
 .cursor-star {
@@ -415,7 +395,7 @@
   animation: cursorPulse 0.55s ease infinite alternate;
 }
 
-.nova-cursor[data-state="photo"] { width: 30px; height: 30px; }
+.nova-cursor[data-state="photo"] { width: 28px; height: 28px; }
 .nova-cursor[data-state="photo"] .cursor-star {
   animation: cursorSpin 1.2s linear infinite;
   opacity: 1;
@@ -447,11 +427,10 @@
 @media (prefers-reduced-motion: reduce) {
   .gallery-track            { animation: none !important; }
   .gallery-item img         { transition: none; }
-  .gallery-caption          { transition: none; opacity: 1; transform: none; }
+  .gallery-caption          { opacity: 1; transform: none; transition: none; }
   .tool-item,
   .tool-item:hover          { transform: none; transition: none; }
-  .c-tag,
-  .c-tag:hover              { transform: none; transition: none; }
+  .c-tag, .c-tag:hover      { transform: none; transition: none; }
   .cursor-star              { animation: none !important; }
   .nova-cursor              { display: none !important; }
   .about-page,
@@ -467,11 +446,7 @@
    =========================== */
 
 @media (min-width: 1440px) {
-  .about-layout {
-    max-width: 1400px;
-    padding: 0 60px;
-  }
-
+  .about-layout,
   .about-footer .footer-inner {
     max-width: 1400px;
     padding: 0 60px;
@@ -483,13 +458,8 @@
    =========================== */
 
 @media (max-width: 1280px) {
-  .about-layout {
-    padding: 0 32px;
-  }
-
-  .about-footer .footer-inner {
-    padding: 0 32px;
-  }
+  .about-layout,
+  .about-footer .footer-inner { padding: 0 32px; }
 }
 
 /* ===========================
@@ -501,82 +471,53 @@
     grid-template-columns: 58fr 42fr;
     padding: 0 28px;
   }
-
-  .about-content {
-    padding: 48px 36px 64px 0;
-    gap: 36px;
-  }
-
-  .about-heading {
-    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
-  }
-
-  .about-footer .footer-inner {
-    padding: 0 28px;
-  }
+  .about-content { padding: 44px 32px 60px 0; gap: 32px; }
+  .about-heading { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
+  .about-footer .footer-inner { padding: 0 28px; }
 }
 
 /* ===========================
    RESPONSIVE — 768px
-   Single column, gallery below content
+   Single column: content above, gallery below as scrollable strip
    =========================== */
 
 @media (max-width: 768px) {
   .about-layout {
     grid-template-columns: 1fr;
     padding: 0 24px;
-    min-height: auto;
   }
 
   .about-content {
-    padding: 36px 0 28px;
-    gap: 32px;
+    padding: 32px 0 24px;
+    gap: 28px;
   }
 
-  /* Gallery: unstick, show as natural-height vertical strip */
+  /* On mobile, gallery is NOT sticky — it sits in the normal flow */
   .about-gallery {
     position: static;
-    height: auto;
-    max-height: 480px;
+    height: 420px;
     overflow: hidden;
     padding: 0 0 40px 0;
   }
 
   .gallery-track-wrap {
-    height: 480px;
+    height: 420px;
     border-radius: 8px;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 6%,
-      black 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 6%,
-      black 100%
-    );
   }
 
-  /* Gallery track stays vertical on mobile — simpler and better looking */
+  /* Keep vertical scroll on mobile */
   .gallery-track {
     flex-direction: column;
     gap: 6px;
-    padding: 6px 0;
-    height: auto;
-    align-items: unset;
   }
 
   .gallery-item {
     width: 100%;
-    height: auto;
   }
 
   .gallery-item img {
     width: 100%;
     height: auto;
-    object-fit: unset;
   }
 
   /* Restore default cursor */
@@ -584,15 +525,10 @@
   .about-page a,
   .about-page button,
   .about-page .c-tag,
-  .about-page .tool-item {
-    cursor: auto;
-  }
+  .about-page .tool-item { cursor: auto; }
+  .nova-cursor            { display: none !important; }
 
-  .nova-cursor { display: none !important; }
-
-  .about-footer .footer-inner {
-    padding: 0 24px;
-  }
+  .about-footer .footer-inner { padding: 0 24px; }
 }
 
 /* ===========================
@@ -600,32 +536,13 @@
    =========================== */
 
 @media (max-width: 480px) {
-  .about-layout { padding: 0 20px; }
-
-  .about-content {
-    padding: 28px 0 20px;
-    gap: 28px;
-  }
-
-  .about-heading { font-size: 1.9rem; }
-
-  .about-intro p { font-size: 0.875rem; }
-
-  .about-gallery {
-    max-height: 380px;
-  }
-
-  .gallery-track-wrap { height: 380px; }
-
-  .toolkit-grid { gap: 5px; }
-
-  .tool-item {
-    min-width: 56px;
-    padding: 8px 10px;
-  }
-
-  .tool-name { font-size: 0.6rem; }
-
+  .about-layout             { padding: 0 20px; }
+  .about-content            { padding: 28px 0 20px; gap: 24px; }
+  .about-heading            { font-size: 1.75rem; }
+  .about-gallery            { height: 360px; }
+  .gallery-track-wrap       { height: 360px; }
+  .toolkit-grid             { gap: 4px; }
+  .tool-item                { min-width: 54px; padding: 8px 9px; }
   .about-footer .footer-inner { padding: 0 20px; }
 }
 
@@ -634,9 +551,9 @@
    =========================== */
 
 @media (max-width: 375px) {
-  .about-layout { padding: 0 16px; }
-  .about-heading { font-size: 1.7rem; }
-  .about-gallery { max-height: 320px; }
-  .gallery-track-wrap { height: 320px; }
+  .about-layout             { padding: 0 16px; }
+  .about-heading            { font-size: 1.55rem; }
+  .about-gallery            { height: 300px; }
+  .gallery-track-wrap       { height: 300px; }
   .about-footer .footer-inner { padding: 0 16px; }
 }
