@@ -4,225 +4,299 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
-  <title>projects</title>
+  <meta name="description" content="Projects by Nova (Darla Sumanting) — automations, AI integrations, production apps.">
+  <title>projects &middot; nova.</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">
-  <!-- Navigation -->
-  <nav class="nav">
+
+  <a href="#main" class="skip-link">skip to content</a>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="pics/nova-photo.jpg" alt="Nova" class="nav-avatar">
-        nova
+      <a href="index.html" class="nav-logo" aria-label="nova. — home">
+        <img src="pics/nova-photo.jpg" alt="" class="nav-avatar" aria-hidden="true">
+        nova.
       </a>
       <div class="nav-links">
         <a href="index.html" class="nav-link">home</a>
+        <a href="projects.html" class="nav-link active" aria-current="page">projects</a>
         <a href="experience.html" class="nav-link">experience</a>
-        <a href="projects.html" class="nav-link active">projects</a>
         <button class="theme-toggle" aria-label="Toggle dark mode">
-          <span class="toggle-icon">&#9790;</span>
+          <span class="toggle-icon" aria-hidden="true">&#9790;</span>
         </button>
       </div>
     </div>
   </nav>
 
-  <main class="container page-section">
-    <span class="small-label">things that actually work in production</span>
-    <h1 class="page-heading">
-      things i've <span class="italic-accent">built</span>
-    </h1>
+  <main class="container page-section" id="main">
+
+    <h1 class="page-heading">things i've <em class="italic-accent">built</em></h1>
 
     <div class="projects-stack">
-      <!-- PROJECT TYPE: n8n workflow — dark canvas, full bleed -->
-      <article class="project-case">
-        <div class="case-visual workflow-canvas">
-          <img src="pics/aws-community-day.png" alt="Zero-Touch Attendee Pipeline — n8n workflow demo" class="workflow-img">
-        </div>
-        <div class="case-content">
-          <span class="case-label">workflow design &middot; 2026</span>
-          <h2 class="case-title">Zero-Touch Attendee Pipeline</h2>
-          <p class="case-context">event registration automation scenario</p>
-          <p class="case-desc">
-            Designed an end-to-end event registration workflow as a learning project: 
-            webhook trigger, duplicate detection, tier-based conditional routing 
-            (general / VIP / speaker), Google Sheets logging, and personalized Gmail 
-            confirmations.
-          </p>
-          <div class="card-tags">
-            <span class="tech-pill">n8n</span>
-            <span class="tech-pill">Webhooks</span>
-            <span class="tech-pill">Google Sheets API</span>
-            <span class="tech-pill">Gmail API</span>
-            <span class="tech-pill">Conditional Routing</span>
-          </div>
-        </div>
-      </article>
 
-      <!-- PROJECT TYPE: n8n workflow — dark canvas -->
-      <article class="project-case">
+      <!-- =====================================================
+        PROJECT 1 — AI Job Scraper + Custom Output Parser
+        Composition: full-width workflow screenshot, then story text
+        Why: the diagram is the thing — show it big, explain after
+        ===================================================== -->
+      <article class="project-case reveal" id="ai-job-scraper">
         <div class="case-visual workflow-canvas">
-          <img src="pics/google-mpas-craper-leads.png" alt="Google Maps Lead Scraper — n8n workflow" class="workflow-img">
+          <img
+            src="pics/ai-research-workflow.png"
+            alt="n8n workflow diagram: Slack trigger → job scraper → AI matching → custom parser → Google Drive output"
+            loading="lazy"
+          >
         </div>
         <div class="case-content">
-          <span class="case-label">automation &middot; 2026</span>
-          <h2 class="case-title">Google Maps Lead Scraper</h2>
-          <p class="case-context">n8n · Apify · Google Sheets · automated lead generation</p>
+          <span class="case-label">automation &middot; ai integration &middot; 2026</span>
+          <h2 class="case-title">
+            AI Jobs Scraper &amp; Resume Optimizer
+            <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
+          </h2>
           <p class="case-desc">
-            A scheduled pipeline that scrapes business leads from Google Maps using 
-            an Apify actor, filters for qualified prospects, loops through results, 
-            and appends them to a Google Sheet.
+            applying to jobs manually was slow, so i built a Slack-triggered pipeline that
+            scrapes listings and runs an AI agent to score them against my resume.
+            the scraping part was straightforward. the interesting part was that the AI
+            kept sending back malformed JSON — sometimes wrapped in markdown fences,
+            sometimes with trailing commas, sometimes just broken.
           </p>
-          <div class="card-tags">
-            <span class="tech-pill">n8n</span>
-            <span class="tech-pill">Apify</span>
-            <span class="tech-pill">Google Maps</span>
-            <span class="tech-pill">Google Sheets</span>
-            <span class="tech-pill">Scheduled Trigger</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROJECT TYPE: n8n workflow — GTM Signal Outbound -->
-      <article class="project-case">
-        <div class="case-visual workflow-canvas">
-          <img src="pics/gtm-signal-workflow.png" alt="GTM Signal-Based Outbound Pipeline — n8n workflow" class="workflow-img">
-        </div>
-        <div class="case-content">
-          <span class="case-label">automation &middot; 2026</span>
-          <h2 class="case-title">GTM Signal-Based Outbound Pipeline <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" class="project-link" aria-label="View case study">&#128279;</a></h2>
-          <p class="case-context">n8n · Hunter.io · Gmail · automated outbound</p>
           <p class="case-desc">
-            A signal-driven outbound pipeline: ingests GTM signals, searches for 
-            job-related buying signals, scores leads, enriches contacts via Hunter, 
-            validates emails (MX records + format checks), builds ICP profiles, 
-            generates personalized outbound drafts, and logs everything to a CRM sheet.
-          </p>
-          <div class="card-tags">
-            <span class="tech-pill">n8n</span>
-            <span class="tech-pill">Hunter.io</span>
-            <span class="tech-pill">Gmail API</span>
-            <span class="tech-pill">Lead Scoring</span>
-            <span class="tech-pill">Email Validation</span>
-            <span class="tech-pill">CRM</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROJECT TYPE: n8n workflow — AI Jobs Scraper & Resume Optimizer -->
-      <article class="project-case">
-        <div class="case-visual workflow-canvas">
-          <img src="pics/ai-research-workflow.png" alt="AI Jobs Scraper & Resume Optimizer — n8n workflow" class="workflow-img">
-        </div>
-        <div class="case-content">
-          <span class="case-label">ai automation &middot; 2026</span>
-          <h2 class="case-title">AI Jobs Scraper & Resume Optimizer <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" class="project-link" aria-label="View case study">&#128279;</a></h2>
-          <p class="case-context">n8n · AI Agent · Google Drive · Slack</p>
-          <p class="case-desc">
-            A Slack-triggered pipeline that scrapes job listings and runs an AI agent 
-            to match requirements against your resume. built a custom JavaScript 
-            output parser that strips markdown fences, runs JSON.parse, falls back 
-            to regex extraction, and applies safe defaults. Searches Google Drive 
-            for relevant experience, then drafts tailored application materials.
+            so i wrote a parser: strip markdown fences first, then try JSON.parse,
+            then fall back to regex extraction, then apply safe defaults if everything fails.
+            built as a Function node in n8n. the workflow kept running through all of it.
+            i later reused that exact parser pattern in a public webinar, which also meant
+            sanitizing a hardcoded API key from the workflow JSON before sharing — a useful
+            reminder about the gap between "works on my machine" and "shareable artifact."
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
             <span class="tech-pill">AI Agent</span>
             <span class="tech-pill">Slack</span>
             <span class="tech-pill">Google Drive</span>
-            <span class="tech-pill">Job Scraping</span>
-            <span class="tech-pill">Resume Optimization</span>
           </div>
         </div>
       </article>
 
-      <!-- PROJECT TYPE: web app — video mockup -->
-      <article class="project-case">
+      <!-- =====================================================
+        PROJECT 2 — GTM Signal-Based Outbound Pipeline
+        Composition: full-width workflow screenshot, then story
+        Why: another n8n workflow — dark canvas fits both
+        ===================================================== -->
+      <article class="project-case reveal" id="gtm-outbound">
+        <div class="case-visual workflow-canvas">
+          <img
+            src="pics/gtm-signal-workflow.png"
+            alt="n8n workflow: GTM signal ingestion → lead scoring → Hunter.io enrichment → email validation → outbound draft"
+            loading="lazy"
+          >
+        </div>
+        <div class="case-content">
+          <span class="case-label">automation &middot; outbound &middot; 2026</span>
+          <h2 class="case-title">
+            GTM Signal-Based Outbound Pipeline
+            <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
+          </h2>
+          <p class="case-desc">
+            a pipeline that ingests buying signals, scores leads, enriches contacts
+            via Hunter.io, validates emails, builds ICP profiles, and generates
+            personalized outbound drafts. the email validation part had an interesting
+            constraint: i originally planned to use NeverBounce, then found out it had
+            usage costs at this volume.
+          </p>
+          <p class="case-desc">
+            ended up replacing it with a free MX record lookup plus a regex format check.
+            catches the same invalid domains, costs nothing, and is more debuggable
+            than a black-box API. also hit a JSearch nesting bug where the job data
+            came back in an unexpected structure — fixed with a normalization step
+            before scoring. both of those felt like better solutions than the originals.
+          </p>
+          <div class="card-tags">
+            <span class="tech-pill">n8n</span>
+            <span class="tech-pill">Hunter.io</span>
+            <span class="tech-pill">Gmail API</span>
+            <span class="tech-pill">Lead Scoring</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- =====================================================
+        PROJECT 3 — Eskwelabs AI Advisor
+        Composition: video + text side-by-side (split layout)
+        Why: this is a web app — screen recording is more useful
+             than a workflow screenshot; side-by-side shows it off
+        ===================================================== -->
+      <article class="project-case project-case--split reveal" id="ai-advisor">
         <div class="case-visual">
-          <video class="project-video" autoplay loop muted playsinline preload="none" poster="pics/ai-advisor.png">
+          <video
+            class="project-video"
+            autoplay loop muted playsinline
+            preload="none"
+            poster="pics/ai-advisor.png"
+            aria-label="Screen recording of the Eskwelabs internal AI advisor platform"
+          >
             <source src="vid/ai-advisor.mp4" type="video/mp4">
           </video>
         </div>
         <div class="case-content">
-          <span class="case-label">production app &middot; 2026</span>
-          <h2 class="case-title">Internal AI Advisor Platform <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" class="project-link" aria-label="View on GitHub">&#128279;</a></h2>
-          <p class="case-context">Eskwelabs · shipped to production team</p>
+          <span class="case-label">production app &middot; internship &middot; 2026</span>
+          <h2 class="case-title">
+            Internal AI Advisor — Eskwelabs
+            <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View on GitHub">&#128279;</a>
+          </h2>
           <p class="case-desc">
-            Full-stack Next.js 14 app with three AI advisor personas that pull context 
-            from Google Docs and stream Gemini responses. Auth via Google OAuth with 
-            domain allowlist, Supabase backend with Row Level Security.
+            three AI advisor personas that pull context from Google Docs and stream
+            Gemini responses in real time. built during my internship and shipped
+            to the production intern cohort — meaning people on the team used it daily.
+          </p>
+          <p class="case-desc">
+            Google OAuth with a domain allowlist so only @eskwelabs.com accounts
+            can log in. Supabase with Row Level Security for per-user conversation history.
+            the trickiest part was passing the auth JWT correctly from Google OAuth
+            through to Supabase on every request — easy to get conceptually right,
+            annoying to get technically right.
           </p>
           <div class="card-tags">
             <span class="tech-pill">Next.js 14</span>
             <span class="tech-pill">Gemini</span>
             <span class="tech-pill">Supabase RLS</span>
             <span class="tech-pill">Google OAuth</span>
-            <span class="tech-pill">Streaming</span>
           </div>
         </div>
       </article>
 
-      <!-- PROJECT TYPE: web app — video mockup -->
-      <article class="project-case">
+      <!-- =====================================================
+        PROJECT 4 — AWS SBG Website
+        Composition: video + text side-by-side (split, flipped)
+        Why: another web build; flip breaks visual monotony
+        ===================================================== -->
+      <article class="project-case project-case--split project-case--split-flip reveal" id="awssbg-website">
         <div class="case-visual">
-          <video class="project-video" autoplay loop muted playsinline preload="none" poster="pics/aawssbg-website.png">
+          <video
+            class="project-video"
+            autoplay loop muted playsinline
+            preload="none"
+            poster="pics/aawssbg-website.png"
+            aria-label="Screen recording of the AWS SBG Adamson organization website"
+          >
             <source src="vid/awssbg-website.mp4" type="video/mp4">
           </video>
         </div>
         <div class="case-content">
-          <span class="case-label">community &middot; 2025</span>
-          <h2 class="case-title">AWS SBG Adamson · Org Website (Proposed Design) <a href="https://awssbgadu.pages.dev/" target="_blank" class="project-link" aria-label="Visit site">&#128279;</a></h2>
-          <p class="case-context">AWS Student Builder Group · Adamson University</p>
+          <span class="case-label">web &middot; community &middot; 2025</span>
+          <h2 class="case-title">
+            AWS SBG Adamson — Org Website
+            <a href="https://awssbgadu.pages.dev/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Visit live site">&#128279;</a>
+          </h2>
           <p class="case-desc">
-            Helped develop the branding, ui/ux of the official website for our 120+ member cloud community. 
-            Built to showcase events, workshops, and member achievements. 
+            the org needed a web presence. built the branding, UI/UX, and the site
+            for a 120+ member cloud community. kept it to static HTML/CSS/JS because
+            future officers need to be able to maintain it — a React project that
+            only the original developer understands is worse than a plain HTML file
+            anyone can edit.
           </p>
           <div class="card-tags">
             <span class="tech-pill">HTML/CSS</span>
             <span class="tech-pill">JavaScript</span>
             <span class="tech-pill">Web Design</span>
-            <span class="tech-pill">Community</span>
           </div>
         </div>
       </article>
 
-      <!-- PROJECT TYPE: code-only -->
-      <article class="project-case">
+      <!-- =====================================================
+        PROJECT 5 — Zero-Touch Attendee Pipeline
+        Composition: image only, shorter text — supporting project
+        ===================================================== -->
+      <article class="project-case reveal" id="attendee-pipeline">
+        <div class="case-visual workflow-canvas">
+          <img
+            src="pics/aws-community-day.png"
+            alt="n8n workflow: event registration webhook → duplicate check → tier routing → Google Sheets logging → Gmail confirmation"
+            loading="lazy"
+          >
+        </div>
         <div class="case-content">
-          <span class="case-label">academic project &middot; 2025</span>
-          <h2 class="case-title">School Registrar System <a href="https://github.com/novadar-star/school-registrar" target="_blank" class="project-link" aria-label="View on GitHub">&#128279;</a></h2>
-          <p class="case-context">Student record management system</p>
+          <span class="case-label">workflow &middot; 2026</span>
+          <h2 class="case-title">Zero-Touch Attendee Pipeline</h2>
           <p class="case-desc">
-            A registrar system for managing student records, enrollment, and academic 
-            data. Built to learn database design, CRUD operations, and system 
-            architecture fundamentals.
+            webhook trigger to personalized Gmail confirmation, with duplicate detection
+            and tier-based routing (general / VIP / speaker) in between. the deduplication
+            check is the part most people skip — without it, the workflow is a toy.
           </p>
-          <div class="card-tags">
-            <span class="tech-pill">GitHub</span>
-            <span class="tech-pill">Database</span>
-            <span class="tech-pill">CRUD</span>
-          </div>
         </div>
       </article>
-    </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <span class="nav-logo">nova.</span>
-        <div class="footer-links">
-          <a href="mailto:darlanovasumanting06@gmail.com" class="footer-link">email</a>
-          <a href="https://linkedin.com/in/darla-nova" target="_blank" class="footer-link">linkedin</a>
-          <a href="https://github.com/novadar-star" target="_blank" class="footer-link">github</a>
+      <!-- =====================================================
+        PROJECT 6 — Google Maps Lead Scraper
+        Composition: image, shorter text — supporting project
+        ===================================================== -->
+      <article class="project-case reveal" id="maps-scraper">
+        <div class="case-visual workflow-canvas">
+          <img
+            src="pics/google-mpas-craper-leads.png"
+            alt="n8n workflow: cron schedule → Apify Google Maps scraper → filter → loop → append to Google Sheets"
+            loading="lazy"
+          >
         </div>
-        <p class="footer-credit">&copy; 2026 nova. manila, ph.</p>
-      </div>
-    </footer>
+        <div class="case-content">
+          <span class="case-label">automation &middot; 2026</span>
+          <h2 class="case-title">Google Maps Lead Scraper</h2>
+          <p class="case-desc">
+            scheduled pipeline that scrapes business leads from Google Maps via an Apify actor,
+            filters for qualified prospects, loops through results in batches (parallel execution
+            hit rate limits fast — batching fixed it), and appends to a Google Sheet.
+          </p>
+        </div>
+      </article>
+
+      <!-- =====================================================
+        ARCHIVE — smaller / academic projects
+        Composition: compact text-only list, no visuals
+        Why: these don't need visual weight, just honest acknowledgment
+        ===================================================== -->
+      <section class="project-archive reveal" aria-labelledby="archive-heading">
+        <h2 class="archive-heading" id="archive-heading">also</h2>
+        <ul class="archive-list">
+          <li class="archive-item">
+            <div class="archive-item-header">
+              <span class="archive-title">School Registrar System</span>
+              <a href="https://github.com/novadar-star/school-registrar" target="_blank" rel="noopener noreferrer" class="archive-link" aria-label="View on GitHub">github &rarr;</a>
+            </div>
+            <p class="archive-desc">
+              academic project. student record management, enrollment logic,
+              prerequisite checking. built to learn database design — the time
+              spent on the ER diagram before touching code was the most useful part.
+            </p>
+            <span class="archive-stack">SQL &middot; Database Design &middot; CRUD</span>
+          </li>
+          <li class="archive-item">
+            <div class="archive-item-header">
+              <span class="archive-title">LLM-as-a-Judge — Amazon Bedrock article</span>
+            </div>
+            <p class="archive-desc">
+              published article from my Tutorials Dojo internship. covered LLM-as-a-Judge
+              methodology, prompt design, and model comparison on Amazon Bedrock.
+              required running the evaluations rather than writing about them theoretically.
+            </p>
+            <span class="archive-stack">Amazon Bedrock &middot; Technical Writing</span>
+          </li>
+        </ul>
+      </section>
+
+    </div><!-- /projects-stack -->
+
   </main>
 
-  <!-- Floating heart -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span class="footer-name">nova. / darla sumanting</span>
+      <p class="footer-credit">&copy; 2026 &middot; manila, ph</p>
+    </div>
+  </footer>
+
   <button class="heart-float" aria-label="Like this site">
-    <span class="heart-icon">&#9829;</span>
+    <span class="heart-icon" aria-hidden="true">&#9829;</span>
     <span class="heart-count">0</span>
   </button>
 

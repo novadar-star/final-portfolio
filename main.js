@@ -1,107 +1,110 @@
 // ===========================
-// Supabase config
+// nova. — main.js
+//
+// 1. Theme toggle (localStorage + prefers-color-scheme fallback)
+// 2. Heart counter (Supabase, localStorage fallback)
+// 3. Scroll reveal — targets .reveal only, used sparingly
+// 4. Lazy video — play/pause on viewport entry
+// ===========================
+
+// ===========================
+// Supabase
 // ===========================
 const SUPABASE_URL = 'https://lbmplqohcuthpgrnljxy.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxibXBscW9oY3V0aHBncm5sanh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNzUwNzMsImV4cCI6MjA5OTc1MTA3M30.sRmRnyQAcuywBrtUqA6Nggac2Aj0Wvx3B7ViAHWWb7U';
 
 async function getHeartCount() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1&select=count`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/hearts?id=eq.1&select=count`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
     const data = await res.json();
     return data[0]?.count || 0;
-  } catch (e) {
+  } catch {
     return parseInt(localStorage.getItem('heartCount') || '0', 10);
   }
 }
 
 async function incrementHeart() {
   try {
-    // Use RPC or PATCH to increment
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_heart`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
-    });
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/rpc/increment_heart`,
+      {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      }
+    );
     if (!res.ok) {
-      // Fallback: direct update with current count + 1
       const current = await getHeartCount();
       await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1`, {
         method: 'PATCH',
         headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
+          Prefer: 'return=representation'
         },
         body: JSON.stringify({ count: current + 1 })
       });
       return current + 1;
     }
-    const data = await res.json();
-    return data;
-  } catch (e) {
-    // Fallback to localStorage
-    let count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
-    localStorage.setItem('heartCount', count.toString());
+    return await res.json();
+  } catch {
+    const count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
+    localStorage.setItem('heartCount', String(count));
     return count;
   }
 }
 
 // ===========================
-// DOM Ready
+// DOM ready
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
+
   // ===========================
-  // Dark mode toggle
+  // Theme toggle
   // ===========================
   const toggle = document.querySelector('.theme-toggle');
-  const icon = document.querySelector('.toggle-icon');
-  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const icon   = document.querySelector('.toggle-icon');
 
-  document.body.setAttribute('data-theme', savedTheme);
-  updateIcon(savedTheme);
+  // Saved preference → system preference → dark
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const saved = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+
+  document.body.setAttribute('data-theme', saved);
+  setIcon(saved);
 
   if (toggle) {
     toggle.addEventListener('click', () => {
-      const current = document.body.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
+      const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.body.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateIcon(next);
+      setIcon(next);
     });
   }
 
-  function updateIcon(theme) {
-    if (icon) {
-      icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
-    }
+  function setIcon(theme) {
+    if (icon) icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
   }
 
   // ===========================
-  // Heart react — global via Supabase
+  // Heart counter
   // ===========================
-  const heartBtn = document.querySelector('.heart-float');
+  const heartBtn   = document.querySelector('.heart-float');
   const heartCount = document.querySelector('.heart-count');
 
   if (heartBtn && heartCount) {
-    // Load current count from Supabase
-    const initialCount = await getHeartCount();
-    heartCount.textContent = initialCount;
-    if (initialCount > 0) heartBtn.classList.add('liked');
+    heartCount.textContent = await getHeartCount();
 
     heartBtn.addEventListener('click', async () => {
-      // Optimistic UI update
-      const displayed = parseInt(heartCount.textContent, 10) + 1;
-      heartCount.textContent = displayed;
+      // Optimistic update
+      heartCount.textContent = parseInt(heartCount.textContent, 10) + 1;
       heartBtn.classList.add('liked');
 
       // Pop animation
@@ -109,99 +112,44 @@ document.addEventListener('DOMContentLoaded', async () => {
       void heartBtn.offsetWidth;
       heartBtn.classList.add('pop');
 
-      // Persist to Supabase
-      const actualCount = await incrementHeart();
-      if (actualCount && typeof actualCount === 'number') {
-        heartCount.textContent = actualCount;
-      }
+      const actual = await incrementHeart();
+      if (typeof actual === 'number') heartCount.textContent = actual;
     });
   }
 
   // ===========================
-  // Lazy video play — only load/play when in viewport
+  // Lazy video — play only when in viewport
   // ===========================
   const videos = document.querySelectorAll('video.project-video');
   if (videos.length) {
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
-        });
-      },
+    const vObs = new IntersectionObserver(
+      entries => entries.forEach(e => e.isIntersecting
+        ? e.target.play().catch(() => {})
+        : e.target.pause()
+      ),
       { threshold: 0.25 }
     );
-    videos.forEach((v) => videoObserver.observe(v));
+    videos.forEach(v => vObs.observe(v));
   }
 
   // ===========================
-  // Scroll reveal — Stagger List pattern (300-450ms, ease-out)
+  // Scroll reveal
+  // Targets .reveal elements only.
+  // No stagger delay — each element reveals independently.
+  // Respects prefers-reduced-motion via CSS transition:none.
   // ===========================
-  const targets = document.querySelectorAll(
-    '.timeline-entry, .project-case, .edu-item, .service-card, .proof-strip, .contact-strip, .hero-photo, .what-i-do'
-  );
-
-  targets.forEach((el, i) => {
-    el.classList.add('scroll-reveal');
-    el.style.transitionDelay = `${i * 0.07}s`;
-  });
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length) {
+    const rObs = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          rObs.unobserve(e.target);
         }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
-  );
-
-  document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
-
-  // ===========================
-  // Marquee — seamless loop using measured width
-  // ===========================
-  const marquee = document.querySelector('.marquee');
-  const track = document.querySelector('.marquee-track');
-  if (marquee && track) {
-    // Measure half the track (one set of items)
-    const items = track.children;
-    const halfCount = items.length / 2;
-    let halfWidth = 0;
-    for (let i = 0; i < halfCount; i++) {
-      halfWidth += items[i].offsetWidth;
-    }
-    // Add gap between items (16px per gap)
-    halfWidth += halfCount * 16;
-
-    // Set CSS animation dynamically
-    track.style.animation = 'none';
-    const keyframes = `
-      @keyframes marquee-scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-${halfWidth}px); }
-      }
-    `;
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = keyframes;
-    document.head.appendChild(styleSheet);
-
-    // Calculate speed: ~50px per second for consistent feel
-    const duration = halfWidth / 50;
-    track.style.animation = `marquee-scroll ${duration}s linear infinite`;
-
-    // Pause on hover
-    marquee.addEventListener('mouseenter', () => {
-      track.style.animationPlayState = 'paused';
-    });
-    marquee.addEventListener('mouseleave', () => {
-      track.style.animationPlayState = 'running';
-    });
+      }),
+      { threshold: 0.07, rootMargin: '0px 0px -20px 0px' }
+    );
+    reveals.forEach(el => rObs.observe(el));
   }
+
 });
