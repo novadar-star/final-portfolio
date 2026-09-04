@@ -56,19 +56,13 @@
             <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
           </h2>
           <p class="case-desc">
-            applying to jobs manually was slow, so i built a Slack-triggered pipeline that
-            scrapes listings and runs an AI agent to score them against my resume.
-            the scraping part was straightforward. the interesting part was that the AI
-            kept sending back malformed JSON — sometimes wrapped in markdown fences,
-            sometimes with trailing commas, sometimes just broken.
-          </p>
-          <p class="case-desc">
-            so i wrote a parser: strip markdown fences first, then try JSON.parse,
-            then fall back to regex extraction, then apply safe defaults if everything fails.
-            built as a Function node in n8n. the workflow kept running through all of it.
-            i later reused that exact parser pattern in a public webinar, which also meant
-            sanitizing a hardcoded API key from the workflow JSON before sharing — a useful
-            reminder about the gap between "works on my machine" and "shareable artifact."
+            applying to jobs manually was slow, so i built a Slack-triggered pipeline
+            that scrapes listings, scores them against my resume with an AI agent,
+            and posts the results back to Slack. the interesting part wasn't the scraping.
+            the AI kept sending back malformed JSON, so i wrote a parser:
+            strip markdown fences, try JSON.parse, fall back to regex, apply safe defaults.
+            that parser now lives in every AI workflow i build, and reusing it in a public
+            webinar also meant sanitizing a hardcoded API key before sharing it. useful lesson.
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
@@ -99,18 +93,14 @@
             <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
           </h2>
           <p class="case-desc">
-            a pipeline that ingests buying signals, scores leads, enriches contacts
-            via Hunter.io, validates emails, builds ICP profiles, and generates
-            personalized outbound drafts. the email validation part had an interesting
-            constraint: i originally planned to use NeverBounce, then found out it had
-            usage costs at this volume.
-          </p>
-          <p class="case-desc">
-            ended up replacing it with a free MX record lookup plus a regex format check.
-            catches the same invalid domains, costs nothing, and is more debuggable
-            than a black-box API. also hit a JSearch nesting bug where the job data
-            came back in an unexpected structure — fixed with a normalization step
-            before scoring. both of those felt like better solutions than the originals.
+            ingests buying signals, scores leads, enriches contacts via Hunter.io,
+            validates emails, and generates personalized outbound drafts.
+            i originally planned to use NeverBounce for email validation, then found out
+            it had usage costs at this volume, so i swapped it for a free MX record lookup
+            plus a regex format check. catches the same invalid domains, costs nothing,
+            and is easier to debug. also hit a JSearch nesting bug early on
+            and fixed it with a normalization step before scoring.
+            both workarounds ended up being better than the originals.
           </p>
           <div class="card-tags">
             <span class="tech-pill">n8n</span>
@@ -146,16 +136,12 @@
             <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View on GitHub">&#128279;</a>
           </h2>
           <p class="case-desc">
-            three AI advisor personas that pull context from Google Docs and stream
-            Gemini responses in real time. built during my internship and shipped
-            to the production intern cohort — meaning people on the team used it daily.
-          </p>
-          <p class="case-desc">
-            Google OAuth with a domain allowlist so only @eskwelabs.com accounts
-            can log in. Supabase with Row Level Security for per-user conversation history.
-            the trickiest part was passing the auth JWT correctly from Google OAuth
-            through to Supabase on every request — easy to get conceptually right,
-            annoying to get technically right.
+            three AI advisor personas pulling context from Google Docs and streaming
+            Gemini responses. built during my internship at Eskwelabs and shipped
+            to the actual intern cohort. Google OAuth with a domain allowlist,
+            Supabase with Row Level Security. passing the auth JWT through correctly
+            to Supabase was annoying to get right technically even though it's simple
+            conceptually. the team uses it daily.
           </p>
           <div class="card-tags">
             <span class="tech-pill">Next.js 14</span>

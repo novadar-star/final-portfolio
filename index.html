@@ -44,7 +44,7 @@
           hey, i'm <em class="italic-accent">nova</em>
         </h1>
         <p class="hero-sub">
-          Darla Sumanting — CS student at Adamson, automation builder,
+          Darla Sumanting, CS student at Adamson, automation builder,
           and the person who started running a cloud community because
           someone had to.
         </p>
@@ -62,17 +62,12 @@
       </div>
     </section>
 
-    <!-- Selected work — two entries, different compositions -->
+    <!-- Selected work -->
     <section class="home-work" aria-labelledby="work-heading">
       <h2 class="section-heading" id="work-heading">two things i built recently</h2>
 
       <div class="home-projects">
 
-        <!--
-          Project 1 — AI job scraper
-          Composition: workflow image left, text right
-          Why left: the workflow diagram is the story
-        -->
         <article class="home-project reveal" id="home-ai-scraper">
           <div class="home-project-visual workflow-bg">
             <img
@@ -89,7 +84,7 @@
             <p>
               the pipeline scrapes job listings, runs an AI agent to score them
               against my resume, and posts results to Slack. the part that took
-              longest wasn't the scraping — it was the AI kept returning malformed JSON,
+              longest wasn't the scraping. it was that the AI kept returning malformed JSON,
               so i wrote a parser: strip markdown fences, try JSON.parse,
               fall back to regex, apply safe defaults if everything fails.
               that parser now lives in every AI workflow i build.
@@ -98,11 +93,6 @@
           </div>
         </article>
 
-        <!--
-          Project 2 — Eskwelabs AI advisor
-          Composition: text left, video right (flipped)
-          Why flipped: breaks the rhythm, video is supplementary here
-        -->
         <article class="home-project home-project--flip reveal" id="home-ai-advisor">
           <div class="home-project-visual">
             <video
@@ -118,15 +108,15 @@
           <div class="home-project-text">
             <span class="project-meta">production app &middot; Next.js &middot; 2026</span>
             <h3 class="home-project-title">
-              internal AI advisor &mdash; Eskwelabs
+              internal AI advisor, Eskwelabs
             </h3>
             <p>
               three AI personas that pull context from Google Docs and stream
               Gemini responses. built this during my internship and shipped it
               to the actual team. Google OAuth with domain allowlist,
-              Supabase with Row Level Security — the trickiest part was getting
-              the auth token to pass through correctly to Supabase.
-              it's been in daily use since.
+              Supabase with Row Level Security. the trickiest part was getting
+              the auth token to pass through correctly to Supabase,
+              and it's been in daily use since.
             </p>
             <a href="projects.html#ai-advisor" class="project-link-inline">details &rarr;</a>
           </div>
@@ -137,13 +127,13 @@
       <a href="projects.html" class="all-projects-link">all projects &rarr;</a>
     </section>
 
-    <!-- Human layer — after the work, short, earned -->
+    <!-- Human layer -->
     <section class="home-about" aria-labelledby="about-heading">
       <h2 class="section-heading" id="about-heading">a bit more</h2>
       <div class="about-text">
         <p>
           junior CS student at Adamson University. DOST-SEI scholar, Dean's List.
-          3&times; AWS certified (SAA, AI Practitioner, Cloud Practitioner) —
+          3&times; AWS certified (SAA, AI Practitioner, Cloud Practitioner),
           mostly because being able to explain the hard parts to 120 people in
           my community requires actually understanding them.
         </p>
@@ -158,12 +148,12 @@
       </div>
     </section>
 
-    <!-- Contact — functional, no CTA energy -->
+    <!-- Contact -->
     <section class="home-contact" aria-labelledby="contact-heading">
       <h2 class="section-heading" id="contact-heading">say hi</h2>
       <p class="contact-text">
         if you want to talk about automation, cloud stuff, AI pipelines,
-        or anything mildly nerdy &mdash;
+        or anything mildly nerdy, find me here:
       </p>
       <div class="contact-links">
         <a href="mailto:darlanovasumanting06@gmail.com" class="contact-link">email</a>
