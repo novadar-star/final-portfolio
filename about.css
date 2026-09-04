@@ -280,23 +280,20 @@
 .gallery-track-wrap {
   height: 100%;
   overflow: hidden;
-  /* No border-radius that clips right edge */
   border-radius: 6px;
   position: relative;
-  /* Fade out at top and bottom for smooth entry/exit */
+  /* Only fade at top — no bottom fade so the loop looks seamless */
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
+    black 6%,
+    black 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
+    black 6%,
+    black 100%
   );
 }
 
@@ -548,20 +545,17 @@
   .gallery-track-wrap {
     height: 480px;
     border-radius: 8px;
-    /* Mask still works on mobile */
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
       black 6%,
-      black 94%,
-      transparent 100%
+      black 100%
     );
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
       black 6%,
-      black 94%,
-      transparent 100%
+      black 100%
     );
   }
 

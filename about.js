@@ -106,23 +106,21 @@ function initVerticalScroll(track) {
   const items = Array.from(track.querySelectorAll('.gallery-item'));
   const halfCount = PHOTO_DATA.length;
 
-  // Measure true painted height of first set
-  let halfHeight = 0;
-  for (let i = 0; i < halfCount; i++) {
-    halfHeight += items[i].getBoundingClientRect().height;
-  }
-  halfHeight += halfCount * 5; // gap
+  // Measure the exact distance from top of item[0] to top of item[halfCount]
+  // This is the only reliable way to get a seamless loop point.
+  const firstTop  = items[0].getBoundingClientRect().top;
+  const splitTop  = items[halfCount].getBoundingClientRect().top;
+  let halfHeight  = splitTop - firstTop;
 
   if (halfHeight < 50) {
-    // Layout hasn't painted yet — retry
     setTimeout(() => initVerticalScroll(track), 400);
     return;
   }
 
-  // Fade the gallery in once we know it's ready
+  // Reveal the gallery
   wrap.style.opacity = '1';
 
-  const duration = halfHeight / 55;
+  const duration = halfHeight / 55; // px per second — slow, elegant
   track.style.setProperty('--scroll-distance', `-${halfHeight}px`);
   track.style.animation = `scrollUp ${duration}s linear infinite`;
 
@@ -145,8 +143,9 @@ function initVerticalScroll(track) {
     let currentY = matrix.m42;
     currentY -= e.deltaY * 0.6;
 
+    // Seamless loop clamping
     if (currentY < -halfHeight) currentY += halfHeight;
-    if (currentY > 0) currentY -= halfHeight;
+    if (currentY > 0)           currentY -= halfHeight;
 
     track.style.animation = 'none';
     track.style.transform = `translateY(${currentY}px)`;
