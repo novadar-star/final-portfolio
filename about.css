@@ -306,8 +306,9 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px 0;
-  /* animation set by JS after measuring height */
   will-change: transform;
+  /* Minimum height prevents the container collapsing before images load */
+  min-height: 100%;
 }
 
 .gallery-track.paused {
@@ -321,6 +322,8 @@
   overflow: hidden;
   flex-shrink: 0;
   cursor: none;
+  background: var(--hairline); /* visible placeholder while image loads */
+  min-height: 120px;
 }
 
 .gallery-item img {
@@ -398,8 +401,9 @@
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.08s ease-out, width 0.2s ease, height 0.2s ease;
+  transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
   mix-blend-mode: normal;
+  display: none; /* shown by JS after first mousemove */
 }
 
 .cursor-star {
