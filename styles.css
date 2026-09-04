@@ -1391,3 +1391,126 @@ button:focus-visible {
     display: none;
   }
 }
+
+/* ===========================
+   SLICES OF NOVA
+   Fragments of identity — different rhythm from the project section.
+   Not cards. Not uniform. Each slice can breathe differently.
+   =========================== */
+
+.slices {
+  /* no extra top padding — section-heading handles separation */
+}
+
+.slices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.slice {
+  padding: 24px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+/* Every other slice gets left padding to create offset rhythm */
+.slice:nth-child(even) {
+  padding-left: 32px;
+  border-left: 1px solid var(--hairline);
+}
+
+.slice-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+.slice p {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 38ch;
+}
+
+/* Belief slice — slightly different weight, intentional */
+.slice--belief p {
+  font-style: italic;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   TOOLS SECTION
+   Quick reference, plain text groupings.
+   No logos. No pills. No grid.
+   =========================== */
+
+.tools-section {
+  padding-bottom: 16px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+
+.tool-group-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
+}
+
+.tool-list {
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* ===========================
+   RESPONSIVE — slices + tools
+   =========================== */
+
+@media (max-width: 768px) {
+  .slices-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slice:nth-child(even) {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slice p {
+    max-width: 100%;
+  }
+}
+
+/* ===========================
+   PAGE INTRO
+   Single line of context below a page heading.
+   Used on experience page.
+   =========================== */
+
+.page-intro {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  margin-top: -28px;
+  margin-bottom: 40px;
+  letter-spacing: 0.02em;
+}
