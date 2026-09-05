@@ -3,9 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
-  <meta name="description" content="Projects by Nova (Darla Sumanting) — automations, AI integrations, production apps.">
-  <title>projects &middot; nova.</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Primary meta -->
+  <title>Projects · nova.</title>
+  <meta name="description" content="Projects by Darla Nova Sumanting — AI automations, n8n workflows, cloud integrations, and production apps built in Manila.">
+  <link rel="canonical" href="https://novaautomates.vercel.app/projects.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Projects — Darla Nova Sumanting">
+  <meta property="og:description" content="AI automations, n8n workflows, cloud integrations, and production apps by Darla Nova Sumanting.">
+  <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+  <meta property="og:url"         content="https://novaautomates.vercel.app/projects.html">
+  <meta property="og:site_name"   content="nova.">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Projects — Darla Nova Sumanting">
+  <meta name="twitter:description" content="AI automations, n8n workflows, cloud integrations, and production apps.">
+  <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+
+  <!-- Inline theme — prevents dark/light flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var sys   = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+    })();
+  </script>
+
+  <!-- Font preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>

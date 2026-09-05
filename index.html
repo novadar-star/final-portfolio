@@ -3,16 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Primary meta -->
+  <title>Darla Nova Sumanting — AI Automation &amp; Cloud Developer · nova.</title>
   <meta name="description" content='Darla "Nova" Sumanting — CS student, automation builder, cloud community lead. Manila, PH.'>
-  <meta property="og:title" content="nova.">
+  <link rel="canonical" href="https://novaautomates.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
   <meta property="og:description" content='Darla "Nova" Sumanting builds automations, runs a cloud community, and figures things out one pipeline at a time.'>
-  <meta property="og:image" content="pics/nova-photo.jpg">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <title>nova.</title>
+  <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+  <meta property="og:url"         content="https://novaautomates.vercel.app/">
+  <meta property="og:site_name"   content="nova.">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
+  <meta name="twitter:description" content='CS student, automation builder, cloud community lead. 3× AWS Certified. Manila, PH.'>
+  <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+
+  <!-- Google verification -->
+  <meta name="google-site-verification" content="OWQPrIKn8fXrCKGUFpf6AUjx1aLoI8xczasp41Q_lu4">
+
+  <!-- Inline theme — prevents dark/light flash before CSS loads -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var sys   = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+    })();
+  </script>
+
+  <!-- Font preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="styles.css">
-  <meta name="google-site-verification" content="OWQPrIKn8fXrCKGUFpf6AUjx1aLoI8xczasp41Q_lu4" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">

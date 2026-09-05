@@ -953,8 +953,9 @@ body.cursor-active button { cursor: none; }
   height: 18px;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.15s ease, height 0.15s ease;
+  /* translate3d — position driven entirely by JS transform, no left/top updates */
+  transform: translate3d(-200px, -200px, 0);
+  transition: width 0.12s ease, height 0.12s ease;
   display: none;
 }
 

@@ -3,12 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
-  <meta name="description" content="About Darla Nova Sumanting — CS student, automation builder, cloud community lead, and occasional overthinker. Manila, PH.">
-  <title>about me &middot; nova.</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Primary meta -->
+  <title>About Darla Nova Sumanting · nova.</title>
+  <meta name="description" content="Darla Nova Sumanting is a developer and automation builder exploring AI, cloud, full-stack development, and developer communities. CS student, 3× AWS Certified, Manila PH.">
+  <link rel="canonical" href="https://novaautomates.vercel.app/about.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="profile">
+  <meta property="og:title"       content="About Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
+  <meta property="og:description" content="Darla Nova Sumanting is a developer and automation builder exploring AI, cloud, full-stack development, and developer communities in Manila, PH.">
+  <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+  <meta property="og:url"         content="https://novaautomates.vercel.app/about.html">
+  <meta property="og:site_name"   content="nova.">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="About Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
+  <meta name="twitter:description" content="CS student, automation builder, cloud community lead. 3× AWS Certified. Building things in Manila.">
+  <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+
+  <!-- Inline theme — runs before CSS renders to prevent dark/light flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var sys   = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+    })();
+  </script>
+
+  <!-- Font preconnect — eliminates 2-hop waterfall before glyphs render -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="about.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+  <!-- Person structured data — helps Google surface knowledge panel for name searches -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Darla Nova Sumanting",
+    "url": "https://novaautomates.vercel.app/",
+    "email": "darlanovasumanting06@gmail.com",
+    "sameAs": [
+      "https://linkedin.com/in/darla-nova",
+      "https://github.com/novadar-star"
+    ],
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Workflow Automation",
+      "AWS",
+      "Cloud Computing",
+      "Software Development",
+      "Full-Stack Development",
+      "n8n",
+      "Python",
+      "JavaScript"
+    ],
+    "jobTitle": "CS Student & Automation Builder",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Adamson University"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Manila",
+      "addressCountry": "PH"
+    }
+  }
+  </script>
 </head>
 <body data-theme="dark" class="about-page">
 
@@ -89,15 +158,15 @@
         <div class="currently-section" aria-label="Things I'm currently into">
           <span class="currently-label">✦ currently into</span>
           <div class="currently-tags" role="list">
-            <span class="c-tag" role="listitem">AI automation</span>
-            <span class="c-tag" role="listitem">AWS</span>
-            <span class="c-tag" role="listitem">n8n</span>
-            <span class="c-tag" role="listitem">full-stack dev</span>
-            <span class="c-tag" role="listitem">building weird side projects</span>
-            <span class="c-tag" role="listitem">learning things the hard way</span>
-            <span class="c-tag" role="listitem">manga</span>
-            <span class="c-tag" role="listitem">communities</span>
-            <span class="c-tag" role="listitem">anime</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">AI automation</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">AWS</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">n8n</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">full-stack dev</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">building weird side projects</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">learning things the hard way</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">manga</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">communities</span>
+            <span class="c-tag" role="listitem" data-cursor="hover">anime</span>
           </div>
         </div>
 
@@ -106,7 +175,7 @@
           <span class="toolkit-label" id="toolkit-heading">✦ toolkit</span>
           <div class="toolkit-grid" role="list">
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/n8n/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -114,7 +183,7 @@
               <span class="tool-desc">workflow automation</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/amazonaws/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -122,7 +191,7 @@
               <span class="tool-desc">cloud infrastructure</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/python/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -130,7 +199,7 @@
               <span class="tool-desc">AI + automation</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/javascript/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -138,7 +207,7 @@
               <span class="tool-desc">everything, basically</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/nextdotjs/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -146,7 +215,7 @@
               <span class="tool-desc">full-stack apps</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/supabase/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -154,7 +223,7 @@
               <span class="tool-desc">backend + auth</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/postgresql/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -162,7 +231,7 @@
               <span class="tool-desc">data + databases</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/github/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -170,7 +239,7 @@
               <span class="tool-desc">version control</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/figma/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>
@@ -178,7 +247,7 @@
               <span class="tool-desc">UI + visual thinking</span>
             </div>
 
-            <div class="tool-item" role="listitem">
+            <div class="tool-item" role="listitem" data-cursor="tool">
               <div class="tool-icon-wrap">
                 <img src="https://cdn.simpleicons.org/anthropic/8FBF65" alt="" class="tool-icon" aria-hidden="true">
               </div>

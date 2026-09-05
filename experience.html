@@ -3,9 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/jpeg" href="pics/nova-photo.jpg">
-  <meta name="description" content="Nova (Darla Sumanting) — experience, education, certifications. CS student, AWS community lead, automation builder.">
-  <title>experience &middot; nova.</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Primary meta -->
+  <title>Experience · nova.</title>
+  <meta name="description" content="Darla Nova Sumanting — experience, education, and certifications. CS student, AWS community lead, automation builder. Manila, PH.">
+  <link rel="canonical" href="https://novaautomates.vercel.app/experience.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Experience — Darla Nova Sumanting">
+  <meta property="og:description" content="CS student, AWS community lead, automation builder. 3× AWS Certified. Manila, PH.">
+  <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+  <meta property="og:url"         content="https://novaautomates.vercel.app/experience.html">
+  <meta property="og:site_name"   content="nova.">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Experience — Darla Nova Sumanting">
+  <meta name="twitter:description" content="CS student, AWS community lead, automation builder. 3× AWS Certified. Manila, PH.">
+  <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
+
+  <!-- Inline theme — prevents dark/light flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var sys   = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+    })();
+  </script>
+
+  <!-- Font preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>

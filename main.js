@@ -82,9 +82,9 @@ function initGlobalCursor() {
   let mouseX = -200, mouseY = -200;
   let cursorX = -200, cursorY = -200;
   let started = false;
-  const SMOOTHING = 0.18;
+  const SMOOTHING = 0.35;  // nearly native feel — was 0.22
 
-  // Single mousemove drives both position + state — no bubbling noise
+  // Single mousemove drives position + state
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -96,7 +96,6 @@ function initGlobalCursor() {
       started = true;
     }
 
-    // State from element under pointer — more reliable than mouseover/out
     if (e.target.closest('a, button')) {
       cursor.setAttribute('data-state', 'hover');
     } else {
@@ -107,8 +106,8 @@ function initGlobalCursor() {
   (function animateCursor() {
     cursorX += (mouseX - cursorX) * SMOOTHING;
     cursorY += (mouseY - cursorY) * SMOOTHING;
-    cursor.style.left = `${cursorX}px`;
-    cursor.style.top  = `${cursorY}px`;
+    // translate3d — compositor-only, no left/top layout triggers
+    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
     requestAnimationFrame(animateCursor);
   })();
 
@@ -121,10 +120,10 @@ function initGlobalCursor() {
   });
 
   document.addEventListener('mousedown', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(0.6)';
+    cursor.style.scale = '0.6';
   });
   document.addEventListener('mouseup', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    cursor.style.scale = '1';
   });
 }
 
