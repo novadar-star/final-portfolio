@@ -103,57 +103,49 @@ function initScrollLoop(track) {
   if (prefersReducedMotion) return;
 
   const wrap = document.getElementById('galleryWrap');
+  const pin  = document.getElementById('galleryPin') || wrap;
   if (!wrap) return;
 
   const items = Array.from(track.querySelectorAll('.gallery-item'));
   const halfCount = PHOTO_DATA.length;
 
-  // Measure the loop point: distance from first item top to the duplicate set top
-  // Use offsetTop (layout-relative) instead of getBoundingClientRect (viewport-relative)
-  // so scroll position at time of measurement doesn't matter.
+  // Use offsetTop (layout-relative) — accurate regardless of page scroll position
   const firstOffset = items[0].offsetTop;
   const splitOffset = items[halfCount].offsetTop;
   const loopHeight  = splitOffset - firstOffset;
 
   if (loopHeight < 50) {
-    // Layout not ready yet — retry
     setTimeout(() => initScrollLoop(track), 400);
     return;
   }
 
-  const SPEED = 0.5;           // px per frame at 60fps ≈ 30px/s — slow, elegant
+  const SPEED = 0.5;
   const WHEEL_SENSITIVITY = 0.8;
 
-  let posY         = 0;        // current scroll position (px, always positive = scroll up)
-  let targetY      = 0;        // where we want to be (for wheel ease-in)
-  let isHovered    = false;
-  let rafId        = null;
+  let posY      = 0;
+  let targetY   = 0;
+  let isHovered = false;
+  let rafId     = null;
 
-  // ---- clamp to loop range seamlessly ----
   function clamp(y) {
     y = y % loopHeight;
     if (y < 0) y += loopHeight;
     return y;
   }
 
-  // ---- RAF loop ----
   function tick() {
     if (!isHovered) {
-      // Auto-scroll: advance position
       targetY += SPEED;
     }
 
-    // Ease posY toward targetY
     const diff = targetY - posY;
-
-    // Handle wrap-around: if diff is bigger than half a loop, go the short way
     let delta = diff;
     if (Math.abs(diff) > loopHeight / 2) {
       delta = diff > 0 ? diff - loopHeight : diff + loopHeight;
     }
 
-    posY += delta * 0.12;      // 0.12 = smooth lerp factor
-    posY  = clamp(posY);
+    posY   += delta * 0.12;
+    posY    = clamp(posY);
     targetY = clamp(targetY);
 
     track.style.transform = `translateY(-${posY}px)`;
@@ -162,29 +154,28 @@ function initScrollLoop(track) {
 
   tick();
 
-  // ---- Pause on hover ----
-  wrap.addEventListener('mouseenter', () => { isHovered = true; });
-  wrap.addEventListener('mouseleave', () => { isHovered = false; });
+  // Pause on hover — attach to the clipping viewport (pin)
+  pin.addEventListener('mouseenter', () => { isHovered = true;  });
+  pin.addEventListener('mouseleave', () => { isHovered = false; });
 
-  // ---- Wheel scroll — scroll position directly, no timeout restart ----
-  wrap.addEventListener('wheel', e => {
+  // Wheel scroll on the pin
+  pin.addEventListener('wheel', e => {
     e.preventDefault();
     targetY = clamp(targetY + e.deltaY * WHEEL_SENSITIVITY);
   }, { passive: false });
 
-  // ---- Touch scroll ----
+  // Touch scroll
   let touchStartY = 0;
-  wrap.addEventListener('touchstart', e => {
+  pin.addEventListener('touchstart', e => {
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
-  wrap.addEventListener('touchmove', e => {
+  pin.addEventListener('touchmove', e => {
     const delta = touchStartY - e.touches[0].clientY;
     touchStartY = e.touches[0].clientY;
     targetY = clamp(targetY + delta * WHEEL_SENSITIVITY);
   }, { passive: true });
 
-  // ---- Cleanup on page unload ----
   window.addEventListener('pagehide', () => cancelAnimationFrame(rafId));
 }
 
@@ -220,9 +211,8 @@ function initCursor() {
     }
 
     // Determine cursor state from the element under pointer
-    // Using closest() on the actual target is more reliable than bubbling over/out
     const el = e.target;
-    if (el.closest('.gallery-item')) {
+    if (el.closest('#galleryPin .gallery-item')) {
       cursor.setAttribute('data-state', 'photo');
     } else if (el.closest('a, button, .c-tag, .tool-item')) {
       cursor.setAttribute('data-state', 'hover');

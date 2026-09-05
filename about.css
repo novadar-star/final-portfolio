@@ -16,7 +16,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 40px;
-  align-items: start;
+  align-items: start;    /* left content column stays top-aligned */
 }
 
 /* ===========================
@@ -266,29 +266,36 @@
    RIGHT — photo gallery
    
    KEY ARCHITECTURE:
-   - .about-gallery is position:sticky, clips to viewport height
-   - .gallery-track-wrap has NO fixed height, NO overflow:hidden
-   - .gallery-track scrolls via CSS animation
-   - The sticky container IS the clipping boundary
+   - .about-gallery stretches to match the left content column height (align-self: stretch on grid)
+   - The inner .gallery-pin is position:sticky — stays in viewport as you scroll
+   - .gallery-track-wrap clips the scrolling photos to the sticky viewport window
+   - RAF loop drives the infinite scroll in JS
    =========================== */
 
 .about-gallery {
+  /* Stretch full height of the grid row (matches left content column) */
+  align-self: stretch;
+  padding: 0 0 0 20px;
+  /* Relative so the sticky child anchors inside this column */
+  position: relative;
+}
+
+/* Sticky pin — this is the actual visible window */
+.gallery-pin {
   position: sticky;
   top: 60px;
   height: calc(100vh - 60px);
-  overflow: hidden;          /* THIS is the only clip — the sticky viewport */
-  padding: 0 0 0 20px;
+  overflow: hidden;
 }
 
-/* Wrap: purely for the fade mask + border-radius, no height/overflow */
+/* Wrap: fade mask + border-radius */
 .gallery-track-wrap {
   height: 100%;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  /* Always visible — JS animation starts as soon as images are measured */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 .gallery-track {
@@ -486,9 +493,16 @@
   /* On mobile, gallery is NOT sticky — it sits in the normal flow */
   .about-gallery {
     position: static;
+    align-self: auto;
     height: 420px;
     overflow: hidden;
     padding: 0 0 40px 0;
+  }
+
+  .gallery-pin {
+    position: static;
+    height: 420px;
+    overflow: hidden;
   }
 
   .gallery-track-wrap {
@@ -531,6 +545,7 @@
   .about-content            { padding: 28px 0 20px; gap: 24px; }
   .about-heading            { font-size: 1.75rem; }
   .about-gallery            { height: 360px; }
+  .gallery-pin              { height: 360px; }
   .gallery-track-wrap       { height: 360px; }
   .toolkit-grid             { gap: 4px; }
   .tool-item                { min-width: 54px; padding: 8px 9px; }
@@ -545,6 +560,7 @@
   .about-layout             { padding: 0 16px; }
   .about-heading            { font-size: 1.55rem; }
   .about-gallery            { height: 300px; }
+  .gallery-pin              { height: 300px; }
   .gallery-track-wrap       { height: 300px; }
   .about-footer .footer-inner { padding: 0 16px; }
 }
