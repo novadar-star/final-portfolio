@@ -148,13 +148,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const saved = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
 
-  document.body.setAttribute('data-theme', saved);
+  document.documentElement.setAttribute('data-theme', saved);
   setIcon(saved);
 
   if (toggle) {
     toggle.addEventListener('click', () => {
-      const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.body.setAttribute('data-theme', next);
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       setIcon(next);
     });
