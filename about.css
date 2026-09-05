@@ -28,6 +28,7 @@
   display: flex;
   flex-direction: column;
   gap: 36px;     /* tighter — sections feel compact, not drifting */
+  max-width: 720px; /* matches nova container width — keeps content compact */
 }
 
 /* Page header — eyebrow + heading + tagline grouped tight */
@@ -285,9 +286,7 @@
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  /* Top fade only — no bottom fade, that's what caused the cutoff illusion */
+  /* Always visible — JS animation starts as soon as images are measured */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 5%);
 }
@@ -298,10 +297,8 @@
   gap: 6px;
   padding: 6px 0 0 0;
   will-change: transform;
-}
-
-.gallery-track.paused {
-  animation-play-state: paused !important;
+  /* position:relative so offsetTop measurements are container-relative */
+  position: relative;
 }
 
 /* Photos — natural dimensions, no forced ratio */
@@ -351,11 +348,6 @@
 .gallery-item:hover .gallery-caption {
   opacity: 1;
   transform: translateY(0);
-}
-
-@keyframes scrollUp {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(var(--scroll-distance, -50%)); }
 }
 
 /* ===========================
@@ -425,7 +417,7 @@
    =========================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .gallery-track            { animation: none !important; }
+  .gallery-track            { will-change: auto; }
   .gallery-item img         { transition: none; }
   .gallery-caption          { opacity: 1; transform: none; transition: none; }
   .tool-item,
@@ -438,7 +430,6 @@
   .about-page button,
   .about-page .c-tag,
   .about-page .tool-item    { cursor: auto; }
-  .gallery-track-wrap       { opacity: 1 !important; transition: none; }
 }
 
 /* ===========================

@@ -63,9 +63,81 @@ async function incrementHeart() {
 }
 
 // ===========================
+// Custom cursor — all pages except about (about.js handles its own)
+// ===========================
+function initGlobalCursor() {
+  const cursor = document.getElementById('novaCursor');
+  if (!cursor) return;
+
+  // Only run on non-touch desktop devices
+  const isTouchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (isTouchOnly || prefersReducedMotion) return;
+  if (window.innerWidth <= 768) return;
+
+  document.body.classList.add('cursor-active');
+  cursor.style.opacity = '0';
+  cursor.style.display = 'block';
+
+  let mouseX = -200, mouseY = -200;
+  let cursorX = -200, cursorY = -200;
+  let started = false;
+  const SMOOTHING = 0.18;
+
+  // Single mousemove drives both position + state — no bubbling noise
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!started) {
+      cursorX = mouseX;
+      cursorY = mouseY;
+      cursor.style.opacity = '1';
+      started = true;
+    }
+
+    // State from element under pointer — more reliable than mouseover/out
+    if (e.target.closest('a, button')) {
+      cursor.setAttribute('data-state', 'hover');
+    } else {
+      cursor.removeAttribute('data-state');
+    }
+  }, { passive: true });
+
+  (function animateCursor() {
+    cursorX += (mouseX - cursorX) * SMOOTHING;
+    cursorY += (mouseY - cursorY) * SMOOTHING;
+    cursor.style.left = `${cursorX}px`;
+    cursor.style.top  = `${cursorY}px`;
+    requestAnimationFrame(animateCursor);
+  })();
+
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+    cursor.removeAttribute('data-state');
+  });
+  document.addEventListener('mouseenter', () => {
+    if (started) cursor.style.opacity = '1';
+  });
+
+  document.addEventListener('mousedown', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(0.6)';
+  });
+  document.addEventListener('mouseup', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+  });
+}
+
+// ===========================
 // DOM ready
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
+
+  // Init global cursor on all pages except about
+  // (about.js handles its own cursor with photo-state support)
+  if (!document.body.classList.contains('about-page')) {
+    initGlobalCursor();
+  }
 
   // ===========================
   // Theme toggle

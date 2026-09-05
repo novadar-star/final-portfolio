@@ -3,8 +3,7 @@
 // ===========================
 
 // ===========================
-// PHOTO DATA — edit here to change photos and captions
-// paths are relative to the site root
+// PHOTO DATA
 // ===========================
 const PHOTO_DATA = [
   { src: 'life/img1.png', alt: 'nova — life photo 1', caption: 'somewhere in manila' },
@@ -22,8 +21,6 @@ const PHOTO_DATA = [
 // ===========================
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Only treat as touch-only if there is NO fine pointer at all.
-// This correctly keeps the custom cursor on laptops with touchscreens.
 const isTouchOnly = () =>
   window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
@@ -38,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!isTouchOnly() && !prefersReducedMotion) {
     initCursor();
   } else {
-    // Restore default cursor
     document.body.style.cursor = 'auto';
     const cursorEl = document.getElementById('novaCursor');
     if (cursorEl) cursorEl.style.display = 'none';
@@ -52,7 +48,8 @@ function buildGallery() {
   const track = document.getElementById('galleryTrack');
   if (!track) return;
 
-  const allPhotos = [...PHOTO_DATA, ...PHOTO_DATA]; // duplicate for infinite loop
+  // Duplicate photos for seamless infinite loop
+  const allPhotos = [...PHOTO_DATA, ...PHOTO_DATA];
   const loadPromises = [];
 
   allPhotos.forEach(photo => {
@@ -62,9 +59,9 @@ function buildGallery() {
     const img = document.createElement('img');
     img.alt = photo.alt;
     img.loading = 'eager';
-    // decode() ensures natural dimensions are ready before we measure
+
     const p = new Promise(resolve => {
-      img.onload = () => img.decode ? img.decode().then(resolve).catch(resolve) : resolve();
+      img.onload  = () => img.decode ? img.decode().then(resolve).catch(resolve) : resolve();
       img.onerror = resolve;
     });
     loadPromises.push(p);
@@ -80,24 +77,29 @@ function buildGallery() {
     track.appendChild(item);
   });
 
-  // Wait for all images decoded, fallback after 4s
+  // Start scroll once images are ready (4s max fallback)
   Promise.race([
     Promise.all(loadPromises),
     new Promise(resolve => setTimeout(resolve, 4000))
   ]).then(() => {
-    // One more rAF to ensure layout is painted
     requestAnimationFrame(() => {
-      // Both mobile and desktop use vertical scroll now.
-      // Mobile uses a fixed-height container; desktop uses sticky viewport height.
-      initVerticalScroll(track);
+      requestAnimationFrame(() => {
+        // Double rAF — first ensures layout, second ensures paint
+        initScrollLoop(track);
+      });
     });
   });
 }
 
 // ===========================
-// VERTICAL SCROLL (desktop)
+// SCROLL LOOP — pure JS RAF, no CSS animation
+//
+// Why RAF instead of CSS animation:
+// - CSS animation always starts from transform:0, so any reset jumps to top
+// - RAF lets us track position continuously and clamp seamlessly
+// - Manual wheel scroll just adjusts the same position variable — no restart needed
 // ===========================
-function initVerticalScroll(track) {
+function initScrollLoop(track) {
   if (prefersReducedMotion) return;
 
   const wrap = document.getElementById('galleryWrap');
@@ -106,184 +108,151 @@ function initVerticalScroll(track) {
   const items = Array.from(track.querySelectorAll('.gallery-item'));
   const halfCount = PHOTO_DATA.length;
 
-  // Measure the exact distance from top of item[0] to top of item[halfCount]
-  // This is the only reliable way to get a seamless loop point.
-  const firstTop  = items[0].getBoundingClientRect().top;
-  const splitTop  = items[halfCount].getBoundingClientRect().top;
-  let halfHeight  = splitTop - firstTop;
+  // Measure the loop point: distance from first item top to the duplicate set top
+  // Use offsetTop (layout-relative) instead of getBoundingClientRect (viewport-relative)
+  // so scroll position at time of measurement doesn't matter.
+  const firstOffset = items[0].offsetTop;
+  const splitOffset = items[halfCount].offsetTop;
+  const loopHeight  = splitOffset - firstOffset;
 
-  if (halfHeight < 50) {
-    setTimeout(() => initVerticalScroll(track), 400);
+  if (loopHeight < 50) {
+    // Layout not ready yet — retry
+    setTimeout(() => initScrollLoop(track), 400);
     return;
   }
 
-  // Reveal the gallery
-  wrap.style.opacity = '1';
+  const SPEED = 0.5;           // px per frame at 60fps ≈ 30px/s — slow, elegant
+  const WHEEL_SENSITIVITY = 0.8;
 
-  const duration = halfHeight / 55; // px per second — slow, elegant
-  track.style.setProperty('--scroll-distance', `-${halfHeight}px`);
-  track.style.animation = `scrollUp ${duration}s linear infinite`;
+  let posY         = 0;        // current scroll position (px, always positive = scroll up)
+  let targetY      = 0;        // where we want to be (for wheel ease-in)
+  let isHovered    = false;
+  let rafId        = null;
 
-  let isManualScrolling = false;
-  let manualScrollTimeout = null;
+  // ---- clamp to loop range seamlessly ----
+  function clamp(y) {
+    y = y % loopHeight;
+    if (y < 0) y += loopHeight;
+    return y;
+  }
 
-  wrap.addEventListener('mouseenter', () => {
-    if (!isManualScrolling) track.classList.add('paused');
-  });
-  wrap.addEventListener('mouseleave', () => {
-    if (!isManualScrolling) track.classList.remove('paused');
-  });
+  // ---- RAF loop ----
+  function tick() {
+    if (!isHovered) {
+      // Auto-scroll: advance position
+      targetY += SPEED;
+    }
 
+    // Ease posY toward targetY
+    const diff = targetY - posY;
+
+    // Handle wrap-around: if diff is bigger than half a loop, go the short way
+    let delta = diff;
+    if (Math.abs(diff) > loopHeight / 2) {
+      delta = diff > 0 ? diff - loopHeight : diff + loopHeight;
+    }
+
+    posY += delta * 0.12;      // 0.12 = smooth lerp factor
+    posY  = clamp(posY);
+    targetY = clamp(targetY);
+
+    track.style.transform = `translateY(-${posY}px)`;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  tick();
+
+  // ---- Pause on hover ----
+  wrap.addEventListener('mouseenter', () => { isHovered = true; });
+  wrap.addEventListener('mouseleave', () => { isHovered = false; });
+
+  // ---- Wheel scroll — scroll position directly, no timeout restart ----
   wrap.addEventListener('wheel', e => {
     e.preventDefault();
-    track.classList.add('paused');
-    isManualScrolling = true;
-
-    const matrix = new DOMMatrix(getComputedStyle(track).transform);
-    let currentY = matrix.m42;
-    currentY -= e.deltaY * 0.6;
-
-    // Seamless loop clamping
-    if (currentY < -halfHeight) currentY += halfHeight;
-    if (currentY > 0)           currentY -= halfHeight;
-
-    track.style.animation = 'none';
-    track.style.transform = `translateY(${currentY}px)`;
-
-    clearTimeout(manualScrollTimeout);
-    manualScrollTimeout = setTimeout(() => {
-      isManualScrolling = false;
-      track.style.transform = '';
-      track.style.animation = `scrollUp ${duration}s linear infinite`;
-      track.classList.remove('paused');
-    }, 1200);
+    targetY = clamp(targetY + e.deltaY * WHEEL_SENSITIVITY);
   }, { passive: false });
-}
 
-// ===========================
-// HORIZONTAL SCROLL (mobile)
-// ===========================
-function initHorizontalScroll(track) {
-  if (prefersReducedMotion) return;
-
-  const wrap = document.getElementById('galleryWrap');
-  if (!wrap) return;
-
-  const items = Array.from(track.querySelectorAll('.gallery-item'));
-  const halfCount = PHOTO_DATA.length;
-
-  let halfWidth = 0;
-  for (let i = 0; i < halfCount; i++) {
-    halfWidth += items[i].getBoundingClientRect().width;
-  }
-  halfWidth += halfCount * 8; // gap
-
-  if (halfWidth < 10) {
-    setTimeout(() => initHorizontalScroll(track), 500);
-    return;
-  }
-
-  const styleEl = document.createElement('style');
-  styleEl.textContent = `
-    @keyframes scrollLeft {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-${halfWidth}px); }
-    }
-  `;
-  document.head.appendChild(styleEl);
-
-  const duration = halfWidth / 35;
-  track.style.animation = `scrollLeft ${duration}s linear infinite`;
-
-  wrap.addEventListener('touchstart', () => {
-    track.classList.add('paused');
+  // ---- Touch scroll ----
+  let touchStartY = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
-  wrap.addEventListener('touchend', () => {
-    setTimeout(() => track.classList.remove('paused'), 1000);
+  wrap.addEventListener('touchmove', e => {
+    const delta = touchStartY - e.touches[0].clientY;
+    touchStartY = e.touches[0].clientY;
+    targetY = clamp(targetY + delta * WHEEL_SENSITIVITY);
   }, { passive: true });
+
+  // ---- Cleanup on page unload ----
+  window.addEventListener('pagehide', () => cancelAnimationFrame(rafId));
 }
 
 // ===========================
 // CUSTOM CURSOR
+// Improvements:
+// - Single mousemove listener drives everything (no mouseover/out per element)
+// - State determined by element under cursor via document.elementFromPoint equivalent
+// - Uses pointer events for hover detection — far less noisy than mouseover/out bubbling
 // ===========================
 function initCursor() {
   const cursor = document.getElementById('novaCursor');
   if (!cursor) return;
 
-  // Show cursor element (starts hidden until mouse moves)
   cursor.style.opacity = '0';
   cursor.style.display = 'block';
 
-  let mouseX = -100;
-  let mouseY = -100;
-  let cursorX = -100;
-  let cursorY = -100;
+  let mouseX = -200, mouseY = -200;
+  let cursorX = -200, cursorY = -200;
   let started = false;
-  const SMOOTHING = 0.22;
+  const SMOOTHING = 0.18;     // slightly tighter than before for crispness
 
+  // ---- Track mouse position ----
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+
     if (!started) {
-      // Snap to position on first move — no swooping in from corner
       cursorX = mouseX;
       cursorY = mouseY;
       cursor.style.opacity = '1';
       started = true;
     }
-  });
 
+    // Determine cursor state from the element under pointer
+    // Using closest() on the actual target is more reliable than bubbling over/out
+    const el = e.target;
+    if (el.closest('.gallery-item')) {
+      cursor.setAttribute('data-state', 'photo');
+    } else if (el.closest('a, button, .c-tag, .tool-item')) {
+      cursor.setAttribute('data-state', 'hover');
+    } else {
+      cursor.removeAttribute('data-state');
+    }
+  }, { passive: true });
+
+  // ---- Smooth follow via RAF ----
   function animateCursor() {
     cursorX += (mouseX - cursorX) * SMOOTHING;
     cursorY += (mouseY - cursorY) * SMOOTHING;
     cursor.style.left = `${cursorX}px`;
-    cursor.style.top = `${cursorY}px`;
+    cursor.style.top  = `${cursorY}px`;
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
 
-  // Gallery items → "photo" state
-  // Use event delegation — items are dynamically rendered
-  const galleryWrap = document.getElementById('galleryWrap');
-  if (galleryWrap) {
-    galleryWrap.addEventListener('mouseover', e => {
-      if (e.target.closest('.gallery-item')) {
-        cursor.setAttribute('data-state', 'photo');
-      }
-    });
-    galleryWrap.addEventListener('mouseout', e => {
-      if (e.target.closest('.gallery-item')) {
-        cursor.removeAttribute('data-state');
-      }
-    });
-  }
-
-  // Clickable elements → "hover" state
-  document.addEventListener('mouseover', e => {
-    const target = e.target.closest('a, button, .c-tag, .tool-item');
-    if (target && !cursor.getAttribute('data-state')) {
-      cursor.setAttribute('data-state', 'hover');
-    }
-  });
-  document.addEventListener('mouseout', e => {
-    const target = e.target.closest('a, button, .c-tag, .tool-item');
-    if (target && cursor.getAttribute('data-state') === 'hover') {
-      cursor.removeAttribute('data-state');
-    }
-  });
-
-  // Hide when leaving viewport
+  // ---- Hide when pointer leaves viewport ----
   document.addEventListener('mouseleave', () => {
     cursor.style.opacity = '0';
+    cursor.removeAttribute('data-state');
   });
   document.addEventListener('mouseenter', () => {
     if (started) cursor.style.opacity = '1';
   });
 
-  // Click pop
+  // ---- Click pop ----
   document.addEventListener('mousedown', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(0.65)';
+    cursor.style.transform = 'translate(-50%, -50%) scale(0.6)';
   });
   document.addEventListener('mouseup', () => {
     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -291,7 +260,7 @@ function initCursor() {
 }
 
 // ===========================
-// RESIZE — re-init gallery on breakpoint change
+// RESIZE — re-init gallery on breakpoint change only
 // ===========================
 let resizeTimer;
 let lastIsMobile = isMobile();
@@ -300,12 +269,11 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     const nowMobile = isMobile();
-    if (nowMobile === lastIsMobile) return; // only re-init on breakpoint cross
+    if (nowMobile === lastIsMobile) return;
     lastIsMobile = nowMobile;
 
     const track = document.getElementById('galleryTrack');
     if (!track) return;
-    track.style.animation = 'none';
     track.style.transform = '';
     track.innerHTML = '';
     buildGallery();

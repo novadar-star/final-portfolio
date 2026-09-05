@@ -937,6 +937,55 @@ button:focus-visible {
 }
 
 /* ===========================
+   CUSTOM CURSOR — global (all pages)
+   about.css extends this with about-page–specific states
+   =========================== */
+
+body.cursor-active { cursor: none; }
+body.cursor-active a,
+body.cursor-active button { cursor: none; }
+
+.nova-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease;
+  display: none;
+}
+
+.cursor-star {
+  width: 100%;
+  height: 100%;
+  color: var(--green);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 3px var(--green));
+  transition: transform 0.2s ease;
+}
+
+.nova-cursor[data-state="hover"] { width: 26px; height: 26px; }
+.nova-cursor[data-state="hover"] .cursor-star {
+  animation: cursorPulse 0.55s ease infinite alternate;
+}
+
+@keyframes cursorPulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-star    { animation: none !important; }
+  .nova-cursor    { display: none !important; }
+  body.cursor-active,
+  body.cursor-active a,
+  body.cursor-active button { cursor: auto; }
+}
+
+/* ===========================
    SCROLL REVEAL
    (used sparingly — only project entries)
    =========================== */
