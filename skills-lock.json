@@ -1,11 +1,47 @@
 {
   "version": 1,
   "skills": {
+    "animation-vocabulary": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/animation-vocabulary/SKILL.md",
+      "computedHash": "9aaad861dd54dab7c9bb3fb5bd4c539078d8d06c14530d92d49cdb1509bfa937"
+    },
+    "design-taste-frontend": {
+      "source": "leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "computedHash": "899b84384f74f540ea5284d9b2e9234e050998b42eacc805410b518d4226c0b3"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "d55800186ff7651be356015b103047b9dd84f83172cc257042a322491df3502e"
+    },
+    "improve-animations": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/improve-animations/SKILL.md",
+      "computedHash": "b913ec7ef2b1aa900060eb6e5dbdccc94b6ea631059ec3474c4b61e2ffefeeb4"
+    },
     "interactive-portfolio": {
       "source": "davila7/claude-code-templates",
       "sourceType": "github",
       "skillPath": "cli-tool/components/skills/creative-design/interactive-portfolio/SKILL.md",
       "computedHash": "211aa900b0bfb9833bab025a313b02438ff911965df803b2c8135c5b5d653ec7"
+    },
+    "review-animations": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-animations/SKILL.md",
+      "computedHash": "8c2befeb28bb484bf2de7b2fc228774857e266d32a65d76895e78651a536d8cf"
     },
     "supabase": {
       "source": "bobmatnyc/claude-mpm-skills",

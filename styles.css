@@ -1,7 +1,7 @@
 /* ===========================
    nova. — personal site
-   DM Sans (body/headings) + Playfair Display (italic accent)
-   Palette: off-white base, near-black ink, matcha green accent
+   Space Grotesk (body/headings) + Playfair Display (italic accent)
+   Palette: off-white base, near-black ink, warm crimson accent
    Principle: authored, not systematized
    =========================== */
 
@@ -10,7 +10,7 @@
    =========================== */
 
 :root {
-  --paper:       #F7F6F2;
+  --paper:       #FFF5F6;   /* warm blush — subtle pink undertone, not pure white */
   --ink:         #1C1C1A;
   --ink-2:       #4A4A46;
   --ink-3:       #8A8A84;
@@ -20,7 +20,7 @@
   --hairline-2:  rgba(28, 28, 26, 0.06);
   --card-bg:     #FFFFFF;
 
-  --font:        'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font:        'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-italic: 'Playfair Display', Georgia, serif;
 
   --radius:      4px;
@@ -97,7 +97,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
@@ -166,51 +166,38 @@ button:focus-visible {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(247, 246, 242, 0.93);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--hairline);
-  padding: 14px 0;
+  background: rgba(247, 246, 242, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: none;
+  padding: 18px 0;
 }
 
 [data-theme="dark"] .nav {
-  background: rgba(19, 19, 16, 0.94);
+  background: rgba(19, 19, 16, 0.88);
 }
 
 .nav-inner {
-  max-width: 720px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.nav-logo {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--green);
-  letter-spacing: -0.02em;
-  text-decoration: none;
+/* Left group — primary navigation */
+.nav-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 32px;
 }
 
-.nav-avatar {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top;
-  border: 1.5px solid var(--green-dim);
-  flex-shrink: 0;
-}
-
-.nav-links {
+/* Right group — secondary + utility */
+.nav-right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
 }
 
 .nav-link {
@@ -340,7 +327,7 @@ button:focus-visible {
   letter-spacing: 0.08em;
   margin-bottom: 28px;
   padding-top: 48px;
-  border-top: 1px solid var(--hairline);
+  /* border-top removed — nova-phase3.css owns the animated gradient line via ::before */
 }
 
 /* Page-level headings */
@@ -401,6 +388,13 @@ button:focus-visible {
   background: #181818;
   padding: 4px;
   border-color: #2a2a2a;
+}
+
+/* Two-photo grid inside a project visual (e.g. community entry) */
+.home-project-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
 }
 
 .project-video {
@@ -487,6 +481,46 @@ button:focus-visible {
 
 .home-contact {
   padding-bottom: 64px;
+  padding-top: 32px;
+}
+
+/* Display-sized "say hi." — Playfair italic, not a section heading */
+.contact-display {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+/* Warm accent on the display line */
+[data-theme="dark"] .contact-display { color: var(--ink); }
+
+/* ===========================
+   TOOLS INLINE — stripped-down single line
+   =========================== */
+
+.tools-inline {
+  padding: 40px 0 8px;
+  border-top: 1px solid var(--hairline);
+}
+
+.tools-inline-text {
+  font-size: 0.82rem;
+  color: var(--ink-3);
+  line-height: 1.8;
+}
+
+.tools-inline-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nova-accent, var(--ink-3));
+  margin-right: 8px;
 }
 
 .contact-text {
@@ -617,7 +651,7 @@ button:focus-visible {
 .project-link {
   text-decoration: none;
   font-size: 0.85rem;
-  opacity: 0.4;
+  opacity: 0.55;
   transition: opacity 0.15s;
   vertical-align: middle;
   margin-left: 4px;
@@ -889,7 +923,7 @@ button:focus-visible {
 }
 
 .heart-float.pop .heart-icon {
-  animation: heartPop 0.3s ease;
+  animation: heartPop 0.28s ease-out;
 }
 
 @keyframes heartPop {
@@ -973,6 +1007,12 @@ body.cursor-active button { cursor: none; }
   animation: cursorPulse 0.55s ease infinite alternate;
 }
 
+.nova-cursor[data-state="press"] {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+}
+
 @keyframes cursorPulse {
   from { transform: scale(1); }
   to   { transform: scale(1.3); }
@@ -993,8 +1033,11 @@ body.cursor-active button { cursor: none; }
 
 .reveal {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  transform: translateY(20px);
+  transition:
+    opacity   0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 
 .reveal.visible {
@@ -1007,9 +1050,9 @@ body.cursor-active button { cursor: none; }
    =========================== */
 
 @media (max-width: 768px) {
-  .container { padding: 0 24px; }
-  .nav-inner  { padding: 0 24px; }
-  .footer-inner { padding: 0 24px; }
+  .container { padding: 0 28px; }
+  .nav-inner  { padding: 0 28px; }
+  .footer-inner { padding: 0 28px; }
 
   .hero {
     grid-template-columns: 1fr;
@@ -1064,8 +1107,16 @@ body.cursor-active button { cursor: none; }
 
   .timeline-photo { height: 160px; }
 
-  .nav-links { gap: 14px; }
+  .nav-left  { gap: 20px; }
+  .nav-right { gap: 16px; }
   .nav-link  { font-size: 0.8rem; }
+
+  /* Prevent nav overflow on narrow phones — allow wrapping */
+  .nav-inner {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 0 28px;
+  }
 }
 
 /* ===========================
@@ -1090,6 +1141,12 @@ body.cursor-active button { cursor: none; }
 
   .heart-float  { bottom: 16px; right: 16px; padding: 8px 12px; }
 
+  /* At 480px, nav links may still be tight — compress further */
+  .nav-left  { gap: 14px; }
+  .nav-right { gap: 12px; }
+  .nav-link  { font-size: 0.78rem; min-height: 40px; }
+  .theme-toggle { width: 32px; height: 32px; min-width: 32px; }
+
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
@@ -1103,8 +1160,10 @@ body.cursor-active button { cursor: none; }
   .footer-inner { padding: 0 16px; }
 
   .hero-heading { font-size: 1.45rem; }
-  .nav-links { gap: 10px; }
-  .nav-link  { font-size: 0.76rem; }
+  .nav-left  { gap: 10px; }
+  .nav-right { gap: 10px; }
+  .nav-link  { font-size: 0.72rem; }
+  .photo-frame { width: 90px; }
 }
 
 /* ===========================
@@ -1563,4 +1622,68 @@ body.cursor-active button { cursor: none; }
   margin-top: -28px;
   margin-bottom: 40px;
   letter-spacing: 0.02em;
+}
+
+/* ===========================
+   RESPONSIVE — 1280px (13" laptop)
+   Nudge max-width down slightly so lines don't
+   stretch too wide on mid-size screens.
+   =========================== */
+
+@media (max-width: 1280px) and (min-width: 769px) {
+  .container    { max-width: 660px; }
+  .nav-inner    { padding: 0 40px; }
+  .footer-inner { max-width: 660px; }
+}
+
+/* ===========================
+   RESPONSIVE — 1024px (tablet landscape / small laptop)
+   Introduce breathing room before the hard 768px collapse.
+   Two-column layouts get tighter but stay two-column.
+   =========================== */
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container    { max-width: 100%; padding: 0 40px; }
+  .nav-inner    { padding: 0 40px; }
+  .footer-inner { max-width: 100%; padding: 0 40px; }
+
+  .hero {
+    grid-template-columns: 1fr 128px;
+    gap: 32px;
+    padding: 52px 0 40px;
+  }
+
+  .photo-frame { width: 128px; }
+
+  .home-project { gap: 24px; padding: 30px 0; }
+  .home-project-text p { font-size: 0.875rem; }
+
+  .project-case--split {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 24px;
+  }
+
+  .exp-entry {
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+  }
+
+  .tools-grid { gap: 16px 32px; }
+
+  .page-heading    { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 40px; }
+  .section-heading { padding-top: 40px; }
+  .page-section    { padding: 48px 0 72px; }
+}
+
+/* ===========================
+   RESPONSIVE — nav overflow guard
+   At narrower viewports the 5-item nav can get tight.
+   Shrink gaps + font-size progressively before the
+   768px breakpoint kicks in.
+   =========================== */
+
+@media (max-width: 860px) and (min-width: 769px) {
+  .nav-left  { gap: 20px; }
+  .nav-right { gap: 16px; }
+  .nav-link  { font-size: 0.8rem; }
 }

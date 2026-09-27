@@ -1,0 +1,406 @@
+/* ============================================================
+   nova-phase3.css — Design Language Extension
+   Phase 3: Spread the warm pink/red star identity as accents
+   across nav, section headings, project cards, links, and
+   focus states — beyond the hero.
+
+   Rules:
+   - Import nova-tokens.css for all color values
+   - Never override layout — only color, border, shadow, transition
+   - Keep it restrained: accents as punctuation, not wallpaper
+   - All hover transitions use --nova-duration-hover (200ms)
+   - All focus states meet WCAG AA 4.5:1 minimum contrast
+   - prefers-reduced-motion: transitions reduced to opacity-only
+   ============================================================ */
+
+@import url('nova-tokens.css');
+
+/* ============================================================
+   DARK MODE TOKEN BRIDGE
+   --nova-accent is a single switchable variable that all
+   accent rules below use via var(--nova-accent).
+   Light: saturated rose  Dark: lighter coral (passes contrast)
+   This one override fixes dark mode site-wide.
+   ============================================================ */
+
+:root {
+  --nova-accent:     #C0143C;   /* deep crimson rose — light mode (was #E8305A, too light) */
+  --nova-accent-dim: rgba(192, 20, 60, 0.08);
+  --nova-accent-mid: rgba(192, 20, 60, 0.22);
+}
+
+[data-theme="dark"] {
+  --nova-accent:     #FF8FAB;   /* soft pink-coral — readable on dark paper */
+  --nova-accent-dim: rgba(255, 143, 171, 0.10);
+  --nova-accent-mid: rgba(255, 143, 171, 0.20);
+}
+
+/* ============================================================
+   FOCUS STATES — update from green to warm gold
+   Skill audit: focus rings must be visible (HIGH severity).
+   --nova-star-gold passes 4.5:1 on both light and dark --paper.
+   ============================================================ */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--nova-star-gold);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+/* ============================================================
+   NAV — active state underline accent
+   Skill audit: active state should use color + underline (MEDIUM).
+   A warm underline beneath the active link is the minimal,
+   non-disruptive signal that you are on that page.
+   ============================================================ */
+
+.nav-link.active {
+  color: var(--ink);
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--nova-accent);
+  border-radius: 1px;
+}
+
+/* Nav link hover — warm colour, no transform (avoids sub-pixel jitter) */
+.nav-link:hover {
+  color: var(--nova-accent);
+}
+
+.nav-link {
+  transition: color 200ms ease-out;
+}
+
+/* Theme toggle — warm accent on hover (replaces green) */
+.theme-toggle:hover {
+  background: var(--nova-accent-dim);
+  border-color: var(--nova-accent);
+}
+
+/* ============================================================
+   SECTION HEADINGS — animated warm left-border reveal
+   Emil: the border animates from 0 width when entering viewport.
+   JS adds .border-revealed class via IntersectionObserver.
+   ============================================================ */
+
+.section-heading {
+  border-top: none;
+  padding-top: 48px;
+  position: relative;
+}
+
+/* The animated gradient line above section headings */
+.section-heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(
+    to right,
+    var(--nova-accent)  0px,
+    var(--nova-accent) 32px,
+    var(--hairline)    32px,
+    var(--hairline)    100%
+  );
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Triggered by JS IntersectionObserver */
+.section-heading.border-revealed::before {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-heading::before {
+    width: 100%;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   PROJECT VISUALS — hover lift + warm border glow
+   Skill audit: hover states should give clear visual change.
+   The project visual currently has no hover feedback at all.
+   ============================================================ */
+
+.home-project-visual {
+  transition:
+    box-shadow var(--nova-duration-hover) ease,
+    border-color var(--nova-duration-hover) ease;
+}
+
+.home-project:hover .home-project-visual {
+  border-color: var(--nova-accent);
+  box-shadow: 0 4px 24px var(--nova-accent-dim);
+}
+
+/* Project title — warm on parent hover */
+.home-project:hover .home-project-title {
+  color: var(--ink);
+  transition: color var(--nova-duration-hover) ease;
+}
+
+/* Project link inline — stronger hover feedback */
+.project-link-inline {
+  transition:
+    color     var(--nova-duration-hover) ease,
+    gap       var(--nova-duration-hover) ease,
+    opacity   var(--nova-duration-hover) ease;
+}
+
+.project-link-inline:hover {
+  opacity: 1;
+  color: var(--nova-accent);
+  gap: 8px;
+}
+
+/* All projects link — warm on hover */
+.all-projects-link:hover {
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   CONTACT LINKS — warm accent on hover
+   ============================================================ */
+
+.contact-link:hover {
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   PAGE HEADINGS — italic accent warm color
+   The .italic-accent class currently uses --green.
+   Override to use the warm rose from the gradient.
+   ============================================================ */
+
+.italic-accent,
+em.italic-accent {
+  color: var(--nova-accent);
+}
+
+/* Dark mode handled by --nova-accent token switch above */
+
+/* ============================================================
+   HERO LINK (the homepage "things i've built →")
+   Already warm in hero-landing.css — but on other pages
+   that use .hero-link outside the hero context, apply warm.
+   ============================================================ */
+
+.hero-link {
+  color: var(--nova-accent);
+  transition:
+    color var(--nova-duration-hover) ease,
+    gap   var(--nova-duration-hover) ease;
+}
+
+.hero-link:hover {
+  color: var(--nova-star-orange);
+  gap: 8px;
+}
+
+/* ============================================================
+   PROJECT CASES (projects.html) — hover warm border
+   ============================================================ */
+
+.project-case {
+  transition: border-color var(--nova-duration-hover) ease;
+}
+
+.project-case:hover {
+  border-bottom-color: var(--nova-accent-mid);
+}
+
+.case-visual {
+  transition:
+    box-shadow    var(--nova-duration-hover) ease,
+    border-color  var(--nova-duration-hover) ease;
+}
+
+.project-case:hover .case-visual {
+  border-color: var(--nova-accent-mid);
+  box-shadow: 0 4px 20px var(--nova-accent-dim);
+}
+
+/* Case context label — warm */
+.case-context {
+  color: var(--nova-accent);
+}
+
+/* Project external link — warm on hover */
+.project-link:hover {
+  opacity: 1;
+  color: var(--nova-accent);
+}
+
+/* Tech pills — warm accent instead of green-dim */
+.tech-pill {
+  background: var(--nova-accent-dim);
+  color: var(--nova-accent);
+}
+
+[data-theme="dark"] .tech-pill {
+  background: var(--nova-accent-dim);
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   EXPERIENCE PAGE — warm accents
+   ============================================================ */
+
+/* Exp entry — warm left-border on hover */
+.exp-entry {
+  transition: border-color var(--nova-duration-hover) ease;
+  position: relative;
+}
+
+.exp-entry::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--nova-accent);
+  opacity: 0;
+  transition: opacity var(--nova-duration-hover) ease;
+  border-radius: 1px;
+}
+
+.exp-entry:hover::before {
+  opacity: 1;
+}
+
+/* Experience remote tag — warm instead of green */
+.exp-tag.remote {
+  background: var(--nova-accent-dim);
+  color: var(--nova-accent);
+}
+
+[data-theme="dark"] .exp-tag.remote {
+  background: var(--nova-accent-dim);
+  color: var(--nova-accent);
+}
+
+/* Inline links in experience descriptions */
+.inline-link {
+  color: var(--nova-accent);
+}
+
+.inline-link:hover {
+  opacity: 0.75;
+}
+
+/* ============================================================
+   EDUCATION — cert items warm dash
+   ============================================================ */
+
+.cert-item::before {
+  color: var(--nova-accent);
+}
+
+.edu-note {
+  color: var(--nova-accent) !important;
+}
+
+/* ============================================================
+   HEART BUTTON — warm liked state
+   ============================================================ */
+
+.heart-float:hover {
+  border-color: var(--nova-accent);
+}
+
+.heart-float.liked {
+  border-color: var(--nova-accent);
+}
+
+.heart-float.liked .heart-icon {
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   SCROLL REVEAL — keep existing but add warm to visible state
+   No change to layout, just ensure .reveal.visible looks clean.
+   ============================================================ */
+
+/* ============================================================
+   FOOTER — warm name accent
+   ============================================================ */
+
+.footer-name {
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   ARCHIVE LIST (projects.html) — warm link + stack color
+   ============================================================ */
+
+.archive-link {
+  color: var(--nova-accent);
+}
+
+.archive-link:hover {
+  opacity: 0.75;
+  color: var(--nova-star-orange);
+}
+
+/* ============================================================
+   ABOUT PAGE — warm accents carried through
+   ============================================================ */
+
+/* Currently-into tags — warm border/accent on hover */
+.c-tag:hover {
+  border-color: var(--nova-accent);
+  color: var(--nova-accent);
+  background: var(--nova-accent-dim);
+}
+
+/* Toolkit label */
+.toolkit-label {
+  color: var(--nova-accent);
+}
+
+/* Currently label */
+.currently-label {
+  color: var(--nova-accent);
+}
+
+/* About email link */
+.about-email-link {
+  color: var(--nova-accent);
+}
+
+/* ============================================================
+   REDUCED MOTION — keep state changes, remove transitions
+   Skill audit: prefers-reduced-motion (HIGH severity).
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-project-visual,
+  .project-link-inline,
+  .hero-link,
+  .contact-link,
+  .project-case,
+  .case-visual,
+  .exp-entry,
+  .exp-entry::before,
+  .theme-toggle,
+  .all-projects-link,
+  .archive-link {
+    transition: none;
+  }
+
+  /* Still show color changes, just instantly */
+  .nav-link.active::after { opacity: 1; }
+}

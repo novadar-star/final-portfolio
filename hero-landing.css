@@ -1,0 +1,410 @@
+/* ============================================================
+   hero-landing.css  — Phase 3 redesign
+   Name-first centered hero. Photo removed.
+   Grain texture + stronger overlay for text legibility.
+   Nav clearly readable over gradient.
+
+   All color values reference nova-tokens.css.
+   ============================================================ */
+
+@import url('nova-tokens.css');
+
+/* ============================================================
+   HERO WRAPPER — full viewport, full bleed
+   Overrides the .hero grid from styles.css
+   ============================================================ */
+
+.hero-landing {
+  /* Reset the two-column grid from .hero in styles.css */
+  display: flex;
+  grid-template-columns: unset;
+  gap: unset;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  flex-direction: column;
+  text-align: center;
+
+  /* Background: lighter overlay — let the warm pink/orange image breathe */
+  /* background-color fallback ensures white text is never on white bg */
+  background-color: var(--nova-grad-deep);
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(80,  5, 20, 0.30) 0%,
+      rgba(50,  0, 12, 0.18) 35%,
+      rgba(40,  0, 10, 0.22) 65%,
+      rgba(20,  0,  6, 0.45) 100%
+    ),
+    url('background-image.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* ============================================================
+   GRAIN TEXTURE OVERLAY
+   SVG turbulence filter rendered via a pseudo-element.
+   Adds the grainy film feel over the star image.
+   Skill rec: "paper noise texture" for editorial identity.
+   ============================================================ */
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* ============================================================
+   VIGNETTE LAYERS — edge darkening
+   ============================================================ */
+
+.hero-landing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 100% 85% at 50% 50%,
+    transparent 50%,
+    rgba(30, 0, 10, 0.22) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Bottom fade into page */
+.hero-landing::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(15, 0, 5, 0.40) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   HERO INNER — centered, no columns
+   Skill: "single CTA focus, large typography, whitespace"
+   ============================================================ */
+
+.hero-landing-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0 32px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* ============================================================
+   EYEBROW — real name, small, above the big "Nova."
+   ============================================================ */
+
+.hero-eyebrow {
+  font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 235, 220, 0.90);
+  margin-bottom: 16px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.40);
+}
+
+/* ============================================================
+   HERO HEADING — the massive "Nova."
+   Skill: H1 at 4–5× body size, tracking tight, edge-to-edge feel
+   On a bright background: dark shadow carries the text
+   ============================================================ */
+
+.hero-landing .hero-heading {
+  font-family: var(--font-italic);
+  font-size: clamp(5rem, 18vw, 14rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin: 0 0 28px 0;
+  color: #fff8f5;
+
+  /* Strong dark shadow makes white text pop on any brightness */
+  text-shadow:
+    0 0  40px rgba(120, 10, 30, 0.45),
+    0  3px 10px rgba(0,   0,  0, 0.55),
+    0  1px  3px rgba(0,   0,  0, 0.35);
+}
+
+/* The italic "Nova" inside the heading */
+.hero-name-accent {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--nova-text-primary);
+}
+
+/* ============================================================
+   HERO SUBTEXT
+   ============================================================ */
+
+.hero-landing .hero-sub {
+  font-size: clamp(0.88rem, 1.6vw, 1rem);
+  color: rgba(255, 240, 228, 0.95);
+  line-height: 1.65;
+  max-width: 46ch;
+  margin-bottom: 8px;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.50);
+}
+
+/* Second subline slightly dimmer */
+.hero-sub--detail {
+  color: rgba(255, 225, 205, 0.78);
+  font-size: clamp(0.78rem, 1.3vw, 0.88rem);
+  margin-bottom: 28px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.40);
+}
+
+/* ============================================================
+   HERO ENTRANCE — single orchestrated load-in
+   Eyebrow → Name → Sub → CTA. One moment, no loop.
+   Only fires on page load (animation-fill-mode: both).
+   Emil: rare/first-time event = delight allowed.
+   ============================================================ */
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-eyebrow {
+    animation: hero-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
+  }
+
+  .hero-landing .hero-heading {
+    animation: hero-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms both;
+  }
+
+  .hero-landing .hero-sub:first-of-type {
+    animation: hero-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 420ms both;
+  }
+
+  .hero-sub--detail {
+    animation: hero-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+  }
+
+  .hero-landing .hero-link {
+    animation: hero-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) 580ms both;
+  }
+}
+
+/* ============================================================
+   HERO CTA LINK
+   Emil: ease-out spring on gap, press state (:active scale).
+   ============================================================ */
+
+.hero-landing .hero-link {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  font-weight: 500;
+  color: var(--nova-star-cream);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.01em;
+  margin-top: 20px;
+  position: relative;
+  padding-bottom: 2px;
+
+  /* Underline that slides in from left on hover */
+  background-image: linear-gradient(
+    to right,
+    var(--nova-star-gold) 0%,
+    var(--nova-star-gold) 100%
+  );
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition:
+    background-size  350ms cubic-bezier(0.16, 1, 0.3, 1),
+    color            200ms ease-out,
+    transform        150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: none;
+}
+
+.hero-landing .hero-link:hover {
+  background-size: 100% 1px;
+  color: var(--nova-star-gold);
+}
+
+/* Arrow nudge on hover */
+.hero-landing .hero-link::after {
+  content: '→';
+  display: inline-block;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-landing .hero-link:hover::after {
+  transform: translateX(5px);
+}
+
+/* Tactile press */
+.hero-landing .hero-link:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* ============================================================
+   SPARKLE DOTS
+   Asymmetric scale ranges per dot (Emil: vary personality).
+   Easing: ease-out curve so the pop feels energetic.
+   ============================================================ */
+
+.hero-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: sparkle-pulse var(--nova-duration-sparkle) cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+
+/* Each sparkle gets its own scale range for variety */
+.hero-sparkle--a { top: 15%; left: 12%;  width: 6px; height: 6px; background: var(--nova-star-yellow); box-shadow: 0 0 14px 5px var(--nova-glow-gold);   animation-delay: 0s;     animation-name: sparkle-a; }
+.hero-sparkle--b { top: 62%; left: 58%;  width: 5px; height: 5px; background: var(--nova-star-cream);  box-shadow: 0 0 12px 4px var(--nova-glow-cream);  animation-delay: 1200ms; animation-name: sparkle-b; }
+.hero-sparkle--c { top: 22%; right: 14%; width: 4px; height: 4px; background: var(--nova-star-gold);   box-shadow: 0 0 10px 3px var(--nova-glow-orange); animation-delay: 600ms;  animation-name: sparkle-a; }
+.hero-sparkle--d { top: 75%; left: 10%;  width: 4px; height: 4px; background: var(--nova-star-cream);  box-shadow: 0 0 9px  3px var(--nova-glow-peach);  animation-delay: 1800ms; animation-name: sparkle-c; }
+.hero-sparkle--e { top:  8%; right: 22%; width: 5px; height: 5px; background: var(--nova-star-yellow); box-shadow: 0 0 12px 4px var(--nova-glow-cream);  animation-delay: 2400ms; animation-name: sparkle-b; }
+.hero-sparkle--f { top: 45%; left:  5%;  width: 3px; height: 3px; background: var(--nova-star-cream);  box-shadow: 0 0 8px  2px var(--nova-glow-peach);  animation-delay: 900ms;  animation-name: sparkle-c; }
+
+/* Subtle pulser — barely moves */
+@keyframes sparkle-a {
+  0%   { opacity: 0.35; transform: scale(0.82); }
+  100% { opacity: 1;    transform: scale(1.25); }
+}
+/* Normal pulser */
+@keyframes sparkle-b {
+  0%   { opacity: 0.25; transform: scale(0.70); }
+  100% { opacity: 1;    transform: scale(1.45); }
+}
+/* Dramatic pulser — one big bright dot */
+@keyframes sparkle-c {
+  0%   { opacity: 0.15; transform: scale(0.55); }
+  100% { opacity: 0.95; transform: scale(1.80); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-sparkle { animation: none; opacity: 0.6; }
+}
+
+/* ============================================================
+   NAV — fully transparent on hero, dark mode safe
+   The .hero-landing-page class overrides the default
+   light/dark opaque backgrounds so no block appears over
+   the warm gradient image.
+   ============================================================ */
+
+.hero-landing-page .nav {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: none;
+  /* Fade in a subtle dark bg only when scrolled past hero */
+  transition: background 300ms ease-out, backdrop-filter 300ms ease-out;
+}
+
+/* JS adds .nav--scrolled once hero is out of view */
+.hero-landing-page .nav.nav--scrolled {
+  background: rgba(18, 2, 8, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .hero-landing-page .nav.nav--scrolled {
+  background: rgba(247, 244, 242, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.hero-landing-page .nav-link {
+  color: rgba(255, 210, 195, 0.80);
+}
+
+.hero-landing-page .nav-link:hover {
+  color: var(--nova-star-cream);
+}
+
+/* Light mode scrolled — nav links must be dark readable ink */
+[data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link {
+  color: var(--ink-3);
+}
+
+[data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link:hover {
+  color: var(--ink);
+}
+
+[data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link.active {
+  color: var(--ink);
+}
+
+.hero-landing-page .nav-link.active {
+  color: var(--nova-star-cream);
+}
+
+.hero-landing-page .nav-link.active::after {
+  background: var(--nova-star-gold);
+}
+
+.hero-landing-page .theme-toggle {
+  border-color: rgba(255, 160, 140, 0.30);
+}
+
+.hero-landing-page .theme-toggle:hover {
+  background: rgba(255, 100, 80, 0.18);
+  border-color: rgba(255, 200, 180, 0.55);
+}
+
+.hero-landing-page .toggle-icon {
+  color: rgba(255, 210, 200, 0.85);
+}
+
+/* ============================================================
+   CURSOR — warm gold on hero
+   ============================================================ */
+
+.hero-landing-page .cursor-star {
+  color: var(--nova-star-gold);
+  filter: drop-shadow(0 0 4px var(--nova-glow-gold));
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .hero-landing .hero-heading { font-size: clamp(4.5rem, 16vw, 10rem); }
+}
+
+@media (max-width: 768px) {
+  .hero-landing-inner       { padding: 0 24px; }
+  .hero-eyebrow             { font-size: 0.65rem; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .hero-landing .hero-sub   { font-size: 0.875rem; max-width: 100%; }
+  .hero-sub--detail         { display: none; } /* trim on small screens */
+}
+
+@media (max-width: 480px) {
+  .hero-landing-inner       { padding: 0 20px; }
+  .hero-landing .hero-link  { font-size: 0.82rem; padding: 9px 20px; }
+}

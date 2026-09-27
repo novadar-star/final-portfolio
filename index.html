@@ -4,32 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="pics/pic.jpg">
 
-  <!-- Primary meta -->
-  <title>Darla Nova Sumanting — AI Automation &amp; Cloud Developer · nova.</title>
-  <meta name="description" content='Darla "Nova" Sumanting — CS student, automation builder, cloud community lead. Manila, PH.'>
+  <title>Darla Nova Sumanting · nova.</title>
+  <meta name="description" content='Darla "Nova" Sumanting. CS student in Manila who builds automations, works in AWS, and runs a campus cloud community.'>
   <link rel="canonical" href="https://novaautomates.vercel.app/">
 
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
-  <meta property="og:description" content='Darla "Nova" Sumanting builds automations, runs a cloud community, and figures things out one pipeline at a time.'>
+  <meta property="og:title"       content="Darla Nova Sumanting · nova.">
+  <meta property="og:description" content='CS student in Manila. Automations, AWS, and a campus cloud community.'>
   <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
   <meta property="og:url"         content="https://novaautomates.vercel.app/">
   <meta property="og:site_name"   content="nova.">
 
-  <!-- Twitter / X card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Darla Nova Sumanting — AI Automation &amp; Cloud Developer">
-  <meta name="twitter:description" content='CS student, automation builder, cloud community lead. 3× AWS Certified. Manila, PH.'>
+  <meta name="twitter:title"       content="Darla Nova Sumanting · nova.">
+  <meta name="twitter:description" content="CS student in Manila. Automations, AWS, and a campus cloud community.">
   <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
 
-  <!-- Google verification -->
   <meta name="google-site-verification" content="OWQPrIKn8fXrCKGUFpf6AUjx1aLoI8xczasp41Q_lu4">
 
-  <!-- Inline theme — prevents dark/light flash before CSS loads -->
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
@@ -38,35 +32,28 @@
     })();
   </script>
 
-  <!-- Font preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nova-phase3.css">
+  <link rel="stylesheet" href="hero-landing.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
-<body>
-
-  <!-- Custom cursor — desktop only, hidden on touch -->
-  <div class="nova-cursor" id="novaCursor" aria-hidden="true">
-    <svg class="cursor-star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-    </svg>
-  </div>
+<body class="hero-landing-page">
 
   <a href="#main" class="skip-link">skip to content</a>
 
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="nova. home">
-        <img src="pics/nova-photo.jpg" alt="" class="nav-avatar" aria-hidden="true">
-        nova.
-      </a>
-      <div class="nav-links">
+      <div class="nav-left">
         <a href="index.html" class="nav-link active" aria-current="page">home</a>
         <a href="projects.html" class="nav-link">projects</a>
         <a href="experience.html" class="nav-link">experience</a>
+      </div>
+      <div class="nav-right">
         <a href="about.html" class="nav-link">about me</a>
+        <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="nav-link">resume</a>
         <button class="theme-toggle" aria-label="Toggle dark mode">
           <span class="toggle-icon" aria-hidden="true">&#9790;</span>
         </button>
@@ -74,34 +61,27 @@
     </div>
   </nav>
 
-  <main class="container" id="main">
+  <main id="main">
 
-    <!-- Identity — not a headline, not a job title -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero-text">
+    <section class="hero-landing" aria-labelledby="hero-heading">
+      <div class="hero-grain" aria-hidden="true"></div>
+
+      <div class="hero-landing-inner">
+        <p class="hero-eyebrow">darla &ldquo;nova&rdquo; sumanting, manila</p>
         <h1 class="hero-heading" id="hero-heading">
-          Darla <em class="italic-accent">"Nova"</em> Sumanting
+          <em class="hero-name-accent">Nova</em>.
         </h1>
         <p class="hero-sub">
-          CS student, automation builder, cloud community person.
+          CS student. i build automations, work in AWS, and run a campus cloud community.
         </p>
-        <p class="hero-sub">
-          most of what's on this site started as "i wonder if this works"
-          and ended up in production.
-        </p>
-        <a href="projects.html" class="hero-link">things i've built &rarr;</a>
-      </div>
-
-      <div class="hero-photo">
-        <div class="photo-frame">
-          <img src="pics/nova-photo.jpg" alt="Darla Nova Sumanting">
-        </div>
+        <a href="#work" class="hero-link">things i've built</a>
       </div>
     </section>
 
-    <!-- Two recent projects — different compositions, not cards -->
-    <section class="home-work" aria-labelledby="work-heading">
-      <h2 class="section-heading" id="work-heading">two things i built recently</h2>
+    <div class="container">
+
+    <section class="home-work" id="work" aria-labelledby="work-heading">
+      <h2 class="section-heading" id="work-heading">things i've made</h2>
 
       <div class="home-projects">
 
@@ -114,17 +94,44 @@
             >
           </div>
           <div class="home-project-text">
-            <span class="project-meta">automation &middot; n8n &middot; 2026</span>
-            <h3 class="home-project-title">AI job scraper &amp; custom output parser</h3>
+            <p class="project-meta">automation, n8n, 2026</p>
+            <h3 class="home-project-title">AI job scraper and a parser I still reuse</h3>
             <p>
-              the pipeline scrapes job listings, runs an AI agent to score them
-              against my resume, and posts results to Slack. the part that took
-              longest wasn't the scraping. it was that the AI kept returning malformed JSON,
-              so i wrote a parser: strip markdown fences, try JSON.parse,
-              fall back to regex, apply safe defaults if everything fails.
-              that parser now lives in every AI workflow i build.
+              applying to jobs was repetitive, so i built a Slack-triggered pipeline
+              that scrapes listings, scores them against my resume, and posts what
+              is actually worth opening. the long part was not the scraping.
+              the model kept returning messy JSON, so i wrote a parser: strip
+              markdown fences, try JSON.parse, fall back to regex, then safe defaults.
+              that parser now sits in every AI workflow i build.
             </p>
-            <a href="projects.html#ai-job-scraper" class="project-link-inline">full writeup &rarr;</a>
+            <a href="projects.html#ai-job-scraper" class="project-link-inline">the writeup</a>
+          </div>
+        </article>
+
+        <article class="home-project home-project--photos reveal" id="home-community">
+          <div class="home-project-visual home-project-photos">
+            <img
+              src="pics/cloud9-workshop.jpg"
+              alt="Students at an AWS Student Builder Group workshop at Adamson University"
+              loading="lazy"
+            >
+            <img
+              src="pics/cloud9-team.jpg"
+              alt="AWS Student Builder Group team at a campus workshop"
+              loading="lazy"
+            >
+          </div>
+          <div class="home-project-text">
+            <p class="project-meta">community, AWS, 2025-now</p>
+            <h3 class="home-project-title">AWS Student Builder Group, Adamson</h3>
+            <p>
+              i run the campus cloud community: workshops on real AWS services,
+              onboarding, and the messy logistics of getting 120 people in a room.
+              i also help coordinate AWS Cloud Club Philippines across 40+ chapters.
+              the org site is static HTML on purpose, so the next officers can
+              actually edit it.
+            </p>
+            <a href="projects.html#awssbg-website" class="project-link-inline">the site</a>
           </div>
         </article>
 
@@ -141,116 +148,81 @@
             </video>
           </div>
           <div class="home-project-text">
-            <span class="project-meta">production app &middot; Next.js &middot; 2026</span>
+            <p class="project-meta">internship, Next.js, 2026</p>
             <h3 class="home-project-title">internal AI advisor, Eskwelabs</h3>
             <p>
-              three AI personas pulling context from Google Docs and streaming Gemini responses.
-              built during my internship, shipped to the actual team.
-              Google OAuth with domain allowlist, Supabase with Row Level Security.
-              getting the auth token to pass through correctly to Supabase was
-              the annoying part. it's been in daily use since.
+              three advisor personas pulling context from Google Docs and streaming
+              Gemini. Google OAuth with a domain allowlist, Supabase with row-level
+              security. getting the auth token through to Supabase was the annoying
+              part. it shipped, and the team still uses it.
             </p>
-            <a href="projects.html#ai-advisor" class="project-link-inline">details &rarr;</a>
+            <a href="projects.html#ai-advisor" class="project-link-inline">how it was built</a>
           </div>
         </article>
 
       </div>
 
-      <a href="projects.html" class="all-projects-link">all projects &rarr;</a>
+      <a href="projects.html" class="all-projects-link">more on the projects page</a>
     </section>
 
-    <!-- Slices of Nova — fragments, not cards -->
     <section class="slices" aria-labelledby="slices-heading">
-      <h2 class="section-heading" id="slices-heading">slices</h2>
-      <div class="slices-grid">
-
-        <div class="slice slice--community">
-          <span class="slice-label">community</span>
+      <!-- No section-heading — let these fragments float without a label -->
+      <div class="slices-grid" aria-label="Fragments about Nova" id="slices-heading">
+        <div class="slice slice--wide">
           <p>
-            running the AWS Student Builder Group at Adamson since 2025.
-            120+ members. workshops on actual AWS services, not just theory.
-            also Executive Secretary for AWS Cloud Club Philippines,
-            which means staying on top of 40+ chapters nationwide.
-          </p>
-        </div>
-
-        <div class="slice slice--interests">
-          <span class="slice-label">outside the laptop</span>
-          <p>
-            manga, niche anime communities, fanfiction.
-            not as a "fun fact" — it's genuinely what i do.
-            there's something interesting about how those communities
-            are built and maintained that i think about more than i should.
-          </p>
-        </div>
-
-        <div class="slice slice--certs">
-          <span class="slice-label">credentials</span>
-          <p>
-            3&times; AWS Certified (SAA, AI Practitioner, Cloud Practitioner).
-            DOST-SEI Scholar. Dean's List, Adamson CS.
-            the certifications exist mostly so i can explain
-            the confusing parts to the people in my community
+            3x AWS certified (Solutions Architect Associate, AI Practitioner,
+            Cloud Practitioner), DOST-SEI scholar, Dean's List. the certs exist
+            so i can explain the confusing parts to people in the community
             without guessing.
           </p>
         </div>
-
-        <div class="slice slice--belief">
-          <span class="slice-label">what i actually think</span>
+        <div class="slice slice--offset">
           <p>
-            being a try-hard about the things you care about is underrated.
-            most of the interesting things i've built started
-            because i got stubborn about a problem that didn't have to be my problem.
+            manga, niche anime corners, fanfiction. not a fun-fact slot.
+            i think a lot about how those spaces stay kind and keep going.
+            that curiosity shows up in how i run workshops too.
           </p>
         </div>
-
-      </div>
-    </section>
-
-    <!-- Tools — quick reference, not a credential list -->
-    <section class="tools-section" aria-labelledby="tools-heading">
-      <h2 class="section-heading" id="tools-heading">tools i keep reaching for</h2>
-      <div class="tools-grid">
-        <div class="tool-group">
-          <span class="tool-group-label">automation</span>
-          <p class="tool-list">n8n &middot; Webhooks &middot; API integration &middot; Google Sheets</p>
-        </div>
-        <div class="tool-group">
-          <span class="tool-group-label">AI / LLM</span>
-          <p class="tool-list">Gemini &middot; Amazon Bedrock &middot; Claude &middot; prompt engineering</p>
-        </div>
-        <div class="tool-group">
-          <span class="tool-group-label">cloud &amp; infra</span>
-          <p class="tool-list">AWS &middot; Supabase &middot; Vercel &middot; GitHub</p>
-        </div>
-        <div class="tool-group">
-          <span class="tool-group-label">code</span>
-          <p class="tool-list">JavaScript &middot; Python &middot; Next.js &middot; SQL</p>
+        <div class="slice slice--belief">
+          <p>
+            being a try-hard about the things you care about is underrated.
+            most of the useful things i have built started because i got stubborn
+            about a problem that did not have to be mine.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Tools — no heading, no grid. Just a tight inline list -->
+    <section class="tools-inline" aria-label="Tools I use">
+      <p class="tools-inline-text">
+        <span class="tools-inline-label">reach for:</span>
+        n8n &middot; webhooks &middot; Gemini &middot; Amazon Bedrock &middot; Claude &middot;
+        AWS &middot; Supabase &middot; Vercel &middot; JavaScript &middot; Python &middot; Next.js &middot; SQL
+      </p>
+    </section>
+
+    <!-- Contact — display-sized, no section-heading -->
     <section class="home-contact" aria-labelledby="contact-heading">
-      <h2 class="section-heading" id="contact-heading">say hi</h2>
+      <p class="contact-display" id="contact-heading">say hi.</p>
       <p class="contact-text">
-        if you want to talk about automation, cloud stuff, AI pipelines,
-        or anything mildly nerdy, find me here:
+        automations, AWS, student communities, or something mildly nerdy.
+        i like talking to people as much as i like wiring pipelines.
       </p>
       <div class="contact-links">
         <a href="mailto:darlanovasumanting06@gmail.com" class="contact-link">email</a>
         <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="contact-link">linkedin</a>
         <a href="https://github.com/novadar-star" target="_blank" rel="noopener noreferrer" class="contact-link">github</a>
-        <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="contact-link">resume</a>
       </div>
     </section>
 
+  </div>
   </main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-name">nova. / darla sumanting</span>
-      <p class="footer-credit">&copy; 2026 &middot; manila, ph</p>
+      <p class="footer-credit">&copy; 2026, manila</p>
     </div>
   </footer>
 
@@ -260,5 +232,6 @@
   </button>
 
   <script src="main.js"></script>
+  <script src="star-pop.js"></script>
 </body>
 </html>

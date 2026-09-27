@@ -18,13 +18,13 @@ const PHOTO_DATA = [
   {
     src:     'life/img2.webp',
     alt:     'Darla with members of the AWS Student Builder Group at Adamson University',
-    caption: 'the squad ✦',
+    caption: 'the squad',
     meta:    'adamson · 2025',
   },
   {
     src:     'life/img3.webp',
     alt:     'Group photo at an AWS community event',
-    caption: 'the team ✦',
+    caption: 'the team',
     meta:    'manila · 2025',
   },
   {
@@ -47,15 +47,15 @@ const PHOTO_DATA = [
   },
   {
     src:     'life/img7.webp',
-    alt:     'Nova offline for once — camera roll moment',
+    alt:     'Camera roll moment, Nova offline',
     caption: 'offline for once',
     meta:    'from the archives',
   },
   {
     src:     'life/img8.webp',
-    alt:     'Darla probably thinking about a project',
-    caption: 'currently somewhere between projects',
-    meta:    '2026 ✦',
+    alt:     'Darla between projects',
+    caption: 'between projects',
+    meta:    '2026',
   },
 ];
 
@@ -77,14 +77,6 @@ let scrollRafId = null;
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
   buildGallery();
-
-  if (!isTouchOnly() && !prefersReducedMotion) {
-    initCursor();
-  } else {
-    document.body.style.cursor = 'auto';
-    const cursorEl = document.getElementById('novaCursor');
-    if (cursorEl) cursorEl.style.display = 'none';
-  }
 });
 
 // ===========================
@@ -148,9 +140,6 @@ function buildGallery() {
 
     item.appendChild(img);
     item.appendChild(captionEl);
-
-    // Task #3 — data-cursor attribute for clean CSS-only hover state
-    item.setAttribute('data-cursor', 'photo');
 
     track.appendChild(item);
   });
@@ -221,7 +210,7 @@ function initScrollLoop(track) {
       delta = diff > 0 ? diff - loopHeight : diff + loopHeight;
     }
 
-    posY   += delta * 0.14;
+    posY   += delta * 0.06;   // lerp — 0.06 gives silky smooth motion (was 0.14)
     posY    = clamp(posY);
     targetY = clamp(targetY);
 
@@ -328,10 +317,18 @@ function initCursor() {
   });
 
   document.addEventListener('mousedown', () => {
-    cursor.style.scale = '0.6';
+    cursor.setAttribute('data-state', 'press');
   });
   document.addEventListener('mouseup', () => {
-    cursor.style.scale = '1';
+    // Restore hover state if still over an interactive element, else clear
+    const el = document.elementFromPoint(mouseX, mouseY);
+    if (el && el.closest('[data-cursor]')) {
+      cursor.setAttribute('data-state', el.closest('[data-cursor]').getAttribute('data-cursor'));
+    } else if (el && el.closest('a, button')) {
+      cursor.setAttribute('data-state', 'hover');
+    } else {
+      cursor.removeAttribute('data-state');
+    }
   });
 }
 
@@ -351,11 +348,5 @@ window.addEventListener('resize', () => {
 
     // scrollRafId cancellation happens inside initScrollLoop
     buildGallery();
-
-    if (isTouchOnly()) {
-      const cursorEl = document.getElementById('novaCursor');
-      if (cursorEl) cursorEl.style.display = 'none';
-      document.body.style.cursor = 'auto';
-    }
   }, 300);
 });

@@ -4,29 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="pics/pic.jpg">
 
-  <!-- Primary meta -->
   <title>Projects · nova.</title>
-  <meta name="description" content="Projects by Darla Nova Sumanting — AI automations, n8n workflows, cloud integrations, and production apps built in Manila.">
+  <meta name="description" content="Things Darla Nova Sumanting has built: n8n automations, AWS community work, and a production intern app.">
   <link rel="canonical" href="https://novaautomates.vercel.app/projects.html">
 
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Projects — Darla Nova Sumanting">
-  <meta property="og:description" content="AI automations, n8n workflows, cloud integrations, and production apps by Darla Nova Sumanting.">
+  <meta property="og:title"       content="Projects · Darla Nova Sumanting">
+  <meta property="og:description" content="Automations, AWS community work, and a production intern app.">
   <meta property="og:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
   <meta property="og:url"         content="https://novaautomates.vercel.app/projects.html">
   <meta property="og:site_name"   content="nova.">
 
-  <!-- Twitter / X card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Projects — Darla Nova Sumanting">
-  <meta name="twitter:description" content="AI automations, n8n workflows, cloud integrations, and production apps.">
+  <meta name="twitter:title"       content="Projects · Darla Nova Sumanting">
+  <meta name="twitter:description" content="Automations, AWS community work, and a production intern app.">
   <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
 
-  <!-- Inline theme — prevents dark/light flash -->
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
@@ -35,35 +30,27 @@
     })();
   </script>
 
-  <!-- Font preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nova-phase3.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- Custom cursor — desktop only, hidden on touch -->
-  <div class="nova-cursor" id="novaCursor" aria-hidden="true">
-    <svg class="cursor-star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-    </svg>
-  </div>
 
   <a href="#main" class="skip-link">skip to content</a>
 
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="nova. — home">
-        <img src="pics/nova-photo.jpg" alt="" class="nav-avatar" aria-hidden="true">
-        nova.
-      </a>
-      <div class="nav-links">
+      <div class="nav-left">
         <a href="index.html" class="nav-link">home</a>
         <a href="projects.html" class="nav-link active" aria-current="page">projects</a>
         <a href="experience.html" class="nav-link">experience</a>
+      </div>
+      <div class="nav-right">
         <a href="about.html" class="nav-link">about me</a>
+        <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="nav-link">resume</a>
         <button class="theme-toggle" aria-label="Toggle dark mode">
           <span class="toggle-icon" aria-hidden="true">&#9790;</span>
         </button>
@@ -77,87 +64,33 @@
 
     <div class="projects-stack">
 
-      <!-- =====================================================
-        PROJECT 1 — AI Job Scraper + Custom Output Parser
-        Composition: full-width workflow screenshot, then story text
-        Why: the diagram is the thing — show it big, explain after
-        ===================================================== -->
       <article class="project-case reveal" id="ai-job-scraper">
         <div class="case-visual workflow-canvas">
           <img
             src="pics/ai-research-workflow.png"
-            alt="n8n workflow diagram: Slack trigger → job scraper → AI matching → custom parser → Google Drive output"
+            alt="n8n workflow diagram: Slack trigger, job scraper, AI matching, custom parser, Google Drive output"
             loading="lazy"
           >
         </div>
         <div class="case-content">
-          <span class="case-label">automation &middot; ai integration &middot; 2026</span>
+          <p class="case-label">automation, 2026</p>
           <h2 class="case-title">
-            AI Jobs Scraper &amp; Resume Optimizer
-            <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
+            AI jobs scraper and resume optimizer
+            <a href="https://docs.google.com/document/d/10zqOfkmxrdfvt5o_QGfXX9R4xgH0vif_xIE7Dpyyxzs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link">writeup</a>
           </h2>
           <p class="case-desc">
             applying to jobs manually was slow, so i built a Slack-triggered pipeline
             that scrapes listings, scores them against my resume with an AI agent,
-            and posts the results back to Slack. the interesting part wasn't the scraping.
-            the AI kept sending back malformed JSON, so i wrote a parser:
+            and posts the results back. the interesting part was not the scraping.
+            the model kept sending malformed JSON, so i wrote a parser:
             strip markdown fences, try JSON.parse, fall back to regex, apply safe defaults.
-            that parser now lives in every AI workflow i build, and reusing it in a public
-            webinar also meant sanitizing a hardcoded API key before sharing it. useful lesson.
+            that parser now lives in every AI workflow i build. reusing it in a public
+            webinar also meant sanitizing a hardcoded API key before sharing it.
           </p>
-          <div class="card-tags">
-            <span class="tech-pill">n8n</span>
-            <span class="tech-pill">AI Agent</span>
-            <span class="tech-pill">Slack</span>
-            <span class="tech-pill">Google Drive</span>
-          </div>
+          <p class="archive-stack">n8n, Slack, Google Drive</p>
         </div>
       </article>
 
-      <!-- =====================================================
-        PROJECT 2 — GTM Signal-Based Outbound Pipeline
-        Composition: full-width workflow screenshot, then story
-        Why: another n8n workflow — dark canvas fits both
-        ===================================================== -->
-      <article class="project-case reveal" id="gtm-outbound">
-        <div class="case-visual workflow-canvas">
-          <img
-            src="pics/gtm-signal-workflow.png"
-            alt="n8n workflow: GTM signal ingestion → lead scoring → Hunter.io enrichment → email validation → outbound draft"
-            loading="lazy"
-          >
-        </div>
-        <div class="case-content">
-          <span class="case-label">automation &middot; outbound &middot; 2026</span>
-          <h2 class="case-title">
-            GTM Signal-Based Outbound Pipeline
-            <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View case study">&#128279;</a>
-          </h2>
-          <p class="case-desc">
-            ingests buying signals, scores leads, enriches contacts via Hunter.io,
-            validates emails, and generates personalized outbound drafts.
-            i originally planned to use NeverBounce for email validation, then found out
-            it had usage costs at this volume, so i swapped it for a free MX record lookup
-            plus a regex format check. catches the same invalid domains, costs nothing,
-            and is easier to debug. also hit a JSearch nesting bug early on
-            and fixed it with a normalization step before scoring.
-            both workarounds ended up being better than the originals.
-          </p>
-          <div class="card-tags">
-            <span class="tech-pill">n8n</span>
-            <span class="tech-pill">Hunter.io</span>
-            <span class="tech-pill">Gmail API</span>
-            <span class="tech-pill">Lead Scoring</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- =====================================================
-        PROJECT 3 — Eskwelabs AI Advisor
-        Composition: video + text side-by-side (split layout)
-        Why: this is a web app — screen recording is more useful
-             than a workflow screenshot; side-by-side shows it off
-        ===================================================== -->
       <article class="project-case project-case--split reveal" id="ai-advisor">
         <div class="case-visual">
           <video
@@ -171,33 +104,22 @@
           </video>
         </div>
         <div class="case-content">
-          <span class="case-label">production app &middot; internship &middot; 2026</span>
+          <p class="case-label">internship, 2026</p>
           <h2 class="case-title">
-            Internal AI Advisor — Eskwelabs
-            <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View on GitHub">&#128279;</a>
+            Internal AI advisor, Eskwelabs
+            <a href="https://github.com/novadar-star/Eskwelabs-Internal-AI-Advisor-" target="_blank" rel="noopener noreferrer" class="project-link">github</a>
           </h2>
           <p class="case-desc">
-            three AI advisor personas pulling context from Google Docs and streaming
-            Gemini responses. built during my internship at Eskwelabs and shipped
-            to the actual intern cohort. Google OAuth with a domain allowlist,
-            Supabase with Row Level Security. passing the auth JWT through correctly
-            to Supabase was annoying to get right technically even though it's simple
-            conceptually. the team uses it daily.
+            three advisor personas pulling context from Google Docs and streaming
+            Gemini. built during my internship and shipped to the intern cohort.
+            Google OAuth with a domain allowlist, Supabase with row-level security.
+            passing the JWT through correctly was annoying even though the idea is simple.
+            the team uses it daily.
           </p>
-          <div class="card-tags">
-            <span class="tech-pill">Next.js 14</span>
-            <span class="tech-pill">Gemini</span>
-            <span class="tech-pill">Supabase RLS</span>
-            <span class="tech-pill">Google OAuth</span>
-          </div>
+          <p class="archive-stack">Next.js 14, Gemini, Supabase, Google OAuth</p>
         </div>
       </article>
 
-      <!-- =====================================================
-        PROJECT 4 — AWS SBG Website
-        Composition: video + text side-by-side (split, flipped)
-        Why: another web build; flip breaks visual monotony
-        ===================================================== -->
       <article class="project-case project-case--split project-case--split-flip reveal" id="awssbg-website">
         <div class="case-visual">
           <video
@@ -211,114 +133,122 @@
           </video>
         </div>
         <div class="case-content">
-          <span class="case-label">web &middot; community &middot; 2025</span>
+          <p class="case-label">community, 2025</p>
           <h2 class="case-title">
-            AWS SBG Adamson — Org Website
-            <a href="https://awssbgadu.pages.dev/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Visit live site">&#128279;</a>
+            AWS SBG Adamson org site
+            <a href="https://awssbgadu.pages.dev/" target="_blank" rel="noopener noreferrer" class="project-link">live</a>
           </h2>
           <p class="case-desc">
-            the org needed a web presence. built the branding, UI/UX, and the site
-            for a 120+ member cloud community. kept it to static HTML/CSS/JS because
-            future officers need to be able to maintain it — a React project that
-            only the original developer understands is worse than a plain HTML file
-            anyone can edit.
+            the org needed a web presence. i did the branding and built a site
+            a 120-person cloud community could actually keep. static HTML/CSS/JS
+            on purpose: a React project only i understand is worse than a file
+            the next officer can edit.
           </p>
-          <div class="card-tags">
-            <span class="tech-pill">HTML/CSS</span>
-            <span class="tech-pill">JavaScript</span>
-            <span class="tech-pill">Web Design</span>
-          </div>
+          <p class="archive-stack">HTML, CSS, JavaScript</p>
         </div>
       </article>
 
-      <!-- =====================================================
-        PROJECT 5 — Zero-Touch Attendee Pipeline
-        Composition: image only, shorter text — supporting project
-        ===================================================== -->
       <article class="project-case reveal" id="attendee-pipeline">
         <div class="case-visual workflow-canvas">
           <img
             src="pics/aws-community-day.png"
-            alt="n8n workflow: event registration webhook → duplicate check → tier routing → Google Sheets logging → Gmail confirmation"
+            alt="n8n workflow: event registration webhook, duplicate check, tier routing, Google Sheets, Gmail confirmation"
             loading="lazy"
           >
         </div>
         <div class="case-content">
-          <span class="case-label">workflow &middot; 2026</span>
-          <h2 class="case-title">Zero-Touch Attendee Pipeline</h2>
+          <p class="case-label">community ops, 2026</p>
+          <h2 class="case-title">Zero-touch attendee pipeline</h2>
           <p class="case-desc">
-            webhook trigger to personalized Gmail confirmation, with duplicate detection
-            and tier-based routing (general / VIP / speaker) in between. the deduplication
-            check is the part most people skip — without it, the workflow is a toy.
+            webhook to a personalized Gmail confirmation, with duplicate detection
+            and tier routing (general / VIP / speaker) in between. the dedupe check
+            is the part most people skip. without it, the workflow is a toy, and
+            attendees get two emails for one event.
           </p>
         </div>
       </article>
 
-      <!-- =====================================================
-        PROJECT 6 — Google Maps Lead Scraper
-        Composition: image, shorter text — supporting project
-        ===================================================== -->
+      <article class="project-case reveal" id="gtm-outbound">
+        <div class="case-visual workflow-canvas">
+          <img
+            src="pics/gtm-signal-workflow.png"
+            alt="n8n workflow: GTM signal ingestion, lead scoring, Hunter.io enrichment, email validation, outbound draft"
+            loading="lazy"
+          >
+        </div>
+        <div class="case-content">
+          <p class="case-label">automation, 2026</p>
+          <h2 class="case-title">
+            GTM signal outbound pipeline
+            <a href="https://docs.google.com/document/d/1VppM8l46e1lrg1pFAywSw1xVK_FzzFkD-q0oGV-DbxE/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="project-link">writeup</a>
+          </h2>
+          <p class="case-desc">
+            ingests buying signals, scores leads, enriches contacts via Hunter.io,
+            validates emails, and drafts outbound. i planned to use NeverBounce,
+            then found usage costs at this volume, so i swapped it for a free MX
+            lookup plus a format check. same invalid domains, no extra bill.
+            also hit a JSearch nesting bug and fixed it with a normalization step
+            before scoring.
+          </p>
+          <p class="archive-stack">n8n, Hunter.io, Gmail API</p>
+        </div>
+      </article>
+
       <article class="project-case reveal" id="maps-scraper">
         <div class="case-visual workflow-canvas">
           <img
             src="pics/google-mpas-craper-leads.png"
-            alt="n8n workflow: cron schedule → Apify Google Maps scraper → filter → loop → append to Google Sheets"
+            alt="n8n workflow: cron schedule, Apify Google Maps scraper, filter, loop, append to Google Sheets"
             loading="lazy"
           >
         </div>
         <div class="case-content">
-          <span class="case-label">automation &middot; 2026</span>
-          <h2 class="case-title">Google Maps Lead Scraper</h2>
+          <p class="case-label">automation, 2026</p>
+          <h2 class="case-title">Google Maps lead scraper</h2>
           <p class="case-desc">
             scheduled pipeline that scrapes business leads from Google Maps via an Apify actor,
-            filters for qualified prospects, loops through results in batches (parallel execution
-            hit rate limits fast — batching fixed it), and appends to a Google Sheet.
+            filters, then loops in batches. parallel execution hit rate limits fast.
+            batching fixed it.
           </p>
         </div>
       </article>
 
-      <!-- =====================================================
-        ARCHIVE — smaller / academic projects
-        Composition: compact text-only list, no visuals
-        Why: these don't need visual weight, just honest acknowledgment
-        ===================================================== -->
       <section class="project-archive reveal" aria-labelledby="archive-heading">
         <h2 class="archive-heading" id="archive-heading">also</h2>
         <ul class="archive-list">
           <li class="archive-item">
             <div class="archive-item-header">
-              <span class="archive-title">School Registrar System</span>
-              <a href="https://github.com/novadar-star/school-registrar" target="_blank" rel="noopener noreferrer" class="archive-link" aria-label="View on GitHub">github &rarr;</a>
+              <span class="archive-title">School registrar system</span>
+              <a href="https://github.com/novadar-star/school-registrar" target="_blank" rel="noopener noreferrer" class="archive-link">github</a>
             </div>
             <p class="archive-desc">
-              academic project. student record management, enrollment logic,
-              prerequisite checking. built to learn database design — the time
-              spent on the ER diagram before touching code was the most useful part.
+              academic project. student records, enrollment logic, prerequisite checking.
+              the time spent on the ER diagram before touching code was the useful part.
             </p>
-            <span class="archive-stack">SQL &middot; Database Design &middot; CRUD</span>
+            <span class="archive-stack">SQL, database design</span>
           </li>
           <li class="archive-item">
             <div class="archive-item-header">
-              <span class="archive-title">LLM-as-a-Judge — Amazon Bedrock article</span>
+              <span class="archive-title">LLM-as-a-Judge on Amazon Bedrock</span>
             </div>
             <p class="archive-desc">
-              published article from my Tutorials Dojo internship. covered LLM-as-a-Judge
-              methodology, prompt design, and model comparison on Amazon Bedrock.
-              required running the evaluations rather than writing about them theoretically.
+              published article from my Tutorials Dojo internship. methodology,
+              prompt design, and model comparison. required running the evaluations,
+              not just writing about them.
             </p>
-            <span class="archive-stack">Amazon Bedrock &middot; Technical Writing</span>
+            <span class="archive-stack">Amazon Bedrock, technical writing</span>
           </li>
         </ul>
       </section>
 
-    </div><!-- /projects-stack -->
+    </div>
 
   </main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-name">nova. / darla sumanting</span>
-      <p class="footer-credit">&copy; 2026 &middot; manila, ph</p>
+      <p class="footer-credit">&copy; 2026, manila</p>
     </div>
   </footer>
 

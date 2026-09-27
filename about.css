@@ -7,6 +7,9 @@
    =========================== */
 
 .about-main {
+  /* flex column so about-layout can grow to fill all available height */
+  display: flex;
+  flex-direction: column;
   min-height: calc(100vh - 60px);
 }
 
@@ -16,7 +19,10 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 40px;
-  align-items: start;    /* left content column stays top-aligned */
+  align-items: start;
+  /* grow to fill all available height in the flex about-main */
+  flex: 1;
+  min-height: calc(100vh - 60px);
 }
 
 /* ===========================
@@ -92,7 +98,7 @@
 .currently-label {
   font-size: 0.63rem;
   font-weight: 600;
-  color: var(--green);
+  color: var(--nova-accent, var(--green)); /* nova-phase3 overrides to --nova-accent */
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -120,121 +126,154 @@
 
 .c-tag:hover {
   transform: rotate(-2deg) translateY(-2px);
-  border-color: var(--green);
-  color: var(--green);
-  background: var(--green-dim);
+  border-color: var(--nova-accent, var(--green));
+  color: var(--nova-accent, var(--green));
+  background: var(--nova-accent-dim, var(--green-dim));
 }
 
-.c-tag:nth-child(even):hover { transform: rotate(2deg)  translateY(-2px); }
-.c-tag:nth-child(3n):hover   { transform: rotate(-1deg) translateY(-3px); }
+.c-tag:nth-child(even):hover { transform: rotate(2deg)  translateY(-2px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
+.c-tag:nth-child(3n):hover   { transform: rotate(-1deg) translateY(-3px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
 
 /* ===========================
-   TOOLKIT
+   TOOLKIT — dock style
    =========================== */
 
 .toolkit-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .toolkit-label {
   font-size: 0.63rem;
   font-weight: 600;
-  color: var(--green);
+  color: var(--nova-accent, var(--green)); /* nova-phase3 overrides to --nova-accent */
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-.toolkit-grid {
+/* Dock container */
+.dock {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 100%;
 }
 
-.tool-item {
-  position: relative;
+/* Individual dock tile */
+.dock-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 9px 11px;
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
+  gap: 5px;
   cursor: default;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  min-width: 60px;
+  /* reserve label space so dock doesn't reflow on hover */
 }
 
-.tool-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--green);
-  background: var(--green-dim);
-}
-
-.tool-icon-wrap {
-  width: 24px;
-  height: 24px;
+/* The icon square */
+.dock-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;        /* iOS-style squircle approximation */
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.18),
+    0 4px 12px rgba(0,0,0,0.10);
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
-.tool-item:hover .tool-icon-wrap { transform: translateY(-2px); }
-
-.tool-icon {
-  width: 20px;
-  height: 20px;
+.dock-icon img {
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
+  /* prevent layout shift from CDN images */
+  aspect-ratio: 1;
 }
 
-.tool-name {
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  text-align: center;
-  white-space: nowrap;
-  transition: color 0.2s ease;
-}
-
-.tool-item:hover .tool-name { color: var(--green); }
-
-/* Tooltip */
-.tool-desc {
-  position: absolute;
-  bottom: calc(100% + 7px);
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 0.6rem;
+/* Label — hidden by default, slides up on hover */
+.dock-label {
+  font-size: 0.62rem;
   font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 5px;
+  color: var(--ink-3);
   white-space: nowrap;
   opacity: 0;
-  visibility: hidden;
+  transform: translateY(3px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
   pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
-  z-index: 20;
+  letter-spacing: 0.01em;
 }
 
-.tool-desc::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 3px solid transparent;
-  border-top-color: var(--ink);
+/* Hover state — lift icon, show label.
+   Gated behind hover: hover so touch devices don't get stuck.
+   Emil: ungated :hover on touch = stuck state = bug. */
+@media (hover: hover) and (pointer: fine) {
+  .dock-item:hover .dock-icon {
+    transform: translateY(-8px) scale(1.12);
+    box-shadow:
+      0 6px 20px rgba(0,0,0,0.18),
+      0 2px 6px rgba(0,0,0,0.10);
+  }
+
+  .dock-item:hover .dock-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Neighbour magnification via :has */
+  .dock:has(.dock-item:hover) .dock-item:not(:hover) .dock-icon {
+    transform: scale(1);
+  }
+
+  .dock-item:has(+ .dock-item:hover) .dock-icon,
+  .dock-item:hover + .dock-item .dock-icon {
+    transform: translateY(-4px) scale(1.06);
+  }
+
+  [data-theme="dark"] .dock-item:hover .dock-icon {
+    box-shadow:
+      0 8px 24px rgba(0,0,0,0.45),
+      0 2px 8px rgba(0,0,0,0.25);
+  }
 }
 
-.tool-item:hover .tool-desc {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+/* Dark mode — slightly lighter shadow */
+[data-theme="dark"] .dock {
+  background: rgba(255,255,255,0.04);
+}
+
+[data-theme="dark"] .dock-icon {
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.4),
+    0 4px 14px rgba(0,0,0,0.3);
+}
+
+/* Reduced motion — skip transforms, just fade label */
+@media (prefers-reduced-motion: reduce) {
+  .dock-icon,
+  .dock-item:hover .dock-icon,
+  .dock-item:has(+ .dock-item:hover) .dock-icon,
+  .dock-item:hover + .dock-item .dock-icon { transform: none !important; }
+  .dock-label { transition: opacity 0.18s ease; }
+}
+
+/* Responsive — smaller icons on mobile */
+@media (max-width: 480px) {
+  .dock { padding: 10px 12px; gap: 8px; border-radius: 16px; }
+  .dock-icon { width: 44px; height: 44px; border-radius: 11px; }
+  .dock-icon img { width: 26px; height: 26px; }
+  .dock-item:hover .dock-icon { transform: translateY(-6px) scale(1.1); }
 }
 
 /* ===========================
@@ -255,7 +294,7 @@
 .about-email-link {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--green);
+  color: var(--nova-accent, var(--green));
   text-decoration: none;
   transition: opacity 0.15s;
 }
@@ -273,11 +312,12 @@
    =========================== */
 
 .about-gallery {
-  /* Stretch full height of the grid row (matches left content column) */
+  /* Stretch full height of the grid row */
   align-self: stretch;
   padding: 0 0 0 20px;
-  /* Relative so the sticky child anchors inside this column */
   position: relative;
+  /* Ensure gallery column fills down to the footer, not just content height */
+  min-height: calc(100vh - 60px);
 }
 
 /* Sticky pin — this is the actual visible window */
@@ -294,8 +334,9 @@
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  /* Softer fade — starts fading only at the very last 6% so it feels continuous */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
 }
 
 .gallery-track {
@@ -397,12 +438,18 @@
    State driven by data-cursor attributes on elements
    =========================== */
 
-.about-page { cursor: none; }
+/* Custom cursor removed: native pointer, visible focus rings instead. */
+
+.about-page,
 .about-page a,
-.about-page button,
-.about-page .c-tag,
-.about-page .tool-item,
-.about-page [data-cursor] { cursor: none; }
+.about-page button {
+  cursor: auto;
+}
+
+.about-page a,
+.about-page button {
+  cursor: pointer;
+}
 
 .nova-cursor {
   position: fixed;
@@ -430,6 +477,13 @@
 .nova-cursor[data-state="hover"] { width: 24px; height: 24px; }
 .nova-cursor[data-state="hover"] .cursor-star {
   animation: cursorPulse 0.6s ease infinite alternate;
+}
+
+/* press state — mousedown hold */
+.nova-cursor[data-state="press"] {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
 }
 
 /* photo state — gallery items */
@@ -472,8 +526,8 @@
   .gallery-track            { will-change: auto; }
   .gallery-item img         { transition: none; }
   .gallery-caption          { opacity: 1; transform: none; transition: none; }
-  .tool-item,
-  .tool-item:hover          { transform: none; transition: none; }
+  .dock-icon,
+  .dock-item:hover .dock-icon { transform: none !important; transition: none; }
   .c-tag, .c-tag:hover      { transform: none; transition: none; }
   .cursor-star              { animation: none !important; }
   .nova-cursor              { display: none !important; }
@@ -481,7 +535,7 @@
   .about-page a,
   .about-page button,
   .about-page .c-tag,
-  .about-page .tool-item    { cursor: auto; }
+  .about-page .dock-item    { cursor: auto; }
 }
 
 /* ===========================
@@ -497,26 +551,50 @@
 }
 
 /* ===========================
-   RESPONSIVE — 1280px
+   RESPONSIVE — 1280px (13" laptop)
    =========================== */
 
 @media (max-width: 1280px) {
   .about-layout,
-  .about-footer .footer-inner { padding: 0 32px; }
+  .about-footer .footer-inner { padding: 0 36px; }
+
+  .about-content { padding: 48px 40px 80px 0; gap: 34px; }
 }
 
 /* ===========================
-   RESPONSIVE — 1024px
+   RESPONSIVE — 1024px (tablet landscape / small laptop)
    =========================== */
 
 @media (max-width: 1024px) {
   .about-layout {
-    grid-template-columns: 58fr 42fr;
+    grid-template-columns: 60fr 40fr;
+    padding: 0 32px;
+  }
+  .about-content { padding: 44px 36px 64px 0; gap: 30px; }
+  .about-heading { font-size: clamp(1.85rem, 3.5vw, 2.6rem); }
+  .about-footer .footer-inner { padding: 0 32px; }
+
+  /* Gallery stays sticky but slightly less tall */
+  .gallery-pin {
+    height: calc(100vh - 70px);
+    top: 70px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE — 860px (between tablet-landscape and mobile)
+   Transition tier so the jump to single-column isn't abrupt.
+   =========================== */
+
+@media (max-width: 860px) and (min-width: 769px) {
+  .about-layout {
+    grid-template-columns: 55fr 45fr;
     padding: 0 28px;
   }
-  .about-content { padding: 44px 32px 60px 0; gap: 32px; }
-  .about-heading { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
-  .about-footer .footer-inner { padding: 0 28px; }
+  .about-content { padding: 40px 28px 60px 0; gap: 28px; }
+  .about-heading { font-size: clamp(1.75rem, 4vw, 2.4rem); }
+  .about-tagline { font-size: 0.84rem; }
+  .about-intro p { font-size: 0.85rem; }
 }
 
 /* ===========================
@@ -527,11 +605,11 @@
 @media (max-width: 768px) {
   .about-layout {
     grid-template-columns: 1fr;
-    padding: 0 24px;
+    padding: 0 28px;
   }
 
   .about-content {
-    padding: 32px 0 24px;
+    padding: 36px 0 28px;
     gap: 28px;
   }
 
@@ -539,19 +617,19 @@
   .about-gallery {
     position: static;
     align-self: auto;
-    height: 420px;
+    height: 460px;
     overflow: hidden;
     padding: 0 0 40px 0;
   }
 
   .gallery-pin {
     position: static;
-    height: 420px;
+    height: 460px;
     overflow: hidden;
   }
 
   .gallery-track-wrap {
-    height: 420px;
+    height: 460px;
     border-radius: 8px;
   }
 
@@ -575,10 +653,10 @@
   .about-page a,
   .about-page button,
   .about-page .c-tag,
-  .about-page .tool-item { cursor: auto; }
+  .about-page .dock-item { cursor: auto; }
   .nova-cursor            { display: none !important; }
 
-  .about-footer .footer-inner { padding: 0 24px; }
+  .about-footer .footer-inner { padding: 0 28px; }
 }
 
 /* ===========================
@@ -587,13 +665,14 @@
 
 @media (max-width: 480px) {
   .about-layout             { padding: 0 20px; }
-  .about-content            { padding: 28px 0 20px; gap: 24px; }
-  .about-heading            { font-size: 1.75rem; }
-  .about-gallery            { height: 360px; }
-  .gallery-pin              { height: 360px; }
-  .gallery-track-wrap       { height: 360px; }
-  .toolkit-grid             { gap: 4px; }
-  .tool-item                { min-width: 54px; padding: 8px 9px; }
+  .about-content            { padding: 28px 0 24px; gap: 24px; }
+  .about-heading            { font-size: 1.8rem; }
+  .about-tagline            { font-size: 0.84rem; }
+  .about-intro p            { font-size: 0.865rem; }
+  .about-gallery            { height: 420px; }
+  .gallery-pin              { height: 420px; }
+  .gallery-track-wrap       { height: 420px; }
+  .dock                     { gap: 8px; padding: 10px 12px; }
   .about-footer .footer-inner { padding: 0 20px; }
 }
 
@@ -603,9 +682,9 @@
 
 @media (max-width: 375px) {
   .about-layout             { padding: 0 16px; }
-  .about-heading            { font-size: 1.55rem; }
-  .about-gallery            { height: 300px; }
-  .gallery-pin              { height: 300px; }
-  .gallery-track-wrap       { height: 300px; }
+  .about-heading            { font-size: 1.6rem; }
+  .about-gallery            { height: 360px; }
+  .gallery-pin              { height: 360px; }
+  .gallery-track-wrap       { height: 360px; }
   .about-footer .footer-inner { padding: 0 16px; }
 }

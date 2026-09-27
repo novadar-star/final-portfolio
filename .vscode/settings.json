@@ -17,5 +17,6 @@
     "**/.claude/**": true,
     "**/.kiro/**": true,
     "**/__pycache__/**": true
-  }
+  },
+  "liveServer.settings.port": 5501
 }

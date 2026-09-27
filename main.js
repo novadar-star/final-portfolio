@@ -63,82 +63,10 @@ async function incrementHeart() {
 }
 
 // ===========================
-// Custom cursor — all pages except about (about.js handles its own)
-// ===========================
-function initGlobalCursor() {
-  const cursor = document.getElementById('novaCursor');
-  if (!cursor) return;
-
-  // Only run on non-touch desktop devices
-  const isTouchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (isTouchOnly || prefersReducedMotion) return;
-  if (window.innerWidth <= 768) return;
-
-  document.body.classList.add('cursor-active');
-  cursor.style.opacity = '0';
-  cursor.style.display = 'block';
-
-  let mouseX = -200, mouseY = -200;
-  let cursorX = -200, cursorY = -200;
-  let started = false;
-  const SMOOTHING = 0.35;  // nearly native feel — was 0.22
-
-  // Single mousemove drives position + state
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    if (!started) {
-      cursorX = mouseX;
-      cursorY = mouseY;
-      cursor.style.opacity = '1';
-      started = true;
-    }
-
-    if (e.target.closest('a, button')) {
-      cursor.setAttribute('data-state', 'hover');
-    } else {
-      cursor.removeAttribute('data-state');
-    }
-  }, { passive: true });
-
-  (function animateCursor() {
-    cursorX += (mouseX - cursorX) * SMOOTHING;
-    cursorY += (mouseY - cursorY) * SMOOTHING;
-    // translate3d — compositor-only, no left/top layout triggers
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-    requestAnimationFrame(animateCursor);
-  })();
-
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    cursor.removeAttribute('data-state');
-  });
-  document.addEventListener('mouseenter', () => {
-    if (started) cursor.style.opacity = '1';
-  });
-
-  document.addEventListener('mousedown', () => {
-    cursor.style.scale = '0.6';
-  });
-  document.addEventListener('mouseup', () => {
-    cursor.style.scale = '1';
-  });
-}
-
-// ===========================
 // DOM ready
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // Init global cursor on all pages except about
-  // (about.js handles its own cursor with photo-state support)
-  if (!document.body.classList.contains('about-page')) {
-    initGlobalCursor();
-  }
-
-  // ===========================
   // Theme toggle
   // ===========================
   const toggle = document.querySelector('.theme-toggle');
@@ -204,13 +132,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ===========================
-  // Scroll reveal
-  // Targets .reveal elements only.
-  // No stagger delay — each element reveals independently.
-  // Respects prefers-reduced-motion via CSS transition:none.
+  // Scroll reveal — .reveal elements (staggered)
   // ===========================
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
+    // Assign stagger index per visible group
+    // Group elements that share the same parent so siblings stagger together
+    const groups = new Map();
+    reveals.forEach(el => {
+      const parent = el.parentElement;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent).push(el);
+    });
+    groups.forEach(siblings => {
+      siblings.forEach((el, i) => {
+        el.style.setProperty('--i', i);
+      });
+    });
+
     const rObs = new IntersectionObserver(
       entries => entries.forEach(e => {
         if (e.isIntersecting) {
@@ -221,6 +160,80 @@ document.addEventListener('DOMContentLoaded', async () => {
       { threshold: 0.07, rootMargin: '0px 0px -20px 0px' }
     );
     reveals.forEach(el => rObs.observe(el));
+  }
+
+  // ===========================
+  // Section heading border reveal
+  // Adds .border-revealed when heading enters viewport.
+  // CSS animates the gradient line from 0 → 100% width.
+  // ===========================
+  const sectionHeadings = document.querySelectorAll('.section-heading');
+  if (sectionHeadings.length) {
+    const hObs = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('border-revealed');
+          hObs.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.3 }
+    );
+    sectionHeadings.forEach(el => hObs.observe(el));
+  }
+
+  // ===========================
+  // Film strip drag-to-scroll
+  // ===========================
+  document.querySelectorAll('.film-track').forEach(track => {
+    let isDragging = false;
+    let startX     = 0;
+    let scrollLeft = 0;
+
+    track.addEventListener('mousedown', e => {
+      isDragging = true;
+      track.classList.add('is-dragging');
+      startX     = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      e.preventDefault();
+    });
+
+    const stopDrag = () => {
+      isDragging = false;
+      track.classList.remove('is-dragging');
+    };
+    document.addEventListener('mouseup',    stopDrag);
+    document.addEventListener('mouseleave', stopDrag);
+
+    document.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const x    = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.4;
+      track.scrollLeft = scrollLeft - walk;
+    });
+  });
+
+  // ===========================
+  // Hero nav — transparent until scrolled past hero
+  // Adds .nav--scrolled class once hero leaves viewport
+  // ===========================
+  const nav = document.querySelector('.nav');
+  const heroSection = document.querySelector('.hero-landing');
+  if (nav && heroSection) {
+    const navObs = new IntersectionObserver(
+      ([entry]) => {
+        nav.classList.toggle('nav--scrolled', !entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    navObs.observe(heroSection);
+  }
+  if (scrollCue) {
+    const heroCueObs = new IntersectionObserver(
+      ([entry]) => { scrollCue.style.opacity = entry.isIntersecting ? '' : '0'; },
+      { threshold: 0.5 }
+    );
+    const heroSection = document.querySelector('.hero-landing');
+    if (heroSection) heroCueObs.observe(heroSection);
   }
 
 });

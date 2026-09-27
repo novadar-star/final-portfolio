@@ -1,0 +1,118 @@
+/* ============================================================
+   nova-tokens.css — Design System Tokens
+   Source of truth for the warm pink/red star gradient identity.
+
+   Extracted from the hero (background-image.jpg + hero-landing.css).
+   Referenced by hero-landing.css and future phase stylesheets.
+   Do not define visual styles here — only named values.
+
+   TOKEN GROUPS:
+   1. Star gradient palette   — the hero background colors
+   2. Accent + glow           — the star sparkle / hover accents
+   3. Text on gradient        — readable text over the warm bg
+   4. Overlay / vignette      — semi-transparent layers
+   5. Star particle           — Phase 2 canvas particle system
+   6. Animation timing        — duration / easing constants
+   ============================================================ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     1. STAR GRADIENT PALETTE
+     Pulled directly from the gradient overlay in hero-landing.css
+     and the dominant hues visible in background-image.jpg.
+
+     Visual reading of background-image.jpg:
+       – Deep corner:   very dark crimson / near-black red
+       – Mid tone:      saturated magenta-red
+       – Warm center:   hot pink → rose
+       – Star halos:    bright yellow-orange (the glow inside stars)
+       – Star whites:   near-white warm cream (star center highlight)
+     ---------------------------------------------------------- */
+
+  --nova-grad-deep:     #2D0012;   /* darkest corner — near-black crimson  */
+  --nova-grad-dark:     #7A0828;   /* dark zone — deep burgundy-red        */
+  --nova-grad-mid:      #C0143C;   /* midground — saturated crimson        */
+  --nova-grad-warm:     #E8305A;   /* warm midtone — magenta-red           */
+  --nova-grad-bright:   #FF6B6B;   /* lightest gradient stop — coral-pink  */
+
+  /* Gradient overlay stops (used as semi-transparent layers over the image) */
+  --nova-overlay-corner: rgba(140, 10,  40, 0.55);
+  --nova-overlay-mid:    rgba(200, 30,  70, 0.35);
+  --nova-overlay-warm:   rgba(180, 20,  60, 0.45);
+  --nova-overlay-dark:   rgba(100,  5,  30, 0.60);
+
+  /* ----------------------------------------------------------
+     2. ACCENT + GLOW
+     Star sparkle colors, hover states, link accents.
+     ---------------------------------------------------------- */
+
+  --nova-star-gold:     #FFD580;   /* warm gold — star glow center / link hover */
+  --nova-star-cream:    #FFF0EE;   /* near-white warm cream — sparkle highlight */
+  --nova-star-yellow:   #FFEC9E;   /* soft yellow-white — sparkle body         */
+  --nova-star-orange:   #FFAA50;   /* orange glow halo around stars            */
+
+  /* Glow box-shadows (used on sparkle dots) */
+  --nova-glow-gold:     rgba(255, 220, 100, 0.75);
+  --nova-glow-cream:    rgba(255, 240, 140, 0.65);
+  --nova-glow-orange:   rgba(255, 200,  80, 0.70);
+  --nova-glow-peach:    rgba(255, 160, 130, 0.55);
+
+  /* ----------------------------------------------------------
+     3. TEXT ON GRADIENT
+     Contrast-checked against the warm red/pink background.
+     ---------------------------------------------------------- */
+
+  --nova-text-primary:  #FFF0EE;           /* main heading / body on hero         */
+  --nova-text-muted:    rgba(255, 235, 225, 0.88); /* subheading / descriptors  */
+  --nova-text-dim:      rgba(255, 210, 195, 0.75); /* nav links / secondary text */
+  --nova-text-accent:   #7A0020;           /* italic accent on light hero center  */
+  --nova-text-link:     #FFF0EE;           /* CTA link default                    */
+  --nova-text-link-hover: #FFD580;         /* CTA link hover — gold               */
+
+  /* ----------------------------------------------------------
+     4. OVERLAY / VIGNETTE / SURFACES
+     Semi-transparent layers that sit over the background image.
+     ---------------------------------------------------------- */
+
+  --nova-nav-bg:        rgba(30,  2, 10, 0.55);    /* nav bar on hero           */
+  --nova-nav-border:    rgba(255, 160, 140, 0.15); /* nav bottom border         */
+  --nova-nav-toggle-hover-bg:     rgba(255, 100, 80, 0.18);
+  --nova-nav-toggle-hover-border: rgba(255, 160, 140, 0.55);
+
+  --nova-vignette-edge: rgba(80,   0, 20, 0.45);   /* radial dark vignette      */
+  --nova-vignette-bottom: rgba(60, 0, 15, 0.55);   /* bottom fade               */
+
+  --nova-photo-border:  rgba(255, 200, 160, 0.30); /* photo frame border        */
+  --nova-photo-shadow:  rgba(120,   0,  30, 0.35); /* photo drop-shadow         */
+  --nova-photo-glow:    rgba(255, 160,  80, 0.20); /* radial glow behind photo  */
+
+  /* ----------------------------------------------------------
+     5. STAR PARTICLE (Phase 2 canvas system)
+     Pre-defined so the canvas JS reads from one place.
+     Colors listed light-to-dark for variety in the particle pool.
+     ---------------------------------------------------------- */
+
+  --nova-particle-color-1: #FFD580;  /* gold  — most common                 */
+  --nova-particle-color-2: #FFF0EE;  /* cream — bright pop                  */
+  --nova-particle-color-3: #FFAA50;  /* orange — warm variant               */
+  --nova-particle-color-4: #FF8FAB;  /* pink — subtle                       */
+  --nova-particle-glow:    rgba(255, 213, 128, 0.60); /* canvas shadow blur  */
+
+  /* Particle sizes (px) */
+  --nova-particle-size-min: 3;    /* unitless — used in JS Math.random()   */
+  --nova-particle-size-max: 7;
+
+  /* ----------------------------------------------------------
+     6. ANIMATION TIMING
+     Shared durations so Phase 2 and future phases feel consistent.
+     ---------------------------------------------------------- */
+
+  --nova-duration-sparkle:    3000ms;  /* CSS sparkle pulse cycle              */
+  --nova-duration-pop-in:      180ms;  /* particle scale-up                    */
+  --nova-duration-pop-out:     320ms;  /* particle fade-out (longer = floatier)*/
+  --nova-duration-hover:       200ms;  /* hover state transitions              */
+  --nova-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* spring pop     */
+  --nova-easing-out:    cubic-bezier(0.16, 1, 0.3, 1);      /* smooth exit    */
+
+}
