@@ -89,11 +89,13 @@ function buildGallery() {
   track.innerHTML = '';
 
   const touch    = isTouchOnly();
-  const allPhotos = [...PHOTO_DATA, ...PHOTO_DATA]; // one duplicate for seamless loop
+  // Triple the photos so there's always enough scroll buffer regardless of
+  // viewport height or content length — loop reset never becomes visible
+  const allPhotos = [...PHOTO_DATA, ...PHOTO_DATA, ...PHOTO_DATA];
 
-  // Task #10 — only first 2 photos load eagerly (visible on initial viewport)
+  // First 3 photos load eagerly (visible on initial viewport)
   // The rest are lazy with async decoding to avoid blocking the main thread
-  const EAGER_COUNT = 2;
+  const EAGER_COUNT = 3;
   const loadPromises = [];
 
   allPhotos.forEach((photo, idx) => {
@@ -169,7 +171,9 @@ function initScrollLoop(track) {
   const items     = Array.from(track.querySelectorAll('.gallery-item'));
   const halfCount = PHOTO_DATA.length;
 
-  // offsetTop is layout-relative — not affected by page scroll position
+  // loopHeight = vertical distance from start of set-1 to start of set-2
+  // When posY reaches this, we jump back to 0 — seamlessly because set-2
+  // looks identical to set-1. Third set is the safety buffer.
   const loopHeight = items[halfCount].offsetTop - items[0].offsetTop;
 
   if (loopHeight < 50) {
@@ -177,7 +181,7 @@ function initScrollLoop(track) {
     return;
   }
 
-  // Task #4 — cancel any existing RAF before starting a new loop
+  // Cancel any existing RAF before starting a new loop
   if (scrollRafId) {
     cancelAnimationFrame(scrollRafId);
     scrollRafId = null;
@@ -192,9 +196,11 @@ function initScrollLoop(track) {
   let isHovered   = false;
   let resumeTimer = null;
 
+  // Clamp y to [0, loopHeight) without a modulo jump that creates a visual glitch.
+  // We use the raw value and only snap when it's clearly past the boundary.
   function clamp(y) {
-    y = y % loopHeight;
-    if (y < 0) y += loopHeight;
+    // Normalise into [0, loopHeight)
+    y = ((y % loopHeight) + loopHeight) % loopHeight;
     return y;
   }
 
@@ -203,14 +209,15 @@ function initScrollLoop(track) {
       targetY += SPEED;
     }
 
-    const diff  = targetY - posY;
-    // Take the short path around the loop boundary
-    let delta = diff;
-    if (Math.abs(diff) > loopHeight / 2) {
-      delta = diff > 0 ? diff - loopHeight : diff + loopHeight;
-    }
+    // Normalise both into same [0, loopHeight) space before lerping
+    // so the lerp never takes the long way around the loop boundary
+    let diff = targetY - posY;
 
-    posY   += delta * 0.06;   // lerp — 0.06 gives silky smooth motion (was 0.14)
+    // Take the short path: if the gap is more than half the loop, wrap it
+    if (diff > loopHeight / 2)  diff -= loopHeight;
+    if (diff < -loopHeight / 2) diff += loopHeight;
+
+    posY   += diff * 0.06;   // silky smooth lerp
     posY    = clamp(posY);
     targetY = clamp(targetY);
 
@@ -333,8 +340,7 @@ function initCursor() {
 }
 
 // ===========================
-// RESIZE — cancel old RAF before rebuilding
-// Task #4 — scrollRafId is cancelled inside initScrollLoop before restart
+// RESIZE — rebuild gallery if layout changes meaningfully
 // ===========================
 let resizeTimer;
 let lastIsMobile = isMobile();
@@ -343,10 +349,21 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     const nowMobile = isMobile();
-    if (nowMobile === lastIsMobile) return;
-    lastIsMobile = nowMobile;
-
-    // scrollRafId cancellation happens inside initScrollLoop
-    buildGallery();
+    // Rebuild on mobile/desktop threshold cross OR any significant resize
+    // (viewport height change shifts loopHeight and breaks the loop)
+    if (nowMobile !== lastIsMobile) {
+      lastIsMobile = nowMobile;
+      buildGallery();
+      return;
+    }
+    // For desktop resizes, re-init the scroll loop to recalculate loopHeight
+    const track = document.getElementById('galleryTrack');
+    if (track && !nowMobile) {
+      if (scrollRafId) {
+        cancelAnimationFrame(scrollRafId);
+        scrollRafId = null;
+      }
+      initScrollLoop(track);
+    }
   }, 300);
 });

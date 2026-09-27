@@ -305,26 +305,26 @@
    RIGHT — photo gallery
    
    KEY ARCHITECTURE:
-   - .about-gallery stretches to match the left content column height (align-self: stretch on grid)
-   - The inner .gallery-pin is position:sticky — stays in viewport as you scroll
-   - .gallery-track-wrap clips the scrolling photos to the sticky viewport window
+   - .about-gallery is a full-height column that matches left content height
+   - .gallery-pin is position:sticky — stays in viewport window as you scroll
+   - .gallery-track-wrap clips the infinite-scroll photos to the sticky window
    - RAF loop drives the infinite scroll in JS
+   - The column must be tall enough that sticky never un-sticks before footer
    =========================== */
 
 .about-gallery {
-  /* Stretch full height of the grid row */
+  /* Stretch to full height of the grid row (content column drives height) */
   align-self: stretch;
   padding: 0 0 0 20px;
   position: relative;
-  /* Ensure gallery column fills down to the footer, not just content height */
-  min-height: calc(100vh - 60px);
 }
 
-/* Sticky pin — this is the actual visible window */
+/* Sticky pin — the visible window that stays fixed while page scrolls */
 .gallery-pin {
   position: sticky;
   top: 60px;
-  height: calc(100vh - 60px);
+  /* Fill remaining viewport height below nav */
+  height: calc(100dvh - 60px);
   overflow: hidden;
 }
 
@@ -576,8 +576,8 @@
 
   /* Gallery stays sticky but slightly less tall */
   .gallery-pin {
-    height: calc(100vh - 70px);
-    top: 70px;
+    height: calc(100dvh - 60px);
+    top: 60px;
   }
 }
 
