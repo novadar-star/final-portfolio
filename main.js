@@ -227,13 +227,85 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
     navObs.observe(heroSection);
   }
-  if (scrollCue) {
-    const heroCueObs = new IntersectionObserver(
-      ([entry]) => { scrollCue.style.opacity = entry.isIntersecting ? '' : '0'; },
-      { threshold: 0.5 }
-    );
-    const heroSection = document.querySelector('.hero-landing');
-    if (heroSection) heroCueObs.observe(heroSection);
+
+  // ===========================
+  // Custom cursor — global, all pages
+  // Disabled on touch devices and prefers-reduced-motion.
+  // The .nova-cursor element is injected in every page's HTML.
+  // JS moves it via transform: translate3d (no left/top) for
+  // GPU-composited, jank-free tracking.
+  // ===========================
+  const cursor = document.getElementById('novaCursor');
+
+  // Only wire up on non-touch, non-reduced-motion desktops
+  const isTouch   = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (cursor && !isTouch && !isReduced) {
+    // Show cursor, hide system pointer
+    cursor.style.display = 'block';
+    document.body.classList.add('cursor-active');
+
+    let mouseX = -200;
+    let mouseY = -200;
+    let curX   = -200;
+    let curY   = -200;
+    let rafId  = null;
+
+    // Smooth follow — lerps toward actual mouse position each frame
+    const LERP = 0.18;
+
+    function animateCursor() {
+      curX += (mouseX - curX) * LERP;
+      curY += (mouseY - curY) * LERP;
+
+      // Centre the 18px cursor on the hot spot
+      const offsetX = curX - 9;
+      const offsetY = curY - 9;
+      cursor.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+
+      rafId = requestAnimationFrame(animateCursor);
+    }
+
+    rafId = requestAnimationFrame(animateCursor);
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }, { passive: true });
+
+    // Hover state — enlarge on interactive elements
+    const interactiveSelector = 'a, button, [role="button"], label[for], input, textarea, select, summary';
+
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(interactiveSelector)) {
+        cursor.setAttribute('data-state', 'hover');
+      }
+    }, { passive: true });
+
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest(interactiveSelector)) {
+        cursor.setAttribute('data-state', '');
+      }
+    }, { passive: true });
+
+    // Press state
+    document.addEventListener('mousedown', () => {
+      cursor.setAttribute('data-state', 'press');
+    }, { passive: true });
+
+    document.addEventListener('mouseup', () => {
+      cursor.setAttribute('data-state', '');
+    }, { passive: true });
+
+    // Hide cursor when it leaves the window
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+    }, { passive: true });
+
+    document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '';
+    }, { passive: true });
   }
 
 });

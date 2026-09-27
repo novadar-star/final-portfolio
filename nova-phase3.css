@@ -45,9 +45,9 @@
    ============================================================ */
 
 :root {
-  --nova-accent:     #C0143C;   /* deep crimson rose — light mode (was #E8305A, too light) */
-  --nova-accent-dim: rgba(192, 20, 60, 0.08);
-  --nova-accent-mid: rgba(192, 20, 60, 0.22);
+  --nova-accent:     #8B0020;   /* deep burgundy-red — light mode, clearly red not pink */
+  --nova-accent-dim: rgba(139, 0, 32, 0.08);
+  --nova-accent-mid: rgba(139, 0, 32, 0.22);
 }
 
 [data-theme="dark"] {
@@ -172,31 +172,165 @@ button:focus-visible {
   transition: color var(--nova-duration-hover) ease;
 }
 
-/* Project link inline — stronger hover feedback */
+/* Project link inline — transition + base color; hover handled by rainbow rules below */
 .project-link-inline {
   transition:
     color     var(--nova-duration-hover) ease,
-    gap       var(--nova-duration-hover) ease,
     opacity   var(--nova-duration-hover) ease;
 }
 
-.project-link-inline:hover {
-  opacity: 1;
-  color: var(--nova-accent);
-  gap: 8px;
+/* ============================================================
+   RAINBOW DASH HOVER
+   A fine iridescent underline sweeps across text on hover.
+   No arrow. The text color itself gains a rainbow shimmer.
+
+   Strategy:
+   - background-clip: text + transparent color reveals the gradient
+   - gradient animates position via background-position (0→100%)
+   - Only fires on hover; rests at the element's normal color
+   - Reduced-motion: instant color swap, no sweep
+   ============================================================ */
+
+@keyframes rainbow-sweep {
+  0%   { background-position: 0% 50%;   }
+  100% { background-position: 200% 50%; }
 }
 
-/* All projects link — warm on hover */
-.all-projects-link:hover {
-  color: var(--nova-accent);
+/* The rainbow gradient shared across all shimmer links */
+:root {
+  --rainbow-gradient: linear-gradient(
+    90deg,
+    #FF6B6B 0%,
+    #FF8FAB 14%,
+    #FFD580 28%,
+    #8FBF65 42%,
+    #56CCF2 56%,
+    #BB6BD9 70%,
+    #FF6B6B 84%,
+    #FF8FAB 100%
+  );
+}
+
+/* ── Hero CTA "things i've built" — no arrow, rainbow on hover ── */
+
+/* Remove the → arrow completely */
+.hero-landing .hero-link::after {
+  display: none;
+}
+
+/* Hero link rainbow text on hover */
+.hero-landing .hero-link:hover {
+  background-image: var(--rainbow-gradient);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbow-sweep 1.4s linear infinite;
+}
+
+/* Reset fill when not hovered (avoids bleed) */
+.hero-landing .hero-link:not(:hover) {
+  -webkit-text-fill-color: unset;
+  animation: none;
 }
 
 /* ============================================================
-   CONTACT LINKS — warm accent on hover
+   PROJECT LINKS INLINE — rainbow on hover, no arrow
+   ============================================================ */
+
+.project-link-inline:hover {
+  background-image: var(--rainbow-gradient);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbow-sweep 1.4s linear infinite;
+  gap: 0;
+  opacity: 1;
+}
+
+.project-link-inline:not(:hover) {
+  -webkit-text-fill-color: unset;
+  animation: none;
+}
+
+/* ============================================================
+   ALL-PROJECTS LINK — rainbow on hover
+   ============================================================ */
+
+.all-projects-link:hover {
+  background-image: var(--rainbow-gradient);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbow-sweep 1.4s linear infinite;
+}
+
+.all-projects-link:not(:hover) {
+  -webkit-text-fill-color: unset;
+  animation: none;
+}
+
+/* ============================================================
+   ARCHIVE LINKS — rainbow on hover
+   ============================================================ */
+
+.archive-link:hover {
+  background-image: var(--rainbow-gradient);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbow-sweep 1.4s linear infinite;
+  opacity: 1;
+}
+
+.archive-link:not(:hover) {
+  -webkit-text-fill-color: unset;
+  animation: none;
+}
+
+/* ============================================================
+   CONTACT LINKS — rainbow on hover
    ============================================================ */
 
 .contact-link:hover {
-  color: var(--nova-accent);
+  background-image: var(--rainbow-gradient);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbow-sweep 1.4s linear infinite;
+}
+
+.contact-link:not(:hover) {
+  -webkit-text-fill-color: unset;
+  animation: none;
+}
+
+/* ============================================================
+   REDUCED MOTION — instant color, no sweep animation
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-landing .hero-link:hover,
+  .project-link-inline:hover,
+  .all-projects-link:hover,
+  .archive-link:hover,
+  .contact-link:hover {
+    animation: none;
+    background-image: none;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    color: var(--nova-accent);
+  }
 }
 
 /* ============================================================
@@ -225,10 +359,7 @@ em.italic-accent {
     gap   var(--nova-duration-hover) ease;
 }
 
-.hero-link:hover {
-  color: var(--nova-star-orange);
-  gap: 8px;
-}
+/* hover handled by rainbow-sweep rules further down */
 
 /* ============================================================
    PROJECT CASES (projects.html) — hover warm border
@@ -371,10 +502,7 @@ em.italic-accent {
   color: var(--nova-accent);
 }
 
-.archive-link:hover {
-  opacity: 0.75;
-  color: var(--nova-star-orange);
-}
+/* hover handled by rainbow-sweep rules further down */
 
 /* ============================================================
    ABOUT PAGE — warm accents carried through

@@ -245,20 +245,16 @@
   text-shadow: none;
 }
 
+/* On hover: suppress the gold underline and gold color so nova-phase3.css
+   rainbow sweep takes full control of the text fill */
 .hero-landing .hero-link:hover {
-  background-size: 100% 1px;
-  color: var(--nova-star-gold);
+  background-size: 0% 1px;
+  color: transparent;
 }
 
-/* Arrow nudge on hover */
+/* Arrow removed — replaced by rainbow text shimmer in nova-phase3.css */
 .hero-landing .hero-link::after {
-  content: '→';
-  display: inline-block;
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-landing .hero-link:hover::after {
-  transform: translateX(5px);
+  display: none;
 }
 
 /* Tactile press */
@@ -339,20 +335,30 @@
 }
 
 .hero-landing-page .nav-link {
-  color: rgba(255, 210, 195, 0.80);
+  color: rgba(255, 210, 195, 0.80);  /* dark mode / over image — warm peach readable on red */
+}
+
+/* Light mode over hero — use dark readable ink so links aren't washed out */
+[data-theme="light"] .hero-landing-page .nav-link {
+  color: var(--ink-2);
 }
 
 .hero-landing-page .nav-link:hover {
   color: var(--nova-star-cream);
 }
 
-/* Light mode scrolled — nav links must be dark readable ink */
+/* Light mode hover over hero */
+[data-theme="light"] .hero-landing-page .nav-link:hover {
+  color: var(--nova-accent);
+}
+
+/* Light mode scrolled — nav links use ink base, accent on hover (consistent with rest of site) */
 [data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link {
   color: var(--ink-3);
 }
 
 [data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link:hover {
-  color: var(--ink);
+  color: var(--nova-accent);
 }
 
 [data-theme="light"] .hero-landing-page .nav.nav--scrolled .nav-link.active {
@@ -363,8 +369,18 @@
   color: var(--nova-star-cream);
 }
 
+/* Light mode active over hero */
+[data-theme="light"] .hero-landing-page .nav-link.active {
+  color: var(--ink);
+}
+
 .hero-landing-page .nav-link.active::after {
   background: var(--nova-star-gold);
+}
+
+/* Light mode active underline over hero */
+[data-theme="light"] .hero-landing-page .nav-link.active::after {
+  background: var(--nova-accent);
 }
 
 .hero-landing-page .theme-toggle {

@@ -280,7 +280,7 @@ button:focus-visible {
 .hero-link {
   font-size: 0.84rem;
   font-weight: 500;
-  color: var(--green);
+  color: var(--nova-accent, #8B0020);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -433,7 +433,7 @@ button:focus-visible {
 .project-link-inline {
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--green);
+  color: var(--nova-accent, #8B0020);
   text-decoration: none;
   margin-top: 4px;
   transition: opacity 0.15s;
@@ -995,9 +995,9 @@ body.cursor-active button { cursor: none; }
 .cursor-star {
   width: 100%;
   height: 100%;
-  color: var(--green);
+  color: var(--nova-accent, #8B0020);
   opacity: 0.9;
-  filter: drop-shadow(0 0 3px var(--green));
+  filter: drop-shadow(0 0 3px var(--nova-accent, #8B0020));
   transition: transform 0.2s ease;
 }
 
