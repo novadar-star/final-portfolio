@@ -16,6 +16,27 @@
 @import url('nova-tokens.css');
 
 /* ============================================================
+   BLUSH PAGE — warm body background on non-hero pages
+   Scoped to .blush-page so index.html hero is unaffected.
+   Does not touch --paper token — only overrides body bg.
+   ============================================================ */
+
+.blush-page {
+  background-color: #FFF5F6;
+}
+
+[data-theme="dark"] .blush-page {
+  /* Dark mode keeps its own paper — blush would be too jarring on dark */
+  background-color: var(--paper);
+}
+
+/* Shift card backgrounds slightly warmer in light mode on blush pages */
+.blush-page .home-project-visual,
+.blush-page .project-case {
+  /* inherits fine — card-bg is still #FFFFFF */
+}
+
+/* ============================================================
    DARK MODE TOKEN BRIDGE
    --nova-accent is a single switchable variable that all
    accent rules below use via var(--nova-accent).

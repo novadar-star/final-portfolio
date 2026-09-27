@@ -10,7 +10,7 @@
    =========================== */
 
 :root {
-  --paper:       #FFF5F6;   /* warm blush — subtle pink undertone, not pure white */
+  --paper:       #F7F6F2;
   --ink:         #1C1C1A;
   --ink-2:       #4A4A46;
   --ink-3:       #8A8A84;
@@ -530,7 +530,6 @@ button:focus-visible {
   max-width: 52ch;
   line-height: 1.65;
 }
-
 .contact-links {
   display: flex;
   flex-wrap: wrap;

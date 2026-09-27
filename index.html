@@ -35,6 +35,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+  <!-- Preload LCP assets — hero bg image paints before CSS is fully parsed -->
+  <link rel="preload" href="background-image.jpg" as="image" fetchpriority="high">
+
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="nova-phase3.css">
   <link rel="stylesheet" href="hero-landing.css">
