@@ -78,11 +78,299 @@
   gap: 12px;
 }
 
-.about-intro p {
+.about-intro-lead {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  line-height: 1.8;
+  max-width: 54ch;
+  /* Slightly larger than body — feels like an opening statement, not a paragraph */
+}
+
+/* ===========================
+   STORY SECTION
+   A progression of beats. Not a timeline.
+   Each beat is a moment or turning point.
+   =========================== */
+
+.about-story {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+  padding-top: 28px;
+}
+
+.story-beat {
+  padding: 20px 0 20px 20px;
+  border-left: 1.5px solid var(--hairline);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Small dot at the top of each beat's left border */
+.story-beat::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 24px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nova-accent);
+  opacity: 0.5;
+}
+
+.story-beat:first-child::before {
+  opacity: 1;
+}
+
+/* Optional small label above a beat — context, not a heading */
+.story-beat-label {
+  display: block;
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--nova-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Hidden when empty */
+  min-height: 0;
+}
+
+.story-beat-label:empty {
+  display: none;
+}
+
+.story-beat p {
   font-size: 0.875rem;
   color: var(--ink-2);
-  line-height: 1.78;
-  max-width: 58ch;
+  line-height: 1.8;
+  max-width: 56ch;
+}
+
+/* Pull-quote — a sentence that earned its own space.
+   Use once, maximum. Not for every beat. */
+.story-pullquote {
+  margin: 4px 0 0 0;
+  padding: 12px 0 12px 16px;
+  border-left: 2px solid var(--nova-accent);
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+/* Story images — inline within beats */
+.story-image {
+  margin: 0;
+}
+
+.story-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+}
+
+.story-image--full img {
+  /* Full width of the content column */
+  max-height: 320px;
+  object-fit: cover;
+}
+
+.story-image--inline img {
+  /* Slightly inset — feels like a photo dropped into a notebook */
+  max-width: 85%;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+.story-image-caption {
+  font-size: 0.68rem;
+  color: var(--ink-3);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+/* ===========================
+   SECTION LABELS
+   Shared small label used above milestones, interests, etc.
+   Different from toolkit-label (not uppercase heavy)
+   =========================== */
+
+.about-section-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+/* ===========================
+   MILESTONES
+   Not a timeline. Not a résumé bullet list.
+   Moments worth marking.
+   =========================== */
+
+.about-milestones {
+  padding-top: 4px;
+}
+
+.milestone-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.milestone-item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline-2);
+  align-items: baseline;
+}
+
+.milestone-item:last-child {
+  border-bottom: 1px solid var(--hairline-2);
+}
+
+.milestone-marker {
+  font-size: 0.55rem;
+  color: var(--nova-accent);
+  opacity: 0.7;
+  padding-top: 3px;
+  line-height: 1;
+}
+
+.milestone-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.milestone-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.milestone-meta {
+  font-size: 0.68rem;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.milestone-note {
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* ===========================
+   PHOTO PAIR
+   Two images side by side — for scattered personal photos.
+   =========================== */
+
+.about-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-photos-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.about-photos-pair .story-image img {
+  height: 160px;
+  object-fit: cover;
+}
+
+/* ===========================
+   INTERESTS
+   Small honest list. Not a skills section.
+   =========================== */
+
+.about-interests {
+  padding-top: 4px;
+}
+
+.interest-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.interest-item {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  padding: 4px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 100px;
+  line-height: 1.4;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+@media (hover: hover) {
+  .interest-item:hover {
+    border-color: var(--nova-accent);
+    color: var(--nova-accent);
+  }
+}
+
+.interests-note {
+  margin-top: 12px;
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+  max-width: 52ch;
+  font-style: italic;
+}
+
+/* ===========================
+   RESPONSIVE — story section
+   =========================== */
+
+@media (max-width: 768px) {
+  .story-beat {
+    padding: 18px 0 18px 16px;
+  }
+  .story-pullquote {
+    max-width: 100%;
+  }
+  .about-photos-pair {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .about-photos-pair .story-image img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-beat p {
+    max-width: 100%;
+  }
+  .milestone-item {
+    gap: 8px;
+  }
 }
 
 /* ===========================

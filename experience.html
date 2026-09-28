@@ -4,15 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="pics/pic.jpg">
 
-  <!-- Primary meta -->
   <title>Experience · nova.</title>
   <meta name="description" content="Darla Nova Sumanting — experience, education, and certifications. CS student, AWS community lead, automation builder. Manila, PH.">
   <link rel="canonical" href="https://novaautomates.vercel.app/experience.html">
 
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Experience — Darla Nova Sumanting">
   <meta property="og:description" content="CS student, AWS community lead, automation builder. 3× AWS Certified. Manila, PH.">
@@ -20,13 +17,11 @@
   <meta property="og:url"         content="https://novaautomates.vercel.app/experience.html">
   <meta property="og:site_name"   content="nova.">
 
-  <!-- Twitter / X card -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Experience — Darla Nova Sumanting">
   <meta name="twitter:description" content="CS student, AWS community lead, automation builder. 3× AWS Certified. Manila, PH.">
   <meta name="twitter:image"       content="https://novaautomates.vercel.app/pics/nova-photo.jpg">
 
-  <!-- Inline theme — prevents dark/light flash -->
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
@@ -35,7 +30,6 @@
     })();
   </script>
 
-  <!-- Font preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -44,19 +38,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
   <style>
-    /* ============================================================
-       CONSTELLATION — experience.html only
-       Star nodes + SVG lines + detail panel.
-       ============================================================ */
+    /* ================================================================
+       EXPERIENCE CONSTELLATION — experience.html only
+       Full lore exploration system.
 
-    /* Layout wrapper — map left, detail right */
-    .constellation-section {
+       STRUCTURE:
+         .xp-section              — outer wrapper, border-reveal hook
+         .xp-map                  — left column: SVG + star nodes
+         .xp-panel                — right column: lore panel
+         .xp-lore                 — the actual lore content (hidden until node clicked)
+         .xp-lore-body            — full lore (hidden until "read more" clicked)
+         .xp-accordion            — mobile fallback list
+         .xp-accordion-item       — each mobile entry (tap to expand)
+
+       STATES:
+         .xp-map--has-active      — a node is selected (dims unselected nodes)
+         .xp-node--active         — the currently selected node
+         .xp-lore--visible        — lore panel shown
+         .xp-lore-body--open      — full lore expanded
+         .xp-accordion-item--open — mobile accordion open
+    ================================================================ */
+
+    /* ── Layout ──────────────────────────────────────────────────── */
+
+    .xp-section {
       position: relative;
       padding-top: 48px;
+      margin-bottom: 8px;
     }
 
-    .constellation-section::before {
-      /* section heading border reveal (same as .section-heading) */
+    /* Section border-reveal line (same system as .section-heading) */
+    .xp-section::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
@@ -68,41 +80,46 @@
         var(--hairline) 32px,
         var(--hairline) 100%
       );
-      transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .constellation-section.border-revealed::before { width: 100%; }
+    .xp-section.border-revealed::before { width: 100%; }
 
-    /* On desktop: show constellation, hide fallback list */
-    @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
-      .constellation-fallback { display: none; }
-
-      .constellation-section {
-        display: grid;
-        grid-template-columns: 380px 1fr;
-        gap: 0 48px;
-        align-items: start;
-        min-height: 560px;
-      }
-
-      /* Map occupies full column height */
-      .constellation-map {
-        position: relative;
-        width: 380px;
-        height: 520px;
-        flex-shrink: 0;
-      }
+    /* Desktop layout — map left, lore right */
+    .xp-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 0 56px;
+      align-items: start;
+      min-height: 540px;
     }
 
-    /* On mobile / reduced-motion: hide constellation, show list */
+    /* Mobile + reduced-motion: hide visual constellation, show accordion */
     @media (max-width: 768px), (prefers-reduced-motion: reduce) {
-      .constellation-map,
-      .constellation-detail { display: none; }
-      .constellation-fallback { display: flex; flex-direction: column; gap: 0; list-style: none; padding: 0; }
+      .xp-layout { display: none; }
+      .xp-accordion { display: flex; }
+    }
+    @media (min-width: 769px) {
+      @media not (prefers-reduced-motion: reduce) {
+        .xp-accordion { display: none; }
+      }
+    }
+    /* Reduced motion: hide constellation on all sizes */
+    @media (prefers-reduced-motion: reduce) {
+      .xp-layout { display: none !important; }
+      .xp-accordion { display: flex !important; }
     }
 
-    /* ── SVG lines ─────────────────────────────────────────── */
+    /* ── Constellation map ───────────────────────────────────────── */
 
-    .constellation-svg {
+    .xp-map {
+      position: relative;
+      width: 340px;
+      height: 500px;
+      flex-shrink: 0;
+    }
+
+    /* SVG layer for lines */
+    .xp-svg {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -111,42 +128,39 @@
       overflow: visible;
     }
 
-    .c-line {
+    .xp-line {
       stroke: var(--nova-accent);
       stroke-width: 1;
       stroke-linecap: round;
       opacity: 0;
-      /* Draw-in: start fully invisible via dashoffset */
-      stroke-dasharray: 500;
-      stroke-dashoffset: 500;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
       transition:
-        stroke-dashoffset 1100ms cubic-bezier(0.16, 1, 0.3, 1),
-        opacity           400ms ease;
+        stroke-dashoffset 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 400ms ease;
     }
 
-    .constellation-map.lines-drawn .c-line {
+    .xp-map.lines-drawn .xp-line {
       stroke-dashoffset: 0;
-      opacity: 0.28;
-      /* After draw-in completes, show dotted pattern */
-      stroke-dasharray: 4 6;
+      opacity: 0.22;
+      stroke-dasharray: 4 7;
     }
 
-    /* Stagger the second line slightly */
-    .constellation-map.lines-drawn .c-line:nth-child(2) {
-      transition-delay: 250ms;
-    }
+    .xp-map.lines-drawn .xp-line:nth-child(2) { transition-delay: 300ms; }
+    .xp-map.lines-drawn .xp-line:nth-child(3) { transition-delay: 500ms; }
 
-    .c-ambient {
+    /* Ambient dust dots */
+    .xp-dust {
       fill: var(--nova-accent);
-      opacity: 0.18;
+      opacity: 0.14;
     }
 
-    /* ── Star nodes ────────────────────────────────────────── */
+    /* ── Star nodes ──────────────────────────────────────────────── */
 
-    .c-star {
+    .xp-node {
       position: absolute;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       background: none;
       border: none;
       cursor: pointer;
@@ -155,161 +169,514 @@
       justify-content: center;
       transform: translate(-50%, -50%);
       padding: 0;
+      /* transition for the dim-unselected effect */
+      transition: opacity 300ms ease;
     }
 
-    /* Positions matching SVG viewBox coords scaled to container */
-    .c-star--0 { left: 55%;  top: 15.4%; }
-    .c-star--1 { left: 25%;  top: 46.2%; }
-    .c-star--2 { left: 70%;  top: 76.9%; }
-
-    .c-star-shape {
-      width: 18px;
-      height: 18px;
+    /* Star shape SVG */
+    .xp-node-star {
+      width: 16px;
+      height: 16px;
       color: var(--nova-accent);
-      filter: drop-shadow(0 0 4px var(--nova-accent-dim));
+      filter: drop-shadow(0 0 3px var(--nova-accent-dim));
       transition:
-        transform   200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        filter      200ms ease,
-        color       200ms ease;
+        transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter    220ms ease,
+        color     220ms ease;
       position: relative;
       z-index: 1;
+      flex-shrink: 0;
     }
 
-    .c-star-ring {
+    /* Halo ring */
+    .xp-node-ring {
       position: absolute;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       border: 1px solid var(--nova-accent);
-      opacity: 0.35;
-      transition: opacity 200ms ease, transform 200ms ease;
-    }
-
-    /* Label beside the star */
-    .c-star-label {
-      position: absolute;
-      left: calc(50% + 18px);
-      white-space: nowrap;
-      font-size: 0.74rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--ink-2);
-      text-transform: uppercase;
-      transition: color 200ms ease;
+      opacity: 0.28;
+      transition: opacity 220ms ease, transform 220ms ease;
       pointer-events: none;
     }
 
-    /* Active star state */
-    .c-star--active .c-star-shape,
-    .c-star:focus-visible .c-star-shape {
-      transform: scale(1.6) rotate(15deg);
-      filter:
-        drop-shadow(0 0 8px var(--nova-accent))
-        drop-shadow(0 0 16px var(--nova-accent-dim));
-      color: var(--nova-star-gold);
+    /* Outer pulse ring — only on active */
+    .xp-node-pulse {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--nova-accent);
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 400ms ease, transform 400ms ease;
+      pointer-events: none;
     }
 
-    .c-star--active .c-star-ring,
-    .c-star:focus-visible .c-star-ring {
-      opacity: 0.7;
+    /* Node label */
+    .xp-node-label {
+      position: absolute;
+      left: calc(50% + 16px);
+      white-space: nowrap;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      color: var(--ink-3);
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: color 220ms ease;
+    }
+
+    /* Node positions — percentage of container (340×500) */
+    .xp-node--0 { left: 62%;  top: 13%; }
+    .xp-node--1 { left: 28%;  top: 44%; }
+    .xp-node--2 { left: 72%;  top: 70%; }
+    .xp-node--3 { left: 18%;  top: 82%; }
+
+    /* Hover (pointer devices only) */
+    @media (hover: hover) {
+      .xp-node:hover .xp-node-star {
+        transform: scale(1.35) rotate(8deg);
+        filter: drop-shadow(0 0 6px var(--nova-accent));
+      }
+      .xp-node:hover .xp-node-ring {
+        opacity: 0.55;
+        transform: scale(1.3);
+      }
+      .xp-node:hover .xp-node-label { color: var(--ink-2); }
+    }
+
+    /* Focus */
+    .xp-node:focus-visible .xp-node-star {
+      transform: scale(1.35) rotate(8deg);
+      filter: drop-shadow(0 0 8px var(--nova-star-gold, #FFD580));
+      color: var(--nova-star-gold, #FFD580);
+    }
+
+    /* Active state */
+    .xp-node--active .xp-node-star {
+      transform: scale(1.65) rotate(15deg);
+      color: var(--nova-star-gold, #FFD580);
+      filter:
+        drop-shadow(0 0 8px var(--nova-star-gold, #FFD580))
+        drop-shadow(0 0 18px rgba(255, 213, 128, 0.4));
+    }
+
+    .xp-node--active .xp-node-ring {
+      opacity: 0.65;
       transform: scale(1.5);
     }
 
-    .c-star--active .c-star-label {
+    .xp-node--active .xp-node-pulse {
+      opacity: 0.35;
+      transform: scale(1);
+    }
+
+    .xp-node--active .xp-node-label {
       color: var(--nova-accent);
     }
 
-    @media (hover: hover) {
-      .c-star:hover .c-star-shape {
-        transform: scale(1.3) rotate(8deg);
-        filter: drop-shadow(0 0 6px var(--nova-accent));
-      }
-      .c-star:hover .c-star-ring { opacity: 0.6; transform: scale(1.25); }
-      .c-star:hover .c-star-label { color: var(--ink); }
+    /* Pulse keyframe */
+    @keyframes xp-pulse {
+      0%   { opacity: 0.35; transform: scale(1); }
+      70%  { opacity: 0;    transform: scale(1.8); }
+      100% { opacity: 0;    transform: scale(1.8); }
     }
 
-    /* Pulse animation on active star */
-    @keyframes star-pulse {
-      0%   { filter: drop-shadow(0 0 4px var(--nova-accent-dim)); }
-      50%  { filter: drop-shadow(0 0 12px var(--nova-accent)) drop-shadow(0 0 20px var(--nova-accent-dim)); }
-      100% { filter: drop-shadow(0 0 4px var(--nova-accent-dim)); }
+    .xp-node--active .xp-node-pulse {
+      animation: xp-pulse 2.4s ease-out infinite;
     }
 
-    .c-star--active .c-star-shape {
-      animation: star-pulse 2.2s ease-in-out infinite;
+    /* When a selection is made: dim other nodes */
+    .xp-map--has-active .xp-node:not(.xp-node--active) {
+      opacity: 0.45;
     }
 
-    /* ── Detail panel ──────────────────────────────────────── */
+    /* ── Lore panel (right column) ───────────────────────────────── */
 
-    .constellation-detail {
+    .xp-panel {
+      padding-top: 4px;
+      min-height: 500px;
       position: relative;
-      /* min-height matches the tallest panel so layout doesn't collapse */
-      min-height: 360px;
-      padding-top: 40px;
     }
 
-    .c-detail-panel {
-      /* Use visibility+opacity instead of display:none so CSS transitions fire */
+    /* Empty state — shown when nothing is selected */
+    .xp-panel-empty {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 60px;
+      opacity: 0.5;
+      transition: opacity 300ms ease;
+    }
+
+    .xp-panel-empty p {
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .xp-panel-empty-star {
+      width: 14px;
+      height: 14px;
+      color: var(--nova-accent);
+      opacity: 0.5;
+    }
+
+    .xp-panel-empty.xp-panel-empty--hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Lore container — hidden until a node is activated */
+    .xp-lore {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      visibility: hidden;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(12px);
       pointer-events: none;
       transition:
-        opacity    320ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform  320ms cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0ms  320ms;   /* delay hides after fade-out completes */
+        opacity    360ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform  360ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .c-detail-panel.c-detail--active {
-      visibility: visible;
+    .xp-lore--visible {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
-      transition:
-        opacity   320ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0ms;  /* show immediately on enter */
     }
 
-    .c-detail-date {
-      font-size: 0.7rem;
-      color: var(--ink-3);
-      letter-spacing: 0.04em;
+    /* Lore header */
+    .xp-lore-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+
+    .xp-lore-close {
+      background: none;
+      border: 1px solid var(--hairline);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink-3);
+      font-size: 1rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+      margin-top: 2px;
     }
 
-    .c-detail-role {
-      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    .xp-lore-close:hover {
+      border-color: var(--nova-accent);
+      color: var(--nova-accent);
+      background: var(--nova-accent-dim);
+    }
+
+    .xp-lore-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .xp-lore-date {
+      font-size: 0.68rem;
+      color: var(--ink-3);
+      letter-spacing: 0.04em;
+    }
+
+    .xp-lore-tag {
+      font-size: 0.6rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: var(--ink);
+      padding: 2px 7px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--nova-accent-dim);
+      color: var(--nova-accent);
     }
 
-    .c-detail-org {
-      font-size: 0.78rem;
+    .xp-lore-role {
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .xp-lore-org {
+      font-size: 0.8rem;
       color: var(--ink-3);
       font-weight: 500;
+      margin-bottom: 14px;
     }
 
-    .c-detail-desc {
+    .xp-lore-overview {
       font-size: 0.875rem;
       color: var(--ink-2);
       line-height: 1.75;
-      max-width: 58ch;
-      margin-top: 4px;
+      max-width: 54ch;
+      margin-bottom: 16px;
     }
 
-    /* ── Cert badges ───────────────────────────────────────── */
+    /* "read more" toggle — expands the full lore body */
+    .xp-lore-expand {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--nova-accent);
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 200ms ease;
+      min-height: 40px;
+    }
+
+    .xp-lore-expand:hover { opacity: 0.72; }
+
+    .xp-lore-expand-icon {
+      display: inline-block;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-style: normal;
+    }
+
+    .xp-lore-body--open .xp-lore-expand-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Full lore body — hidden by default */
+    .xp-lore-body {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height 480ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity    360ms ease;
+      margin-top: 0;
+    }
+
+    .xp-lore-body--open {
+      max-height: 1200px; /* large enough for any content */
+      opacity: 1;
+      margin-top: 20px;
+    }
+
+    /* Lore body sections */
+    .xp-lore-body-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-bottom: 8px;
+    }
+
+    .xp-lore-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .xp-lore-section-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      color: var(--ink-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .xp-lore-section ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .xp-lore-section ul li {
+      font-size: 0.855rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .xp-lore-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--nova-accent);
+      font-size: 0.75rem;
+    }
+
+    .xp-lore-section p {
+      font-size: 0.855rem;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    /* Stack pills — small, low-key */
+    .xp-lore-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .xp-lore-pill {
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 3px 10px;
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      color: var(--ink-3);
+      letter-spacing: 0.02em;
+    }
+
+    /* Optional images inside lore */
+    .xp-lore-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .xp-lore-images img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* Optional external link */
+    .xp-lore-link {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--nova-accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 40px;
+      transition: opacity 200ms ease;
+    }
+    .xp-lore-link:hover { opacity: 0.72; }
+
+    /* ── Mobile accordion ────────────────────────────────────────── */
+
+    .xp-accordion {
+      flex-direction: column;
+      gap: 0;
+      list-style: none;
+      padding: 0;
+    }
+
+    .xp-accordion-item {
+      border-top: 1px solid var(--hairline);
+    }
+
+    .xp-accordion-item:last-child {
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    /* Tap trigger — the visible header */
+    .xp-accordion-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 22px 0;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 28px 1fr 24px;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+    }
+
+    .xp-accordion-trigger-star {
+      width: 14px;
+      height: 14px;
+      color: var(--nova-accent);
+      flex-shrink: 0;
+      transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), color 220ms ease;
+    }
+
+    .xp-accordion-item--open .xp-accordion-trigger-star {
+      transform: scale(1.4) rotate(15deg);
+      color: var(--nova-star-gold, #FFD580);
+    }
+
+    .xp-accordion-trigger-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .xp-accordion-trigger-role {
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .xp-accordion-trigger-meta {
+      font-size: 0.68rem;
+      color: var(--ink-3);
+      letter-spacing: 0.03em;
+    }
+
+    .xp-accordion-chevron {
+      width: 14px;
+      height: 14px;
+      color: var(--ink-3);
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      flex-shrink: 0;
+    }
+
+    .xp-accordion-item--open .xp-accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Accordion body */
+    .xp-accordion-body {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height 480ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity    320ms ease;
+    }
+
+    .xp-accordion-item--open .xp-accordion-body {
+      max-height: 2000px;
+      opacity: 1;
+    }
+
+    .xp-accordion-body-inner {
+      padding: 0 0 28px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Shared lore section styles work inside accordion too */
+
+    /* ── Cert badges (unchanged from previous) ───────────────────── */
 
     .cert-badges {
       display: flex;
@@ -328,11 +695,11 @@
       border-radius: 8px;
       text-decoration: none;
       width: 80px;
-      transition:
-        border-color 200ms ease-out,
-        background   200ms ease-out,
-        transform    150ms cubic-bezier(0.34, 1.56, 0.64, 1);
       background: var(--card-bg);
+      transition:
+        border-color 200ms ease,
+        background   200ms ease,
+        transform    150ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     @media (hover: hover) {
@@ -356,7 +723,6 @@
       color: var(--ink-2);
       text-align: center;
       line-height: 1.3;
-      letter-spacing: 0;
     }
 
     .cert-badge__level {
@@ -367,24 +733,26 @@
       text-transform: uppercase;
     }
 
-    /* ── Dark mode adjustments ─────────────────────────────── */
-    [data-theme="dark"] .c-star-shape {
-      color: var(--nova-accent);
-    }
+    /* ── Dark mode tweaks ────────────────────────────────────────── */
 
-    [data-theme="dark"] .c-line {
-      stroke: var(--nova-accent);
-      opacity: 0.25;
-    }
+    [data-theme="dark"] .xp-node-star { color: var(--nova-accent); }
+    [data-theme="dark"] .xp-line { stroke: var(--nova-accent); }
+    [data-theme="dark"] .xp-lore-role { color: var(--ink); }
 
-    [data-theme="dark"] .c-detail-role {
-      color: var(--ink);
+    /* ── Responsive: mid (1024–769px) ───────────────────────────── */
+
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .xp-layout {
+        grid-template-columns: 280px 1fr;
+        gap: 0 36px;
+      }
+      .xp-map { width: 280px; height: 440px; }
     }
   </style>
 </head>
 <body class="blush-page">
 
-  <!-- Custom cursor — desktop only, hidden on touch -->
+  <!-- Custom cursor -->
   <div class="nova-cursor" id="novaCursor" aria-hidden="true">
     <svg class="cursor-star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
@@ -413,191 +781,67 @@
   <main class="container page-section" id="main">
 
     <h1 class="page-heading page-heading--experience">where i've <em class="italic-accent">been</em></h1>
-    <p class="page-context">internships, community leadership, education.</p>
+    <p class="page-context">tap a node to explore.</p>
 
-    <!-- ============================================================
-         CONSTELLATION — experience as a star map
-         Each role is a star node; SVG lines connect them.
-         JS drives the active state; CSS animates the lines.
-         Falls back to the plain .exp-list on reduced-motion / mobile.
-         ============================================================ -->
-    <section class="constellation-section" aria-label="Work experience">
+    <!-- ================================================================
+         EXPERIENCE CONSTELLATION
+         Data lives entirely in experience-data.js (JS object array).
+         HTML below is only the shell — JS renders all node + lore content.
+    ================================================================ -->
+    <section class="xp-section" id="xpSection" aria-label="Experience constellation">
 
-      <!-- Accessible list — always in DOM, visually hidden on desktop
-           when constellation is active -->
-      <ul class="exp-list constellation-fallback" aria-label="Work experience list">
-        <li class="exp-entry reveal" style="--i:0">
-          <div class="exp-meta">
-            <span class="exp-date">May 2026 — now</span>
-            <span class="exp-tag remote">remote</span>
-          </div>
-          <div class="exp-body">
-            <h2 class="exp-role">AI Solutions Development Intern</h2>
-            <span class="exp-org">Eskwelabs</span>
-            <p class="exp-desc">
-              co-built an internal AI advisor chat: three personas using Gemini streaming,
-              Google OAuth with a domain allowlist, Supabase with Row Level Security.
-              the hardest part was the auth token passthrough to Supabase — getting the
-              JWT from Google OAuth to evaluate correctly against RLS policies took most
-              of the debugging time. shipped to production. the team uses it daily.
-            </p>
-            <div class="exp-stack">
-              <span>Next.js 14</span><span>Gemini</span><span>Supabase</span><span>Google OAuth</span>
-            </div>
-          </div>
-        </li>
+      <!-- Desktop constellation layout -->
+      <div class="xp-layout" id="xpLayout" aria-hidden="true">
 
-        <li class="exp-entry reveal" style="--i:1">
-          <div class="exp-meta">
-            <span class="exp-date">Aug 2025 — now</span>
-          </div>
-          <div class="exp-body">
-            <h2 class="exp-role">President &amp; AWS Student Builder Lead</h2>
-            <span class="exp-org">AWS Student Builder Group · Adamson University</span>
-            <p class="exp-desc">
-              running a 120+ member cloud community: workshops on actual AWS services,
-              member onboarding, event production. also Executive Secretary for
-              AWS Cloud Club Philippines — coordination across 40+ chapters nationwide.
-              the org website is one of the <a href="projects.html#awssbg-website" class="inline-link">projects</a>.
-            </p>
-            <div class="timeline-photos" aria-label="Photos from AWS SBG workshops">
-              <img src="pics/cloud9-workshop.jpg" alt="Students deploying cloud apps at a campus workshop" class="timeline-photo" loading="lazy">
-              <img src="pics/cloud9-team.jpg" alt="Cloud9 team photo at a campus workshop" class="timeline-photo" loading="lazy">
-            </div>
-            <div class="exp-stack">
-              <span>AWS</span><span>Community</span><span>Workshops</span>
-            </div>
-          </div>
-        </li>
+        <!-- LEFT: star map -->
+        <div class="xp-map" id="xpMap">
+          <svg class="xp-svg" viewBox="0 0 340 500"
+               xmlns="http://www.w3.org/2000/svg"
+               preserveAspectRatio="xMidYMid meet"
+               aria-hidden="true">
+            <!-- Lines drawn between node positions (JS references these by class) -->
+            <!-- Node 0 (210,65) → Node 1 (95,220) -->
+            <line class="xp-line" x1="210" y1="65"  x2="95"  y2="220" />
+            <!-- Node 1 (95,220) → Node 2 (245,350) -->
+            <line class="xp-line" x1="95"  y1="220" x2="245" y2="350" />
+            <!-- Node 2 (245,350) → Node 3 (61,410) -->
+            <line class="xp-line" x1="245" y1="350" x2="61"  y2="410" />
+            <!-- Ambient dust -->
+            <circle class="xp-dust" cx="155" cy="140" r="1.5"/>
+            <circle class="xp-dust" cx="170" cy="285" r="1"/>
+            <circle class="xp-dust" cx="130" cy="380" r="1.5"/>
+            <circle class="xp-dust" cx="290" cy="160" r="1"/>
+            <circle class="xp-dust" cx="50"  cy="300" r="1.5"/>
+            <circle class="xp-dust" cx="310" cy="420" r="1"/>
+            <circle class="xp-dust" cx="75"  cy="180" r="1"/>
+          </svg>
+          <!-- Star nodes injected by JS -->
+        </div>
 
-        <li class="exp-entry reveal" style="--i:2">
-          <div class="exp-meta">
-            <span class="exp-date">Jan–Feb 2026</span>
-            <span class="exp-tag remote">remote</span>
+        <!-- RIGHT: lore panel -->
+        <div class="xp-panel" id="xpPanel">
+
+          <!-- Empty state -->
+          <div class="xp-panel-empty" id="xpEmpty">
+            <svg class="xp-panel-empty-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
+            </svg>
+            <p>select a node</p>
           </div>
-          <div class="exp-body">
-            <h2 class="exp-role">IT Intern</h2>
-            <span class="exp-org">Tutorials Dojo</span>
-            <p class="exp-desc">
-              wrote and published a technical article on Amazon Bedrock —
-              LLM-as-a-Judge methodology, prompt design, model comparison.
-              required running the evaluations, not just describing them.
-            </p>
-            <div class="exp-stack">
-              <span>Amazon Bedrock</span><span>Technical Writing</span>
-            </div>
-          </div>
-        </li>
+
+          <!-- Lore panels injected by JS -->
+        </div>
+
+      </div>
+
+      <!-- Mobile / reduced-motion accordion (always in DOM, shown via CSS) -->
+      <ul class="xp-accordion" id="xpAccordion" aria-label="Experience list">
+        <!-- Items injected by JS -->
       </ul>
 
-      <!-- Constellation visual — desktop only, aria-hidden -->
-      <div class="constellation-map" aria-hidden="true" id="constellationMap">
-
-        <!-- SVG lines between stars -->
-        <svg class="constellation-svg" viewBox="0 0 400 520"
-             xmlns="http://www.w3.org/2000/svg"
-             preserveAspectRatio="xMidYMid meet">
-          <!-- Line: star 0 → star 1 -->
-          <line class="c-line" x1="220" y1="80"  x2="100" y2="240" />
-          <!-- Line: star 1 → star 2 -->
-          <line class="c-line" x1="100" y1="240" x2="280" y2="400" />
-          <!-- Ambient faint connecting dot -->
-          <circle class="c-ambient" cx="160" cy="160" r="1.5"/>
-          <circle class="c-ambient" cx="200" cy="320" r="1"/>
-          <circle class="c-ambient" cx="140" cy="450" r="1.5"/>
-          <circle class="c-ambient" cx="320" cy="180" r="1"/>
-          <circle class="c-ambient" cx="60"  cy="350" r="1.5"/>
-        </svg>
-
-        <!-- Star nodes — 4-point star SVG matching site cursor motif -->
-        <button class="c-star c-star--0 c-star--active"
-                data-index="0"
-                aria-label="Eskwelabs internship — click to view details">
-          <svg class="c-star-shape" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-          </svg>
-          <span class="c-star-ring"></span>
-          <span class="c-star-label">Eskwelabs</span>
-        </button>
-
-        <button class="c-star c-star--1"
-                data-index="1"
-                aria-label="AWS Student Builder Group — click to view details">
-          <svg class="c-star-shape" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-          </svg>
-          <span class="c-star-ring"></span>
-          <span class="c-star-label">AWS SBG</span>
-        </button>
-
-        <button class="c-star c-star--2"
-                data-index="2"
-                aria-label="Tutorials Dojo internship — click to view details">
-          <svg class="c-star-shape" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-          </svg>
-          <span class="c-star-ring"></span>
-          <span class="c-star-label">Tutorials Dojo</span>
-        </button>
-
-      </div>
-
-      <!-- Detail panel — driven by active star -->
-      <div class="constellation-detail" id="constellationDetail" aria-live="polite">
-
-        <div class="c-detail-panel c-detail--0 c-detail--active">
-          <span class="c-detail-date">May 2026 — now &nbsp;·&nbsp; <span class="exp-tag remote" style="font-size:0.6rem">remote</span></span>
-          <h2 class="c-detail-role">AI Solutions Development Intern</h2>
-          <span class="c-detail-org">Eskwelabs</span>
-          <p class="c-detail-desc">
-            co-built an internal AI advisor chat: three personas using Gemini streaming,
-            Google OAuth with a domain allowlist, Supabase with Row Level Security.
-            the hardest part was the auth token passthrough to Supabase — getting the
-            JWT from Google OAuth to evaluate correctly against RLS policies took most
-            of the debugging time. shipped to production. the team uses it daily.
-          </p>
-          <div class="exp-stack">
-            <span>Next.js 14</span><span>Gemini</span><span>Supabase</span><span>Google OAuth</span>
-          </div>
-        </div>
-
-        <div class="c-detail-panel c-detail--1">
-          <span class="c-detail-date">Aug 2025 — now</span>
-          <h2 class="c-detail-role">President &amp; AWS Student Builder Lead</h2>
-          <span class="c-detail-org">AWS Student Builder Group · Adamson University</span>
-          <p class="c-detail-desc">
-            running a 120+ member cloud community: workshops on actual AWS services,
-            member onboarding, event production. also Executive Secretary for
-            AWS Cloud Club Philippines — coordination across 40+ chapters nationwide.
-            the org website is one of the <a href="projects.html#awssbg-website" class="inline-link">projects</a>.
-          </p>
-          <div class="timeline-photos" style="margin-bottom:8px">
-            <img src="pics/cloud9-workshop.jpg" alt="Students at AWS SBG workshop" class="timeline-photo" loading="lazy">
-            <img src="pics/cloud9-team.jpg" alt="Cloud9 team photo" class="timeline-photo" loading="lazy">
-          </div>
-          <div class="exp-stack">
-            <span>AWS</span><span>Community</span><span>Workshops</span>
-          </div>
-        </div>
-
-        <div class="c-detail-panel c-detail--2">
-          <span class="c-detail-date">Jan–Feb 2026 &nbsp;·&nbsp; <span class="exp-tag remote" style="font-size:0.6rem">remote</span></span>
-          <h2 class="c-detail-role">IT Intern</h2>
-          <span class="c-detail-org">Tutorials Dojo</span>
-          <p class="c-detail-desc">
-            wrote and published a technical article on Amazon Bedrock —
-            LLM-as-a-Judge methodology, prompt design, model comparison.
-            required running the evaluations, not just describing them.
-          </p>
-          <div class="exp-stack">
-            <span>Amazon Bedrock</span><span>Technical Writing</span>
-          </div>
-        </div>
-
-      </div>
     </section>
 
-    <!-- Education + credentials — tighter than a full section -->
+    <!-- Education + credentials -->
     <section class="edu-section" aria-labelledby="edu-heading">
       <h2 class="section-heading" id="edu-heading">education &amp; credentials</h2>
 
@@ -609,45 +853,40 @@
         </div>
         <div class="edu-item reveal">
           <h3>Certifications</h3>
-          <!-- Badge row — verified Credly badges with real links -->
           <div class="cert-badges" role="list" aria-label="Certifications">
 
             <a class="cert-badge" role="listitem" target="_blank" rel="noopener noreferrer"
                href="https://www.credly.com/badges/89176952-9640-420e-8124-64921606c940/public_url"
-               aria-label="AWS Certified Solutions Architect – Associate — verify on Credly">
+               aria-label="AWS Certified Solutions Architect – Associate">
               <img src="https://images.credly.com/size/110x110/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png"
-                   alt="AWS Certified Solutions Architect – Associate badge"
-                   width="56" height="56" loading="lazy">
+                   alt="AWS Certified Solutions Architect – Associate" width="56" height="56" loading="lazy">
               <span class="cert-badge__name">Solutions Architect</span>
               <span class="cert-badge__level">Associate</span>
             </a>
 
             <a class="cert-badge" role="listitem" target="_blank" rel="noopener noreferrer"
                href="https://www.credly.com/badges/7a4c8560-fd8f-4e81-99a6-5cd373afeab1/public_url"
-               aria-label="AWS Certified AI Practitioner — verify on Credly">
+               aria-label="AWS Certified AI Practitioner">
               <img src="https://images.credly.com/size/110x110/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png"
-                   alt="AWS Certified AI Practitioner badge"
-                   width="56" height="56" loading="lazy">
+                   alt="AWS Certified AI Practitioner" width="56" height="56" loading="lazy">
               <span class="cert-badge__name">AI Practitioner</span>
               <span class="cert-badge__level">Foundational</span>
             </a>
 
             <a class="cert-badge" role="listitem" target="_blank" rel="noopener noreferrer"
                href="https://www.credly.com/badges/31605b11-13c1-4534-862e-82021c79d6a3/public_url"
-               aria-label="AWS Certified Cloud Practitioner — verify on Credly">
+               aria-label="AWS Certified Cloud Practitioner">
               <img src="https://images.credly.com/size/110x110/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png"
-                   alt="AWS Certified Cloud Practitioner badge"
-                   width="56" height="56" loading="lazy">
+                   alt="AWS Certified Cloud Practitioner" width="56" height="56" loading="lazy">
               <span class="cert-badge__name">Cloud Practitioner</span>
               <span class="cert-badge__level">Foundational</span>
             </a>
 
             <a class="cert-badge" role="listitem" target="_blank" rel="noopener noreferrer"
                href="https://www.credly.com/badges/e30fe59b-2816-44aa-8e8a-ea93dfda801c/public_url"
-               aria-label="IT Specialist – Databases — verify on Credly">
+               aria-label="IT Specialist – Databases">
               <img src="it-sepcialist.png"
-                   alt="IT Specialist – Databases badge"
-                   width="56" height="56" loading="lazy"
+                   alt="IT Specialist – Databases" width="56" height="56" loading="lazy"
                    style="object-fit:contain;">
               <span class="cert-badge__name">IT Specialist</span>
               <span class="cert-badge__level">Databases</span>
@@ -655,11 +894,10 @@
 
             <a class="cert-badge" role="listitem" target="_blank" rel="noopener noreferrer"
                href="https://cs50.harvard.edu/certificates/b9d79f34-081c-43b7-9e0c-e2a52e4d54b4"
-               aria-label="Harvard CS50x certificate — verify on Harvard">
+               aria-label="Harvard CS50x certificate">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Harvard_University_logo.svg/480px-Harvard_University_logo.svg.png"
-                   alt="Harvard CS50x certificate"
-                   width="56" height="28" loading="lazy"
-                   style="object-fit:contain; height:28px; width:auto; margin:14px auto;">
+                   alt="Harvard CS50x" width="56" height="28" loading="lazy"
+                   style="object-fit:contain;height:28px;width:auto;margin:14px auto;">
               <span class="cert-badge__name">CS50x</span>
               <span class="cert-badge__level">Harvard</span>
             </a>
@@ -669,10 +907,11 @@
       </div>
     </section>
 
-    <!-- Working notes — plain prose, no card grid -->
+    <!-- Working style -->
     <section class="collab-section" aria-labelledby="collab-heading">
       <h2 class="section-heading" id="collab-heading">working with me</h2>
       <p class="collab-text">
+        <!-- TODO: Replace with personal writing -->
         give me a brief and a deadline and i'll figure it out.
         i work independently, document as i go, and ask questions before
         something breaks rather than after.
@@ -696,58 +935,444 @@
   </button>
 
   <script defer src="/_vercel/insights/script.js"></script>
-  <script src="main.js"></script>  <script>
-    // ============================================================
-    // Constellation interaction — experience.html
-    // ============================================================
-    (function () {
-      var map    = document.getElementById('constellationMap');
-      var detail = document.getElementById('constellationDetail');
-      if (!map || !detail) return;
+  <script src="main.js"></script>
+  <script>
+  // ================================================================
+  // EXPERIENCE DATA
+  // To add a new experience: add one object to EXPERIENCES array.
+  // All fields are optional except role, org, date.
+  // Replace placeholder text with real content before publishing.
+  //
+  // NODE POSITIONS: [leftPercent, topPercent] of the 340×500 SVG map.
+  // ================================================================
+  const EXPERIENCES = [
+    {
+      id: 'eskwelabs',
+      label: 'Eskwelabs',           // short label shown on the map node
+      role: 'AI Solutions Development Intern',
+      org: 'Eskwelabs',
+      date: 'May 2026 — present',
+      tag: 'remote',
+      // TODO: Replace overview with personal writing
+      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+      responsibilities: [
+        // TODO: Replace with real responsibilities
+        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore.',
+        '[PLACEHOLDER] Ut enim ad minim veniam, quis nostrud exercitation.',
+      ],
+      achievements: [
+        // TODO: Replace with real achievements
+        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate.',
+        '[PLACEHOLDER] Excepteur sint occaecat cupidatat non proident.',
+      ],
+      learned: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      stack: ['Next.js 14', 'Gemini', 'Supabase', 'Google OAuth'],
+      images: [
+        // TODO: Replace with real image paths when available
+        // { src: 'pics/eskwelabs-1.jpg', alt: 'Description' },
+      ],
+      link: null,
+      // link: { href: 'https://...', label: 'view project' },
+    },
+    {
+      id: 'aws-sbg',
+      label: 'AWS SBG',
+      role: 'President & AWS Student Builder Lead',
+      org: 'AWS Student Builder Group · Adamson University',
+      date: 'Aug 2025 — present',
+      tag: null,
+      // TODO: Replace overview with personal writing
+      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      responsibilities: [
+        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore et dolore.',
+        '[PLACEHOLDER] Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
+        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate velit.',
+      ],
+      achievements: [
+        '[PLACEHOLDER] Excepteur sint occaecat cupidatat non proident.',
+        '[PLACEHOLDER] Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      ],
+      learned: '[PLACEHOLDER] Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
+      stack: ['AWS', 'Community', 'Workshops', 'Event Production'],
+      images: [
+        { src: 'pics/cloud9-workshop.jpg', alt: 'AWS SBG workshop at Adamson University' },
+        { src: 'pics/cloud9-team.jpg',     alt: 'AWS SBG team' },
+      ],
+      link: { href: 'projects.html#awssbg-website', label: 'see the org site' },
+    },
+    {
+      id: 'tutorials-dojo',
+      label: 'Tutorials Dojo',
+      role: 'IT Intern',
+      org: 'Tutorials Dojo',
+      date: 'Jan – Feb 2026',
+      tag: 'remote',
+      // TODO: Replace overview with personal writing
+      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      responsibilities: [
+        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore et dolore magna.',
+      ],
+      achievements: [
+        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate velit esse.',
+      ],
+      learned: '[PLACEHOLDER] At vero eos et accusamus et iusto odio dignissimos ducimus.',
+      stack: ['Amazon Bedrock', 'Technical Writing', 'LLM Evaluation'],
+      images: [],
+      link: null,
+    },
+    {
+      id: 'placeholder-4',
+      label: 'Add more',
+      role: '[PLACEHOLDER ROLE]',
+      org: '[PLACEHOLDER ORG]',
+      date: '[DATE]',
+      tag: null,
+      // TODO: Replace all placeholder content when adding a real experience
+      overview: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
+      responsibilities: [
+        '[PLACEHOLDER] Lorem ipsum dolor sit amet.',
+        '[PLACEHOLDER] Sed do eiusmod tempor incididunt.',
+      ],
+      achievements: [
+        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit.',
+      ],
+      learned: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      stack: ['[PLACEHOLDER]'],
+      images: [],
+      link: null,
+    },
+  ];
 
-      // Respect reduced-motion — constellation already hidden via CSS
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (window.matchMedia('(max-width: 768px)').matches) return;
+  // ================================================================
+  // CONSTELLATION ENGINE
+  // ================================================================
+  (function () {
 
-      var stars   = map.querySelectorAll('.c-star');
-      var panels  = detail.querySelectorAll('.c-detail-panel');
+    // SVG star path (4-point, same motif as site cursor)
+    const STAR_PATH = 'M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z';
 
-      // Activate star + panel by index
-      function activate(idx) {
-        stars.forEach(function (s, i) {
-          s.classList.toggle('c-star--active', i === idx);
-          s.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
-        });
-        panels.forEach(function (p, i) {
-          p.classList.toggle('c-detail--active', i === idx);
-        });
+    // Node positions as [leftPct, topPct] of the map container
+    // Matches the SVG line endpoints (210/340*100, 65/500*100, etc.)
+    const NODE_POSITIONS = [
+      [61.8, 13.0],   // node 0
+      [27.9, 44.0],   // node 1
+      [72.1, 70.0],   // node 2
+      [17.9, 82.0],   // node 3
+    ];
+
+    const map       = document.getElementById('xpMap');
+    const panel     = document.getElementById('xpPanel');
+    const emptyEl   = document.getElementById('xpEmpty');
+    const accordion = document.getElementById('xpAccordion');
+    const section   = document.getElementById('xpSection');
+
+    if (!map || !panel || !accordion) return;
+
+    let activeIndex = -1;  // -1 = nothing selected
+
+    // ── Build helpers ──────────────────────────────────────────────
+
+    function svgIcon(cls) {
+      return `<svg class="${cls}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="${STAR_PATH}"/>
+      </svg>`;
+    }
+
+    function chevronIcon(cls) {
+      return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>`;
+    }
+
+    function buildLoreBodyHTML(exp) {
+      let html = '<div class="xp-lore-body-inner">';
+
+      // Responsibilities
+      if (exp.responsibilities && exp.responsibilities.length) {
+        html += `<div class="xp-lore-section">
+          <span class="xp-lore-section-label">responsibilities</span>
+          <ul>${exp.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>`;
       }
 
-      // Wire up click events
-      stars.forEach(function (star, i) {
-        star.setAttribute('role', 'button');
-        star.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-        star.addEventListener('click', function () { activate(i); });
-        star.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(i); }
-        });
+      // Achievements
+      if (exp.achievements && exp.achievements.length) {
+        html += `<div class="xp-lore-section">
+          <span class="xp-lore-section-label">highlights</span>
+          <ul>${exp.achievements.map(a => `<li>${a}</li>`).join('')}</ul>
+        </div>`;
+      }
+
+      // Learned
+      if (exp.learned) {
+        html += `<div class="xp-lore-section">
+          <span class="xp-lore-section-label">what i took away</span>
+          <p>${exp.learned}</p>
+        </div>`;
+      }
+
+      // Images
+      if (exp.images && exp.images.length) {
+        html += `<div class="xp-lore-images">
+          ${exp.images.map(img => `<img src="${img.src}" alt="${img.alt}" loading="lazy">`).join('')}
+        </div>`;
+      }
+
+      // Stack
+      if (exp.stack && exp.stack.length) {
+        html += `<div class="xp-lore-section">
+          <span class="xp-lore-section-label">stack</span>
+          <div class="xp-lore-stack">
+            ${exp.stack.map(s => `<span class="xp-lore-pill">${s}</span>`).join('')}
+          </div>
+        </div>`;
+      }
+
+      // Link
+      if (exp.link) {
+        html += `<a href="${exp.link.href}" class="xp-lore-link">
+          ${exp.link.label} ↗
+        </a>`;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    // ── Build desktop nodes + lore panels ─────────────────────────
+
+    EXPERIENCES.forEach(function (exp, i) {
+      // -- Star node --
+      const pos   = NODE_POSITIONS[i] || [50, 50];
+      const btn   = document.createElement('button');
+      btn.className   = `xp-node xp-node--${i}`;
+      btn.style.left  = pos[0] + '%';
+      btn.style.top   = pos[1] + '%';
+      btn.dataset.index = i;
+      btn.setAttribute('aria-label', `${exp.role} at ${exp.org} — click to explore`);
+      btn.innerHTML = `
+        ${svgIcon('xp-node-star')}
+        <span class="xp-node-ring"></span>
+        <span class="xp-node-pulse"></span>
+        <span class="xp-node-label">${exp.label}</span>
+      `;
+      map.appendChild(btn);
+
+      // -- Lore panel --
+      const lore  = document.createElement('div');
+      lore.className    = 'xp-lore';
+      lore.id           = `xp-lore-${i}`;
+      lore.setAttribute('role', 'region');
+      lore.setAttribute('aria-label', `${exp.role} lore`);
+
+      lore.innerHTML = `
+        <div class="xp-lore-header">
+          <div class="xp-lore-meta">
+            <span class="xp-lore-date">${exp.date}</span>
+            ${exp.tag ? `<span class="xp-lore-tag">${exp.tag}</span>` : ''}
+          </div>
+          <button class="xp-lore-close" aria-label="Close — return to constellation" data-close="${i}">×</button>
+        </div>
+        <h2 class="xp-lore-role">${exp.role}</h2>
+        <p class="xp-lore-org">${exp.org}</p>
+        <p class="xp-lore-overview">${exp.overview}</p>
+        <button class="xp-lore-expand" aria-expanded="false" data-expand="${i}">
+          read more <em class="xp-lore-expand-icon" aria-hidden="true">+</em>
+        </button>
+        <div class="xp-lore-body" id="xp-lorebody-${i}" aria-hidden="true">
+          ${buildLoreBodyHTML(exp)}
+        </div>
+      `;
+      panel.appendChild(lore);
+    });
+
+    // ── Build mobile accordion ─────────────────────────────────────
+
+    EXPERIENCES.forEach(function (exp, i) {
+      const li = document.createElement('li');
+      li.className  = 'xp-accordion-item';
+      li.id         = `xp-acc-${i}`;
+
+      li.innerHTML = `
+        <button class="xp-accordion-trigger" aria-expanded="false" aria-controls="xp-acc-body-${i}">
+          ${svgIcon('xp-accordion-trigger-star')}
+          <span class="xp-accordion-trigger-text">
+            <span class="xp-accordion-trigger-role">${exp.role}</span>
+            <span class="xp-accordion-trigger-meta">${exp.org} &nbsp;·&nbsp; ${exp.date}${exp.tag ? ` &nbsp;·&nbsp; ${exp.tag}` : ''}</span>
+          </span>
+          ${chevronIcon('xp-accordion-chevron')}
+        </button>
+        <div class="xp-accordion-body" id="xp-acc-body-${i}" aria-hidden="true">
+          <div class="xp-accordion-body-inner">
+            <p class="xp-lore-overview">${exp.overview}</p>
+            ${buildLoreBodyHTML(exp)}
+          </div>
+        </div>
+      `;
+      accordion.appendChild(li);
+    });
+
+    // ── Desktop interaction ────────────────────────────────────────
+
+    function deselectAll() {
+      // Deactivate all nodes
+      map.querySelectorAll('.xp-node').forEach(function (n) {
+        n.classList.remove('xp-node--active');
+      });
+      map.classList.remove('xp-map--has-active');
+
+      // Hide all lore panels
+      panel.querySelectorAll('.xp-lore').forEach(function (l) {
+        l.classList.remove('xp-lore--visible');
+        // Also collapse any open lore body
+        const body = l.querySelector('.xp-lore-body');
+        if (body) {
+          body.classList.remove('xp-lore-body--open');
+          body.setAttribute('aria-hidden', 'true');
+          const expBtn = l.querySelector('.xp-lore-expand');
+          if (expBtn) {
+            expBtn.setAttribute('aria-expanded', 'false');
+            expBtn.querySelector('.xp-lore-expand-icon').textContent = '+';
+          }
+        }
       });
 
-      // Draw constellation lines when section enters viewport
-      var section = document.querySelector('.constellation-section');
-      if (section) {
-        var drawObs = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              map.classList.add('lines-drawn');
-              section.classList.add('border-revealed');
-              drawObs.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.3 });
-        drawObs.observe(section);
+      // Show empty state
+      emptyEl.classList.remove('xp-panel-empty--hidden');
+      activeIndex = -1;
+    }
+
+    function activateNode(idx) {
+      if (activeIndex === idx) {
+        // Toggle off — clicking the same node closes it
+        deselectAll();
+        return;
       }
-    })();
+
+      activeIndex = idx;
+
+      // Update nodes
+      map.querySelectorAll('.xp-node').forEach(function (n, i) {
+        n.classList.toggle('xp-node--active', i === idx);
+      });
+      map.classList.add('xp-map--has-active');
+
+      // Update lore panels
+      panel.querySelectorAll('.xp-lore').forEach(function (l, i) {
+        l.classList.toggle('xp-lore--visible', i === idx);
+      });
+
+      // Hide empty state
+      emptyEl.classList.add('xp-panel-empty--hidden');
+    }
+
+    // Node click
+    map.addEventListener('click', function (e) {
+      const btn = e.target.closest('.xp-node');
+      if (!btn) return;
+      activateNode(Number(btn.dataset.index));
+    });
+
+    map.addEventListener('keydown', function (e) {
+      const btn = e.target.closest('.xp-node');
+      if (!btn) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateNode(Number(btn.dataset.index));
+      }
+    });
+
+    // Close button
+    panel.addEventListener('click', function (e) {
+      const closeBtn  = e.target.closest('.xp-lore-close');
+      const expandBtn = e.target.closest('.xp-lore-expand');
+
+      if (closeBtn) {
+        deselectAll();
+        // Return focus to the node that was active
+        const prevNode = map.querySelector(`.xp-node--${closeBtn.dataset.close}`);
+        if (prevNode) prevNode.focus();
+        return;
+      }
+
+      if (expandBtn) {
+        const idx  = Number(expandBtn.dataset.expand);
+        const lore = document.getElementById(`xp-lore-${idx}`);
+        const body = document.getElementById(`xp-lorebody-${idx}`);
+        if (!lore || !body) return;
+
+        const isOpen = body.classList.contains('xp-lore-body--open');
+        body.classList.toggle('xp-lore-body--open', !isOpen);
+        body.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+        expandBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        expandBtn.querySelector('.xp-lore-expand-icon').textContent = isOpen ? '+' : '×';
+        return;
+      }
+    });
+
+    // Keyboard: Escape closes lore
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && activeIndex !== -1) {
+        const prevIdx = activeIndex;
+        deselectAll();
+        const node = map.querySelector(`.xp-node--${prevIdx}`);
+        if (node) node.focus();
+      }
+    });
+
+    // ── Mobile accordion interaction ───────────────────────────────
+
+    accordion.addEventListener('click', function (e) {
+      const trigger = e.target.closest('.xp-accordion-trigger');
+      if (!trigger) return;
+
+      const item   = trigger.closest('.xp-accordion-item');
+      const bodyId = trigger.getAttribute('aria-controls');
+      const body   = document.getElementById(bodyId);
+      if (!item || !body) return;
+
+      const isOpen = item.classList.contains('xp-accordion-item--open');
+
+      // Close all others first
+      accordion.querySelectorAll('.xp-accordion-item--open').forEach(function (openItem) {
+        if (openItem !== item) {
+          openItem.classList.remove('xp-accordion-item--open');
+          const t = openItem.querySelector('.xp-accordion-trigger');
+          const b = document.getElementById(t.getAttribute('aria-controls'));
+          if (t) t.setAttribute('aria-expanded', 'false');
+          if (b) b.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Toggle this one
+      item.classList.toggle('xp-accordion-item--open', !isOpen);
+      trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      body.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+    });
+
+    // ── Line draw on viewport entry ────────────────────────────────
+
+    if (section && 'IntersectionObserver' in window) {
+      const drawObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            map.classList.add('lines-drawn');
+            section.classList.add('border-revealed');
+            drawObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      drawObs.observe(section);
+    } else if (section) {
+      // No IO support — just show lines immediately
+      map.classList.add('lines-drawn');
+      section.classList.add('border-revealed');
+    }
+
+  })();
   </script>
 </body>
 </html>
