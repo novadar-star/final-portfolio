@@ -452,3 +452,90 @@
     linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size: 12px 12px;
 }
+
+/* ============================================================
+   HERO NAME LINK
+   "Nova." in the h1 links to LinkedIn.
+   Looks identical to the non-link version — no underline,
+   no color change. The cursor change is the only signal.
+   ============================================================ */
+
+.hero-name-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline;
+}
+
+.hero-name-link:hover .hero-name-accent,
+.hero-name-link:focus-visible .hero-name-accent {
+  opacity: 0.82;
+  transition: opacity 200ms ease;
+}
+
+.hero-name-link:focus-visible {
+  outline: 2px solid var(--nova-star-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   ROTATING IDENTITY SENTENCE
+   Inspired by Daisy Fernandez's identity sentence mechanic.
+   The word fades out → new word fades in.
+   The sentence structure is grammatically fixed.
+
+   .hero-sub--rotating   — the animated line
+   .hero-sub--static     — the factual follow-up line
+   .hero-rotating-word   — the swapping word (accent color)
+   .hero-rotating-word.is-leaving  — fading out
+   .hero-rotating-word.is-entering — fading in
+   ============================================================ */
+
+.hero-sub--rotating {
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  font-weight: 400;
+  color: rgba(255, 240, 228, 0.92);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hero-rotating-sentence {
+  display: inline;
+}
+
+.hero-rotating-word {
+  color: var(--nova-star-gold, #FFD580);
+  font-style: italic;
+  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  display: inline-block;
+  transition: opacity 280ms ease;
+  will-change: opacity;
+}
+
+.hero-rotating-word.is-leaving {
+  opacity: 0;
+}
+
+.hero-rotating-word.is-entering {
+  opacity: 0;
+}
+
+/* Static follow-up line — smaller, more muted */
+.hero-sub--static {
+  font-size: clamp(0.82rem, 1.4vw, 0.92rem);
+  color: rgba(255, 225, 205, 0.72);
+  line-height: 1.65;
+  max-width: 44ch;
+  margin-bottom: 8px;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.40);
+}
+
+/* Reduced-motion: skip animation, show first word only */
+@media (prefers-reduced-motion: reduce) {
+  .hero-rotating-word { transition: none; }
+  .hero-rotating-word.is-leaving  { display: none; }
+  .hero-rotating-word.is-entering { opacity: 1; }
+}

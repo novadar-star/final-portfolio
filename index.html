@@ -89,10 +89,23 @@
         </div>
         <p class="hero-eyebrow">darla &ldquo;nova&rdquo; sumanting, manila</p>
         <h1 class="hero-heading" id="hero-heading">
-          <em class="hero-name-accent">Nova</em>.
+          <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="hero-name-link" aria-label="Nova — view LinkedIn profile">
+            <em class="hero-name-accent">Nova</em>
+          </a>.
         </h1>
-        <p class="hero-sub">
-          CS student. i build automations, work in AWS, and run a campus cloud community.
+
+        <!-- Rotating identity sentence -->
+        <!-- Words cycle: community person → cloud person → developer → automation builder -->
+        <p class="hero-sub hero-sub--rotating" aria-live="polite">
+          <span class="hero-rotating-sentence">
+            nova. is a
+            <span class="hero-rotating-word" id="heroRotatingWord" aria-atomic="true">community person</span>.
+          </span>
+        </p>
+
+        <p class="hero-sub hero-sub--static">
+          CS student in Manila. i build automations, work in AWS,
+          and run a campus cloud community.
         </p>
         <a href="#work" class="hero-link">things i've built</a>
       </div>
@@ -238,13 +251,125 @@
       </div>
     </section>
 
-    <!-- Tools — tight inline, no grid, no logos -->
-    <section class="tools-inline" aria-label="Tools I use">
-      <p class="tools-inline-text">
-        <span class="tools-inline-label">reach for:</span>
-        n8n &middot; Gemini &middot; Amazon Bedrock &middot; Claude &middot;
-        AWS &middot; Supabase &middot; Next.js &middot; Python &middot; SQL &middot; Vercel
-      </p>
+    <!-- Tools dock — moved from about.html, lives here on homepage now -->
+    <section class="home-tools" aria-labelledby="home-tools-heading">
+      <p class="toolkit-label" id="home-tools-heading">tools i actually open</p>
+      <div class="dock" role="list" aria-label="Tools I use">
+
+        <div class="dock-item" role="listitem" aria-label="n8n, workflow automation">
+          <div class="dock-icon" style="background:#EA4B71;">
+            <img src="https://cdn.simpleicons.org/n8n/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">n8n</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="AWS, cloud infrastructure">
+          <div class="dock-icon" style="background:#232F3E;">
+            <img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">AWS</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Python, automation and AI">
+          <div class="dock-icon" style="background:#1e415e;">
+            <img src="https://cdn.simpleicons.org/python/FFD43B" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Python</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="JavaScript, web development">
+          <div class="dock-icon" style="background:#F7DF1E;">
+            <img src="https://cdn.simpleicons.org/javascript/000000" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">JS</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Next.js, full-stack apps">
+          <div class="dock-icon" style="background:#000000;">
+            <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Next.js</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Supabase, backend and auth">
+          <div class="dock-icon" style="background:#1C1C1C;">
+            <img src="https://cdn.simpleicons.org/supabase/3ECF8E" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Supabase</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="SQL, databases">
+          <div class="dock-icon" style="background:#336791;">
+            <img src="https://cdn.simpleicons.org/postgresql/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">SQL</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="GitHub, version control">
+          <div class="dock-icon" style="background:#24292E;">
+            <img src="https://cdn.simpleicons.org/github/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">GitHub</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Figma, UI design">
+          <div class="dock-icon" style="background:#1E1E1E;">
+            <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Figma</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Claude, AI assistant">
+          <div class="dock-icon" style="background:#D4A27F;">
+            <img src="https://cdn.simpleicons.org/anthropic/000000" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Claude</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Vercel, deployment">
+          <div class="dock-icon" style="background:#000000;">
+            <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Vercel</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Gemini, AI LLM">
+          <div class="dock-icon" style="background:linear-gradient(135deg,#4285F4,#9B72CB,#D96570);">
+            <img src="https://cdn.simpleicons.org/googlegemini/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">Gemini</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="OpenAI, AI models">
+          <div class="dock-icon" style="background:#000000;">
+            <img src="https://cdn.simpleicons.org/openai/ffffff" alt="" aria-hidden="true" loading="lazy">
+          </div>
+          <span class="dock-label">OpenAI</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="Cursor, AI code editor">
+          <div class="dock-icon" style="background:#1A1A1A;">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="#1A1A1A"/>
+              <path d="M16 4 L28 16 L16 28 L4 16 Z" fill="none" stroke="white" stroke-width="2"/>
+              <path d="M16 4 L28 16 L16 16 Z" fill="white" opacity="0.9"/>
+              <path d="M16 16 L28 16 L16 28 Z" fill="white" opacity="0.4"/>
+            </svg>
+          </div>
+          <span class="dock-label">Cursor</span>
+        </div>
+
+        <div class="dock-item" role="listitem" aria-label="GoHighLevel, CRM automation">
+          <div class="dock-icon" style="background:#F97316;">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
+              <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+                    font-family="sans-serif" font-weight="900" font-size="13" fill="white">GHL</text>
+            </svg>
+          </div>
+          <span class="dock-label">GHL</span>
+        </div>
+
+      </div>
     </section>
 
     <!-- Contact -->

@@ -213,6 +213,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // ===========================
+  // Rotating identity word — hero
+  // Fades between identity descriptors in the hero sentence.
+  // Inspired by Daisy Fernandez's identity sentence mechanic.
+  // Words are in Nova's voice: lowercase, honest, specific.
+  // ===========================
+  const rotatingWord = document.getElementById('heroRotatingWord');
+  if (rotatingWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const words = [
+      'community person',
+      'cloud enthusiast',
+      'developer',
+      'automation builder',
+    ];
+    let current = 0;
+
+    function cycleWord() {
+      const el = rotatingWord;
+
+      // Fade out
+      el.classList.add('is-leaving');
+
+      setTimeout(() => {
+        // Swap word
+        current = (current + 1) % words.length;
+        el.textContent = words[current];
+
+        // Brief pause while invisible, then fade in
+        el.classList.remove('is-leaving');
+        el.classList.add('is-entering');
+
+        // RAF ensures the browser registers the opacity:0 class before removing it
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.remove('is-entering');
+          });
+        });
+      }, 300); // matches transition duration in CSS
+    }
+
+    setInterval(cycleWord, 2200); // swap every 2.2 seconds
+  }
+
+  // ===========================
   // Hero nav — transparent until scrolled past hero
   // Adds .nav--scrolled class once hero leaves viewport
   // ===========================

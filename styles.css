@@ -2235,3 +2235,146 @@ body.cursor-active button { cursor: none; }
   .slice--belief p { font-size: 1rem; }
   .about-tagline { font-size: 1rem; }
 }
+
+/* ===========================
+   HOME TOOLS DOCK
+   Toolkit dock moved to homepage.
+   Uses the same .dock / .dock-item / .dock-icon / .dock-label
+   classes defined in about.css — those rules apply globally
+   since about.css is only loaded on about.html.
+   We redeclare the essentials here so the dock works on index.html.
+   =========================== */
+
+.home-tools {
+  padding: 40px 0 8px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* .toolkit-label and .dock/.dock-item are defined in about.css.
+   Mirror the critical rules here for homepage use. */
+
+.home-tools .toolkit-label {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--nova-accent, var(--ink-3));
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.home-tools .dock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.home-tools .dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: default;
+}
+
+.home-tools .dock-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.18),
+    0 4px 12px rgba(0,0,0,0.10);
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.home-tools .dock-icon img,
+.home-tools .dock-icon svg {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.home-tools .dock-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+  letter-spacing: 0.01em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-tools .dock-item:hover .dock-icon {
+    transform: translateY(-8px) scale(1.12);
+    box-shadow:
+      0 6px 20px rgba(0,0,0,0.18),
+      0 2px 6px rgba(0,0,0,0.10);
+  }
+  .home-tools .dock-item:hover .dock-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .home-tools .dock-item:has(+ .dock-item:hover) .dock-icon,
+  .home-tools .dock-item:hover + .dock-item .dock-icon {
+    transform: translateY(-4px) scale(1.06);
+  }
+}
+
+[data-theme="dark"] .home-tools .dock {
+  background: rgba(255,255,255,0.04);
+}
+
+[data-theme="dark"] .home-tools .dock-icon {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-tools .dock-icon,
+  .home-tools .dock-item:hover .dock-icon { transform: none !important; }
+  .home-tools .dock-label { transition: opacity 0.18s ease; }
+}
+
+@media (max-width: 480px) {
+  .home-tools .dock { padding: 10px 12px; gap: 8px; border-radius: 16px; }
+  .home-tools .dock-icon { width: 44px; height: 44px; border-radius: 11px; }
+  .home-tools .dock-icon img,
+  .home-tools .dock-icon svg { width: 26px; height: 26px; }
+}
+
+/* ===========================
+   NAME LINK — darla / nova
+   Clicking the name anywhere goes to LinkedIn.
+   Inherits its context's color — no underline, no separate style.
+   =========================== */
+
+.name-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline;
+}
+
+.name-link:hover { opacity: 0.8; }
+
+.name-link:focus-visible {
+  outline: 2px solid var(--nova-star-gold, #FFD580);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
