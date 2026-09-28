@@ -424,3 +424,31 @@
   .hero-landing-inner       { padding: 0 20px; }
   .hero-landing .hero-link  { font-size: 0.82rem; padding: 9px 20px; }
 }
+
+/* ============================================================
+   HERO PORTRAIT — warm treatment over the gradient background
+   The portrait placeholder picks up a warm glow consistent
+   with the hero palette. Replace placeholder when photo is ready.
+   ============================================================ */
+
+.hero-landing-page .hero-portrait {
+  border-color: rgba(255, 190, 150, 0.45);
+  box-shadow: 0 0 0 4px rgba(255, 140, 100, 0.18);
+}
+
+/* PLACEHOLDER STYLE — remove when real portrait photo is added */
+.hero-landing-page .hero-portrait-placeholder {
+  background: rgba(255, 130, 90, 0.20);
+}
+
+/* Add a subtle "+" hint so it's clear this is a placeholder */
+.hero-landing-page .hero-portrait-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+}

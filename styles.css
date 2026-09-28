@@ -1536,7 +1536,7 @@ body.cursor-active button { cursor: none; }
   max-width: 56ch;
 }
 
-/* Two-column row holding personal + belief */
+/* Two-column row holding personal + photo slot */
 .slice-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1556,21 +1556,7 @@ body.cursor-active button { cursor: none; }
   max-width: 34ch;
 }
 
-/* Belief — Playfair italic, a statement */
-.slice--belief {
-  padding: 28px 0 28px 32px;
-}
-
-.slice--belief p {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--ink);
-  line-height: 1.6;
-  max-width: 32ch;
-  letter-spacing: -0.01em;
-}
+/* .slice--belief is full-width, outside .slice-row — see appended rules below */
 
 /* Legacy — hide old grid so it doesn't interfere if present */
 .slices-grid { display: none; }
@@ -2038,4 +2024,214 @@ body.cursor-active button { cursor: none; }
 
 @media (max-width: 480px) {
   .page-context { margin-top: -22px; margin-bottom: 28px; }
+}
+
+/* ===========================
+   HERO PORTRAIT
+   A small face attached to the name.
+   Sits above the eyebrow text — personal, not a headshot section.
+   Replace the placeholder div with a real <img> when ready.
+   =========================== */
+
+.hero-portrait-wrap {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-portrait {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 200, 160, 0.35);
+  box-shadow: 0 0 0 4px rgba(255, 160, 120, 0.12);
+  position: relative;
+}
+
+.hero-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Placeholder state — visible until real photo added */
+/* PLACEHOLDER STYLE — remove when real portrait photo is added */
+.hero-portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 160, 120, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   SLICES — belief isolated (visual storytelling fix)
+   .slice--belief moved out of .slice-row to span full width.
+   Playfair italic, larger — reads as a statement, not a second paragraph.
+   .slice-row now holds personal + photo slot side by side.
+   =========================== */
+
+/* Personal slice + photo slot layout */
+.slice-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.slice--personal {
+  padding: 28px 32px 28px 0;
+  border-right: 1px solid var(--hairline);
+}
+
+.slice--personal p {
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 34ch;
+}
+
+/* Photo slot beside personal text */
+.slice-photo-slot {
+  padding: 28px 0 28px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.slice-photo {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+  display: block;
+}
+
+/* PLACEHOLDER STYLE — remove when real photo added to slice-photo-slot */
+.slice-photo-placeholder {
+  width: 100%;
+  height: 120px;
+  background: var(--hairline-2);
+  border-radius: var(--radius);
+  border: 1px dashed var(--hairline);
+  position: relative;
+}
+
+.slice-photo-placeholder::after {
+  content: 'photo';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Belief — full-width, Playfair italic, visual weight of a statement */
+.slice--belief {
+  border-top: 1px solid var(--hairline);
+  padding: 32px 0;
+}
+
+.slice--belief p {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 52ch;
+  letter-spacing: -0.01em;
+}
+
+/* ===========================
+   COMMUNITY PHOTOS in project-case
+   Stacked above the video on the awssbg project page.
+   Shows people first, then the artifact.
+   =========================== */
+
+.case-visual--community {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: visible;
+}
+
+.case-community-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.case-community-photo {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.case-visual--community .project-video {
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+}
+
+/* ===========================
+   ABOUT PAGE — tagline as Playfair italic
+   "i build things because wondering how something works
+    is usually not enough."
+   Best sentence on the site — give it the weight it earns.
+   =========================== */
+
+.about-tagline {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--ink);
+  line-height: 1.5;
+  max-width: 46ch;
+  letter-spacing: -0.01em;
+  margin-top: 14px;
+}
+
+/* ===========================
+   RESPONSIVE — new elements
+   =========================== */
+
+@media (max-width: 768px) {
+  .hero-portrait { width: 60px; height: 60px; }
+
+  .slice-row {
+    grid-template-columns: 1fr;
+  }
+  .slice--personal {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 22px;
+  }
+  .slice-photo-slot {
+    padding: 20px 0 22px 0;
+  }
+  .slice-photo-placeholder { height: 140px; }
+  .slice--belief p { max-width: 100%; }
+
+  .case-community-photos { grid-template-columns: 1fr; }
+  .case-community-photo  { height: 140px; }
+}
+
+@media (max-width: 480px) {
+  .hero-portrait-wrap { margin-bottom: 18px; }
+  .hero-portrait { width: 52px; height: 52px; }
+  .slice--belief p { font-size: 1rem; }
+  .about-tagline { font-size: 1rem; }
 }

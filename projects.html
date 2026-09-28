@@ -132,7 +132,16 @@
 
       <!-- SPLIT FLIP — video right, text left -->
       <article class="project-case project-case--split project-case--split-flip reveal" id="awssbg-website">
-        <div class="case-visual">
+        <div class="case-visual case-visual--community">
+          <!-- Community photos above the video — shows the people, not just the artifact -->
+          <div class="case-community-photos">
+            <img src="pics/cloud9-workshop.jpg"
+                 alt="Students at an AWS Student Builder Group workshop at Adamson University"
+                 loading="lazy" class="case-community-photo">
+            <img src="pics/cloud9-team.jpg"
+                 alt="AWS Student Builder Group team photo"
+                 loading="lazy" class="case-community-photo">
+          </div>
           <video
             class="project-video"
             autoplay loop muted playsinline
@@ -181,7 +190,8 @@
       </article>
 
       <!-- COMPACT -->
-      <article class="project-case project-case--compact reveal" id="gtm-outbound">
+      <!-- SPLIT — GTM pipeline: writing is strong enough for more space -->
+      <article class="project-case project-case--split reveal" id="gtm-outbound">
         <div class="case-visual workflow-canvas">
           <img
             src="pics/gtm-signal-workflow.png"
@@ -244,6 +254,8 @@
           <li class="archive-item">
             <div class="archive-item-header">
               <span class="archive-title">LLM-as-a-Judge on Amazon Bedrock</span>
+              <!-- TODO: Replace href with the actual Tutorials Dojo article URL when published -->
+              <a href="https://tutorialsdojo.com/" target="_blank" rel="noopener noreferrer" class="archive-link">article ↗</a>
             </div>
             <p class="archive-desc">
               published article from my Tutorials Dojo internship. methodology,
