@@ -91,48 +91,59 @@
     <div class="container">
 
     <section class="home-work" id="work" aria-labelledby="work-heading">
-      <h2 class="section-heading" id="work-heading">things i've made</h2>
+      <h2 class="section-heading" id="work-heading">made</h2>
 
       <div class="home-projects">
 
-        <article class="home-project reveal" id="home-ai-scraper">
-          <div class="home-project-visual workflow-bg">
+        <!-- PROJECT 1 — workflow artifact, full-width visual + annotation -->
+        <article class="home-project home-project--artifact reveal" id="home-ai-scraper">
+          <div class="home-project-artifact-visual workflow-bg">
             <img
               src="pics/ai-research-workflow.png"
               alt="n8n workflow: Slack trigger, job scraper, AI matching, custom parser, output to Google Drive"
               loading="lazy"
             >
+            <!-- marginal annotation — sits in the visual, feels authored -->
+            <aside class="artifact-annotation" aria-label="Technical note">
+              <span class="annotation-marker">↳</span>
+              the model kept returning malformed JSON.
+              wrote a fallback parser. now it lives in every workflow i build.
+            </aside>
           </div>
-          <div class="home-project-text">
-            <p class="project-meta">automation, n8n, 2026</p>
-            <h3 class="home-project-title">AI job scraper and a parser I still reuse</h3>
-            <p>
-              applying to jobs was repetitive, so i built a Slack-triggered pipeline
-              that scrapes listings, scores them against my resume, and posts what
-              is actually worth opening. the long part was not the scraping.
-              the model kept returning messy JSON, so i wrote a parser: strip
-              markdown fences, try JSON.parse, fall back to regex, then safe defaults.
-              that parser now sits in every AI workflow i build.
-            </p>
-            <a href="projects.html#ai-job-scraper" class="project-link-inline">the writeup</a>
+          <div class="home-project-artifact-footer">
+            <div class="artifact-meta-row">
+              <span class="project-meta">n8n · Slack · 2026</span>
+              <h3 class="home-project-title">AI job scraper</h3>
+            </div>
+            <div class="artifact-desc-row">
+              <p>
+                applying to jobs was repetitive, so i built a Slack-triggered pipeline
+                that scrapes listings, scores them against my resume, and posts what
+                is actually worth opening.
+              </p>
+              <a href="projects.html#ai-job-scraper" class="project-link-inline">the writeup</a>
+            </div>
           </div>
         </article>
 
-        <article class="home-project home-project--photos reveal" id="home-community">
-          <div class="home-project-visual home-project-photos">
+        <!-- PROJECT 2 — community, photos-heavy, text floats right -->
+        <article class="home-project home-project--community reveal" id="home-community">
+          <div class="home-project-photos-pair">
             <img
               src="pics/cloud9-workshop.jpg"
               alt="Students at an AWS Student Builder Group workshop at Adamson University"
               loading="lazy"
+              class="community-photo community-photo--primary"
             >
             <img
               src="pics/cloud9-team.jpg"
               alt="AWS Student Builder Group team at a campus workshop"
               loading="lazy"
+              class="community-photo community-photo--secondary"
             >
           </div>
-          <div class="home-project-text">
-            <p class="project-meta">community, AWS, 2025-now</p>
+          <div class="home-project-text home-project-text--community">
+            <p class="project-meta">community · AWS · 2025–now</p>
             <h3 class="home-project-title">AWS Student Builder Group, Adamson</h3>
             <p>
               i run the campus cloud community: workshops on real AWS services,
@@ -145,8 +156,9 @@
           </div>
         </article>
 
-        <article class="home-project home-project--flip reveal" id="home-ai-advisor">
-          <div class="home-project-visual">
+        <!-- PROJECT 3 — internship, compact horizontal, video prominent -->
+        <article class="home-project home-project--internship reveal" id="home-ai-advisor">
+          <div class="home-project-video-wrap">
             <video
               class="project-video"
               autoplay loop muted playsinline
@@ -157,14 +169,15 @@
               <source src="vid/ai-advisor.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="home-project-text">
-            <p class="project-meta">internship, Next.js, 2026</p>
-            <h3 class="home-project-title">internal AI advisor, Eskwelabs</h3>
+          <div class="home-project-text home-project-text--internship">
+            <div>
+              <p class="project-meta">internship · Next.js · 2026</p>
+              <h3 class="home-project-title">internal AI advisor, Eskwelabs</h3>
+            </div>
             <p>
-              three advisor personas pulling context from Google Docs and streaming
-              Gemini. Google OAuth with a domain allowlist, Supabase with row-level
-              security. getting the auth token through to Supabase was the annoying
-              part. it shipped, and the team still uses it.
+              three advisor personas streaming Gemini, Google OAuth with a domain
+              allowlist, Supabase with row-level security. getting the JWT through
+              to Supabase was the annoying part. it shipped. the team still uses it.
             </p>
             <a href="projects.html#ai-advisor" class="project-link-inline">how it was built</a>
           </div>
@@ -172,47 +185,51 @@
 
       </div>
 
-      <a href="projects.html" class="all-projects-link">more on the projects page</a>
+      <a href="projects.html" class="all-projects-link">more projects</a>
     </section>
 
-    <section class="slices" aria-labelledby="slices-heading">
-      <!-- No section-heading — let these fragments float without a label -->
-      <div class="slices-grid" aria-label="Fragments about Nova" id="slices-heading">
-        <div class="slice slice--wide">
+    <!-- SLICES — fragments of identity. no heading. different rhythms. -->
+    <section class="slices" aria-label="Fragments about Nova">
+      <div class="slices-stack">
+
+        <div class="slice slice--credentials">
           <p>
-            3x AWS certified (Solutions Architect Associate, AI Practitioner,
-            Cloud Practitioner), DOST-SEI scholar, Dean's List. the certs exist
-            so i can explain the confusing parts to people in the community
-            without guessing.
+            3× AWS certified — Solutions Architect, AI Practitioner, Cloud Practitioner.
+            DOST-SEI scholar. Dean's List. the certs exist so i can explain
+            the confusing parts to people in the community without guessing.
           </p>
         </div>
-        <div class="slice slice--offset">
-          <p>
-            manga, niche anime corners, fanfiction. not a fun-fact slot.
-            i think a lot about how those spaces stay kind and keep going.
-            that curiosity shows up in how i run workshops too.
-          </p>
+
+        <div class="slice-row">
+          <div class="slice slice--personal">
+            <p>
+              manga, niche anime corners, fanfiction. i think a lot about how
+              those spaces stay kind and keep going. that curiosity shows up in
+              how i run workshops too.
+            </p>
+          </div>
+          <div class="slice slice--belief">
+            <p>
+              being a try-hard about the things you care about is underrated.
+              most of the useful things i've built started because i got stubborn
+              about a problem that didn't have to be mine.
+            </p>
+          </div>
         </div>
-        <div class="slice slice--belief">
-          <p>
-            being a try-hard about the things you care about is underrated.
-            most of the useful things i have built started because i got stubborn
-            about a problem that did not have to be mine.
-          </p>
-        </div>
+
       </div>
     </section>
 
-    <!-- Tools — no heading, no grid. Just a tight inline list -->
+    <!-- Tools — tight inline, no grid, no logos -->
     <section class="tools-inline" aria-label="Tools I use">
       <p class="tools-inline-text">
         <span class="tools-inline-label">reach for:</span>
-        n8n &middot; webhooks &middot; Gemini &middot; Amazon Bedrock &middot; Claude &middot;
-        AWS &middot; Supabase &middot; Vercel &middot; JavaScript &middot; Python &middot; Next.js &middot; SQL
+        n8n &middot; Gemini &middot; Amazon Bedrock &middot; Claude &middot;
+        AWS &middot; Supabase &middot; Next.js &middot; Python &middot; SQL &middot; Vercel
       </p>
     </section>
 
-    <!-- Contact — display-sized, no section-heading -->
+    <!-- Contact -->
     <section class="home-contact" aria-labelledby="contact-heading">
       <p class="contact-display" id="contact-heading">say hi.</p>
       <p class="contact-text">
@@ -241,6 +258,7 @@
     <span class="heart-count">0</span>
   </button>
 
+  <script defer src="/_vercel/insights/script.js"></script>
   <script src="main.js"></script>
   <script src="star-pop.js"></script>
 </body>

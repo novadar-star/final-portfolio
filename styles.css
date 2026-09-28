@@ -1503,53 +1503,77 @@ body.cursor-active button { cursor: none; }
 /* ===========================
    SLICES OF NOVA
    Fragments of identity — different rhythm from the project section.
-   Not cards. Not uniform. Each slice can breathe differently.
+   Not cards. Not uniform. Each slice breathes differently.
+
+   Structure:
+   .slices-stack       — vertical flex, no symmetric grid
+   .slice--credentials — full-width, quiet
+   .slice-row          — two columns, different text weights
+   .slice--personal    — narrow, plain prose
+   .slice--belief      — Playfair italic, larger — a statement not a bullet
    =========================== */
 
 .slices {
-  /* no extra top padding — section-heading handles separation */
+  padding-top: 16px;
 }
 
-.slices-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.slices-stack {
+  display: flex;
+  flex-direction: column;
   gap: 0;
 }
 
-.slice {
-  padding: 24px 0;
+/* Full-width credentials slice */
+.slice--credentials {
+  padding: 32px 0;
   border-top: 1px solid var(--hairline);
 }
 
-/* Every other slice gets left padding to create offset rhythm */
-.slice:nth-child(even) {
-  padding-left: 32px;
-  border-left: 1px solid var(--hairline);
-}
-
-.slice-label {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 10px;
-}
-
-.slice p {
+.slice--credentials p {
   font-size: 0.875rem;
   color: var(--ink-2);
   line-height: 1.75;
-  max-width: 38ch;
+  max-width: 56ch;
 }
 
-/* Belief slice — slightly different weight, intentional */
-.slice--belief p {
-  font-style: italic;
-  color: var(--ink);
-  font-size: 0.9rem;
+/* Two-column row holding personal + belief */
+.slice-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
 }
+
+.slice--personal {
+  padding: 28px 32px 28px 0;
+  border-right: 1px solid var(--hairline);
+}
+
+.slice--personal p {
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 34ch;
+}
+
+/* Belief — Playfair italic, a statement */
+.slice--belief {
+  padding: 28px 0 28px 32px;
+}
+
+.slice--belief p {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.6;
+  max-width: 32ch;
+  letter-spacing: -0.01em;
+}
+
+/* Legacy — hide old grid so it doesn't interfere if present */
+.slices-grid { display: none; }
 
 /* ===========================
    TOOLS SECTION
@@ -1588,13 +1612,26 @@ body.cursor-active button { cursor: none; }
    =========================== */
 
 @media (max-width: 768px) {
-  .slices-grid {
+  .slice-row {
     grid-template-columns: 1fr;
   }
 
-  .slice:nth-child(even) {
+  .slice--personal {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 24px;
+  }
+
+  .slice--belief {
     padding-left: 0;
-    border-left: none;
+    padding-top: 24px;
+  }
+
+  .slice--credentials p,
+  .slice--personal p,
+  .slice--belief p {
+    max-width: 100%;
   }
 
   .tools-grid {
@@ -1604,7 +1641,7 @@ body.cursor-active button { cursor: none; }
 }
 
 @media (max-width: 480px) {
-  .slice p {
+  .slice--credentials p {
     max-width: 100%;
   }
 }
@@ -1685,4 +1722,320 @@ body.cursor-active button { cursor: none; }
   .nav-left  { gap: 20px; }
   .nav-right { gap: 16px; }
   .nav-link  { font-size: 0.8rem; }
+}
+
+/* ===========================
+   HOME PROJECT — ARTIFACT (task 1)
+   Full-width workflow diagram with an in-image annotation.
+   Caption footer splits meta left / desc right.
+   =========================== */
+
+.home-project--artifact {
+  padding: 36px 0;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.home-project-artifact-visual {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid #2a2a2a;
+  background: #181818;
+}
+
+.home-project-artifact-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Annotation — overlays bottom-left of the diagram */
+.artifact-annotation {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  font-size: 0.71rem;
+  color: rgba(255, 240, 200, 0.80);
+  line-height: 1.5;
+  max-width: 36ch;
+  pointer-events: none;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.annotation-marker {
+  font-style: normal;
+  color: var(--nova-star-gold, #FFD580);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 0.9rem;
+}
+
+/* Footer below the diagram */
+.home-project-artifact-footer {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 24px;
+  padding-top: 18px;
+  align-items: start;
+}
+
+.artifact-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.artifact-desc-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.artifact-desc-row p {
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .home-project-artifact-footer {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .home-project-artifact-visual img {
+    max-height: 240px;
+  }
+  .artifact-annotation {
+    display: none; /* too cramped on mobile */
+  }
+}
+
+/* ===========================
+   HOME PROJECT — COMMUNITY (task 1)
+   Photos 55%, text 45%. Photos stack vertically — primary taller.
+   =========================== */
+
+.home-project--community {
+  padding: 36px 0;
+  border-bottom: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.home-project-photos-pair {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 6px;
+}
+
+.community-photo {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.community-photo--primary  { height: 220px; }
+.community-photo--secondary { height: 138px; }
+
+.home-project-text--community {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.home-project-text--community p {
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .home-project--community {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .community-photo--primary  { height: 180px; }
+  .community-photo--secondary { height: 116px; }
+}
+
+/* ===========================
+   HOME PROJECT — INTERNSHIP (task 1)
+   Compact horizontal. Video 55%, text 45%, vertically centred.
+   Text is shorter — lets the video do the showing.
+   =========================== */
+
+.home-project--internship {
+  padding: 36px 0;
+  border-bottom: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.home-project-video-wrap {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+}
+
+.home-project-video-wrap .project-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.home-project-text--internship {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-project-text--internship p {
+  font-size: 0.855rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .home-project--internship {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .home-project-video-wrap .project-video {
+    max-height: 220px;
+  }
+}
+
+/* ===========================
+   PROJECTS PAGE — differentiated tiers (task 3)
+
+   Tier 1: .project-case--flagship
+     Full-width visual, generous padding, wider desc text.
+     Used for the AI scraper (big workflow diagram).
+
+   Tier 2: .project-case + .project-case--split (unchanged)
+     Two-column, existing layout. Used for AI advisor + AWS site.
+
+   Tier 3: .project-case--compact
+     Thumbnail right, text left. Tight padding.
+     Used for attendee pipeline, GTM, maps scraper.
+   =========================== */
+
+/* Flagship — more vertical breathing room */
+.project-case--flagship {
+  padding: 52px 0;
+}
+
+.project-case--flagship .case-visual {
+  margin-bottom: 26px;
+}
+
+.project-case--flagship .case-visual img {
+  max-height: 460px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.project-case--flagship .case-desc {
+  max-width: 64ch;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.project-case--flagship .case-title {
+  font-size: 1.2rem;
+}
+
+/* Compact — thumbnail on the right, text dominant */
+.project-case--compact {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 28px;
+  align-items: start;
+  padding: 28px 0;
+}
+
+.project-case--compact .case-visual {
+  margin-bottom: 0;
+  order: 2;
+}
+
+.project-case--compact .case-content {
+  order: 1;
+}
+
+.project-case--compact .case-visual img {
+  max-height: 190px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+@media (max-width: 768px) {
+  .project-case--compact {
+    grid-template-columns: 1fr;
+  }
+  .project-case--compact .case-visual {
+    order: 0;
+    margin-bottom: 0;
+  }
+  .project-case--compact .case-visual img {
+    max-height: 160px;
+  }
+}
+
+/* ===========================
+   INNER PAGE VARIATIONS (task 6)
+   Each page gets a slightly different opening.
+   Not identical blush-page blanks.
+   =========================== */
+
+/* projects.html — more air above the content, heading sits larger */
+.page-heading--projects {
+  padding-top: 20px;
+  margin-bottom: 60px;
+}
+
+/* experience.html — closer to nav, direct and purposeful */
+.page-heading--experience {
+  padding-top: 8px;
+  margin-bottom: 44px;
+}
+
+/* A small context line sitting just below the heading.
+   Replaces the generic blush-page blank state. */
+.page-context {
+  font-size: 0.77rem;
+  color: var(--ink-3);
+  margin-top: -44px;
+  margin-bottom: 48px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .page-heading--projects { padding-top: 12px; margin-bottom: 44px; }
+  .page-heading--experience { padding-top: 4px; margin-bottom: 36px; }
+  .page-context { margin-top: -32px; margin-bottom: 36px; }
+}
+
+@media (max-width: 480px) {
+  .page-context { margin-top: -22px; margin-bottom: 28px; }
 }
