@@ -455,9 +455,9 @@
 
 /* ============================================================
    HERO NAME LINK
-   "Nova." in the h1 links to LinkedIn.
-   Looks identical to the non-link version — no underline,
-   no color change. The cursor change is the only signal.
+   "Nova" in the h1 links to LinkedIn.
+   No underline at rest. Rainbow gradient sweep on hover —
+   similar to GitHub's link hover treatment.
    ============================================================ */
 
 .hero-name-link {
@@ -466,16 +466,48 @@
   display: inline;
 }
 
+/* Rainbow gradient sweep on hover */
+@keyframes nova-rainbow {
+  0%   { background-position: 0% 50%;   }
+  100% { background-position: 200% 50%; }
+}
+
 .hero-name-link:hover .hero-name-accent,
 .hero-name-link:focus-visible .hero-name-accent {
-  opacity: 0.82;
-  transition: opacity 200ms ease;
+  background: linear-gradient(
+    90deg,
+    #FF6B6B, #FFD580, #8FBF65, #56CCF2, #BB6BD9, #FF8FAB, #FF6B6B
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: nova-rainbow 1.2s linear infinite;
+  /* Override the drop-shadow text-shadow which breaks background-clip */
+  text-shadow: none;
+  transition: none;
+}
+
+.hero-name-link:not(:hover) .hero-name-accent,
+.hero-name-link:not(:focus-visible) .hero-name-accent {
+  -webkit-text-fill-color: unset;
+  background: none;
+  animation: none;
 }
 
 .hero-name-link:focus-visible {
   outline: 2px solid var(--nova-star-gold);
   outline-offset: 4px;
   border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name-link:hover .hero-name-accent,
+  .hero-name-link:focus-visible .hero-name-accent {
+    animation: none;
+    background-size: 100% auto;
+  }
 }
 
 /* ============================================================
