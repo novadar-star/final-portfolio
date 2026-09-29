@@ -93,6 +93,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ===========================
+  // Live date — footer
+  // Shows the current date so visitors know when they're here.
+  // Format: "sunday, 28 sep 2026" — lowercase, conversational.
+  // ===========================
+  const liveDateEl = document.getElementById('liveDate');
+  if (liveDateEl) {
+    const now  = new Date();
+    const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    const day   = days[now.getDay()];
+    const date  = now.getDate();
+    const month = months[now.getMonth()];
+    const year  = now.getFullYear();
+    liveDateEl.textContent = `${day}, ${date} ${month} ${year}`;
+  }
+
+  // ===========================
   // Heart counter
   // ===========================
   const heartBtn   = document.querySelector('.heart-float');

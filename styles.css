@@ -2378,3 +2378,63 @@ body.cursor-active button { cursor: none; }
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* ===========================
+   FOOTER LIVE DATE
+   Real-time date injected by JS — lowercase, same size as
+   the copyright line, slightly lighter so it reads as context
+   rather than competing with the footer name.
+   =========================== */
+
+.footer-live-date {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  letter-spacing: 0.01em;
+}
+
+/* ===========================
+   NAME LINK RAINBOW — inner pages
+   .name-link wraps <em class="italic-accent"> on about.html.
+   Same rainbow sweep as the hero name, but scoped to
+   non-hero context (uses nova-accent color at rest).
+   =========================== */
+
+@keyframes name-rainbow {
+  0%   { background-position: 0% 50%;   }
+  100% { background-position: 200% 50%; }
+}
+
+.name-link:hover .italic-accent,
+.name-link:focus-visible .italic-accent {
+  background: linear-gradient(
+    90deg,
+    #FF6B6B, #FFD580, #8FBF65, #56CCF2, #BB6BD9, #FF8FAB, #FF6B6B
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: name-rainbow 1.2s linear infinite;
+}
+
+.name-link:not(:hover) .italic-accent,
+.name-link:not(:focus-visible) .italic-accent {
+  -webkit-text-fill-color: unset;
+  background: none;
+  animation: none;
+}
+
+.name-link:focus-visible {
+  outline: 2px solid var(--nova-star-gold, #FFD580);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-link:hover .italic-accent,
+  .name-link:focus-visible .italic-accent {
+    animation: none;
+    background-size: 100% auto;
+  }
+}
