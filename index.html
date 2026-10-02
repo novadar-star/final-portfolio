@@ -77,16 +77,6 @@
       <div class="hero-grain" aria-hidden="true"></div>
 
       <div class="hero-landing-inner">
-        <!-- Portrait placeholder — remove wrapper once you have a real photo -->
-        <!-- TODO: Replace with a candid/personal photo of you -->
-        <div class="hero-portrait-wrap">
-          <div class="hero-portrait">
-            <!-- PLACEHOLDER: add a real photo when ready
-            <img src="pics/nova-photo.jpg" alt="Darla Nova Sumanting" loading="eager">
-            -->
-            <div class="hero-portrait-placeholder" aria-hidden="true"></div>
-          </div>
-        </div>
         <p class="hero-eyebrow">darla &ldquo;nova&rdquo; sumanting, manila</p>
         <h1 class="hero-heading" id="hero-heading">
           <em class="hero-name-accent">Nova</em>
@@ -95,8 +85,8 @@
         <!-- Rotating identity sentence -->
         <p class="hero-sub hero-sub--rotating" aria-live="polite">
           <span class="hero-rotating-sentence">
-            nova is a
-            <span class="hero-rotating-word" id="heroRotatingWord" aria-atomic="true">community person</span>.
+            Nova runs on
+            <span class="hero-rotating-word" id="heroRotatingWord" aria-atomic="true">curiosity</span>.
           </span>
         </p>
 
@@ -123,13 +113,19 @@
               alt="n8n workflow: Slack trigger, job scraper, AI matching, custom parser, output to Google Drive"
               loading="lazy"
             >
-            <!-- marginal annotation — sits in the visual, feels authored -->
-            <aside class="artifact-annotation" aria-label="Technical note">
+            <!-- Desktop: annotation overlaid on image -->
+            <aside class="artifact-annotation artifact-annotation--overlay" aria-hidden="true">
               <span class="annotation-marker">↳</span>
               the model kept returning malformed JSON.
               wrote a fallback parser. now it lives in every workflow i build.
             </aside>
           </div>
+          <!-- Mobile: annotation visible below image -->
+          <aside class="artifact-annotation artifact-annotation--below" aria-label="Technical note">
+            <span class="annotation-marker">↳</span>
+            the model kept returning malformed JSON.
+            wrote a fallback parser. now it lives in every workflow i build.
+          </aside>
           <div class="home-project-artifact-footer">
             <div class="artifact-meta-row">
               <span class="project-meta">n8n · Slack · 2026</span>
@@ -228,12 +224,6 @@
               how i run workshops too.
             </p>
           </div>
-          <!-- Photo slot — a candid beside the personal text -->
-          <div class="slice-photo-slot">
-            <!-- TODO: Add a candid/life photo here when ready -->
-            <!-- <img src="pics/[YOUR-PHOTO].jpg" alt="[TODO]" loading="lazy" class="slice-photo"> -->
-            <div class="slice-photo-placeholder" aria-hidden="true"></div>
-          </div>
         </div>
 
         <!-- Belief — full-width, Playfair, isolated. The only editorial statement on the page. -->
@@ -248,125 +238,13 @@
       </div>
     </section>
 
-    <!-- Tools dock — moved from about.html, lives here on homepage now -->
-    <section class="home-tools" aria-labelledby="home-tools-heading">
-      <p class="toolkit-label" id="home-tools-heading">tools i actually open</p>
-      <div class="dock" role="list" aria-label="Tools I use">
-
-        <div class="dock-item" role="listitem" aria-label="n8n, workflow automation">
-          <div class="dock-icon" style="background:#EA4B71;">
-            <img src="https://cdn.simpleicons.org/n8n/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">n8n</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="AWS, cloud infrastructure">
-          <div class="dock-icon" style="background:#232F3E;">
-            <img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">AWS</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Python, automation and AI">
-          <div class="dock-icon" style="background:#1e415e;">
-            <img src="https://cdn.simpleicons.org/python/FFD43B" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Python</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="JavaScript, web development">
-          <div class="dock-icon" style="background:#F7DF1E;">
-            <img src="https://cdn.simpleicons.org/javascript/000000" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">JS</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Next.js, full-stack apps">
-          <div class="dock-icon" style="background:#000000;">
-            <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Next.js</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Supabase, backend and auth">
-          <div class="dock-icon" style="background:#1C1C1C;">
-            <img src="https://cdn.simpleicons.org/supabase/3ECF8E" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Supabase</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="SQL, databases">
-          <div class="dock-icon" style="background:#336791;">
-            <img src="https://cdn.simpleicons.org/postgresql/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">SQL</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="GitHub, version control">
-          <div class="dock-icon" style="background:#24292E;">
-            <img src="https://cdn.simpleicons.org/github/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">GitHub</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Figma, UI design">
-          <div class="dock-icon" style="background:#1E1E1E;">
-            <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Figma</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Claude, AI assistant">
-          <div class="dock-icon" style="background:#D4A27F;">
-            <img src="https://cdn.simpleicons.org/anthropic/000000" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Claude</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Vercel, deployment">
-          <div class="dock-icon" style="background:#000000;">
-            <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Vercel</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Gemini, AI LLM">
-          <div class="dock-icon" style="background:linear-gradient(135deg,#4285F4,#9B72CB,#D96570);">
-            <img src="https://cdn.simpleicons.org/googlegemini/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">Gemini</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="OpenAI, AI models">
-          <div class="dock-icon" style="background:#000000;">
-            <img src="https://cdn.simpleicons.org/openai/ffffff" alt="" aria-hidden="true" loading="lazy">
-          </div>
-          <span class="dock-label">OpenAI</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="Cursor, AI code editor">
-          <div class="dock-icon" style="background:#1A1A1A;">
-            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
-              <rect width="32" height="32" rx="8" fill="#1A1A1A"/>
-              <path d="M16 4 L28 16 L16 28 L4 16 Z" fill="none" stroke="white" stroke-width="2"/>
-              <path d="M16 4 L28 16 L16 16 Z" fill="white" opacity="0.9"/>
-              <path d="M16 16 L28 16 L16 28 Z" fill="white" opacity="0.4"/>
-            </svg>
-          </div>
-          <span class="dock-label">Cursor</span>
-        </div>
-
-        <div class="dock-item" role="listitem" aria-label="GoHighLevel, CRM automation">
-          <div class="dock-icon" style="background:#F97316;">
-            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
-              <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
-                    font-family="sans-serif" font-weight="900" font-size="13" fill="white">GHL</text>
-            </svg>
-          </div>
-          <span class="dock-label">GHL</span>
-        </div>
-
-      </div>
+    <!-- Tools — plain inline list. The projects prove the tools; this is just a quick reference. -->
+    <section class="tools-inline" aria-label="Tools I use">
+      <p class="tools-inline-text">
+        <span class="tools-inline-label">reach for:</span>
+        n8n &middot; AWS &middot; Python &middot; Next.js &middot; Supabase &middot;
+        Gemini &middot; Claude &middot; OpenAI &middot; SQL &middot; Vercel &middot; GHL
+      </p>
     </section>
 
     <!-- Contact -->

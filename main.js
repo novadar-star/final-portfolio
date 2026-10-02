@@ -238,10 +238,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const rotatingWord = document.getElementById('heroRotatingWord');
   if (rotatingWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const words = [
-      'community person',
-      'cloud enthusiast',
-      'developer',
-      'automation builder',
+      'curiosity',
+      'community',
+      'automation',
+      'stubbornness',
     ];
     let current = 0;
 

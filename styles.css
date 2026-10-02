@@ -2438,3 +2438,43 @@ body.cursor-active button { cursor: none; }
     background-size: 100% auto;
   }
 }
+
+/* ===========================
+   ARTIFACT ANNOTATION — responsive variants
+   --overlay: positioned inside the image (desktop only)
+   --below:   sits under the image as a plain note (mobile only)
+   =========================== */
+
+/* Desktop: show overlay, hide below-image note */
+.artifact-annotation--overlay {
+  display: flex;
+}
+
+.artifact-annotation--below {
+  display: none;
+}
+
+/* Mobile: hide overlay, show below-image note */
+@media (max-width: 768px) {
+  .artifact-annotation--overlay {
+    display: none;
+  }
+
+  .artifact-annotation--below {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    line-height: 1.5;
+    font-style: italic;
+    letter-spacing: 0.01em;
+    padding: 8px 0 4px;
+  }
+
+  .artifact-annotation--below .annotation-marker {
+    color: var(--nova-accent);
+    font-style: normal;
+    flex-shrink: 0;
+  }
+}
