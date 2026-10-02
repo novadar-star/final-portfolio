@@ -2478,3 +2478,41 @@ body.cursor-active button { cursor: none; }
     flex-shrink: 0;
   }
 }
+
+/* ===========================
+   CARD TILT — home project articles
+   Subtle perspective tilt follows the cursor.
+   JS writes --tilt-x and --tilt-y CSS vars on mousemove.
+   Max 4° rotation. Snaps back on mouse leave.
+   GPU-only: transform only, no layout change.
+   =========================== */
+
+@media (hover: hover) and (pointer: fine) {
+  .home-project {
+    transform-style: preserve-3d;
+    /* perspective on the element itself so children don't inherit */
+    perspective: 800px;
+    transition: transform 120ms ease-out, box-shadow 120ms ease-out;
+  }
+
+  .home-project.is-tilting {
+    transform:
+      perspective(800px)
+      rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+    transition: transform 60ms linear; /* snappy while moving */
+  }
+
+  .home-project.tilt-reset {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+    transition: transform 500ms cubic-bezier(0.34, 1.38, 0.64, 1); /* spring back */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-project.is-tilting,
+  .home-project.tilt-reset {
+    transform: none !important;
+    transition: none !important;
+  }
+}

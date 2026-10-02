@@ -563,3 +563,101 @@
   .hero-rotating-word.is-leaving  { display: none; }
   .hero-rotating-word.is-entering { opacity: 1; }
 }
+
+/* ============================================================
+   DRAGGABLE WORKFLOW NODES
+   Small n8n-style connector blocks that float over the hero.
+   Draggable on desktop + touch. Spring back on release.
+   z-index sits above grain (1) and vignette (0), below text (2+).
+   ============================================================ */
+
+.hero-nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* container is passthrough; nodes handle their own events */
+  z-index: 2;
+}
+
+.wf-node {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px 7px 9px;
+  background: rgba(20, 2, 8, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 160, 130, 0.22);
+  border-radius: 8px;
+  cursor: grab;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  /* spring return — cubic-bezier overshoot for physical feel */
+  transition: transform 600ms cubic-bezier(0.34, 1.38, 0.64, 1),
+              box-shadow 200ms ease,
+              border-color 200ms ease;
+  will-change: transform;
+  /* Each node starts at its own offset for natural scatter */
+  transform: translate(var(--nx, 0px), var(--ny, 0px)) rotate(var(--nr, 0deg));
+}
+
+.wf-node:active {
+  cursor: grabbing;
+  transition: box-shadow 80ms ease, border-color 80ms ease; /* snap off spring while dragging */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 200, 160, 0.45);
+  z-index: 10;
+}
+
+.wf-node-icon {
+  font-size: 0.72rem;
+  line-height: 1;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.wf-node-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(255, 230, 210, 0.88);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  font-family: var(--font, 'Space Grotesk', sans-serif);
+}
+
+/* Connector dot — the small circle on node edges */
+.wf-node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 160, 100, 0.55);
+  border: 1px solid rgba(255, 180, 130, 0.4);
+  flex-shrink: 0;
+}
+
+.wf-node-dot--in  { margin-left: -4px; }  /* left side connector */
+.wf-node-dot--out { margin-right: -4px; } /* right side connector */
+
+/* Initial natural scatter — each node has its own slight rotation */
+.wf-node:nth-child(1) { --nr: -2deg; }
+.wf-node:nth-child(2) { --nr:  1.5deg; }
+.wf-node:nth-child(3) { --nr: -1deg; }
+
+/* Hover glow — subtle, not flashy */
+@media (hover: hover) {
+  .wf-node:hover {
+    border-color: rgba(255, 200, 160, 0.38);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Reduced motion + touch: hide nodes entirely */
+@media (prefers-reduced-motion: reduce) {
+  .hero-nodes { display: none; }
+}
+
+/* Hide on very small screens — they'd clutter the text */
+@media (max-width: 480px) {
+  .hero-nodes { display: none; }
+}

@@ -76,6 +76,31 @@
     <section class="hero-landing" aria-labelledby="hero-heading">
       <div class="hero-grain" aria-hidden="true"></div>
 
+      <!--
+        DRAGGABLE WORKFLOW NODES
+        From Nova's actual AI job scraper pipeline.
+        Drag them around — they spring back on release.
+        aria-hidden: decorative, not content.
+      -->
+      <div class="hero-nodes" aria-hidden="true">
+        <div class="wf-node" data-ox="18" data-oy="22" style="left:8%;top:18%">
+          <span class="wf-node-icon">⚡</span>
+          <span class="wf-node-label">Slack trigger</span>
+          <span class="wf-node-dot wf-node-dot--out"></span>
+        </div>
+        <div class="wf-node" data-ox="-14" data-oy="8" style="right:10%;top:38%">
+          <span class="wf-node-icon">🤖</span>
+          <span class="wf-node-label">AI agent</span>
+          <span class="wf-node-dot wf-node-dot--in"></span>
+          <span class="wf-node-dot wf-node-dot--out"></span>
+        </div>
+        <div class="wf-node" data-ox="10" data-oy="-12" style="left:12%;bottom:28%">
+          <span class="wf-node-icon">{ }</span>
+          <span class="wf-node-label">parser ↳</span>
+          <span class="wf-node-dot wf-node-dot--in"></span>
+        </div>
+      </div>
+
       <div class="hero-landing-inner">
         <p class="hero-eyebrow">darla &ldquo;nova&rdquo; sumanting, manila</p>
         <h1 class="hero-heading" id="hero-heading">

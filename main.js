@@ -230,6 +230,103 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // ===========================
+  // Draggable workflow nodes — hero
+  // Nodes from Nova's actual AI job scraper pipeline.
+  // Drag to move. Release to spring back.
+  // Works on mouse + touch. Disabled by reduced-motion CSS.
+  // ===========================
+  document.querySelectorAll('.wf-node').forEach(node => {
+    let dragging  = false;
+    let startX    = 0;
+    let startY    = 0;
+    let originX   = 0;
+    let originY   = 0;
+    // Current translate offset
+    let curDX = parseFloat(node.dataset.ox || 0);
+    let curDY = parseFloat(node.dataset.oy || 0);
+
+    // Apply initial scattered position from data attributes
+    node.style.setProperty('--nx', curDX + 'px');
+    node.style.setProperty('--ny', curDY + 'px');
+
+    function onDown(e) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      dragging = true;
+      node.classList.add('wf-node--dragging');
+
+      const pt = e.touches ? e.touches[0] : e;
+      startX = pt.clientX - curDX;
+      startY = pt.clientY - curDY;
+
+      e.preventDefault();
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+      const pt = e.touches ? e.touches[0] : e;
+      curDX = pt.clientX - startX;
+      curDY = pt.clientY - startY;
+      node.style.setProperty('--nx', curDX + 'px');
+      node.style.setProperty('--ny', curDY + 'px');
+      // Remove transition while dragging so it follows instantly
+      node.style.transition = 'box-shadow 80ms ease, border-color 80ms ease';
+    }
+
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      node.classList.remove('wf-node--dragging');
+      // Spring back to original position
+      curDX = parseFloat(node.dataset.ox || 0);
+      curDY = parseFloat(node.dataset.oy || 0);
+      node.style.removeProperty('transition'); // restore CSS spring transition
+      node.style.setProperty('--nx', curDX + 'px');
+      node.style.setProperty('--ny', curDY + 'px');
+    }
+
+    node.addEventListener('mousedown',  onDown,  { passive: false });
+    node.addEventListener('touchstart', onDown,  { passive: false });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('touchmove', onMove, { passive: true });
+    window.addEventListener('mouseup',   onUp,   { passive: true });
+    window.addEventListener('touchend',  onUp,   { passive: true });
+  });
+
+  // ===========================
+  // Card tilt — home project articles
+  // Subtle perspective tilt on cursor position within card.
+  // Max 4° rotation. Springs back on mouse leave.
+  // ===========================
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch2 = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  if (!isReducedMotion && !isTouch2) {
+    document.querySelectorAll('.home-project').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect   = card.getBoundingClientRect();
+        const cx     = rect.left + rect.width  / 2;
+        const cy     = rect.top  + rect.height / 2;
+        const dx     = (e.clientX - cx) / (rect.width  / 2); // -1 to 1
+        const dy     = (e.clientY - cy) / (rect.height / 2); // -1 to 1
+        const MAX    = 4; // degrees
+        const tiltX  = (-dy * MAX).toFixed(2); // invert Y so top edge tilts toward cursor
+        const tiltY  = ( dx * MAX).toFixed(2);
+        card.style.setProperty('--tilt-x', tiltX + 'deg');
+        card.style.setProperty('--tilt-y', tiltY + 'deg');
+        card.classList.add('is-tilting');
+        card.classList.remove('tilt-reset');
+      }, { passive: true });
+
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-tilting');
+        card.classList.add('tilt-reset');
+        // Clean up class after spring animation completes (~500ms)
+        setTimeout(() => card.classList.remove('tilt-reset'), 520);
+      }, { passive: true });
+    });
+  }
+
+  // ===========================
   // Rotating identity word — hero
   // Fades between identity descriptors in the hero sentence.
   // Inspired by Daisy Fernandez's identity sentence mechanic.
