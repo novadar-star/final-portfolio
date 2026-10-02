@@ -748,6 +748,116 @@
       }
       .xp-map { width: 280px; height: 440px; }
     }
+
+    /* ================================================================
+       NODE ENTRANCE STAGGER
+       When the constellation enters the viewport, each star node
+       arrives with scale+fade and a 60ms stagger.
+       JS adds .xp-map--entered to trigger this.
+       Emil: rare/first-time event = delight allowed (Standard 2).
+       GPU-only: transform + opacity only (Standard 7).
+    ================================================================ */
+
+    .xp-node {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.55);
+      /* transition driven by JS-added class — not on :hover */
+    }
+
+    .xp-map--entered .xp-node {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transition:
+        opacity    380ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform  380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Stagger: each node delays by its index (set via --xp-node-i in JS) */
+    .xp-map--entered .xp-node { transition-delay: calc(var(--xp-node-i, 0) * 65ms); }
+
+    /* After entrance, hover/active transforms need no base translate offset —
+       the existing rules use translate(-50%,-50%) already on .xp-node */
+
+    /* ================================================================
+       LORE SECTION STAGGER
+       When .xp-lore-body--open is added, each .xp-lore-section
+       inside arrives with a translateY + fade stagger.
+       Emil: progressive disclosure — feels like revealing, not rendering.
+    ================================================================ */
+
+    .xp-lore-body .xp-lore-section,
+    .xp-lore-body .xp-lore-images,
+    .xp-lore-body .xp-lore-stack,
+    .xp-lore-body .xp-lore-link {
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        opacity   320ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+      /* delay is 0 until body opens */
+      transition-delay: 0ms;
+    }
+
+    .xp-lore-body--open .xp-lore-section,
+    .xp-lore-body--open .xp-lore-images,
+    .xp-lore-body--open .xp-lore-stack,
+    .xp-lore-body--open .xp-lore-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger each child — nth-child picks them in DOM order */
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(1) { transition-delay:  60ms; }
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(2) { transition-delay: 110ms; }
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(3) { transition-delay: 155ms; }
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(4) { transition-delay: 195ms; }
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(5) { transition-delay: 230ms; }
+    .xp-lore-body--open > .xp-lore-body-inner > *:nth-child(6) { transition-delay: 260ms; }
+
+    /* Also stagger accordion body sections on mobile */
+    .xp-accordion-body-inner > *:nth-child(1) { transition-delay:  40ms; }
+    .xp-accordion-body-inner > *:nth-child(2) { transition-delay:  80ms; }
+    .xp-accordion-body-inner > *:nth-child(3) { transition-delay: 115ms; }
+    .xp-accordion-body-inner > *:nth-child(4) { transition-delay: 145ms; }
+    .xp-accordion-body-inner > *:nth-child(5) { transition-delay: 170ms; }
+
+    /* Lore panel arrival — slightly more lift for physical weight */
+    .xp-lore {
+      transform: translateY(16px); /* was 12px — slightly more presence */
+    }
+
+    /* Ambient dots fade in after lines draw */
+    .xp-dust {
+      opacity: 0;
+      transition: opacity 400ms ease 800ms; /* 800ms delay = after lines finish */
+    }
+
+    .xp-map.lines-drawn .xp-dust {
+      opacity: 0.14;
+    }
+
+    /* Reduced motion overrides */
+    @media (prefers-reduced-motion: reduce) {
+      .xp-node,
+      .xp-map--entered .xp-node {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: none;
+      }
+      .xp-lore-body .xp-lore-section,
+      .xp-lore-body .xp-lore-images,
+      .xp-lore-body .xp-lore-stack,
+      .xp-lore-body .xp-lore-link,
+      .xp-lore-body--open .xp-lore-section,
+      .xp-lore-body--open .xp-lore-images,
+      .xp-lore-body--open .xp-lore-stack,
+      .xp-lore-body--open .xp-lore-link {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .xp-dust { opacity: 0.14; transition: none; }
+    }
   </style>
 </head>
 <body class="blush-page">
@@ -1152,6 +1262,7 @@
       btn.style.left  = pos[0] + '%';
       btn.style.top   = pos[1] + '%';
       btn.dataset.index = i;
+      btn.style.setProperty('--xp-node-i', i);
       btn.setAttribute('aria-label', `${exp.role} at ${exp.org} — click to explore`);
       btn.innerHTML = `
         ${svgIcon('xp-node-star')}
@@ -1361,14 +1472,18 @@
           if (entry.isIntersecting) {
             map.classList.add('lines-drawn');
             section.classList.add('border-revealed');
+            // Stagger node entrances 120ms after lines start drawing
+            setTimeout(function () {
+              map.classList.add('xp-map--entered');
+            }, 120);
             drawObs.unobserve(entry.target);
           }
         });
       }, { threshold: 0.25 });
       drawObs.observe(section);
     } else if (section) {
-      // No IO support — just show lines immediately
       map.classList.add('lines-drawn');
+      map.classList.add('xp-map--entered');
       section.classList.add('border-revealed');
     }
 

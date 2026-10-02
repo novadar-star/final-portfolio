@@ -454,59 +454,51 @@
 }
 
 /* ============================================================
-   HERO NAME LINK
-   "Nova" in the h1 links to LinkedIn.
-   No underline at rest. Rainbow gradient sweep on hover —
-   similar to GitHub's link hover treatment.
+   HERO HEADING — hover rainbow on "Nova"
+   Wrapping the em in a span lets us isolate the text-shadow
+   suppression without touching the h1 shadow.
+   Emil: rare first-time delight is allowed. GPU-only (background-clip).
+   text-shadow is suppressed on hover because it breaks background-clip:text.
    ============================================================ */
 
-.hero-name-link {
-  text-decoration: none;
-  color: inherit;
-  display: inline;
-}
-
-/* Rainbow gradient sweep on hover */
-@keyframes nova-rainbow {
+@keyframes nova-hero-rainbow {
   0%   { background-position: 0% 50%;   }
   100% { background-position: 200% 50%; }
 }
 
-.hero-name-link:hover .hero-name-accent,
-.hero-name-link:focus-visible .hero-name-accent {
+.hero-heading:hover .hero-name-accent {
   background: linear-gradient(
     90deg,
-    #FF6B6B, #FFD580, #8FBF65, #56CCF2, #BB6BD9, #FF8FAB, #FF6B6B
+    #FF6B6B 0%,
+    #FFD580 18%,
+    #8FBF65 36%,
+    #56CCF2 54%,
+    #BB6BD9 72%,
+    #FF8FAB 88%,
+    #FF6B6B 100%
   );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: nova-rainbow 1.2s linear infinite;
-  /* Override the drop-shadow text-shadow which breaks background-clip */
-  text-shadow: none;
+  text-shadow: none; /* must clear — text-shadow breaks background-clip:text */
+  animation: nova-hero-rainbow 1.4s linear infinite;
   transition: none;
 }
 
-.hero-name-link:not(:hover) .hero-name-accent,
-.hero-name-link:not(:focus-visible) .hero-name-accent {
+.hero-heading:not(:hover) .hero-name-accent {
   -webkit-text-fill-color: unset;
   background: none;
   animation: none;
 }
 
-.hero-name-link:focus-visible {
-  outline: 2px solid var(--nova-star-gold);
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-name-link:hover .hero-name-accent,
-  .hero-name-link:focus-visible .hero-name-accent {
+  .hero-heading:hover .hero-name-accent {
     animation: none;
-    background-size: 100% auto;
+    background: none;
+    -webkit-text-fill-color: unset;
+    text-shadow: inherit;
   }
 }
 
