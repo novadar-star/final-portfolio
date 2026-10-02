@@ -1681,7 +1681,8 @@ body.cursor-active button { cursor: none; }
   .home-project-text p { font-size: 0.875rem; }
 
   .project-case--split {
-    grid-template-columns: 1.15fr 0.85fr;
+    /* At tablet widths, columns need a bit more balance to avoid cramped text */
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
@@ -1705,8 +1706,12 @@ body.cursor-active button { cursor: none; }
    =========================== */
 
 @media (max-width: 860px) and (min-width: 769px) {
-  .nav-left  { gap: 20px; }
-  .nav-right { gap: 16px; }
+  .nav-left  { gap: 16px; }
+  .nav-right { gap: 12px; }
+  .nav-link  { font-size: 0.78rem; }
+  /* At this width "resume" can wrap — shrink theme toggle to save space */
+  .theme-toggle { width: 30px; height: 30px; min-width: 30px; }
+}
   .nav-link  { font-size: 0.8rem; }
 }
 
@@ -2027,48 +2032,6 @@ body.cursor-active button { cursor: none; }
 }
 
 /* ===========================
-   HERO PORTRAIT
-   A small face attached to the name.
-   Sits above the eyebrow text — personal, not a headshot section.
-   Replace the placeholder div with a real <img> when ready.
-   =========================== */
-
-.hero-portrait-wrap {
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-.hero-portrait {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(255, 200, 160, 0.35);
-  box-shadow: 0 0 0 4px rgba(255, 160, 120, 0.12);
-  position: relative;
-}
-
-.hero-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-
-/* Placeholder state — visible until real photo added */
-/* PLACEHOLDER STYLE — remove when real portrait photo is added */
-.hero-portrait-placeholder {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 160, 120, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ===========================
    SLICES — belief isolated (visual storytelling fix)
    .slice--belief moved out of .slice-row to span full width.
    Playfair italic, larger — reads as a statement, not a second paragraph.
@@ -2208,8 +2171,6 @@ body.cursor-active button { cursor: none; }
    =========================== */
 
 @media (max-width: 768px) {
-  .hero-portrait { width: 60px; height: 60px; }
-
   .slice-row {
     grid-template-columns: 1fr;
   }
@@ -2230,8 +2191,6 @@ body.cursor-active button { cursor: none; }
 }
 
 @media (max-width: 480px) {
-  .hero-portrait-wrap { margin-bottom: 18px; }
-  .hero-portrait { width: 52px; height: 52px; }
   .slice--belief p { font-size: 1rem; }
   .about-tagline { font-size: 1rem; }
 }
@@ -2505,7 +2464,7 @@ body.cursor-active button { cursor: none; }
 
   .home-project.tilt-reset {
     transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-    transition: transform 500ms cubic-bezier(0.34, 1.38, 0.64, 1); /* spring back */
+    transition: transform 420ms cubic-bezier(0.34, 1.38, 0.64, 1); /* spring back */
   }
 }
 

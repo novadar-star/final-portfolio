@@ -461,19 +461,25 @@
       transform: rotate(45deg);
     }
 
-    /* Full lore body — hidden by default */
+    /* Full lore body — hidden by default.
+       Uses grid-template-rows: 0fr → 1fr instead of max-height
+       to avoid animating a layout property (Emil Standard 7). */
     .xp-lore-body {
-      overflow: hidden;
-      max-height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
       opacity: 0;
       transition:
-        max-height 480ms cubic-bezier(0.16, 1, 0.3, 1),
-        opacity    360ms ease;
+        grid-template-rows 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity            360ms ease;
       margin-top: 0;
     }
 
+    .xp-lore-body > .xp-lore-body-inner {
+      overflow: hidden;
+    }
+
     .xp-lore-body--open {
-      max-height: 1200px; /* large enough for any content */
+      grid-template-rows: 1fr;
       opacity: 1;
       margin-top: 20px;
     }
@@ -652,18 +658,22 @@
       transform: rotate(180deg);
     }
 
-    /* Accordion body */
+    /* Accordion body — same grid-template-rows trick */
     .xp-accordion-body {
-      overflow: hidden;
-      max-height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
       opacity: 0;
       transition:
-        max-height 480ms cubic-bezier(0.16, 1, 0.3, 1),
-        opacity    320ms ease;
+        grid-template-rows 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity            320ms ease;
+    }
+
+    .xp-accordion-body > .xp-accordion-body-inner {
+      overflow: hidden;
     }
 
     .xp-accordion-item--open .xp-accordion-body {
-      max-height: 2000px;
+      grid-template-rows: 1fr;
       opacity: 1;
     }
 
