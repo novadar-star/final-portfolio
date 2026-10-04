@@ -1111,3 +1111,86 @@
     transition: none;
   }
 }
+
+/* ===========================
+   STORY + GALLERY — two-column wrapper
+   Story column left (single-column narrative, max 640px),
+   gallery strip right (sticky scrolling photos).
+   The story-layout controls its own max-width and padding;
+   the gallery stretches full height alongside it.
+   =========================== */
+
+.about-story-with-gallery {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+  align-items: start;
+  min-height: calc(100dvh - 60px);
+}
+
+/* Left story column: override the centred-standalone padding since
+   the wrapper handles the outer padding now */
+.about-story-with-gallery .about-story-layout {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Right gallery column stretches to match story height */
+.about-story-with-gallery .about-gallery {
+  align-self: stretch;
+  padding: 0;
+  position: relative;
+  min-height: calc(100dvh - 60px);
+}
+
+/* ===========================
+   RESPONSIVE — collapse to single column on small screens
+   Gallery strip moves below story content on mobile
+   =========================== */
+
+@media (max-width: 1024px) {
+  .about-story-with-gallery {
+    grid-template-columns: 1fr 280px;
+    gap: 0 24px;
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-story-with-gallery {
+    grid-template-columns: 1fr;
+    padding: 0 24px;
+    gap: 0;
+    min-height: auto;
+  }
+
+  /* Gallery below story on mobile */
+  .about-story-with-gallery .about-gallery {
+    align-self: auto;
+    height: 460px;
+    overflow: hidden;
+    min-height: unset;
+    padding: 0 0 40px;
+  }
+
+  .about-story-with-gallery .gallery-pin {
+    position: static;
+    height: 460px;
+    overflow: hidden;
+  }
+
+  .about-story-with-gallery .gallery-track-wrap {
+    height: 460px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-story-with-gallery { padding: 0 20px; }
+  .about-story-with-gallery .about-gallery { height: 400px; }
+  .about-story-with-gallery .gallery-pin  { height: 400px; }
+  .about-story-with-gallery .gallery-track-wrap { height: 400px; }
+}

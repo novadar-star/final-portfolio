@@ -107,7 +107,11 @@
   </nav>
 
   <main class="about-main about-main--story" id="main">
-    <div class="about-story-layout">
+    <!-- Two-column: story left, gallery strip right -->
+    <div class="about-story-with-gallery">
+
+      <!-- LEFT — single-column narrative -->
+      <div class="about-story-layout">
 
       <!-- ═══════════════════════════════════════════════
            SINGLE COLUMN NARRATIVE
@@ -288,6 +292,19 @@
         </div>
 
     </div><!-- /about-story-layout -->
+
+      <!-- RIGHT — scrolling photo gallery strip -->
+      <aside class="about-gallery" aria-label="Photo gallery">
+        <div class="gallery-pin" id="galleryPin">
+          <div class="gallery-track-wrap" id="galleryWrap">
+            <div class="gallery-track" id="galleryTrack">
+              <!-- JS renders photo items here -->
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div><!-- /about-story-with-gallery -->
   </main>
 
   <footer class="site-footer about-footer" role="contentinfo">
@@ -299,5 +316,6 @@
 
   <script defer src="/_vercel/insights/script.js"></script>
   <script src="main.js"></script>
+  <script src="about.js"></script>
 </body>
 </html>
