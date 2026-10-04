@@ -45,15 +45,15 @@
    ============================================================ */
 
 :root {
-  --nova-accent:     #8B0020;   /* deep burgundy-red — light mode, clearly red not pink */
-  --nova-accent-dim: rgba(139, 0, 32, 0.08);
-  --nova-accent-mid: rgba(139, 0, 32, 0.22);
+  --nova-accent:     #C2607A;   /* dusty rose — pinkish-minimal, editorial, warm */
+  --nova-accent-dim: rgba(194, 96, 122, 0.08);
+  --nova-accent-mid: rgba(194, 96, 122, 0.20);
 }
 
 [data-theme="dark"] {
-  --nova-accent:     #FF8FAB;   /* soft pink-coral — readable on dark paper */
-  --nova-accent-dim: rgba(255, 143, 171, 0.10);
-  --nova-accent-mid: rgba(255, 143, 171, 0.20);
+  --nova-accent:     #E8929F;   /* lighter rose on dark — readable, not neon */
+  --nova-accent-dim: rgba(232, 146, 159, 0.10);
+  --nova-accent-mid: rgba(232, 146, 159, 0.20);
 }
 
 /* ============================================================
@@ -92,13 +92,43 @@ button:focus-visible {
   border-radius: 1px;
 }
 
-/* Nav link hover — warm colour, no transform (avoids sub-pixel jitter) */
+/* Nav link hover — warm colour + subtle underline slides in from left */
 .nav-link:hover {
   color: var(--nova-accent);
 }
 
+/* Underline slides in from left on hover — 1px, quiet, intentional */
 .nav-link {
-  transition: color 200ms ease-out;
+  position: relative;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--nova-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  border-radius: 1px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+/* Active link keeps underline visible permanently via ::after (existing rule) */
+.nav-link.active::before {
+  display: none; /* active uses ::after, not ::before */
+}
+
+.nav-link {
+  transition: color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 /* Theme toggle — warm accent on hover (replaces green) */
@@ -386,8 +416,8 @@ em.italic-accent {
 .hero-link {
   color: var(--nova-accent);
   transition:
-    color var(--nova-duration-hover) ease,
-    gap   var(--nova-duration-hover) ease;
+    color var(--nova-duration-hover) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    gap   var(--nova-duration-hover) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 /* hover handled by rainbow-sweep rules further down */
