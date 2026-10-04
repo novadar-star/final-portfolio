@@ -106,17 +106,16 @@
     </div>
   </nav>
 
-  <main class="about-main" id="main">
-    <div class="about-layout">
+  <main class="about-main about-main--story" id="main">
+    <div class="about-story-layout">
 
-      <!-- LEFT — content column -->
-      <div class="about-content">
+      <!-- ═══════════════════════════════════════════════
+           SINGLE COLUMN NARRATIVE
+           Sunny Wu principle: text flows, photos land inside
+           the story at the exact moment they belong.
+           No sidebar. No gallery strip. Just the page.
+      ═══════════════════════════════════════════════ -->
 
-        <!-- ═══════════════════════════════════════════════
-             INTRO — who you are right now, in one breath.
-             Short. Human. Not a job title.
-             Replace placeholder with your own words.
-        ═══════════════════════════════════════════════ -->
         <div class="about-header">
           <h1 class="about-heading">
             hi, i'm <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="name-link"><em class="italic-accent">darla</em></a>
@@ -151,11 +150,17 @@
               time, I was exploring the things I already loved — biological competitions, and even
               competing in head dancing for the UAAP.
             </p>
-            <!-- dance photo — placed here because it belongs to this chapter -->
-            <figure class="story-image story-image--inline">
+          </div>
+
+          <!-- dance.jpg — appears between story beats, inline, polaroid style -->
+          <div class="story-photo-moment">
+            <figure class="story-polaroid">
               <img src="pics/dance.jpg" alt="Darla competing in head dancing for the UAAP" loading="lazy">
-              <figcaption class="story-image-caption">uaap head dancing · before the tech era</figcaption>
+              <figcaption>uaap head dancing · before the tech era</figcaption>
             </figure>
+          </div>
+
+          <div class="story-beat">
             <p>
               Looking back, I think all of those interests shaped how I approach the things I do now.
             </p>
@@ -175,6 +180,18 @@
               for others made a real difference in my own journey. It also made me want to create
               that kind of space for other people.
             </p>
+          </div>
+
+          <!-- Community photos — 2-up cluster for the AWS chapter -->
+          <div class="story-photo-moment story-photo-moment--pair">
+            <figure class="story-polaroid story-polaroid--left">
+              <img src="pics/cloud9-workshop.jpg" alt="AWS SBG workshop at Adamson University" loading="lazy">
+              <figcaption>cloud9 workshop · adamson</figcaption>
+            </figure>
+            <figure class="story-polaroid story-polaroid--right">
+              <img src="pics/cloud9-team.jpg" alt="AWS Student Builder Group team" loading="lazy">
+              <figcaption>the team</figcaption>
+            </figure>
           </div>
 
           <div class="story-beat">
@@ -197,12 +214,7 @@
 
         </div>
 
-        <!-- ═══════════════════════════════════════════════
-             MILESTONES — moments worth marking.
-             Not a timeline. Not a résumé bullet list.
-             Just: things that happened that you think about.
-             Add or remove .milestone items as needed.
-        ═══════════════════════════════════════════════ -->
+        <!-- MILESTONES -->
         <div class="about-milestones" aria-label="Milestones">
           <span class="about-section-label">moments</span>
           <ul class="milestone-list">
@@ -258,24 +270,7 @@
           </ul>
         </div>
 
-        <!-- ═══════════════════════════════════════════════
-             PHOTO SLOTS — optional scattered images.
-             These break up the text and feel personal.
-             Only add photos you actually want here.
-             Remove the entire block if you have nothing yet.
-        ═══════════════════════════════════════════════ -->
-        <!-- Personal photo — dance photoshoot -->
-        <div class="about-photos" aria-label="Personal photos">
-          <figure class="story-image story-image--full">
-            <img src="pics/dance-photoshoot.jpg" alt="Darla Nova in a dance photoshoot" loading="lazy">
-          </figure>
-        </div>
-
-        <!-- ═══════════════════════════════════════════════
-             INTERESTS — things outside the résumé.
-             Plain text or small tags. Not a skills section.
-             Replace with what's actually true for you.
-        ═══════════════════════════════════════════════ -->
+        <!-- INTERESTS -->
         <div class="about-interests">
           <span class="about-section-label">also into</span>
           <ul class="interest-list">
@@ -284,13 +279,10 @@
             <li class="interest-item">fanfiction</li>
             <li class="interest-item">community building</li>
             <li class="interest-item">design</li>
-            <!-- TODO: Add more of your real interests -->
           </ul>
-          <!-- TODO: Uncomment and write one sentence in your own voice -->
-          <!-- <p class="interests-note">[PLACEHOLDER: one sentence about something non-tech you actually care about]</p> -->
         </div>
 
-        <!-- Contact -->
+        <!-- CONTACT -->
         <div class="about-contact">
           <p>if you want to talk, email is easiest.</p>
           <a href="mailto:darlanovasumanting06@gmail.com" class="about-email-link">
@@ -298,20 +290,7 @@
           </a>
         </div>
 
-      </div><!-- /about-content -->
-
-      <!-- RIGHT — photo gallery strip -->
-      <aside class="about-gallery" aria-label="Photo gallery">
-        <div class="gallery-pin" id="galleryPin">
-          <div class="gallery-track-wrap" id="galleryWrap">
-            <div class="gallery-track" id="galleryTrack">
-              <!-- JS renders photo items here -->
-            </div>
-          </div>
-        </div>
-      </aside>
-
-    </div><!-- /about-layout -->
+    </div><!-- /about-story-layout -->
   </main>
 
   <footer class="site-footer about-footer" role="contentinfo">
