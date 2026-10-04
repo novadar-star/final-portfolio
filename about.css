@@ -131,15 +131,17 @@
   opacity: 1;
 }
 
-/* Optional small label above a beat — context, not a heading */
+/* Optional small label above a beat — chapter whisper, not section header.
+   Caveat (handwritten) + lowercase keeps it intimate. */
 .story-beat-label {
   display: block;
-  font-size: 0.63rem;
-  font-weight: 600;
-  color: var(--nova-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  /* Hidden when empty */
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-size: 0.95rem;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--ink-3);
+  text-transform: none;
+  letter-spacing: 0;
   min-height: 0;
 }
 
@@ -210,11 +212,12 @@
 
 .about-section-label {
   display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-size: 0.95rem;
+  font-weight: 400;
   color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  text-transform: none;
+  letter-spacing: 0;
   margin-bottom: 14px;
 }
 
@@ -240,7 +243,7 @@
   display: grid;
   grid-template-columns: 20px 1fr;
   gap: 10px;
-  padding: 12px 0;
+  padding: 16px 0;
   border-top: 1px solid var(--hairline-2);
   align-items: baseline;
 }
@@ -250,10 +253,10 @@
 }
 
 .milestone-marker {
-  font-size: 0.55rem;
+  font-size: 0.45rem;
   color: var(--nova-accent);
-  opacity: 0.7;
-  padding-top: 3px;
+  opacity: 0.6;
+  padding-top: 4px;
   line-height: 1;
 }
 
@@ -269,10 +272,11 @@
   color: var(--ink);
   letter-spacing: -0.01em;
   line-height: 1.3;
+  max-width: 48ch;
 }
 
 .milestone-meta {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--ink-3);
   letter-spacing: 0.02em;
 }
@@ -333,7 +337,7 @@
   transition: border-color 200ms ease, color 200ms ease;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .interest-item:hover {
     border-color: var(--nova-accent);
     color: var(--nova-accent);
@@ -417,15 +421,17 @@
   user-select: none;
 }
 
-.c-tag:hover {
-  transform: rotate(-2deg) translateY(-2px);
-  border-color: var(--nova-accent, var(--green));
-  color: var(--nova-accent, var(--green));
-  background: var(--nova-accent-dim, var(--green-dim));
-}
+@media (hover: hover) and (pointer: fine) {
+  .c-tag:hover {
+    transform: rotate(-2deg) translateY(-2px);
+    border-color: var(--nova-accent, var(--green));
+    color: var(--nova-accent, var(--green));
+    background: var(--nova-accent-dim, var(--green-dim));
+  }
 
-.c-tag:nth-child(even):hover { transform: rotate(2deg)  translateY(-2px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
-.c-tag:nth-child(3n):hover   { transform: rotate(-1deg) translateY(-3px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
+  .c-tag:nth-child(even):hover { transform: rotate(2deg)  translateY(-2px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
+  .c-tag:nth-child(3n):hover   { transform: rotate(-1deg) translateY(-3px); border-color: var(--nova-accent, var(--green)); color: var(--nova-accent, var(--green)); }
+}
 
 /* ===========================
    TOOLKIT — dock style
@@ -574,7 +580,7 @@
    =========================== */
 
 .about-contact {
-  padding-top: 8px;
+  padding-top: 16px;
   border-top: 1px solid var(--hairline);
 }
 

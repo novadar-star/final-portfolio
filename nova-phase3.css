@@ -349,6 +349,21 @@ button:focus-visible {
   }
 }
 
+/* Active / pressed feedback — all interactive text links
+   touch devices never get hover; :active is the only feedback signal */
+.project-link-inline:active,
+.all-projects-link:active,
+.archive-link:active,
+.contact-link:active,
+.hero-landing .hero-link:active {
+  opacity: 0.6;
+  -webkit-text-fill-color: unset;
+  animation: none;
+  background-image: none;
+  background-clip: unset;
+  -webkit-background-clip: unset;
+}
+
 /* ============================================================
    PAGE HEADINGS — italic accent warm color
    The .italic-accent class currently uses --green.

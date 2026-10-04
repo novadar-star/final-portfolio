@@ -228,6 +228,7 @@
   margin-top: 20px;
   position: relative;
   padding-bottom: 2px;
+  touch-action: manipulation; /* removes 300ms tap delay on iOS */
 
   /* Underline that slides in from left on hover */
   background-image: linear-gradient(
@@ -584,10 +585,11 @@
 }
 
 .wf-node-icon {
-  font-size: 0.72rem;
-  line-height: 1;
-  opacity: 0.9;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
+  color: rgba(255, 200, 160, 0.82);
+  display: block;
 }
 
 .wf-node-label {
