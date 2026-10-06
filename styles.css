@@ -139,7 +139,7 @@ h1, h2, h3, h4 {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--nova-star-gold, #FFD580);
   outline-offset: 3px;
   border-radius: var(--radius);
 }
@@ -330,8 +330,8 @@ button:focus-visible {
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-transform: none;
+  letter-spacing: 0.01em;
   margin-bottom: 28px;
   padding-top: 48px;
   /* border-top removed — nova-phase3.css owns the animated gradient line via ::before */

@@ -1068,32 +1068,25 @@
   const EXPERIENCES = [
     {
       id: 'eskwelabs',
-      label: 'Eskwelabs',           // short label shown on the map node
+      label: 'Eskwelabs',
       role: 'AI Solutions Development Intern',
       org: 'Eskwelabs',
       date: 'May 2026 — present',
       tag: 'remote',
-      // TODO: Replace overview with personal writing
-      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+      overview: 'Co-built an internal AI advisor chat used daily by the intern cohort. Three personas streaming Gemini, Google OAuth with a domain allowlist, Supabase with Row Level Security.',
       responsibilities: [
-        // TODO: Replace with real responsibilities
-        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore.',
-        '[PLACEHOLDER] Ut enim ad minim veniam, quis nostrud exercitation.',
+        'Built three AI advisor personas pulling context from Google Docs and streaming Gemini responses.',
+        'Implemented Google OAuth with domain allowlist and Supabase Row Level Security.',
+        'Debugged JWT passthrough to Supabase — the hardest part of the project.',
       ],
       achievements: [
-        // TODO: Replace with real achievements
-        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate.',
-        '[PLACEHOLDER] Excepteur sint occaecat cupidatat non proident.',
+        'Shipped to production. The team uses it daily.',
+        // TODO: Add more real achievements when ready
       ],
-      learned: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      learned: 'Getting auth token passthrough right matters more than the feature itself. A system that works for the happy path but breaks on auth edge cases ships nothing.',
       stack: ['Next.js 14', 'Gemini', 'Supabase', 'Google OAuth'],
-      images: [
-        // TODO: Replace with real image paths when available
-        // { src: 'pics/eskwelabs-1.jpg', alt: 'Description' },
-      ],
-      link: null,
-      // link: { href: 'https://...', label: 'view project' },
+      images: [],
+      link: { href: 'projects.html#ai-advisor', label: 'see the project' },
     },
     {
       id: 'aws-sbg',
@@ -1102,19 +1095,17 @@
       org: 'AWS Student Builder Group · Adamson University',
       date: 'Aug 2025 — present',
       tag: null,
-      // TODO: Replace overview with personal writing
-      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      overview: 'Running a 120+ member cloud community: workshops on real AWS services, onboarding, and the messy logistics of getting that many people in a room consistently.',
       responsibilities: [
-        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore et dolore.',
-        '[PLACEHOLDER] Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate velit.',
+        'Led workshops on actual AWS services — not slides, deployed things.',
+        'Managed member onboarding and event production for 120+ member community.',
+        'Executive Secretary for AWS Cloud Club Philippines — coordination across 40+ chapters nationwide.',
       ],
       achievements: [
-        '[PLACEHOLDER] Excepteur sint occaecat cupidatat non proident.',
-        '[PLACEHOLDER] Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        'Grew the community and maintained consistent member engagement.',
+        'Built the org website — static HTML/CSS/JS so the next officer can actually edit it.',
       ],
-      learned: '[PLACEHOLDER] Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
+      learned: 'Having people willing to teach and make room for others changes careers. That\'s why I run this.',
       stack: ['AWS', 'Community', 'Workshops', 'Event Production'],
       images: [
         { src: 'pics/cloud9-workshop.jpg', alt: 'AWS SBG workshop at Adamson University' },
@@ -1129,40 +1120,19 @@
       org: 'Tutorials Dojo',
       date: 'Jan – Feb 2026',
       tag: 'remote',
-      // TODO: Replace overview with personal writing
-      overview: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      overview: 'Wrote and published a technical article on Amazon Bedrock — LLM-as-a-Judge methodology, prompt design, and model comparison.',
       responsibilities: [
-        '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        '[PLACEHOLDER] Sed do eiusmod tempor incididunt ut labore et dolore magna.',
+        'Ran actual LLM evaluations on Amazon Bedrock — not just writing about them.',
+        'Documented methodology, prompt design, and model comparison findings.',
       ],
       achievements: [
-        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit in voluptate velit esse.',
+        'Published article on Tutorials Dojo.',
       ],
-      learned: '[PLACEHOLDER] At vero eos et accusamus et iusto odio dignissimos ducimus.',
+      learned: 'You cannot write credibly about something you have not run. Required running the evaluations, not just describing them.',
       stack: ['Amazon Bedrock', 'Technical Writing', 'LLM Evaluation'],
       images: [],
       link: null,
-    },
-    {
-      id: 'placeholder-4',
-      label: 'Add more',
-      role: '[PLACEHOLDER ROLE]',
-      org: '[PLACEHOLDER ORG]',
-      date: '[DATE]',
-      tag: null,
-      // TODO: Replace all placeholder content when adding a real experience
-      overview: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
-      responsibilities: [
-        '[PLACEHOLDER] Lorem ipsum dolor sit amet.',
-        '[PLACEHOLDER] Sed do eiusmod tempor incididunt.',
-      ],
-      achievements: [
-        '[PLACEHOLDER] Duis aute irure dolor in reprehenderit.',
-      ],
-      learned: '[PLACEHOLDER] Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      stack: ['[PLACEHOLDER]'],
-      images: [],
-      link: null,
+      // TODO: Add link: { href: 'actual-article-url', label: 'read article' } when URL is available
     },
   ];
 

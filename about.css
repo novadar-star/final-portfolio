@@ -760,46 +760,7 @@
   transition: width 0.12s ease, height 0.12s ease;
   display: none;
 }
-
-.cursor-star {
-  width: 100%;
-  height: 100%;
-  color: var(--green);
-  opacity: 0.9;
-  filter: drop-shadow(0 0 3px var(--green));
-}
-
-/* hover state — links, buttons */
-.nova-cursor[data-state="hover"] { width: 24px; height: 24px; }
-.nova-cursor[data-state="hover"] .cursor-star {
-  animation: cursorPulse 0.6s ease infinite alternate;
-}
-
-/* press state — mousedown hold */
-.nova-cursor[data-state="press"] {
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
-}
-
-/* photo state — gallery items */
-.nova-cursor[data-state="photo"] { width: 26px; height: 26px; }
-.nova-cursor[data-state="photo"] .cursor-star {
-  animation: cursorSpin 1.4s linear infinite;
-  opacity: 1;
-}
-
-/* tool state — toolkit items */
-.nova-cursor[data-state="tool"] { width: 22px; height: 22px; }
-.nova-cursor[data-state="tool"] .cursor-star {
-  animation: cursorPulse 0.45s ease infinite alternate;
-}
-
-@keyframes cursorPulse {
-  from { transform: scale(1); }
-  to   { transform: scale(1.25); }
-}
-
+/* cursor-star color inherits from styles.css global rule — no override needed */
 @keyframes cursorSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(45deg); }
