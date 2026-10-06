@@ -627,15 +627,58 @@
   overflow: hidden;
 }
 
-/* Wrap: fade mask + border-radius */
+/* Pinkish gradient overlay at the bottom of the gallery strip —
+   creates a soft dissolve into the page background (#FFF5F6 blush).
+   Pointer-events none so it doesn't block photo hover/captions. */
+.gallery-pin::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 245, 246, 0.6) 50%,
+    rgba(255, 245, 246, 0.95) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+[data-theme="dark"] .gallery-pin::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(19, 19, 16, 0.6) 50%,
+    rgba(19, 19, 16, 0.95) 100%
+  );
+}
+
+/* Wrap: gradient fade at top and bottom — pinkish tint on the fade
+   so the edge feels like the photos are dissolving into the page
+   rather than hard-clipping */
 .gallery-track-wrap {
   height: 100%;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  /* Softer fade — starts fading only at the very last 6% so it feels continuous */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
+  /* Pink-tinted fade: dissolves into the blush page background */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
+  );
 }
 
 .gallery-track {
