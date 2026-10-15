@@ -57,6 +57,16 @@ html, body {
   overflow-x: hidden;
 }
 
+/* `hidden` turns <body> into its own scroll container, which silently
+   breaks every position: sticky inside it (e.g. the about-page gallery,
+   which then scrolled away mid-page). `clip` stops sideways overflow
+   without creating a scroll container. */
+@supports (overflow-x: clip) {
+  html, body {
+    overflow-x: clip;
+  }
+}
+
 img, video {
   max-width: 100%;
   height: auto;

@@ -619,10 +619,12 @@
 }
 
 /* Sticky pin — the visible window that stays fixed while page scrolls */
+/* Sits just below the sticky nav (~76px) with a little air, and is
+   short enough that a small gap shows above the viewport bottom too */
 .gallery-pin {
   position: sticky;
-  top: 60px;
-  height: calc(100dvh - 60px);
+  top: 92px;
+  height: calc(100dvh - 116px);
   overflow: hidden;
   border-bottom: 1.5px solid var(--hairline);
 }
@@ -833,8 +835,8 @@
 
   /* Gallery stays sticky but slightly less tall */
   .gallery-pin {
-    height: calc(100dvh - 60px);
-    top: 60px;
+    height: calc(100dvh - 116px);
+    top: 92px;
   }
 }
 
