@@ -218,20 +218,19 @@
       position: absolute;
       left: calc(50% + 16px);
       white-space: nowrap;
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.01em;
       color: var(--ink-3);
-      text-transform: uppercase;
       pointer-events: none;
       transition: color 220ms ease;
     }
 
     /* Node positions — percentage of container (340×500) */
-    .xp-node--0 { left: 62%;  top: 13%; }
-    .xp-node--1 { left: 28%;  top: 44%; }
-    .xp-node--2 { left: 72%;  top: 70%; }
-    .xp-node--3 { left: 18%;  top: 82%; }
+    .xp-node--0 { left: 29.4%; top: 40%; }
+    .xp-node--1 { left: 17.6%; top: 84%; }
+    .xp-node--2 { left: 73.5%; top: 66%; }
+    .xp-node--3 { left: 63.2%; top: 17%; }
 
     /* Hover (pointer devices only) */
     @media (hover: hover) {
@@ -292,6 +291,133 @@
       opacity: 0.45;
     }
 
+    /* ── The nova star ───────────────────────────────────────────────
+       The map's one bold element. Nova = "new": the brightest star is
+       the next one. Gold, larger, with a soft halo. It flares once when
+       the lines finish drawing (rare, so delight is allowed), then rests.
+       Click it for the "next" panel.
+    ──────────────────────────────────────────────────────────────── */
+
+    .xp-node--nova {
+      width: 88px;
+      height: 88px;
+    }
+
+    .xp-node--nova .xp-node-star {
+      width: 54px;
+      height: 54px;
+      color: #FFD580;
+      fill: url(#xpNovaFill);
+      filter:
+        drop-shadow(0 0 6px rgba(255, 196, 90, 0.9))
+        drop-shadow(0 0 22px rgba(255, 170, 80, 0.45));
+    }
+
+    .xp-node--nova .xp-node-star path { fill: url(#xpNovaFill); }
+
+    /* soft halo behind the star */
+    .xp-node--nova::before {
+      content: "";
+      position: absolute;
+      inset: -34px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 213, 128, 0.42) 0%, rgba(255, 170, 120, 0.16) 38%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .xp-node--nova .xp-node-ring {
+      width: 60px;
+      height: 60px;
+      border-color: #FFC24D;
+      opacity: 0.35;
+    }
+
+    .xp-node--nova .xp-node-pulse {
+      width: 76px;
+      height: 76px;
+      border-color: #FFC24D;
+    }
+
+    .xp-node--nova .xp-node-label {
+      left: calc(50% + 38px);
+      font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--nova-accent);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .xp-node--nova:hover .xp-node-star {
+        transform: scale(1.08) rotate(6deg);
+        filter:
+          drop-shadow(0 0 8px rgba(255, 196, 90, 1))
+          drop-shadow(0 0 28px rgba(255, 170, 80, 0.6));
+      }
+    }
+
+    .xp-node--nova.xp-node--active .xp-node-star {
+      transform: scale(1.12) rotate(12deg);
+    }
+
+    /* the once-only flare, after the climb finishes drawing */
+    @keyframes xp-nova-flare {
+      0%   { transform: scale(1);    filter: drop-shadow(0 0 6px rgba(255,196,90,.9)) drop-shadow(0 0 22px rgba(255,170,80,.45)); }
+      35%  { transform: scale(1.28) rotate(10deg); filter: drop-shadow(0 0 12px rgba(255,210,120,1)) drop-shadow(0 0 44px rgba(255,170,80,.8)); }
+      100% { transform: scale(1);    filter: drop-shadow(0 0 6px rgba(255,196,90,.9)) drop-shadow(0 0 22px rgba(255,170,80,.45)); }
+    }
+
+    @keyframes xp-nova-halo {
+      0%   { opacity: 0.5; transform: scale(0.85); }
+      35%  { opacity: 1;   transform: scale(1.25); }
+      100% { opacity: 1;   transform: scale(1); }
+    }
+
+    /* Added once by JS after the lines draw, removed when done,
+       so deselecting the star never replays it */
+    @media (prefers-reduced-motion: no-preference) {
+      .xp-node--nova.is-flaring .xp-node-star {
+        animation: xp-nova-flare 1100ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .xp-node--nova.is-flaring::before {
+        animation: xp-nova-halo 1100ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+    }
+
+    /* the last leg of the climb is solid and warm, drawn last */
+    .xp-line--nova {
+      stroke: url(#xpNovaLine);
+    }
+
+    .xp-map.lines-drawn .xp-line--nova {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 0;
+      stroke-width: 1.5;
+      opacity: 0.75;
+      transition-delay: 700ms;
+    }
+
+    /* "next" panel call to action */
+    .xp-lore-cta {
+      display: inline-block;
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--nova-accent);
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      background-size: 0% 1px;
+      transition:
+        background-size 200ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .xp-lore-cta:hover { background-size: 100% 1px; }
+    }
+    .xp-lore-cta:focus-visible { background-size: 100% 1px; }
+    .xp-lore-cta:active { transform: scale(0.97); }
+
     /* ── Lore panel (right column) ───────────────────────────────── */
 
     .xp-panel {
@@ -311,10 +437,9 @@
     }
 
     .xp-panel-empty p {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--ink-3);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      font-style: italic;
     }
 
     .xp-panel-empty-star {
@@ -913,13 +1038,11 @@
                xmlns="http://www.w3.org/2000/svg"
                preserveAspectRatio="xMidYMid meet"
                aria-hidden="true">
-            <!-- Lines drawn between node positions (JS references these by class) -->
-            <!-- Node 0 (210,65) → Node 1 (95,220) -->
-            <line class="xp-line" x1="210" y1="65"  x2="95"  y2="220" />
-            <!-- Node 1 (95,220) → Node 2 (245,350) -->
-            <line class="xp-line" x1="95"  y1="220" x2="245" y2="350" />
-            <!-- Node 2 (245,350) → Node 3 (61,410) -->
-            <line class="xp-line" x1="245" y1="350" x2="61"  y2="410" />
+            <!-- The path climbs in time order toward the nova star:
+                 AWS SBG (60,420) → Tutorials Dojo (250,330) → Eskwelabs (100,200) → next (215,85) -->
+            <line class="xp-line" x1="60"  y1="420" x2="250" y2="330" />
+            <line class="xp-line" x1="250" y1="330" x2="100" y2="200" />
+            <line class="xp-line xp-line--nova" x1="100" y1="200" x2="215" y2="85" />
             <!-- Ambient dust -->
             <circle class="xp-dust" cx="155" cy="140" r="1.5"/>
             <circle class="xp-dust" cx="170" cy="285" r="1"/>
@@ -928,6 +1051,17 @@
             <circle class="xp-dust" cx="50"  cy="300" r="1.5"/>
             <circle class="xp-dust" cx="310" cy="420" r="1"/>
             <circle class="xp-dust" cx="75"  cy="180" r="1"/>
+            <defs>
+              <linearGradient id="xpNovaLine" gradientUnits="userSpaceOnUse" x1="100" y1="200" x2="215" y2="85">
+                <stop offset="0" stop-color="var(--nova-accent)"/>
+                <stop offset="1" stop-color="#FFC24D"/>
+              </linearGradient>
+              <radialGradient id="xpNovaFill" cx="50%" cy="50%" r="50%">
+                <stop offset="0"   stop-color="#FFF6DA"/>
+                <stop offset="0.45" stop-color="#FFD580"/>
+                <stop offset="1"   stop-color="#FF9F6B"/>
+              </radialGradient>
+            </defs>
           </svg>
           <!-- Star nodes injected by JS -->
         </div>
@@ -940,7 +1074,7 @@
             <svg class="xp-panel-empty-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
             </svg>
-            <p>select a node</p>
+            <p>pick a star</p>
           </div>
 
           <!-- Lore panels injected by JS -->
@@ -1062,7 +1196,7 @@
   const EXPERIENCES = [
     {
       id: 'eskwelabs',
-      label: 'Eskwelabs',
+      label: 'eskwelabs',
       role: 'AI Solutions Development Intern',
       org: 'Eskwelabs',
       date: 'May — Aug 2026',
@@ -1084,7 +1218,7 @@
     },
     {
       id: 'aws-sbg',
-      label: 'AWS SBG',
+      label: 'aws sbg',
       role: 'President & AWS Student Builder Lead',
       org: 'AWS Student Builder Group · Adamson University',
       date: 'Aug 2025 — present',
@@ -1109,7 +1243,7 @@
     },
     {
       id: 'tutorials-dojo',
-      label: 'Tutorials Dojo',
+      label: 'tutorials dojo',
       role: 'IT Intern',
       org: 'Tutorials Dojo',
       date: 'Jan – Feb 2026',
@@ -1140,12 +1274,13 @@
 
     // Node positions as [leftPct, topPct] of the map container
     // Matches the SVG line endpoints (210/340*100, 65/500*100, etc.)
+    // Laid out in time order, climbing toward the nova star (see SVG lines)
     const NODE_POSITIONS = [
-      [61.8, 13.0],   // node 0
-      [27.9, 44.0],   // node 1
-      [72.1, 70.0],   // node 2
-      [17.9, 82.0],   // node 3
+      [29.4, 40.0],   // 0 Eskwelabs      (100,200)  May–Aug 2026
+      [17.6, 84.0],   // 1 AWS SBG        (60,420)   Aug 2025 →
+      [73.5, 66.0],   // 2 Tutorials Dojo (250,330)  Jan–Feb 2026
     ];
+    const NOVA_POSITION = [63.2, 17.0];   // the next one (215,85)
 
     const map       = document.getElementById('xpMap');
     const panel     = document.getElementById('xpPanel');
@@ -1300,6 +1435,74 @@
       accordion.appendChild(li);
     });
 
+    // ── The nova star: "next" ─────────────────────────────────────
+    // Always the last node/panel, so its index = EXPERIENCES.length.
+    const NEXT = {
+      date: 'next',
+      role: 'the one that isn\u2019t written yet',
+      org: 'open to freelance builds',
+      overview: 'every star here started with someone needing something built. if you have a web app, an automation, or the glue between them in mind, this is where it goes.',
+      cta: { href: 'mailto:darlanovasumanting06@gmail.com?subject=A%20project%20for%20the%20next%20star', label: 'tell me about it' },
+    };
+    const novaIndex = EXPERIENCES.length;
+
+    (function buildNova() {
+      const btn = document.createElement('button');
+      btn.className = `xp-node xp-node--nova xp-node--${novaIndex}`;
+      btn.style.left = NOVA_POSITION[0] + '%';
+      btn.style.top  = NOVA_POSITION[1] + '%';
+      btn.dataset.index = novaIndex;
+      btn.style.setProperty('--xp-node-i', novaIndex);
+      btn.setAttribute('aria-label', 'the next star: open to freelance builds. click to explore');
+      // A fuller four-point star than the others: the bold one
+      const NOVA_PATH = 'M12 0.5 L14.9 9.1 L23.5 12 L14.9 14.9 L12 23.5 L9.1 14.9 L0.5 12 L9.1 9.1 Z';
+      btn.innerHTML = `
+        <svg class="xp-node-star" viewBox="0 0 24 24" aria-hidden="true"><path d="${NOVA_PATH}"/></svg>
+        <span class="xp-node-ring"></span>
+        <span class="xp-node-pulse"></span>
+        <span class="xp-node-label">next</span>
+      `;
+      map.appendChild(btn);
+
+      const lore = document.createElement('div');
+      lore.className = 'xp-lore';
+      lore.id = `xp-lore-${novaIndex}`;
+      lore.setAttribute('role', 'region');
+      lore.setAttribute('aria-label', 'the next star');
+      lore.innerHTML = `
+        <div class="xp-lore-header">
+          <div class="xp-lore-meta"><span class="xp-lore-date">${NEXT.date}</span></div>
+          <button class="xp-lore-close" aria-label="Close — return to constellation" data-close="${novaIndex}">×</button>
+        </div>
+        <h2 class="xp-lore-role">${NEXT.role}</h2>
+        <p class="xp-lore-org">${NEXT.org}</p>
+        <p class="xp-lore-overview">${NEXT.overview}</p>
+        <a class="xp-lore-cta" href="${NEXT.cta.href}">${NEXT.cta.label}</a>
+      `;
+      panel.appendChild(lore);
+
+      const li = document.createElement('li');
+      li.className = 'xp-accordion-item xp-accordion-item--nova';
+      li.id = `xp-acc-${novaIndex}`;
+      li.innerHTML = `
+        <button class="xp-accordion-trigger" aria-expanded="false" aria-controls="xp-acc-body-${novaIndex}">
+          ${svgIcon('xp-accordion-trigger-star')}
+          <span class="xp-accordion-trigger-text">
+            <span class="xp-accordion-trigger-role">${NEXT.role}</span>
+            <span class="xp-accordion-trigger-meta">${NEXT.org}</span>
+          </span>
+          ${chevronIcon('xp-accordion-chevron')}
+        </button>
+        <div class="xp-accordion-body" id="xp-acc-body-${novaIndex}" aria-hidden="true">
+          <div class="xp-accordion-body-inner">
+            <p class="xp-lore-overview">${NEXT.overview}</p>
+            <a class="xp-lore-cta" href="${NEXT.cta.href}">${NEXT.cta.label}</a>
+          </div>
+        </div>
+      `;
+      accordion.appendChild(li);
+    })();
+
     // ── Desktop interaction ────────────────────────────────────────
 
     function deselectAll() {
@@ -1450,6 +1653,15 @@
             setTimeout(function () {
               map.classList.add('xp-map--entered');
             }, 120);
+            // The nova star flares once, after the climb finishes drawing
+            const nova = map.querySelector('.xp-node--nova');
+            if (nova) {
+              setTimeout(function () {
+                if (nova.classList.contains('xp-node--active')) return;
+                nova.classList.add('is-flaring');
+                setTimeout(function () { nova.classList.remove('is-flaring'); }, 1150);
+              }, 1500);
+            }
             drawObs.unobserve(entry.target);
           }
         });

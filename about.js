@@ -9,53 +9,53 @@
 // alt      — descriptive alt text for accessibility + SEO
 // ===========================
 const PHOTO_DATA = [
+  // Captions are visible under each photo now, so they describe what's
+  // actually in the frame. Meta is only set where the photo itself shows it.
   {
     src:     'life/img1.webp',
-    alt:     'Darla Sumanting at an AWS student community event in Manila',
+    alt:     'Darla with friends at a photo booth, wearing party glasses and headbands',
     caption: 'cloud community things',
     meta:    'manila · 2025',
   },
   {
     src:     'life/img2.webp',
-    alt:     'Darla with members of the AWS Student Builder Group at Adamson University',
-    caption: 'the squad',
-    meta:    'adamson · 2025',
+    alt:     'Darla mid-snack at a restaurant table',
+    caption: 'snack break',
   },
   {
     src:     'life/img3.webp',
-    alt:     'Group photo at an AWS community event',
-    caption: 'the team',
-    meta:    'manila · 2025',
+    alt:     'Darla and a friend at the Soar Through AWS booth at Adamson',
+    caption: 'soar through aws',
+    meta:    'adamson · 2026',
   },
   {
     src:     'life/img4.webp',
-    alt:     'Darla presenting at a cloud community workshop',
+    alt:     'Large group photo at a cloud community event in a function hall',
     caption: 'community day',
     meta:    'somewhere in ph',
   },
   {
     src:     'life/img5.webp',
-    alt:     'Darla working on a side project setup',
-    caption: 'building, again',
-    meta:    '2026',
+    alt:     'Darla next to an n8n "Node thyself, go with the flow" event sign',
+    caption: 'node thyself',
+    meta:    'an n8n event',
   },
   {
     src:     'life/img6.webp',
-    alt:     'Rare photo of Darla outside the terminal',
+    alt:     'Friends walking outside together at night',
     caption: 'rare evidence i went outside',
     meta:    'manila',
   },
   {
     src:     'life/img7.webp',
-    alt:     'Camera roll moment, Nova offline',
-    caption: 'offline for once',
-    meta:    'from the archives',
+    alt:     'Darla working at a table beside a friend',
+    caption: 'heads down',
   },
   {
     src:     'life/img8.webp',
-    alt:     'Darla between projects',
-    caption: 'between projects',
-    meta:    '2026',
+    alt:     'Darla and a friend at an AWS office, in front of the "It\'s still Day One" wall',
+    caption: 'it\'s still day one',
+    meta:    'aws office',
   },
 ];
 
