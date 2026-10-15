@@ -1736,8 +1736,10 @@ body.cursor-active button { cursor: none; }
   /* At this width "resume" can wrap — shrink theme toggle to save space */
   .theme-toggle { width: 30px; height: 30px; min-width: 30px; }
 }
-  .nav-link  { font-size: 0.8rem; }
-}
+/* This rule has applied site-wide since the start; kept as-is. The stray
+   "}" that used to follow it made browsers drop the next rule
+   (.home-project--artifact), so the scraper card never got its layout. */
+.nav-link  { font-size: 0.8rem; }
 
 /* ===========================
    HOME PROJECT — ARTIFACT (task 1)

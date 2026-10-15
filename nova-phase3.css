@@ -714,3 +714,94 @@ em.italic-accent {
   outline: 2px solid var(--nova-accent);
   outline-offset: 3px;
 }
+
+/* ============================================================
+   TOOLS — "tools i keep reaching for"
+   Was a uniform grid of app tiles (the generic dock look, and two
+   logos 404'd after Simple Icons dropped AWS/OpenAI). Now grouped by
+   how they're used, each tool styled like the hero's workflow nodes:
+   small icon, name, connector dot. Logos are inline SVG.
+   ============================================================ */
+
+.home-tools .toolkit-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.tool-rows {
+  display: grid;
+  gap: 0;
+}
+
+.tool-row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.tool-row:first-child { border-top: 0; padding-top: 4px; }
+
+.tool-row-label {
+  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--ink-3);
+  padding-top: 6px;
+}
+
+.tool-row-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tool-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 11px 6px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--card-bg);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* output connector, same as the hero nodes */
+.tool-node::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-left: 2px;
+  background: var(--nova-accent-mid);
+  border: 1px solid var(--nova-accent);
+  opacity: 0.6;
+}
+
+.tool-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .tool-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .tool-row-label { padding-top: 0; }
+}
