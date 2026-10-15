@@ -67,6 +67,24 @@ async function incrementHeart() {
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
 
+  // ===========================
+  // PLAIN PHOTO SLOTS
+  // Some photos carry event artwork (Cloud9 clouds, mascot, lettering)
+  // that clashes with the site palette. Drop a plain version into
+  // pics/plain/ with the same file name and it replaces the event
+  // version everywhere. Until the file exists, nothing changes.
+  // ===========================
+  const PLAIN_SLOTS = ['cloud9-workshop.jpg', 'cloud9-team.jpg'];
+  PLAIN_SLOTS.forEach(name => {
+    const imgs = Array.from(document.querySelectorAll('img'))
+      .filter(img => (img.getAttribute('src') || '').endsWith('pics/' + name));
+    if (!imgs.length) return;
+    const probe = new Image();
+    probe.onload = () => imgs.forEach(img => { img.src = 'pics/plain/' + name; });
+    probe.src = 'pics/plain/' + name;
+  });
+
+
   // Theme toggle
   // ===========================
   const toggle = document.querySelector('.theme-toggle');
