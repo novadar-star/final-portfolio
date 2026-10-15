@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);  /* mobile toolbars */
 }
 
 .about-layout {
@@ -25,6 +26,7 @@
   /* grow to fill all available height in the flex about-main */
   flex: 1;
   min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);  /* mobile toolbars */
 }
 
 /* ===========================
@@ -948,9 +950,16 @@
    =========================== */
 
 .story-photo-moment {
-  margin: 8px -24px;
+  /* Break out to the LEFT only. The old -24px on both sides swallowed
+     the whole gap to the gallery column (photos touched it). */
+  margin: 8px 0 8px -24px;
   display: flex;
   justify-content: center;
+}
+
+/* Tablet: the wrapper padding is smaller, so no break-out at all */
+@media (max-width: 1099px) {
+  .story-photo-moment { margin: 8px 0; }
 }
 
 .story-photo-moment--pair {
@@ -1118,4 +1127,12 @@
   .about-story-with-gallery .about-gallery { height: 400px; }
   .about-story-with-gallery .gallery-pin  { height: 400px; }
   .about-story-with-gallery .gallery-track-wrap { height: 400px; }
+}
+
+
+/* ── Responsive pass: phone text floor ── */
+@media (max-width: 480px) {
+  .milestone-meta,
+  .story-editorial figcaption,
+  .gallery-caption { font-size: 0.75rem; }
 }

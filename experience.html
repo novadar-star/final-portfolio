@@ -993,6 +993,13 @@
       }
       .xp-dust { opacity: 0.14; transition: none; }
     }
+
+    /* Responsive pass: phone text floor (this inline sheet loads last) */
+    @media (max-width: 480px) {
+      .cert-badge__name,
+      .cert-badge__level,
+      .xp-accordion-trigger-meta { font-size: 0.75rem; }
+    }
   </style>
 </head>
 <body class="blush-page">
@@ -1020,7 +1027,7 @@
   <main class="container page-section" id="main">
 
     <h1 class="page-heading page-heading--experience">where i've <em class="italic-accent">been</em></h1>
-    <p class="page-context">tap a node to explore.</p>
+    <p class="page-context">pick a star to explore.</p>
 
     <!-- ================================================================
          EXPERIENCE CONSTELLATION

@@ -74,6 +74,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   // pics/plain/ with the same file name and it replaces the event
   // version everywhere. Until the file exists, nothing changes.
   // ===========================
+  // ===========================
+  // PHONE NAV — one scrollable row (see nova-phase3.css)
+  // Opens with the current page in view; the edge fade goes away
+  // once there's nothing more to scroll to.
+  // ===========================
+  const navInner = document.querySelector('.nav-inner');
+  if (navInner) {
+    const updateNavFade = () => navInner.classList.toggle(
+      'is-scrolled-end',
+      navInner.scrollLeft + navInner.clientWidth >= navInner.scrollWidth - 2
+    );
+    const active = navInner.querySelector('.nav-link.active');
+    if (active && navInner.scrollWidth > navInner.clientWidth) {
+      const a = active.getBoundingClientRect();
+      const n = navInner.getBoundingClientRect();
+      if (a.right > n.right - 28) navInner.scrollLeft += a.right - n.right + 40;
+    }
+    updateNavFade();
+    navInner.addEventListener('scroll', updateNavFade, { passive: true });
+    window.addEventListener('resize', updateNavFade, { passive: true });
+  }
+
   const PLAIN_SLOTS = ['cloud9-workshop.jpg', 'cloud9-team.jpg'];
   PLAIN_SLOTS.forEach(name => {
     const imgs = Array.from(document.querySelectorAll('img'))
