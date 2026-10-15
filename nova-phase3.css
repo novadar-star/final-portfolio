@@ -614,3 +614,34 @@ em.italic-accent {
   /* Still show color changes, just instantly */
   .nav-link.active::after { opacity: 1; }
 }
+
+/* ============================================================
+   PROJECT OUTCOME LINE
+   One plain result per project (Miffy Wang's pattern),
+   marked with the site's four-point star instead of a badge.
+   ============================================================ */
+
+.project-outcome {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 10px 0 8px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--nova-accent);
+}
+
+.project-outcome .outcome-star {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  position: relative;
+  top: 1px;
+}
+
+/* The home cards set p sizes broadly — keep the outcome line small */
+.home-project-text p.project-outcome,
+.artifact-desc-row p.project-outcome {
+  font-size: 0.78rem;
+  color: var(--nova-accent);
+}
