@@ -934,3 +934,14 @@
     animation: hero-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
   }
 }
+
+
+/* ── Responsive pass: home-only small text + touch targets ── */
+.hero-pipe-mini { min-height: 44px; }
+
+@media (max-width: 480px) {
+  .hero-eyebrow             { font-size: 0.75rem; }
+  .hero-previously          { font-size: 0.78rem; }
+  .pm-node                  { font-size: 0.75rem; }
+  .hero-landing .hero-link  { min-height: 44px; }
+}

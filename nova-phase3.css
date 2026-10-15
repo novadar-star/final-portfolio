@@ -587,3 +587,113 @@ em.italic-accent {
     clip-path: inset(0 0 0 0);
   }
 }
+
+
+/* ============================================================
+   RESPONSIVE PASS (responsive-design skill)
+   - every tap target is at least 44x44px
+   - nothing under 12px on phones
+   - phone nav: one scrollable row instead of a two-row sticky bar
+   ============================================================ */
+
+/* Text links in a flex column were stretching to the full row width:
+   tapping blank space opened them and the underline ran edge to edge */
+.project-link-inline,
+.all-projects-link {
+  align-self: flex-start;
+  width: fit-content;
+}
+
+/* Invisible 44x44 hit area for links/buttons that are visually small.
+   Doesn't change layout; the pseudo-element just catches the tap. */
+.contact-link,
+.archive-link,
+.project-link,
+.about-email-link,
+.name-link,
+.theme-toggle {
+  position: relative;
+}
+
+.contact-link::after,
+.archive-link::after,
+.project-link::after,
+.about-email-link::after,
+.name-link::after,
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+
+.skip-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Small-text floor on phones (meta lines, tags, labels, footer) */
+@media (max-width: 480px) {
+  .section-heading,
+  .project-meta,
+  .case-label,
+  .archive-stack,
+  .archive-heading,
+  .toolkit-label,
+  .footer-credit,
+  .footer-live-date,
+  .cert-badge__name,
+  .cert-badge__level,
+  .xp-accordion-trigger-meta {
+    font-size: 0.75rem;
+  }
+}
+
+/* Phone nav: a single row that scrolls sideways, with a fade hinting
+   at more. Keeps the sticky bar one line tall (it was wrapping to two
+   rows ~120px tall at 320px). */
+@media (max-width: 480px) {
+  .nav-inner {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    gap: 18px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-inner.is-scrolled-end {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .nav-left,
+  .nav-right {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 16px;
+  }
+  .nav-link { white-space: nowrap; }
+  .nav { padding: 8px 0; }
+}
+
+/* "home" is the one nav link narrower than 44px: widen its tap area
+   without moving anything (padding in, margin out), and keep its
+   underline the width of the word */
+.nav-link[href="index.html"] {
+  padding-inline: 5px;
+  margin-inline: -5px;
+}
+.nav-link[href="index.html"]::before,
+.nav-link[href="index.html"]::after {
+  left: 5px;
+  right: 5px;
+}
+
+@media (max-width: 480px) {
+  .home-tools .toolkit-label { font-size: 0.75rem; }
+}

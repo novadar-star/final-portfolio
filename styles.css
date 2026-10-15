@@ -165,7 +165,7 @@ button:focus-visible {
 }
 
 .page-section {
-  padding: 56px 0 80px;
+  padding-block: 56px 80px;
 }
 
 /* ===========================
@@ -901,7 +901,7 @@ button:focus-visible {
   align-items: center;
   gap: 6px;
   padding: 9px 14px;
-  min-height: 40px;
+  min-height: 44px;
   background: rgba(19, 19, 16, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -1165,7 +1165,7 @@ body.cursor-active button { cursor: none; }
   /* At 480px, nav links may still be tight — compress further */
   .nav-left  { gap: 14px; }
   .nav-right { gap: 12px; }
-  .nav-link  { font-size: 0.78rem; min-height: 40px; }
+  .nav-link  { font-size: 0.82rem; min-height: 44px; }
   .theme-toggle { width: 32px; height: 32px; min-width: 32px; }
 
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
@@ -1183,7 +1183,7 @@ body.cursor-active button { cursor: none; }
   .hero-heading { font-size: 1.45rem; }
   .nav-left  { gap: 10px; }
   .nav-right { gap: 10px; }
-  .nav-link  { font-size: 0.72rem; }
+  .nav-link  { font-size: 0.8rem; }
   .photo-frame { width: 90px; }
 }
 
@@ -1380,7 +1380,7 @@ body.cursor-active button { cursor: none; }
 .project-link-inline,
 .archive-link,
 .footer-name {
-  min-height: 40px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
 }
@@ -1717,7 +1717,9 @@ body.cursor-active button { cursor: none; }
 
   .page-heading    { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 40px; }
   .section-heading { padding-top: 40px; }
-  .page-section    { padding: 48px 0 72px; }
+  /* block-only: the old `padding: 48px 0 72px` shorthand wiped the
+     .container side padding, so content touched the screen edge */
+  .page-section    { padding-block: 48px 72px; }
 }
 
 /* ===========================
