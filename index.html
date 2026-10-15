@@ -45,12 +45,6 @@
 </head>
 <body class="hero-landing-page">
 
-  <!-- Custom cursor — desktop only, hidden on touch -->
-  <div class="nova-cursor" id="novaCursor" aria-hidden="true">
-    <svg class="cursor-star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/>
-    </svg>
-  </div>
 
   <a href="#main" class="skip-link">skip to content</a>
 
@@ -77,21 +71,33 @@
       <div class="hero-grain" aria-hidden="true"></div>
 
       <!--
-        DRAGGABLE WORKFLOW NODES
-        From Nova's actual AI job scraper pipeline.
-        Drag them around — they spring back on release.
+        RUN THE PIPELINE
+        Nodes from Nova's actual AI job scraper pipeline, wired together.
+        Click the Slack trigger to run it: a pulse travels the connections,
+        each node reports success, and the output is "things i've built".
+        It also runs once on load. Nodes stay draggable; lines follow.
         aria-hidden: decorative, not content.
       -->
       <div class="hero-nodes" aria-hidden="true">
-        <div class="wf-node" data-ox="18" data-oy="22" style="left:8%;top:18%">
+        <svg class="wf-links" id="wfLinks">
+          <path class="wf-link" data-from="0" data-to="1"/>
+          <path class="wf-link" data-from="1" data-to="2"/>
+          <path class="wf-link-pulse" data-for="0"/>
+          <path class="wf-link-pulse" data-for="1"/>
+        </svg>
+        <div class="wf-node wf-node--trigger" data-step="0" data-ox="18" data-oy="22" style="left:8%;top:18%" title="run the pipeline">
           <!-- Lightning bolt — Slack trigger -->
           <svg class="wf-node-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M9 2L4 9h4l-1 5 5-7H8L9 2z"/>
           </svg>
           <span class="wf-node-label">Slack trigger</span>
+          <span class="wf-node-play">&#9654;</span>
           <span class="wf-node-dot wf-node-dot--out"></span>
+          <span class="wf-node-status"></span>
+          <span class="wf-node-hint">click to run</span>
         </div>
-        <div class="wf-node" data-ox="-14" data-oy="8" style="right:10%;top:38%">
+        <div class="wf-node" data-step="1" data-ox="-14" data-oy="8" style="right:10%;top:38%">
+          <span class="wf-node-dot wf-node-dot--in"></span>
           <!-- CPU / agent chip -->
           <svg class="wf-node-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="3" width="10" height="10" rx="1"/>
@@ -99,16 +105,17 @@
             <rect x="5.5" y="5.5" width="5" height="5" rx="0.5"/>
           </svg>
           <span class="wf-node-label">AI agent</span>
-          <span class="wf-node-dot wf-node-dot--in"></span>
           <span class="wf-node-dot wf-node-dot--out"></span>
+          <span class="wf-node-status"></span>
         </div>
-        <div class="wf-node" data-ox="10" data-oy="-12" style="left:12%;bottom:28%">
+        <div class="wf-node" data-step="2" data-ox="10" data-oy="-12" style="left:12%;bottom:28%">
+          <span class="wf-node-dot wf-node-dot--in"></span>
           <!-- Brackets — code parser -->
           <svg class="wf-node-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 3L2 8l3 5M11 3l3 5-3 5"/>
           </svg>
           <span class="wf-node-label">parser ↳</span>
-          <span class="wf-node-dot wf-node-dot--in"></span>
+          <span class="wf-node-status"></span>
         </div>
       </div>
 
@@ -130,7 +137,11 @@
           i build <em class="hero-kw">web apps</em> and the <em class="hero-kw">automations</em> behind them.
           CS student in Manila, and i run a campus cloud community.
         </p>
-        <a href="#work" class="hero-link">things i've built</a>
+        <!-- Phone-sized version of the pipeline (the floating nodes hide under 480px) -->
+        <button type="button" class="hero-pipe-mini" id="heroPipeMini" aria-label="Run the demo pipeline">
+          <span class="pm-node">Slack</span><span class="pm-link"></span><span class="pm-node">AI agent</span><span class="pm-link"></span><span class="pm-node pm-node--last">parser</span>
+        </button>
+        <a href="#work" class="hero-link" id="heroOutput">things i've built</a>
         <p class="hero-previously"><span class="hero-previously-label">previously</span> Eskwelabs <span aria-hidden="true">&middot;</span> Tutorials Dojo</p>
       </div>
     </section>
