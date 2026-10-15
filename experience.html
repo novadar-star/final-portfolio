@@ -462,6 +462,7 @@
       padding-top: 4px;
       min-height: 500px;
       position: relative;
+      transition: min-height 300ms cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     /* Empty state — shown when nothing is selected */
@@ -1547,6 +1548,20 @@
       accordion.appendChild(li);
     })();
 
+    // ── Panel height follows the open role ──────────────────────
+    // Lore panels are absolutely positioned so they can crossfade, which
+    // meant an expanded "read more" spilled over the at-a-glance list.
+    // Grow the panel to fit whichever panel is visible.
+    function fitPanel() {
+      const visible = panel.querySelector('.xp-lore--visible');
+      const h = visible ? visible.offsetHeight : 0;
+      panel.style.minHeight = Math.max(500, h + 8) + 'px';
+    }
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(fitPanel);
+      panel.querySelectorAll('.xp-lore').forEach(function (l) { ro.observe(l); });
+    }
+
     // ── At a glance: every role readable without clicking ─────────
     // Newest first. Each row also selects its star.
     const glance = document.getElementById('xpGlance');
@@ -1618,6 +1633,7 @@
 
       // Show empty state
       emptyEl.classList.remove('xp-panel-empty--hidden');
+      fitPanel();
       activeIndex = -1;
     }
 
@@ -1644,6 +1660,7 @@
 
       // Hide empty state
       emptyEl.classList.add('xp-panel-empty--hidden');
+      fitPanel();
     }
 
     // Node click
