@@ -418,6 +418,44 @@
     .xp-lore-cta:focus-visible { background-size: 100% 1px; }
     .xp-lore-cta:active { transform: scale(0.97); }
 
+    /* ── At a glance list ─────────────────────────────────────────
+       The constellation is the fun way in; this is the fast way in.
+       Desktop only (phones and reduced motion already get the accordion). */
+    .xp-glance {
+      list-style: none;
+      margin: 8px 0 0;
+      padding: 0;
+      border-top: 1px solid var(--hairline);
+    }
+    @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+      .xp-glance { display: none; }
+    }
+    .xp-glance-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: baseline;
+      text-align: left;
+      padding: 14px 4px;
+      min-height: 44px;
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--hairline);
+      font: inherit;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: color 150ms ease, background-color 150ms ease;
+    }
+    .xp-glance-role { font-weight: 600; color: var(--ink); }
+    .xp-glance-org  { font-size: 0.85rem; }
+    .xp-glance-date { font-size: 0.8rem; color: var(--ink-3); white-space: nowrap; }
+    @media (hover: hover) and (pointer: fine) {
+      .xp-glance-row:hover { background: var(--nova-accent-dim); }
+    }
+    .xp-glance-row.is-active .xp-glance-role { color: var(--nova-accent); }
+    .xp-glance-row:focus-visible { outline: 2px solid var(--nova-accent); outline-offset: -2px; }
+
     /* ── Lore panel (right column) ───────────────────────────────── */
 
     .xp-panel {
@@ -1090,10 +1128,26 @@
       </div>
 
       <!-- Mobile / reduced-motion accordion (always in DOM, shown via CSS) -->
+      <!-- At a glance: every role readable without clicking a star (desktop) -->
+      <ol class="xp-glance" id="xpGlance" aria-label="Experience at a glance"></ol>
+
       <ul class="xp-accordion" id="xpAccordion" aria-label="Experience list">
         <!-- Items injected by JS -->
       </ul>
 
+    </section>
+
+    <!-- Working style -->
+    <section class="collab-section" aria-labelledby="collab-heading">
+      <h2 class="section-heading" id="collab-heading">working with me</h2>
+      <p class="collab-text">
+        <!-- TODO: Replace with personal writing -->
+        give me a brief and a deadline and i'll figure it out.
+        i work independently, document as i go, and ask questions before
+        something breaks rather than after.
+        GMT+8 (Manila), open to async and flexible hours.
+        i adapt to whatever tools the team already uses.
+      </p>
     </section>
 
     <!-- Education + credentials -->
@@ -1162,18 +1216,6 @@
       </div>
     </section>
 
-    <!-- Working style -->
-    <section class="collab-section" aria-labelledby="collab-heading">
-      <h2 class="section-heading" id="collab-heading">working with me</h2>
-      <p class="collab-text">
-        <!-- TODO: Replace with personal writing -->
-        give me a brief and a deadline and i'll figure it out.
-        i work independently, document as i go, and ask questions before
-        something breaks rather than after.
-        GMT+8 (Manila), open to async and flexible hours.
-        i adapt to whatever tools the team already uses.
-      </p>
-    </section>
 
   </main>
 
@@ -1183,11 +1225,6 @@
       <p class="footer-credit">&copy; 2026, manila &middot; <span id="liveDate" class="footer-live-date"></span></p>
     </div>
   </footer>
-
-  <button class="heart-float" aria-label="Like this site">
-    <span class="heart-icon" aria-hidden="true">&#9829;</span>
-    <span class="heart-count">0</span>
-  </button>
 
   <script defer src="/_vercel/insights/script.js"></script>
   <script src="main.js"></script>
@@ -1510,6 +1547,49 @@
       accordion.appendChild(li);
     })();
 
+    // ── At a glance: every role readable without clicking ─────────
+    // Newest first. Each row also selects its star.
+    const glance = document.getElementById('xpGlance');
+    if (glance) {
+      const order = EXPERIENCES
+        .map(function (exp, i) { return { exp: exp, i: i }; })
+        .sort(function (a, b) { return glanceStart(b.exp) - glanceStart(a.exp); });
+      order.forEach(function (o) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <button type="button" class="xp-glance-row" data-index="${o.i}">
+            <span class="xp-glance-role">${o.exp.role}</span>
+            <span class="xp-glance-org">${o.exp.org}</span>
+            <span class="xp-glance-date">${o.exp.date}</span>
+          </button>`;
+        glance.appendChild(li);
+      });
+      glance.addEventListener('click', function (e) {
+        const row = e.target.closest('.xp-glance-row');
+        if (!row) return;
+        const idx = Number(row.dataset.index);
+        if (activeIndex !== idx) activateNode(idx);
+        map.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+    function glanceStart(exp) {
+      // "May — Aug 2026", "Aug 2025 — present", "Jan – Feb 2026"
+      const m = exp.date.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s*(\d{4})?/);
+      const months = 'JanFebMarAprMayJunJulAugSepOctNovDec';
+      const years = exp.date.match(/\d{4}/g) || ['0'];
+      const mon = m ? months.indexOf(m[1]) / 3 : 0;
+      const yr = m && m[2] ? +m[2] : +years[0];
+      return yr * 12 + mon;
+    }
+    function syncGlance(idx) {
+      if (!glance) return;
+      glance.querySelectorAll('.xp-glance-row').forEach(function (r) {
+        const on = Number(r.dataset.index) === idx;
+        r.classList.toggle('is-active', on);
+        if (on) r.setAttribute('aria-current', 'true'); else r.removeAttribute('aria-current');
+      });
+    }
+
     // ── Desktop interaction ────────────────────────────────────────
 
     function deselectAll() {
@@ -1518,6 +1598,7 @@
         n.classList.remove('xp-node--active');
       });
       map.classList.remove('xp-map--has-active');
+      syncGlance(-1);
 
       // Hide all lore panels
       panel.querySelectorAll('.xp-lore').forEach(function (l) {
@@ -1553,6 +1634,7 @@
       map.querySelectorAll('.xp-node').forEach(function (n, i) {
         n.classList.toggle('xp-node--active', i === idx);
       });
+      syncGlance(idx);
       map.classList.add('xp-map--has-active');
 
       // Update lore panels

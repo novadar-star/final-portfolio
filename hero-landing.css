@@ -945,3 +945,24 @@
   .pm-node                  { font-size: 0.75rem; }
   .hero-landing .hero-link  { min-height: 44px; }
 }
+
+/* ── Roast fixes: hero readability + phone height ─────────────
+   A soft dark wash sits behind the text block only, so light text
+   holds up over the yellow patches without dimming the whole hero. */
+.hero-landing-inner::before {
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(45, 0, 18, 0.34) 0%, rgba(45, 0, 18, 0.16) 45%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Phones: the full-height hero left ~200px of empty background
+   under the text. Size it to its content instead. */
+@media (max-width: 480px) {
+  .hero-landing {
+    min-height: 0;
+    padding: 120px 0 96px;
+  }
+}

@@ -697,3 +697,20 @@ em.italic-accent {
 @media (max-width: 480px) {
   .home-tools .toolkit-label { font-size: 0.75rem; }
 }
+
+/* ── Roast fixes ────────────────────────────────────────────── */
+
+/* Home GTM card: image on the right so it doesn't mirror the card above */
+@media (min-width: 769px) {
+  .home-project--flip .home-project-video-wrap { order: 2; }
+}
+
+/* n8n screenshots open full size: they're unreadable at phone width */
+.workflow-zoom {
+  display: block;
+  cursor: zoom-in;
+}
+.workflow-zoom:focus-visible {
+  outline: 2px solid var(--nova-accent);
+  outline-offset: 3px;
+}
