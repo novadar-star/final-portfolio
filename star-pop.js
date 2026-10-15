@@ -2,8 +2,10 @@
  * star-pop.js — Phase 2: hero star pop interaction
  *
  * Canvas-based particle system scoped to .hero-landing.
- * Small stars appear and pop near the cursor as it moves,
- * with a larger burst on click.
+ * No longer follows the cursor. It exposes one function,
+ * window.novaStarBurst(clientX, clientY, count), which the
+ * "run the pipeline" interaction calls when a run finishes.
+ * The RAF loop only runs while particles are alive.
  *
  * Performance constraints (from ui-ux-pro-max audit):
  *   - Single canvas, no DOM node per particle
@@ -22,9 +24,6 @@
 
   // ── Guard: reduced motion ────────────────────────────────────
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  // ── Guard: touch-only devices ────────────────────────────────
-  if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
 
   // ── Wait for DOM ─────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', init);
@@ -134,12 +133,14 @@
     }
 
     // ── RAF loop ────────────────────────────────────────────────
-    let rafId    = null;
+    let rafId    = null;   // null = loop asleep
     let isActive = true;   // paused when hero leaves viewport
 
     function tick(now) {
       if (!isActive) {
-        rafId = requestAnimationFrame(tick);
+        particles.length = 0;   // off-screen: drop them and sleep
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        rafId = null;
         return;
       }
 
@@ -185,10 +186,18 @@
         ctx.restore();
       }
 
-      rafId = requestAnimationFrame(tick);
+      // Sleep when nothing is left to draw
+      if (particles.length) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        rafId = null;
+      }
     }
 
-    rafId = requestAnimationFrame(tick);
+    function wake() {
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    }
 
     // Pause RAF when hero is out of viewport — saves CPU when scrolled away
     const heroObserver = new IntersectionObserver(
@@ -197,58 +206,28 @@
     );
     heroObserver.observe(hero);
 
-    // ── Mouse interaction ────────────────────────────────────────
-
-    // Convert page coords → canvas-relative coords
+    // ── Public burst ─────────────────────────────────────────────
+    // Called by the pipeline run in main.js when the parser finishes.
     function toCanvas(clientX, clientY) {
       const rect = canvas.getBoundingClientRect();
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top,
-      };
+      return { x: clientX - rect.left, y: clientY - rect.top };
     }
 
-    // mousemove: throttled to 60ms, only fires if cursor moved >8px
-    let lastMoveTime = 0;
-    let lastMoveX    = -999;
-    let lastMoveY    = -999;
-
-    function onMouseMove(e) {
-      const now  = performance.now();
-      if (now - lastMoveTime < 60) return;
-
-      const dx = e.clientX - lastMoveX;
-      const dy = e.clientY - lastMoveY;
-      if (Math.sqrt(dx * dx + dy * dy) < 8) return;
-
-      lastMoveTime = now;
-      lastMoveX    = e.clientX;
-      lastMoveY    = e.clientY;
-
-      const { x, y } = toCanvas(e.clientX, e.clientY);
-      const size      = 2.5 + Math.random() * 2.5;  // 2.5–5px radius
-      spawnParticle(x, y, size, false);
-    }
-
-    // click: burst of 5 larger stars
-    function onClick(e) {
-      const { x, y } = toCanvas(e.clientX, e.clientY);
-      const count     = 5;
-      for (let i = 0; i < count; i++) {
-        const size = 4 + Math.random() * 4;           // 4–8px radius
-        spawnParticle(x, y, size, true);
+    window.novaStarBurst = function (clientX, clientY, count) {
+      const { x, y } = toCanvas(clientX, clientY);
+      const n = count || 6;
+      for (let i = 0; i < n; i++) {
+        spawnParticle(x, y, 4 + Math.random() * 4, true);
       }
-    }
-
-    hero.addEventListener('mousemove', onMouseMove, { passive: true });
-    hero.addEventListener('click',     onClick,     { passive: true });
+      wake();
+    };
 
     // ── Cleanup ──────────────────────────────────────────────────
     // If the hero element is ever removed (e.g. SPA navigation),
     // cancel RAF and disconnect observers.
     const cleanupObserver = new MutationObserver(() => {
       if (!document.contains(hero)) {
-        cancelAnimationFrame(rafId);
+        if (rafId) cancelAnimationFrame(rafId);
         ro.disconnect();
         heroObserver.disconnect();
         cleanupObserver.disconnect();

@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const heartCount = document.querySelector('.heart-count');
 
   if (heartBtn && heartCount) {
-    heartCount.textContent = await getHeartCount();
+    // Don't block the rest of the page scripts on a network call
+    getHeartCount().then(c => { heartCount.textContent = c; }).catch(() => {});
 
     heartBtn.addEventListener('click', async () => {
       // Optimistic update
@@ -230,101 +231,217 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // ===========================
-  // Draggable workflow nodes — hero
-  // Nodes from Nova's actual AI job scraper pipeline.
-  // Drag to move. Release to spring back.
-  // Works on mouse + touch. Disabled by reduced-motion CSS.
+  // RUN THE PIPELINE — hero
+  // Nodes from Nova's actual AI job scraper pipeline, wired with
+  // connector lines. Click the Slack trigger (or let it run once on
+  // load): a pulse travels each connection, every node reports
+  // success like an n8n execution, the parser finishes with a star
+  // burst, and "things i've built" lights up as the output.
+  //
+  // Emil: purpose = explanation, frequency = rare, so a longer,
+  // delightful sequence is allowed. Drag uses pointer capture and
+  // ignores a second finger. Reduced motion: nodes are hidden by CSS
+  // and the run never starts.
   // ===========================
-  document.querySelectorAll('.wf-node').forEach(node => {
-    let dragging  = false;
-    let startX    = 0;
-    let startY    = 0;
-    let originX   = 0;
-    let originY   = 0;
-    // Current translate offset
-    let curDX = parseFloat(node.dataset.ox || 0);
-    let curDY = parseFloat(node.dataset.oy || 0);
+  (function initPipeline() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const layer   = document.querySelector('.hero-nodes');
+    const output  = document.getElementById('heroOutput');
+    const mini    = document.getElementById('heroPipeMini');
+    const nodes   = Array.from(document.querySelectorAll('.wf-node'))
+      .sort((x, y) => x.dataset.step - y.dataset.step);
+    const links   = Array.from(document.querySelectorAll('.wf-link'));
+    const pulses  = Array.from(document.querySelectorAll('.wf-link-pulse'));
+    const wait    = ms => new Promise(r => setTimeout(r, ms));
+    const EASE_IO = 'cubic-bezier(0.77, 0, 0.175, 1)';
 
-    // Apply initial scattered position from data attributes
-    node.style.setProperty('--nx', curDX + 'px');
-    node.style.setProperty('--ny', curDY + 'px');
-
-    function onDown(e) {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      dragging = true;
-      node.classList.add('wf-node--dragging');
-
-      const pt = e.touches ? e.touches[0] : e;
-      startX = pt.clientX - curDX;
-      startY = pt.clientY - curDY;
-
-      e.preventDefault();
+    // ── Connector geometry ──────────────────────────────────────
+    function dotCenter(node, cls, base) {
+      const dot = node.querySelector(cls);
+      if (!dot) return null;
+      const r = dot.getBoundingClientRect();
+      return { x: r.left + r.width / 2 - base.left, y: r.top + r.height / 2 - base.top };
     }
 
-    function onMove(e) {
-      if (!dragging) return;
-      const pt = e.touches ? e.touches[0] : e;
-      curDX = pt.clientX - startX;
-      curDY = pt.clientY - startY;
+    function pathBetween(a, b) {
+      // n8n-style: leave to the right, enter from the left
+      const dx = Math.max(60, Math.abs(b.x - a.x) * 0.5);
+      return `M ${a.x} ${a.y} C ${a.x + dx} ${a.y}, ${b.x - dx} ${b.y}, ${b.x} ${b.y}`;
+    }
+
+    function drawLinks() {
+      if (!layer || !nodes.length) return;
+      const base = layer.getBoundingClientRect();
+      links.forEach((link, i) => {
+        const from = dotCenter(nodes[+link.dataset.from], '.wf-node-dot--out', base);
+        const to   = dotCenter(nodes[+link.dataset.to],   '.wf-node-dot--in',  base);
+        if (!from || !to) return;
+        const d = pathBetween(from, to);
+        link.setAttribute('d', d);
+        if (pulses[i]) pulses[i].setAttribute('d', d);
+      });
+    }
+
+    // Keep lines attached while a node springs back (CSS transition ~480ms)
+    let followUntil = 0;
+    let followRaf   = null;
+    function followFor(ms) {
+      followUntil = Math.max(followUntil, performance.now() + ms);
+      if (followRaf) return;
+      const step = () => {
+        drawLinks();
+        followRaf = performance.now() < followUntil ? requestAnimationFrame(step) : null;
+      };
+      followRaf = requestAnimationFrame(step);
+    }
+
+    // ── Run sequence ────────────────────────────────────────────
+    let running = false;
+
+    function pulse(i) {
+      const path = pulses[i];
+      if (!path || !path.getTotalLength) return wait(0);
+      const len = path.getTotalLength();
+      const seg = Math.min(70, len * 0.35);
+      path.style.strokeDasharray = `${seg} ${len + seg}`;
+      const anim = path.animate(
+        [
+          { strokeDashoffset: seg,  opacity: 1 },
+          { strokeDashoffset: -len, opacity: 1 },
+        ],
+        { duration: 620, easing: EASE_IO, fill: 'forwards' }
+      );
+      return anim.finished.then(() => anim.cancel());   // back to hidden
+    }
+
+    async function succeed(node, thinkMs) {
+      node.classList.add('is-running');
+      await wait(thinkMs);
+      node.classList.remove('is-running');
+      node.classList.add('is-done');
+    }
+
+    async function run() {
+      if (running || reduced || !nodes.length) return;
+      running = true;
+      nodes.forEach(n => n.classList.remove('is-done'));
+      pulses.forEach(p => p.getAnimations().forEach(a => a.cancel()));
+      drawLinks();
+
+      await succeed(nodes[0], 220);
+      await pulse(0);
+      await succeed(nodes[1], 520);   // the AI step "thinks" a little longer
+      await pulse(1);
+      await succeed(nodes[2], 260);
+
+      const r = nodes[2].getBoundingClientRect();
+      if (window.novaStarBurst) window.novaStarBurst(r.left + r.width / 2, r.top + r.height / 2, 10);
+      lightOutput();
+
+      await wait(2200);
+      nodes.forEach(n => n.classList.remove('is-done'));
+      running = false;
+    }
+
+    function lightOutput() {
+      if (!output) return;
+      output.classList.add('is-output');
+      setTimeout(() => output.classList.remove('is-output'), 700);
+    }
+
+    // ── Drag (pointer events + capture) ─────────────────────────
+    nodes.forEach(node => {
+      let pointerId = null;
+      let startX = 0, startY = 0, downX = 0, downY = 0;
+      let curDX = parseFloat(node.dataset.ox || 0);
+      let curDY = parseFloat(node.dataset.oy || 0);
+
       node.style.setProperty('--nx', curDX + 'px');
       node.style.setProperty('--ny', curDY + 'px');
-      // Remove transition while dragging so it follows instantly
-      node.style.transition = 'box-shadow 80ms ease, border-color 80ms ease';
-    }
 
-    function onUp() {
-      if (!dragging) return;
-      dragging = false;
-      node.classList.remove('wf-node--dragging');
-      // Spring back to original position
-      curDX = parseFloat(node.dataset.ox || 0);
-      curDY = parseFloat(node.dataset.oy || 0);
-      node.style.removeProperty('transition'); // restore CSS spring transition
-      node.style.setProperty('--nx', curDX + 'px');
-      node.style.setProperty('--ny', curDY + 'px');
-    }
+      node.addEventListener('pointerdown', e => {
+        if (reduced || pointerId !== null) return;   // ignore a second finger
+        pointerId = e.pointerId;
+        node.setPointerCapture(e.pointerId);
+        node.classList.add('wf-node--dragging');
+        startX = e.clientX - curDX;
+        startY = e.clientY - curDY;
+        downX  = e.clientX;
+        downY  = e.clientY;
+        node.style.transition = 'box-shadow 80ms ease, border-color 80ms ease';
+        e.preventDefault();
+      });
 
-    node.addEventListener('mousedown',  onDown,  { passive: false });
-    node.addEventListener('touchstart', onDown,  { passive: false });
-    window.addEventListener('mousemove', onMove, { passive: true });
-    window.addEventListener('touchmove', onMove, { passive: true });
-    window.addEventListener('mouseup',   onUp,   { passive: true });
-    window.addEventListener('touchend',  onUp,   { passive: true });
-  });
+      node.addEventListener('pointermove', e => {
+        if (e.pointerId !== pointerId) return;
+        curDX = e.clientX - startX;
+        curDY = e.clientY - startY;
+        node.style.setProperty('--nx', curDX + 'px');
+        node.style.setProperty('--ny', curDY + 'px');
+        drawLinks();
+      });
 
-  // ===========================
-  // Card tilt — home project articles
-  // Subtle perspective tilt on cursor position within card.
-  // Max 4° rotation. Springs back on mouse leave.
-  // ===========================
-  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isTouch2 = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      function release(e) {
+        if (e.pointerId !== pointerId) return;
+        pointerId = null;
+        node.classList.remove('wf-node--dragging');
+        const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
 
-  if (!isReducedMotion && !isTouch2) {
-    document.querySelectorAll('.home-project').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect   = card.getBoundingClientRect();
-        const cx     = rect.left + rect.width  / 2;
-        const cy     = rect.top  + rect.height / 2;
-        const dx     = (e.clientX - cx) / (rect.width  / 2); // -1 to 1
-        const dy     = (e.clientY - cy) / (rect.height / 2); // -1 to 1
-        const MAX    = 4; // degrees
-        const tiltX  = (-dy * MAX).toFixed(2); // invert Y so top edge tilts toward cursor
-        const tiltY  = ( dx * MAX).toFixed(2);
-        card.style.setProperty('--tilt-x', tiltX + 'deg');
-        card.style.setProperty('--tilt-y', tiltY + 'deg');
-        card.classList.add('is-tilting');
-        card.classList.remove('tilt-reset');
-      }, { passive: true });
+        // Spring back to the resting position; lines follow
+        curDX = parseFloat(node.dataset.ox || 0);
+        curDY = parseFloat(node.dataset.oy || 0);
+        node.style.removeProperty('transition');
+        node.style.setProperty('--nx', curDX + 'px');
+        node.style.setProperty('--ny', curDY + 'px');
+        followFor(560);
 
-      card.addEventListener('mouseleave', () => {
-        card.classList.remove('is-tilting');
-        card.classList.add('tilt-reset');
-        // Clean up class after spring animation completes (~500ms)
-        setTimeout(() => card.classList.remove('tilt-reset'), 520);
-      }, { passive: true });
+        // A tap (not a drag) on the trigger runs the pipeline
+        if (e.type === 'pointerup' && moved < 5 && node.dataset.step === '0') {
+          layer.classList.add('has-run');   // hides the "click to run" hint
+          run();
+        }
+      }
+      node.addEventListener('pointerup', release);
+      node.addEventListener('pointercancel', release);
     });
-  }
+
+    // ── Phone version ───────────────────────────────────────────
+    let miniRunning = false;
+    function runMini() {
+      if (!mini || reduced || miniRunning) return;
+      miniRunning = true;
+      mini.classList.remove('is-running');
+      void mini.offsetWidth;
+      mini.classList.add('is-running');
+      setTimeout(() => {
+        const last = mini.querySelector('.pm-node--last');
+        const r = last.getBoundingClientRect();
+        if (window.novaStarBurst) window.novaStarBurst(r.left + r.width / 2, r.top + r.height / 2, 6);
+        lightOutput();
+      }, 1500);
+      setTimeout(() => { miniRunning = false; }, 1900);
+    }
+    if (mini) mini.addEventListener('click', runMini);
+
+    // ── First paint, resize, auto-run once ──────────────────────
+    const nodesVisible = () => layer && getComputedStyle(layer).display !== 'none';
+    const miniVisible  = () => mini && getComputedStyle(mini).display !== 'none';
+
+    window.addEventListener('resize', drawLinks, { passive: true });
+    function onLoaded() {
+      drawLinks();
+      if (reduced) return;
+      // After the hero entrance settles
+      setTimeout(() => {
+        if (nodesVisible()) { drawLinks(); run(); }
+        else if (miniVisible()) runMini();
+      }, 1300);
+    }
+    if (document.readyState === 'complete') onLoaded();
+    else window.addEventListener('load', onLoaded);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLinks);
+    drawLinks();
+  })();
 
   // ===========================
   // Rotating identity word — hero
@@ -383,86 +500,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       { threshold: 0.1 }
     );
     navObs.observe(heroSection);
-  }
-
-  // ===========================
-  // Custom cursor — global, all pages
-  // Disabled on touch devices and prefers-reduced-motion.
-  // The .nova-cursor element is injected in every page's HTML.
-  // JS moves it via transform: translate3d (no left/top) for
-  // GPU-composited, jank-free tracking.
-  // ===========================
-  const cursor = document.getElementById('novaCursor');
-
-  // Only wire up on non-touch, non-reduced-motion desktops
-  const isTouch   = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (cursor && !isTouch && !isReduced) {
-    // Show cursor, hide system pointer
-    cursor.style.display = 'block';
-    document.body.classList.add('cursor-active');
-
-    let mouseX = -200;
-    let mouseY = -200;
-    let curX   = -200;
-    let curY   = -200;
-    let rafId  = null;
-
-    // Smooth follow — lerps toward actual mouse position each frame
-    const LERP = 0.18;
-
-    function animateCursor() {
-      curX += (mouseX - curX) * LERP;
-      curY += (mouseY - curY) * LERP;
-
-      // Centre the 18px cursor on the hot spot
-      const offsetX = curX - 9;
-      const offsetY = curY - 9;
-      cursor.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
-
-      rafId = requestAnimationFrame(animateCursor);
-    }
-
-    rafId = requestAnimationFrame(animateCursor);
-
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    }, { passive: true });
-
-    // Hover state — enlarge on interactive elements
-    const interactiveSelector = 'a, button, [role="button"], label[for], input, textarea, select, summary';
-
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest(interactiveSelector)) {
-        cursor.setAttribute('data-state', 'hover');
-      }
-    }, { passive: true });
-
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest(interactiveSelector)) {
-        cursor.setAttribute('data-state', '');
-      }
-    }, { passive: true });
-
-    // Press state
-    document.addEventListener('mousedown', () => {
-      cursor.setAttribute('data-state', 'press');
-    }, { passive: true });
-
-    document.addEventListener('mouseup', () => {
-      cursor.setAttribute('data-state', '');
-    }, { passive: true });
-
-    // Hide cursor when it leaves the window
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-    }, { passive: true });
-
-    document.addEventListener('mouseenter', () => {
-      cursor.style.opacity = '';
-    }, { passive: true });
   }
 
 });
