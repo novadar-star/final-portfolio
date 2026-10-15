@@ -125,13 +125,6 @@
           <em class="hero-name-accent">Nova</em>
         </h1>
 
-        <!-- Rotating identity sentence -->
-        <p class="hero-sub hero-sub--rotating" aria-live="polite">
-          <span class="hero-rotating-sentence">
-            Nova runs on
-            <span class="hero-rotating-word" id="heroRotatingWord" aria-atomic="true">curiosity</span>.
-          </span>
-        </p>
 
         <p class="hero-sub hero-sub--static">
           i build <em class="hero-kw">web apps</em> and the <em class="hero-kw">automations</em> behind them.
@@ -153,14 +146,42 @@
 
       <div class="home-projects">
 
+        <!-- PROJECT 1 — the full-stack app leads, compact horizontal, video prominent -->
+        <article class="home-project home-project--internship reveal" id="home-ai-advisor">
+          <div class="home-project-video-wrap">
+            <video
+              class="project-video"
+              autoplay loop muted playsinline
+              preload="none"
+              poster="pics/ai-advisor.png"
+              aria-label="Demo of the Eskwelabs AI advisor platform"
+            >
+              <source src="vid/ai-advisor.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="home-project-text home-project-text--internship">
+            <div>
+              <p class="project-meta">full-stack · internship · Next.js · 2026</p>
+              <h3 class="home-project-title">internal AI advisor, Eskwelabs</h3>
+            </div>
+            <p>
+              three advisor personas streaming Gemini, Google OAuth with a domain
+              allowlist, Supabase with row-level security. getting the JWT through
+              to Supabase was the annoying part.
+            </p>
+            <p class="project-outcome"><svg class="outcome-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/></svg>shipped to production, used daily by the intern cohort</p>
+            <a href="projects.html#ai-advisor" class="project-link-inline">how it was built</a>
+          </div>
+        </article>
+
         <!-- PROJECT 1 — workflow artifact, full-width visual + annotation -->
         <article class="home-project home-project--artifact reveal" id="home-ai-scraper">
           <div class="home-project-artifact-visual workflow-bg">
-            <img
+            <a class="workflow-zoom" href="pics/ai-research-workflow.png" target="_blank" rel="noopener" aria-label="Open this workflow full size"><img
               src="pics/ai-research-workflow.png"
               alt="n8n workflow: Slack trigger, job scraper, AI matching, custom parser, output to Google Drive"
               loading="lazy"
-            >
+            ></a>
             <!-- Desktop: annotation overlaid on image -->
             <aside class="artifact-annotation artifact-annotation--overlay" aria-hidden="true">
               <span class="annotation-marker">↳</span>
@@ -191,64 +212,28 @@
           </div>
         </article>
 
-        <!-- PROJECT 2 — community, photos-heavy, text floats right -->
-        <article class="home-project home-project--community reveal" id="home-community">
-          <div class="home-project-photos-pair">
-            <img
-              src="pics/cloud9-workshop.jpg"
-              alt="Students at an AWS Student Builder Group workshop at Adamson University"
-              loading="lazy"
-              class="community-photo community-photo--primary"
-            >
-            <img
-              src="pics/cloud9-team.jpg"
-              alt="AWS Student Builder Group team at a campus workshop"
-              loading="lazy"
-              class="community-photo community-photo--secondary"
-            >
-          </div>
-          <div class="home-project-text home-project-text--community">
-            <p class="project-meta">community · web · AWS · 2025–now</p>
-            <h3 class="home-project-title">AWS Student Builder Group, Adamson</h3>
+        <!-- PROJECT 3 — GTM pipeline (image right, text left) -->
+        <article class="home-project home-project--internship home-project--flip reveal" id="home-gtm">
+          <a class="home-project-video-wrap workflow-zoom" href="pics/gtm-signal-workflow.png" target="_blank" rel="noopener" aria-label="Open the GTM pipeline workflow full size">
+            <img class="project-video" src="pics/gtm-signal-workflow.png"
+                 alt="n8n workflow: GTM signal ingestion, lead scoring, Hunter.io enrichment, email validation, outbound draft"
+                 loading="lazy">
+          </a>
+          <div class="home-project-text home-project-text--internship">
+            <div>
+              <p class="project-meta">automation · n8n · Hunter.io · 2026</p>
+              <h3 class="home-project-title">GTM signal outbound pipeline</h3>
+            </div>
             <p>
-              i run the campus cloud community: workshops on real AWS services,
-              onboarding, and the messy logistics of getting 120 people in a room.
-              i also helped coordinate AWS Cloud Club Philippines across 40+ chapters.
-              the org site is static HTML on purpose, so the next officers can
-              actually edit it.
+              buying signals in, scored and enriched leads out, with a drafted
+              first email. i swapped a paid email validator for a free MX lookup
+              plus a format check: same bad domains caught, no bill.
             </p>
-            <p class="project-outcome"><svg class="outcome-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/></svg>120+ members, and an org site the next officers can keep running</p>
-            <a href="projects.html#awssbg-website" class="project-link-inline">the site</a>
+            <p class="project-outcome"><svg class="outcome-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/></svg>email validation at no extra cost</p>
+            <a href="projects.html#gtm-outbound" class="project-link-inline">how it works</a>
           </div>
         </article>
 
-        <!-- PROJECT 3 — internship, compact horizontal, video prominent -->
-        <article class="home-project home-project--internship reveal" id="home-ai-advisor">
-          <div class="home-project-video-wrap">
-            <video
-              class="project-video"
-              autoplay loop muted playsinline
-              preload="none"
-              poster="pics/ai-advisor.png"
-              aria-label="Demo of the Eskwelabs AI advisor platform"
-            >
-              <source src="vid/ai-advisor.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="home-project-text home-project-text--internship">
-            <div>
-              <p class="project-meta">full-stack · internship · Next.js · 2026</p>
-              <h3 class="home-project-title">internal AI advisor, Eskwelabs</h3>
-            </div>
-            <p>
-              three advisor personas streaming Gemini, Google OAuth with a domain
-              allowlist, Supabase with row-level security. getting the JWT through
-              to Supabase was the annoying part.
-            </p>
-            <p class="project-outcome"><svg class="outcome-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/></svg>shipped to production, used daily by the intern cohort</p>
-            <a href="projects.html#ai-advisor" class="project-link-inline">how it was built</a>
-          </div>
-        </article>
 
       </div>
 
@@ -390,16 +375,6 @@
           <span class="dock-label">Cursor</span>
         </div>
 
-        <div class="dock-item" role="listitem" aria-label="GoHighLevel, CRM automation">
-          <div class="dock-icon" style="background:#F97316;">
-            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
-              <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
-                    font-family="sans-serif" font-weight="900" font-size="13" fill="white">GHL</text>
-            </svg>
-          </div>
-          <span class="dock-label">GHL</span>
-        </div>
-
       </div>
     </section>
 
@@ -426,11 +401,6 @@
       <p class="footer-credit">&copy; 2026, manila &middot; <span id="liveDate" class="footer-live-date"></span></p>
     </div>
   </footer>
-
-  <button class="heart-float" aria-label="Like this site">
-    <span class="heart-icon" aria-hidden="true">&#9829;</span>
-    <span class="heart-count">0</span>
-  </button>
 
   <script defer src="/_vercel/insights/script.js"></script>
   <script src="main.js"></script>
