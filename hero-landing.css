@@ -638,14 +638,45 @@
 }
 
 /* ============================================================
-   HERO SUB — hide static line on small screens
-   On mobile the rotating sentence + eyebrow already cover
-   the same information. Three lines saying the same thing
-   is redundant. Static line reappears at ≥769px.
+   HERO SUB — static line on small screens
+   It now carries what Nova builds (web apps + automations),
+   which the rotating sentence doesn't, so it stays visible
+   on phones — just a touch smaller and narrower.
    ============================================================ */
 
 @media (max-width: 768px) {
   .hero-sub--static {
-    display: none;
+    font-size: 0.82rem;
+    max-width: 32ch;
+    margin-left: auto;
+    margin-right: auto;
   }
+}
+
+/* ============================================================
+   HERO KEYWORDS + "PREVIOUSLY" LINE
+   Keyword emphasis borrowed from Sunny Wu's bio rhythm;
+   the quiet "previously" line borrowed from Miffy Wang's hero.
+   ============================================================ */
+
+.hero-kw {
+  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  color: var(--nova-star-gold, #FFD580);
+}
+
+.hero-previously {
+  margin-top: 22px;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 225, 205, 0.68);
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.40);
+}
+
+.hero-previously-label {
+  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  margin-right: 6px;
+  color: rgba(255, 225, 205, 0.5);
 }
