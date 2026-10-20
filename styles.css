@@ -2469,3 +2469,60 @@ body.cursor-active button { cursor: none; }
   }
 }
 
+
+/* ===========================
+   MUSIC TOGGLE — injected by music.js beside the theme toggle
+   Reads like a nav link: quiet, lowercase, no pill.
+   =========================== */
+
+.music-toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.music-toggle:hover,
+.music-toggle.is-on {
+  color: var(--ink);
+}
+
+.music-note {
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--nova-accent, var(--ink-3));
+}
+
+.music-word {
+  margin-right: 0.3em;
+}
+
+/* the note sways a little while music plays — the only motion */
+.music-toggle.is-on .music-note {
+  animation: music-sway 1.6s ease-in-out infinite;
+}
+
+@keyframes music-sway {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(8deg) translateY(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-toggle.is-on .music-note { animation: none; }
+}
+
+/* phones: drop the word, keep "♪ on / ♪ off" */
+@media (max-width: 520px) {
+  .music-word { display: none; }
+  .music-note { margin-right: 4px; }
+  .music-toggle { font-size: 0.82rem; }
+}
