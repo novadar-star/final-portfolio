@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <pattern id="h" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#C2607A" stroke-opacity="0.10" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="900" fill="#F2DCE1"/>
+  <rect width="1200" height="900" fill="url(#h)"/>
+  <text x="600" y="430" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="48" fill="#8C3A52">a sug ph meetup or call</text>
+  <text x="600" y="492" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#A0607A">landscape 4:3</text>
+</svg>

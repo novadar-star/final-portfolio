@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900">
+  <defs>
+    <pattern id="h" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#C2607A" stroke-opacity="0.10" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="900" fill="#F5E2E6"/>
+  <rect width="900" height="900" fill="url(#h)"/>
+  <text x="450" y="440" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="46" fill="#8C3A52">the officers</text>
+  <text x="450" y="500" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#A0607A">square 1:1</text>
+</svg>

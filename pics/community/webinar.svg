@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <rect width="1600" height="900" fill="#FBF0F2"/>
+  <g fill="none" stroke="#D9A3B1" stroke-width="3">
+    <path d="M330 450 C 430 450, 450 330, 560 330"/>
+    <path d="M330 450 C 430 450, 450 570, 560 570"/>
+    <path d="M720 330 C 820 330, 840 450, 940 450"/>
+    <path d="M720 570 C 820 570, 840 450, 940 450"/>
+    <path d="M1100 450 L 1260 450"/>
+  </g>
+  <g fill="#F2DCE1" stroke="#D9A3B1" stroke-width="3">
+    <rect x="210" y="390" width="120" height="120" rx="18"/>
+    <rect x="560" y="270" width="160" height="120" rx="18"/>
+    <rect x="560" y="510" width="160" height="120" rx="18"/>
+    <rect x="940" y="390" width="160" height="120" rx="18"/>
+    <rect x="1260" y="390" width="120" height="120" rx="18"/>
+  </g>
+  <text x="800" y="760" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="46" fill="#8C3A52">screen grab from the webinar, mid-demo</text>
+  <text x="800" y="815" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#A0607A">16:9</text>
+</svg>
