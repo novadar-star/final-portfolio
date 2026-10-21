@@ -769,7 +769,7 @@ em.italic-accent {
   align-items: center;
   gap: 8px;
   min-height: 36px;
-  padding: 6px 11px 6px 9px;
+  padding: 6px 12px 6px 10px;
   border: 1px solid var(--hairline);
   border-radius: 8px;
   background: var(--card-bg);
@@ -777,18 +777,6 @@ em.italic-accent {
   font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
-}
-
-/* output connector, same as the hero nodes */
-.tool-node::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-left: 2px;
-  background: var(--nova-accent-mid);
-  border: 1px solid var(--nova-accent);
-  opacity: 0.6;
 }
 
 .tool-icon {

@@ -2526,3 +2526,99 @@ body.cursor-active button { cursor: none; }
   .music-note { margin-right: 4px; }
   .music-toggle { font-size: 0.82rem; }
 }
+
+/* ===========================
+   GLYPH NOVA — the star in the "say hi" section (glyph-nova.js)
+   Desktop: breaks out past the column's right edge, beside the text.
+   Phones: sits in the flow above "say hi."
+   =========================== */
+
+.home-contact {
+  position: relative;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 72px;
+  padding-bottom: 88px;
+}
+
+.home-contact > :not(.glyph-nova):not(.glyph-nova-hint) {
+  position: relative;
+  z-index: 1;
+}
+
+.glyph-nova {
+  --nova-size: clamp(320px, calc((100vw - 100%) / 2 + 220px), 500px);
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 220px);
+  width: var(--nova-size);
+  height: var(--nova-size);
+  transform: translateY(-50%);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glyph-nova canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glyph-nova:focus-visible {
+  outline: 2px solid var(--nova-accent);
+  outline-offset: -24px;
+}
+
+.glyph-nova-hint {
+  position: absolute;
+  left: calc(100% - 220px + var(--hint-offset, 0px));
+  bottom: 40px;
+  width: clamp(320px, calc((100vw - 100%) / 2 + 220px), 500px);
+  text-align: center;
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: #A8405C; /* darker than the accent so the thin script passes 4.5:1 */
+  pointer-events: none;
+  transition: opacity 400ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.glyph-nova-hint.is-done {
+  opacity: 0;
+}
+
+[data-theme="dark"] .glyph-nova-hint {
+  color: var(--nova-accent);
+}
+
+@media (max-width: 860px) {
+  .home-contact {
+    min-height: 0;
+    display: block;
+    padding-top: 24px;
+  }
+
+  .glyph-nova {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: 280px;
+    margin: 0 0 4px;
+    border-radius: var(--radius);
+  }
+
+  .glyph-nova-hint {
+    position: static;
+    width: auto;
+    margin: -8px 0 20px;
+    font-size: 1.05rem;
+  }
+}
