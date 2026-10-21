@@ -72,7 +72,7 @@
 .cm-note {
   font-family: 'Caveat', var(--font-italic), cursive;
   font-size: 1.25rem;
-  line-height: 1.25;
+  line-height: 1.35;
   color: var(--ink-2);
   margin: 0;
 }

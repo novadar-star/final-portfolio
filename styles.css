@@ -2586,7 +2586,7 @@ body.cursor-active button { cursor: none; }
   font-size: 1.15rem;
   color: #A8405C; /* darker than the accent so the thin script passes 4.5:1 */
   pointer-events: none;
-  transition: opacity 400ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transition: opacity 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 .glyph-nova-hint.is-done {
@@ -2621,4 +2621,113 @@ body.cursor-active button { cursor: none; }
     margin: -8px 0 20px;
     font-size: 1.05rem;
   }
+}
+
+/* ===========================
+   GLYPH ART — small sky objects on the inner pages (glyphs.js)
+   nebula (about) · crux (projects) · cluster (community)
+   Desktop: tucked into an empty margin beside the page's opening.
+   Phones: a short strip in the flow.
+   =========================== */
+
+.glyph-art {
+  margin: 0;
+  z-index: 0;
+}
+
+.glyph-art-btn {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glyph-art-btn canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glyph-art-btn:focus-visible {
+  outline: 2px solid var(--nova-accent);
+  outline-offset: 2px;
+}
+
+/* a quiet "this is touchable" on real hover only */
+@media (hover: hover) and (pointer: fine) {
+  .glyph-art-btn canvas {
+    opacity: 0.9;
+    transition: opacity 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+  .glyph-art-btn:hover canvas { opacity: 1; }
+}
+
+.glyph-art figcaption {
+  margin-top: 2px;
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-weight: 500;
+  font-size: 1.02rem;
+  line-height: 1.35;
+  text-align: center;
+  color: #A8405C; /* darker than the accent so the thin script passes 4.5:1 */
+}
+
+[data-theme="dark"] .glyph-art figcaption { color: var(--nova-accent); }
+
+/* placements. the crux and the cluster lean into the empty side
+   margins; the clamp keeps them on screen at narrower widths. */
+.page-section { position: relative; }
+
+.glyph-art--crux {
+  position: absolute;
+  z-index: 1;
+  top: -52px;
+  right: calc(-1 * clamp(0px, (100vw - 100%) / 2 - 48px, 150px));
+  width: 290px;
+}
+
+.about-header { position: relative; }
+
+.glyph-art--nebula {
+  position: absolute;
+  top: -60px;
+  right: -12px;
+  width: 250px;
+}
+
+.glyph-art--nebula .glyph-art-btn { aspect-ratio: 1.3; }
+.glyph-art--crux .glyph-art-btn { aspect-ratio: 1.25; }
+
+.cm-close { position: relative; }
+
+.glyph-art--cluster {
+  position: absolute;
+  top: -60px;
+  left: calc(-1 * clamp(0px, (100vw - 100%) / 2 - 24px, 110px));
+  width: 300px;
+}
+
+@media (max-width: 860px) {
+  .glyph-art--crux,
+  .glyph-art--nebula,
+  .glyph-art--cluster {
+    position: static;
+    width: 100%;
+    max-width: 340px;
+    margin: 4px 0 28px;
+  }
+
+  .glyph-art--crux .glyph-art-btn,
+  .glyph-art--nebula .glyph-art-btn,
+  .glyph-art--cluster .glyph-art-btn {
+    aspect-ratio: auto;
+    height: 190px;
+  }
+
+  .glyph-art figcaption { text-align: left; }
 }

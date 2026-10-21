@@ -216,6 +216,13 @@
 
     <!-- Closing -->
     <section class="cm-close" aria-label="Contact">
+      <!-- a star cluster, drawn in characters. click it. (glyphs.js) -->
+      <figure class="glyph-art glyph-art--cluster">
+        <button class="glyph-art-btn" type="button" data-glyph="cluster" aria-label="Make the star cluster twinkle">
+          <canvas aria-hidden="true"></canvas>
+        </button>
+        <figcaption>a star cluster. they formed together and stayed close.</figcaption>
+      </figure>
       <p class="cm-close-line">
         if you run a student org and want to compare notes, or need someone to talk
         about cloud or automation at your thing, email is easiest.
@@ -228,7 +235,7 @@
   <!-- Photo inspection: the one interaction on this page -->
   <dialog class="cm-viewer" id="cmViewer" aria-label="Photo">
     <figure>
-      <img id="cmViewerImg" src="" alt="">
+      <img id="cmViewerImg" alt="">
       <figcaption id="cmViewerCap"></figcaption>
     </figure>
     <button class="cm-viewer-close" type="button" aria-label="Close photo">close</button>
@@ -245,5 +252,6 @@
   <script src="main.js"></script>
   <script src="music.js"></script>
   <script src="community.js"></script>
+  <script src="glyphs.js"></script>
 </body>
 </html>
