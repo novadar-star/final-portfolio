@@ -703,3 +703,12 @@ em.italic-accent {
   }
   .tool-row-label { padding-top: 0; }
 }
+
+
+/* ===========================
+   ABOUT PAGE — email link
+   =========================== */
+
+.about-email-link {
+  color: var(--nova-accent);
+}

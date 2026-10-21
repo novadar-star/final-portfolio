@@ -1964,6 +1964,15 @@ button:focus-visible {
 .glyph-art--nebula .glyph-art-btn { aspect-ratio: 1.3; }
 .glyph-art--crux .glyph-art-btn { aspect-ratio: 1.25; }
 
+.cm-close { position: relative; }
+
+.glyph-art--cluster {
+  position: absolute;
+  top: -60px;
+  left: calc(-1 * clamp(0px, (100vw - 100%) / 2 - 24px, 110px));
+  width: 300px;
+}
+
 @media (max-width: 860px) {
   .glyph-art--crux,
   .glyph-art--nebula,
