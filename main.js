@@ -1,7 +1,7 @@
 // ===========================
 // nova. — main.js
 //
-// Theme toggle, phone nav, plain photo slots, footer date, lazy video,
+// Theme toggle, phone nav, plain photo slots, lazy video,
 // scroll reveal, section heading lines, the hero "run the pipeline"
 // interaction, and the nav state over the hero.
 // ===========================
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.documentElement.setAttribute('data-theme', saved);
   setIcon(saved);
+  setThemeColor(saved);
 
   if (toggle) {
     toggle.addEventListener('click', () => {
@@ -69,28 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       setIcon(next);
+      setThemeColor(next);
     });
+  }
+
+  // browser toolbar colour on phones matches the page behind it
+  function setThemeColor(theme) {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) return;
+    const bg = getComputedStyle(document.body).backgroundColor;
+    meta.setAttribute('content', bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : (theme === 'dark' ? '#131310' : '#F7F6F2'));
   }
 
   function setIcon(theme) {
     if (icon) icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
-  }
-
-  // ===========================
-  // Live date — footer
-  // Shows the current date so visitors know when they're here.
-  // Format: "sunday, 28 sep 2026" — lowercase, conversational.
-  // ===========================
-  const liveDateEl = document.getElementById('liveDate');
-  if (liveDateEl) {
-    const now  = new Date();
-    const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-    const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-    const day   = days[now.getDay()];
-    const date  = now.getDate();
-    const month = months[now.getMonth()];
-    const year  = now.getFullYear();
-    liveDateEl.textContent = `${day}, ${date} ${month} ${year}`;
   }
 
   // ===========================

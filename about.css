@@ -122,20 +122,6 @@
   max-width: 56ch;
 }
 
-/* Pull-quote — a sentence that earned its own space.
-   Use once, maximum. Not for every beat. */
-.story-pullquote {
-  margin: 4px 0 0 0;
-  padding: 12px 0 12px 16px;
-  border-left: 2px solid var(--nova-accent);
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--ink);
-  line-height: 1.55;
-  max-width: 44ch;
-}
-
 /* ===========================
    SECTION LABELS
    Shared small label used above milestones, interests, etc.
@@ -194,9 +180,6 @@
 @media (max-width: 768px) {
   .story-beat {
     padding: 18px 0 18px 16px;
-  }
-  .story-pullquote {
-    max-width: 100%;
   }
 }
 
@@ -676,13 +659,15 @@
     min-height: auto;
   }
 
-  /* Gallery below story on mobile */
+  /* Gallery below story on mobile: the window (.gallery-pin) sets the
+     height; the column just holds it, with room before the footer */
   .about-story-with-gallery .about-gallery {
     align-self: auto;
-    height: 460px;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     min-height: unset;
-    padding: 0 0 40px;
+    padding: 0;
+    margin-bottom: 56px;
   }
 
   .about-story-with-gallery .gallery-pin {
@@ -698,7 +683,6 @@
 
 @media (max-width: 480px) {
   .about-story-with-gallery { padding: 0 20px; }
-  .about-story-with-gallery .about-gallery { height: 400px; }
   .about-story-with-gallery .gallery-pin  { height: 400px; }
   .about-story-with-gallery .gallery-track-wrap { height: 400px; }
 }
@@ -709,7 +693,6 @@
   .story-editorial figcaption,
   .gallery-caption { font-size: 0.75rem; }
 }
-
 
 /* ===========================
    CONTACT

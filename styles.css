@@ -635,77 +635,6 @@ button:focus-visible {
 }
 
 /* ===========================
-   FLOATING HEART
-   =========================== */
-
-.heart-float {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 90;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 14px;
-  min-height: 44px;
-  background: rgba(19, 19, 16, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: transform 0.15s, border-color 0.15s;
-}
-
-[data-theme="light"] .heart-float {
-  background: rgba(247, 246, 242, 0.92);
-}
-
-.heart-float:hover {
-  border-color: #C9918A;
-  transform: scale(1.04);
-  transition: transform 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
-              border-color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-}
-
-/* Emil asymmetric press: slow on the way down (deliberate), snap back up (system response) */
-.heart-float:active {
-  transform: scale(0.93);
-  transition: transform 100ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-}
-
-.heart-float.liked {
-  border-color: #C9918A;
-}
-
-.heart-float .heart-icon {
-  font-size: 0.95rem;
-  color: var(--ink-3);
-  transition: color 0.15s;
-}
-
-.heart-float.liked .heart-icon {
-  color: #C9918A;
-}
-
-.heart-float.pop .heart-icon {
-  animation: heartPop 0.28s ease-out;
-}
-
-@keyframes heartPop {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.5);  }  /* fast peak */
-  70%  { transform: scale(0.92); }  /* slight undershoot — physical spring feel */
-  100% { transform: scale(1); }
-}
-
-.heart-count {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-
-/* ===========================
    FOOTER
    =========================== */
 
@@ -832,8 +761,6 @@ button:focus-visible {
 
   .home-project { padding: 28px 0; }
   .project-case { padding: 28px 0; }
-
-  .heart-float  { bottom: 16px; right: 16px; padding: 8px 12px; }
 
   /* At 480px, nav links may still be tight — compress further */
   .nav-left  { gap: 14px; }
@@ -1043,15 +970,6 @@ button:focus-visible {
 }
 
 /* ------------------------------------------
-   Forced colors (high contrast mode)
-   ------------------------------------------ */
-@media (forced-colors: active) {
-  .heart-float {
-    border: 2px solid ButtonText;
-  }
-}
-
-/* ------------------------------------------
    Home project — on very narrow screens,
    don't let description text feel cramped
    ------------------------------------------ */
@@ -1095,7 +1013,6 @@ button:focus-visible {
    ------------------------------------------ */
 @media print {
   .nav,
-  .heart-float,
   .theme-toggle,
   .skip-link {
     display: none !important;
@@ -1125,91 +1042,6 @@ button:focus-visible {
 
   video {
     display: none;
-  }
-}
-
-/* ===========================
-   SLICES OF NOVA
-   Fragments of identity — different rhythm from the project section.
-   Not cards. Not uniform. Each slice breathes differently.
-
-   Structure:
-   .slices-stack       — vertical flex, no symmetric grid
-   .slice--credentials — full-width, quiet
-   .slice-row          — two columns, different text weights
-   .slice--personal    — narrow, plain prose
-   .slice--belief      — Playfair italic, larger — a statement not a bullet
-   =========================== */
-
-.slices {
-  padding-top: 16px;
-}
-
-.slices-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-/* Full-width credentials slice */
-.slice--credentials {
-  padding: 32px 0;
-  border-top: 1px solid var(--hairline);
-}
-
-.slice--credentials p {
-  font-size: 0.875rem;
-  color: var(--ink-2);
-  line-height: 1.75;
-  max-width: 56ch;
-}
-
-/* Two-column row holding personal + photo slot */
-.slice-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 1px solid var(--hairline);
-}
-
-.slice--personal {
-  padding: 28px 32px 28px 0;
-  border-right: 1px solid var(--hairline);
-}
-
-.slice--personal p {
-  font-size: 0.855rem;
-  color: var(--ink-2);
-  line-height: 1.75;
-  max-width: 34ch;
-}
-
-/* ===========================
-   RESPONSIVE — slices + tools
-   =========================== */
-
-@media (max-width: 768px) {
-  .slice-row {
-    grid-template-columns: 1fr;
-  }
-
-  .slice--personal {
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--hairline);
-    padding-bottom: 24px;
-  }
-
-  .slice--credentials p,
-  .slice--personal p,
-  .slice--belief p {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .slice--credentials p {
-    max-width: 100%;
   }
 }
 
@@ -1493,50 +1325,10 @@ button:focus-visible {
 
 /* A small context line sitting just below the heading.
    Replaces the generic blush-page blank state. */
-.page-context {
-  font-size: 0.77rem;
-  color: var(--ink-3);
-  margin-top: -44px;
-  margin-bottom: 48px;
-  letter-spacing: 0.01em;
-  line-height: 1.5;
-}
 
 @media (max-width: 768px) {
   .page-heading--projects { padding-top: 12px; margin-bottom: 44px; }
   .page-heading--experience { padding-top: 4px; margin-bottom: 36px; }
-  .page-context { margin-top: -32px; margin-bottom: 36px; }
-}
-
-@media (max-width: 480px) {
-  .page-context { margin-top: -22px; margin-bottom: 28px; }
-}
-
-/* ===========================
-   SLICES — belief isolated (visual storytelling fix)
-   .slice--belief moved out of .slice-row to span full width.
-   Playfair italic, larger — reads as a statement, not a second paragraph.
-   .slice-row now holds personal + photo slot side by side.
-   =========================== */
-
-/* Personal slice + photo slot layout */
-.slice-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 1px solid var(--hairline);
-}
-
-.slice--personal {
-  padding: 28px 32px 28px 0;
-  border-right: 1px solid var(--hairline);
-}
-
-.slice--personal p {
-  font-size: 0.855rem;
-  color: var(--ink-2);
-  line-height: 1.75;
-  max-width: 34ch;
 }
 
 /* ===========================
@@ -1596,15 +1388,6 @@ button:focus-visible {
    =========================== */
 
 @media (max-width: 768px) {
-  .slice-row {
-    grid-template-columns: 1fr;
-  }
-  .slice--personal {
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--hairline);
-    padding-bottom: 22px;
-  }
 
   .case-community-photos { grid-template-columns: 1fr; }
   .case-community-photo  { height: 140px; }
@@ -1663,19 +1446,6 @@ button:focus-visible {
 }
 
 /* ===========================
-   FOOTER LIVE DATE
-   Real-time date injected by JS — lowercase, same size as
-   the copyright line, slightly lighter so it reads as context
-   rather than competing with the footer name.
-   =========================== */
-
-.footer-live-date {
-  font-size: 0.72rem;
-  color: var(--ink-3);
-  letter-spacing: 0.01em;
-}
-
-/* ===========================
    NAME LINK RAINBOW — inner pages
    .name-link wraps <em class="italic-accent"> on about.html.
    Same rainbow sweep as the hero name, but scoped to
@@ -1721,12 +1491,6 @@ button:focus-visible {
     background-size: 100% auto;
   }
 }
-
-/* ===========================
-   ARTIFACT ANNOTATION — responsive variants
-   --overlay: positioned inside the image (desktop only)
-   --below:   sits under the image as a plain note (mobile only)
-   =========================== */
 
 /* ===========================
    MUSIC TOGGLE — injected by music.js beside the theme toggle
@@ -1795,6 +1559,8 @@ button:focus-visible {
    =========================== */
 
 .say-hi {
+  /* one size for the star and its hint, so they stay lined up */
+  --nova-size: clamp(320px, calc((100vw - 100%) / 2 + 200px), 500px);
   position: relative;
   min-height: 460px;
   display: flex;
@@ -1809,8 +1575,8 @@ button:focus-visible {
   z-index: 1;
 }
 
+/* wide screens: the star breaks out past the column's right edge */
 .glyph-nova {
-  --nova-size: clamp(320px, calc((100vw - 100%) / 2 + 220px), 500px);
   position: absolute;
   top: 50%;
   left: calc(100% - 220px);
@@ -1822,6 +1588,7 @@ button:focus-visible {
   background: none;
   cursor: pointer;
   border-radius: 50%;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -1838,9 +1605,9 @@ button:focus-visible {
 
 .glyph-nova-hint {
   position: absolute;
-  left: calc(100% - 220px + var(--hint-offset, 0px));
+  left: calc(100% - 220px);
   bottom: 40px;
-  width: clamp(320px, calc((100vw - 100%) / 2 + 220px), 500px);
+  width: var(--nova-size);
   text-align: center;
   font-family: 'Caveat', var(--font-italic), cursive;
   font-weight: 500;
@@ -1858,6 +1625,44 @@ button:focus-visible {
   color: var(--nova-accent);
 }
 
+/* tablets and small laptops: the side margin is too narrow to break into,
+   so the star takes its own column beside the text, inside the page */
+@media (min-width: 861px) and (max-width: 1180px) {
+  .say-hi {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    column-gap: 28px;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .say-hi > :not(.glyph-nova):not(.glyph-nova-hint) { grid-column: 1; }
+  .say-hi .contact-display { grid-row: 1; }
+  .say-hi .contact-text    { grid-row: 2; }
+  .say-hi .contact-links   { grid-row: 3; }
+
+  .glyph-nova {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    grid-column: 2;
+    grid-row: 1 / 4;
+    align-self: center;
+    width: 260px;
+    height: 260px;
+  }
+
+  .glyph-nova-hint {
+    position: static;
+    grid-column: 2;
+    grid-row: 4;
+    width: auto;
+    margin: 4px 0 0;
+  }
+}
+
+/* phones: the star sits in the flow above "say hi." */
 @media (max-width: 860px) {
   .say-hi {
     min-height: 0;
@@ -2000,4 +1805,37 @@ button:focus-visible {
 ::selection {
   background: var(--nova-select);
   color: var(--ink);
+}
+
+/* ===========================
+   PLATFORM POLISH — Vercel Web Interface Guidelines
+   =========================== */
+
+/* native scrollbars and form controls follow the theme */
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* a quiet rose flash on tap instead of the default grey box,
+   and no double-tap zoom delay on controls */
+html { -webkit-tap-highlight-color: rgba(194, 96, 122, 0.14); }
+a, button, [role="button"], summary { touch-action: manipulation; }
+
+/* anchor jumps land below the sticky nav, not under it */
+[id] { scroll-margin-top: 96px; }
+
+/* headings break into even lines; paragraphs avoid one-word last lines */
+h1, h2, h3, .contact-display, .cm-title, .page-heading, .about-heading { text-wrap: balance; }
+p, li, figcaption { text-wrap: pretty; }
+
+/* keeps a heading for screen readers without showing a label */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }

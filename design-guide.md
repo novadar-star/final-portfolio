@@ -8,6 +8,18 @@ The current site is clean, but it feels AI-generated because it follows too many
 
 I want you to actively REMOVE that feeling.
 
+## STANDING RULE: LESS IS MORE
+
+Applies to this portfolio and every project after it.
+
+* No gratuitous text or additions.
+* No eyebrow elements: no small label, kicker, or tagline sitting above a heading.
+* Before adding any element, label, line of copy, animation, or feature, ask: why is this here, and does it make the result better? If the answer is unclear, leave it out.
+* Removing beats adding. When in doubt, cut.
+* Don't repeat what another part of the page or site already says.
+
+Reference: "Less is More" by Jakub, https://jakub.kr/writing/less-is-more
+
 ## 1. FIRST: INSPECT THE EXISTING REPO
 
 Before changing anything, inspect the current implementation and understand:

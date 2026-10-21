@@ -12,47 +12,47 @@ const PHOTO_DATA = [
   // Captions are visible under each photo now, so they describe what's
   // actually in the frame. Meta is only set where the photo itself shows it.
   {
-    src:     'life/img1.webp',
+    src:     'life/img1.webp', w: 900, h: 600,
     alt:     'Darla with friends at a photo booth, wearing party glasses and headbands',
     caption: 'cloud community things',
     meta:    'manila · 2025',
   },
   {
-    src:     'life/img2.webp',
+    src:     'life/img2.webp', w: 900, h: 675,
     alt:     'Darla mid-snack at a restaurant table',
     caption: 'snack break',
   },
   {
-    src:     'life/img3.webp',
+    src:     'life/img3.webp', w: 900, h: 473,
     alt:     'Darla and a friend at the Soar Through AWS booth at Adamson',
     caption: 'soar through aws',
     meta:    'adamson · 2026',
   },
   {
-    src:     'life/img4.webp',
+    src:     'life/img4.webp', w: 900, h: 506,
     alt:     'Large group photo at a cloud community event in a function hall',
     caption: 'community day',
     meta:    'somewhere in ph',
   },
   {
-    src:     'life/img5.webp',
+    src:     'life/img5.webp', w: 900, h: 1200,
     alt:     'Darla next to an n8n "Node thyself, go with the flow" event sign',
     caption: 'node thyself',
     meta:    'an n8n event',
   },
   {
-    src:     'life/img6.webp',
+    src:     'life/img6.webp', w: 900, h: 411,
     alt:     'Friends walking outside together at night',
     caption: 'rare evidence i went outside',
     meta:    'manila',
   },
   {
-    src:     'life/img7.webp',
+    src:     'life/img7.webp', w: 900, h: 411,
     alt:     'Darla working at a table beside a friend',
     caption: 'heads down',
   },
   {
-    src:     'life/img8.webp',
+    src:     'life/img8.webp', w: 900, h: 675,
     alt:     'Darla and a friend at an AWS office, in front of the "It\'s still Day One" wall',
     caption: 'it\'s still day one',
     meta:    'aws office',
@@ -118,6 +118,7 @@ function buildGallery() {
       loadPromises.push(p);
     }
 
+    if (photo.w) { img.width = photo.w; img.height = photo.h; }
     img.src = photo.src;
 
     // ---- Caption — task #2 ----

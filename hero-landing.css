@@ -112,20 +112,6 @@
 }
 
 /* ============================================================
-   EYEBROW — real name, small, above the big "Nova."
-   ============================================================ */
-
-.hero-eyebrow {
-  font-size: clamp(0.65rem, 1.2vw, 0.8rem);
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255, 235, 220, 0.90);
-  margin-bottom: 16px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.40);
-}
-
-/* ============================================================
    HERO HEADING — the massive "Nova."
    Skill: H1 at 4–5× body size, tracking tight, edge-to-edge feel
    On a bright background: dark shadow carries the text
@@ -182,9 +168,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-eyebrow {
-    animation: hero-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
-  }
 
   .hero-landing .hero-heading {
     animation: hero-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms both;
@@ -376,7 +359,6 @@
 
 @media (max-width: 768px) {
   .hero-landing-inner       { padding: 0 24px; }
-  .hero-eyebrow             { font-size: 0.65rem; letter-spacing: 0.16em; margin-bottom: 12px; }
   .hero-landing .hero-sub   { font-size: 0.875rem; max-width: 100%; }
 }
 
@@ -445,14 +427,6 @@
    .hero-rotating-word.is-entering — fading in
    ============================================================ */
 
-.hero-rotating-word.is-leaving {
-  opacity: 0;
-}
-
-.hero-rotating-word.is-entering {
-  opacity: 0;
-}
-
 /* Static follow-up line — smaller, more muted */
 .hero-sub--static {
   font-size: clamp(0.82rem, 1.4vw, 0.92rem);
@@ -462,12 +436,6 @@
   margin-bottom: 8px;
   text-align: center;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.40);
-}
-
-/* Reduced-motion: skip animation, show first word only */
-@media (prefers-reduced-motion: reduce) {
-  .hero-rotating-word.is-leaving  { display: none; }
-  .hero-rotating-word.is-entering { opacity: 1; }
 }
 
 /* ============================================================
@@ -872,7 +840,6 @@
 .hero-pipe-mini { min-height: 44px; }
 
 @media (max-width: 480px) {
-  .hero-eyebrow             { font-size: 0.75rem; }
   .hero-previously          { font-size: 0.78rem; }
   .pm-node                  { font-size: 0.75rem; }
   .hero-landing .hero-link  { min-height: 44px; }

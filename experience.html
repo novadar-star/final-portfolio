@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F6F2">
 
   <link rel="icon" type="image/jpeg" href="pics/pic.jpg">
 
@@ -663,7 +664,7 @@
     }
 
     .xp-lore-section-label {
-      font-size: 0.63rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: var(--ink-3);
       text-transform: uppercase;
@@ -708,7 +709,7 @@
     }
 
     .xp-lore-pill {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 500;
       padding: 3px 10px;
       border: 1px solid var(--hairline);
@@ -868,7 +869,7 @@
       border: 1px solid var(--hairline);
       border-radius: 8px;
       text-decoration: none;
-      width: 80px;
+      width: 92px;
       background: var(--card-bg);
       transition:
         border-color 200ms ease,
@@ -900,11 +901,10 @@
     }
 
     .cert-badge__level {
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: var(--ink-3);
       text-align: center;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      overflow-wrap: anywhere;
     }
 
     /* ── Dark mode tweaks ────────────────────────────────────────── */
@@ -1067,7 +1067,6 @@
   <main class="container page-section" id="main">
 
     <h1 class="page-heading page-heading--experience">where i've <em class="italic-accent">been</em></h1>
-    <p class="page-context">pick a star to explore.</p>
 
     <!-- ================================================================
          EXPERIENCE CONSTELLATION
@@ -1224,7 +1223,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-name">nova. / darla sumanting</span>
-      <p class="footer-credit">&copy; 2026, manila &middot; <span id="liveDate" class="footer-live-date"></span></p>
+      <p class="footer-credit">&copy; 2026, manila</p>
     </div>
   </footer>
 
@@ -1283,8 +1282,8 @@
       learned: 'Having people willing to teach and make room for others changes careers. That\'s why I run this.',
       stack: ['AWS', 'Community', 'Workshops', 'Event Production'],
       images: [
-        { src: 'pics/cloud9-workshop.jpg', alt: 'AWS SBG workshop at Adamson University' },
-        { src: 'pics/cloud9-team.jpg',     alt: 'AWS SBG team' },
+        { src: 'pics/cloud9-workshop.jpg', w: 2000, h: 1125, alt: 'AWS SBG workshop at Adamson University' },
+        { src: 'pics/cloud9-team.jpg', w: 2000, h: 1125,     alt: 'AWS SBG team' },
       ],
       link: { href: 'projects.html#awssbg-website', label: 'see the org site' },
     },
@@ -1383,7 +1382,7 @@
       // Images
       if (exp.images && exp.images.length) {
         html += `<div class="xp-lore-images">
-          ${exp.images.map(img => `<img src="${img.src}" alt="${img.alt}" loading="lazy">`).join('')}
+          ${exp.images.map(img => `<img src="${img.src}" alt="${img.alt}" loading="lazy"${img.w ? ` width="${img.w}" height="${img.h}"` : ''}>`).join('')}
         </div>`;
       }
 

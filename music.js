@@ -1,17 +1,24 @@
 // music.js — a small "♪ music off / on" button beside the theme toggle.
 //
-// Track: "Dimly Lit" by iamoneabe, CC0 / public domain
-// https://opengameart.org/content/dimly-lit
+// Track: "Cosmic Navigation" by Synth-thetic, CC0 / public domain
+// https://opengameart.org/content/cosmic-navigation
+// (the loop version, re-encoded to 112 kbps)
 //
 // How it behaves:
 // - Off by default. Nothing downloads until someone turns it on.
+// - Loops without a gap: the track is decoded once with Web Audio and the
+//   few milliseconds of silence MP3 encoding adds at each end are trimmed
+//   from the loop points. Browsers without Web Audio fall back to <audio loop>.
+// - Fades in and out instead of cutting.
 // - Remembers on/off and roughly where the song was, so moving between
 //   pages picks up near the same spot instead of restarting.
 // - Browsers sometimes block sound on a fresh page load. If that happens,
 //   the music resumes on the visitor's next click or key press.
 (function () {
-  var SRC = 'audio/dimly-lit.mp3';
-  var VOLUME = 0.35;
+  var SRC = 'audio/cosmic-navigation.mp3';
+  var CREDIT = 'Cosmic Navigation, by Synth-thetic (CC0)';
+  var VOLUME = 0.6;          // this track sits quieter than most; 0.6 ≈ comfortable background
+  var FADE = 0.45;           // seconds
   var KEY_ON = 'music';
   var KEY_TIME = 'musicTime';
 
@@ -29,16 +36,13 @@
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'music-toggle';
-  btn.title = 'Dimly Lit, by iamoneabe (CC0)';
+  btn.title = CREDIT;
   btn.innerHTML =
     '<span class="music-note" aria-hidden="true">&#9834;</span>' +
     '<span class="music-word">music</span><span class="music-state">off</span>';
   themeToggle.parentNode.insertBefore(btn, themeToggle);
 
   var stateEl = btn.querySelector('.music-state');
-  var audio = null;
-  var fadeTimer = null;
-
   function setUI(on) {
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     btn.setAttribute('aria-label', on ? 'Turn music off' : 'Turn music on');
@@ -46,52 +50,135 @@
     stateEl.textContent = on ? 'on' : 'off';
   }
 
-  function getAudio() {
-    if (audio) return audio;
-    audio = new Audio(SRC);
-    audio.loop = true;
-    audio.preload = 'auto';
-    audio.volume = 0;
-    var saved = parseFloat(read(KEY_TIME));
-    if (saved > 0) {
-      audio.addEventListener('loadedmetadata', function () {
-        if (saved < audio.duration) audio.currentTime = saved;
-      }, { once: true });
-    }
-    return audio;
+  function savedOffset() {
+    var t = parseFloat(read(KEY_TIME));
+    return t > 0 ? t : 0;
   }
 
-  // short fade so it never starts or stops abruptly
-  function fadeTo(target, done) {
-    clearInterval(fadeTimer);
-    var a = getAudio();
-    var step = (target - a.volume) / 12;
-    var n = 0;
-    fadeTimer = setInterval(function () {
-      n += 1;
-      a.volume = Math.min(1, Math.max(0, a.volume + step));
-      if (n >= 12) {
-        clearInterval(fadeTimer);
-        a.volume = target;
-        if (done) done();
+  // ---- engine 1: Web Audio, gapless ----
+  function webAudioEngine(Ctx) {
+    var ctx = null, gain = null, buffer = null, loading = null;
+    var source = null, startedAt = 0, loopStart = 0, loopEnd = 0;
+
+    // find where real sound starts and ends (MP3 pads a little silence)
+    function trimPoints(buf) {
+      var data = buf.getChannelData(0), n = data.length, limit = Math.round(buf.sampleRate * 0.06);
+      var a = 0, b = n - 1;
+      while (a < limit && Math.abs(data[a]) < 1e-4) a++;
+      while (n - 1 - b < limit && Math.abs(data[b]) < 1e-4) b--;
+      return [a / buf.sampleRate, (b + 1) / buf.sampleRate];
+    }
+
+    function load() {
+      if (loading) return loading;
+      ctx = new Ctx();
+      gain = ctx.createGain();
+      gain.gain.value = 0;
+      gain.connect(ctx.destination);
+      loading = fetch(SRC)
+        .then(function (r) { if (!r.ok) throw new Error('music ' + r.status); return r.arrayBuffer(); })
+        .then(function (bytes) {
+          // callback form too, for older Safari
+          return new Promise(function (res, rej) {
+            var p = ctx.decodeAudioData(bytes, res, rej);
+            if (p && p.then) p.then(res, rej);
+          });
+        })
+        .then(function (buf) {
+          buffer = buf;
+          var t = trimPoints(buf);
+          loopStart = t[0]; loopEnd = t[1];
+        });
+      return loading;
+    }
+
+    function length() { return loopEnd - loopStart; }
+
+    return {
+      play: function (offset) {
+        return load().then(function () {
+          // when the browser wants a gesture first, Chrome leaves resume()
+          // pending instead of rejecting, so give it a moment and then check
+          return Promise.race([ctx.resume(), new Promise(function (r) { setTimeout(r, 400); })]);
+        }).then(function () {
+          // resume() resolves without unlocking when the browser wants a gesture
+          if (ctx.state !== 'running') throw new Error('blocked');
+          if (source) return;
+          source = ctx.createBufferSource();
+          source.buffer = buffer;
+          source.loop = true;
+          source.loopStart = loopStart;
+          source.loopEnd = loopEnd;
+          source.connect(gain);
+          var at = loopStart + ((offset || 0) % length());
+          source.start(0, at);
+          startedAt = ctx.currentTime - (at - loopStart);
+          var now = ctx.currentTime;
+          gain.gain.cancelScheduledValues(now);
+          gain.gain.setValueAtTime(gain.gain.value, now);
+          gain.gain.linearRampToValueAtTime(VOLUME, now + FADE);
+        });
+      },
+      stop: function () {
+        if (!source) return;
+        var s = source, now = ctx.currentTime;
+        source = null;
+        gain.gain.cancelScheduledValues(now);
+        gain.gain.setValueAtTime(gain.gain.value, now);
+        gain.gain.linearRampToValueAtTime(0, now + FADE);
+        s.stop(now + FADE + 0.02);
+        // let the device sleep its audio once the fade is done
+        setTimeout(function () { if (!source) ctx.suspend(); }, (FADE + 0.1) * 1000);
+      },
+      playing: function () { return !!source; },
+      position: function () {
+        if (!source) return null;
+        return (ctx.currentTime - startedAt) % length();
       }
-    }, 40);
+    };
   }
 
-  function play() {
-    var a = getAudio();
-    var p = a.play();
-    if (p && typeof p.then === 'function') {
-      return p.then(function () { fadeTo(VOLUME); });
+  // ---- engine 2: plain <audio loop>, for browsers without Web Audio ----
+  function mediaEngine() {
+    var audio = null, timer = null;
+    function get() {
+      if (audio) return audio;
+      audio = new Audio(SRC);
+      audio.loop = true;
+      audio.preload = 'auto';
+      audio.volume = 0;
+      return audio;
     }
-    fadeTo(VOLUME);
-    return Promise.resolve();
+    function fadeTo(target, done) {
+      clearInterval(timer);
+      var a = get(), steps = 12, n = 0, step = (target - a.volume) / steps;
+      timer = setInterval(function () {
+        n += 1;
+        a.volume = Math.min(1, Math.max(0, a.volume + step));
+        if (n >= steps) { clearInterval(timer); a.volume = target; if (done) done(); }
+      }, (FADE * 1000) / steps);
+    }
+    return {
+      play: function (offset) {
+        var a = get();
+        if (offset) {
+          a.addEventListener('loadedmetadata', function () {
+            if (offset < a.duration) a.currentTime = offset;
+          }, { once: true });
+        }
+        var p = a.play();
+        return (p && p.then ? p : Promise.resolve()).then(function () { fadeTo(VOLUME); });
+      },
+      stop: function () { if (audio) fadeTo(0, function () { audio.pause(); }); },
+      playing: function () { return !!audio && !audio.paused; },
+      position: function () { return audio && !audio.paused ? audio.currentTime : null; }
+    };
   }
 
-  function stop() {
-    if (!audio) return;
-    fadeTo(0, function () { audio.pause(); });
-  }
+  var Ctx = window.AudioContext || window.webkitAudioContext;
+  var engine = Ctx && window.fetch ? webAudioEngine(Ctx) : mediaEngine();
+
+  function play() { return engine.play(savedOffset()); }
 
   // resume after the first interaction if the browser blocked autoplay
   function resumeOnInteraction() {
@@ -111,13 +198,15 @@
     if (turningOn) {
       play().catch(function () { setUI(false); write(KEY_ON, 'off'); });
     } else {
-      stop();
+      saveTime();
+      engine.stop();
     }
   });
 
   // keep the position so the next page can pick up from here
   function saveTime() {
-    if (audio && !audio.paused) write(KEY_TIME, String(audio.currentTime));
+    var t = engine.position();
+    if (t !== null) write(KEY_TIME, String(t));
   }
   window.addEventListener('pagehide', saveTime);
   setInterval(saveTime, 2000);
@@ -125,7 +214,5 @@
   // ---- restore on load ----
   var wasOn = read(KEY_ON) === 'on';
   setUI(wasOn);
-  if (wasOn) {
-    play().catch(resumeOnInteraction);
-  }
+  if (wasOn) play().catch(resumeOnInteraction);
 })();

@@ -385,22 +385,6 @@ em.italic-accent {
 }
 
 /* ============================================================
-   HEART BUTTON — warm liked state
-   ============================================================ */
-
-.heart-float:hover {
-  border-color: var(--nova-accent);
-}
-
-.heart-float.liked {
-  border-color: var(--nova-accent);
-}
-
-.heart-float.liked .heart-icon {
-  color: var(--nova-accent);
-}
-
-/* ============================================================
    FOOTER — warm name accent
    ============================================================ */
 
@@ -557,7 +541,6 @@ em.italic-accent {
   .archive-heading,
   .toolkit-label,
   .footer-credit,
-  .footer-live-date,
   .cert-badge__name,
   .cert-badge__level,
   .xp-accordion-trigger-meta {
@@ -703,7 +686,6 @@ em.italic-accent {
   }
   .tool-row-label { padding-top: 0; }
 }
-
 
 /* ===========================
    ABOUT PAGE — email link
