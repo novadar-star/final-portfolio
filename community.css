@@ -229,14 +229,6 @@
   margin-top: 64px;
 }
 
-.cm-sbg-site {
-  margin-top: 36px;
-}
-
-.cm-sbg-site img {
-  border: 1px solid var(--hairline);
-}
-
 .cm-sbg-margin {
   grid-column: 9 / 12;
   margin-top: 148px;

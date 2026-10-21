@@ -1332,39 +1332,6 @@ button:focus-visible {
 }
 
 /* ===========================
-   COMMUNITY PHOTOS in project-case
-   Stacked above the video on the awssbg project page.
-   Shows people first, then the artifact.
-   =========================== */
-
-.case-visual--community {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  overflow: visible;
-}
-
-.case-community-photos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.case-community-photo {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  display: block;
-}
-
-.case-visual--community .project-video {
-  border-radius: var(--radius);
-  border: 1px solid var(--hairline);
-}
-
-/* ===========================
    ABOUT PAGE — tagline as Playfair italic
    "i build things because wondering how something works
     is usually not enough."
@@ -1386,12 +1353,6 @@ button:focus-visible {
 /* ===========================
    RESPONSIVE — new elements
    =========================== */
-
-@media (max-width: 768px) {
-
-  .case-community-photos { grid-template-columns: 1fr; }
-  .case-community-photo  { height: 140px; }
-}
 
 @media (max-width: 480px) {
   .about-tagline { font-size: 1rem; }

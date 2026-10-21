@@ -2,7 +2,9 @@
 //
 // Track: "Cosmic Navigation" by Synth-thetic, CC0 / public domain
 // https://opengameart.org/content/cosmic-navigation
-// (the loop version, re-encoded to 112 kbps)
+// (the loop version, rotated to open at 1:50.4, its fullest stretch, then
+// wrapping through the start; the original loop point stays seamless.
+// Normalized to -14 LUFS, peaks at -1 dB, 128 kbps.)
 //
 // How it behaves:
 // - Off by default. Nothing downloads until someone turns it on.
@@ -17,8 +19,9 @@
 (function () {
   var SRC = 'audio/cosmic-navigation.mp3';
   var CREDIT = 'Cosmic Navigation, by Synth-thetic (CC0)';
-  var VOLUME = 0.6;          // this track sits quieter than most; 0.6 ≈ comfortable background
-  var FADE = 0.45;           // seconds
+  var VOLUME = 0.85;         // file is loudness-normalized; this keeps it present but under speech
+  var FADE_IN = 0.9;         // seconds: swells in rather than ticking on
+  var FADE = 0.45;           // seconds: exits faster than it enters
   var KEY_ON = 'music';
   var KEY_TIME = 'musicTime';
 
@@ -116,7 +119,7 @@
           var now = ctx.currentTime;
           gain.gain.cancelScheduledValues(now);
           gain.gain.setValueAtTime(gain.gain.value, now);
-          gain.gain.linearRampToValueAtTime(VOLUME, now + FADE);
+          gain.gain.linearRampToValueAtTime(VOLUME, now + FADE_IN);
         });
       },
       stop: function () {
