@@ -308,11 +308,19 @@
 
     <!-- Contact -->
     <section class="home-contact" aria-labelledby="contact-heading">
-      <!-- the glyph nova: a star drawn in characters. click it. (glyph-nova.js) -->
-      <button class="glyph-nova" type="button" aria-label="Set off the star">
-        <canvas aria-hidden="true"></canvas>
-      </button>
-      <p class="glyph-nova-hint" aria-hidden="true">click the star</p>
+      <!-- the sky over manila, right now. real star positions. (sky.js) -->
+      <figure class="sky">
+        <div class="sky-disc">
+          <canvas tabindex="0" role="img" aria-label="Star chart of the sky over Manila"></canvas>
+          <p class="sky-tip" hidden></p>
+        </div>
+        <figcaption class="sky-caption">
+          <span class="sky-time" aria-live="polite">the sky over manila.</span>
+          <span class="sky-note"></span>
+          <button class="sky-now" type="button" hidden>back to now</button>
+          <span class="sky-hint" aria-hidden="true">hover a star, drag to turn the sky</span>
+        </figcaption>
+      </figure>
       <p class="contact-display" id="contact-heading">say hi.</p>
       <p class="contact-text">
         i take on freelance builds: web apps, automations, and the glue between them.
@@ -339,6 +347,6 @@
   <script src="main.js"></script>
   <script src="music.js"></script>
   <script src="star-pop.js"></script>
-  <script src="glyph-nova.js"></script>
+  <script src="sky.js"></script>
 </body>
 </html>
