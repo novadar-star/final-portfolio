@@ -45,12 +45,19 @@
    ============================================================ */
 
 :root {
+  /* warm specks from the hero's star glow: icons and glyphs only, never body text */
+  --nova-gold:       #C98A12;   /* amber that still reads on blush paper (3:1 for icons) */
+  --nova-ember:      #D9702A;   /* orange, for the brightest glyph cores */
+  --nova-select:     rgba(255, 170, 80, 0.32);
   --nova-accent:     #C2607A;   /* dusty rose — pinkish-minimal, editorial, warm */
   --nova-accent-dim: rgba(194, 96, 122, 0.08);
   --nova-accent-mid: rgba(194, 96, 122, 0.20);
 }
 
 [data-theme="dark"] {
+  --nova-gold:       #FFD580;
+  --nova-ember:      #FFAA50;
+  --nova-select:     rgba(255, 213, 128, 0.26);
   --nova-accent:     #E8929F;   /* lighter rose on dark — readable, not neon */
   --nova-accent-dim: rgba(232, 146, 159, 0.10);
   --nova-accent-mid: rgba(232, 146, 159, 0.20);
@@ -188,21 +195,6 @@ button:focus-visible {
    The project visual currently has no hover feedback at all.
    ============================================================ */
 
-.home-project-visual {
-  transition:
-    box-shadow  var(--nova-duration-hover) ease,
-    border-color var(--nova-duration-hover) ease,
-    transform   var(--nova-duration-hover) cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .home-project:hover .home-project-visual {
-    border-color: var(--nova-accent);
-    box-shadow: 0 4px 24px var(--nova-accent-dim);
-    transform: translateY(-2px);
-  }
-}
-
 /* Project title — warm on parent hover */
 .home-project:hover .home-project-title {
   color: var(--ink);
@@ -327,8 +319,6 @@ em.italic-accent {
   color: var(--nova-accent);
 }
 
-/* Dark mode handled by --nova-accent token switch above */
-
 /* ============================================================
    HERO LINK (the homepage "things i've built →")
    Already warm in hero-landing.css — but on other pages
@@ -341,8 +331,6 @@ em.italic-accent {
     color var(--nova-duration-hover) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
     gap   var(--nova-duration-hover) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
-
-/* hover handled by the underline rules (LINK HOVER) */
 
 /* ============================================================
    PROJECT CASES (projects.html) — hover warm border
@@ -367,54 +355,15 @@ em.italic-accent {
   box-shadow: 0 4px 20px var(--nova-accent-dim);
 }
 
-/* Case context label — warm */
-.case-context {
-  color: var(--nova-accent);
-}
-
 /* Project external link — warm on hover */
 .project-link:hover {
   opacity: 1;
   color: var(--nova-accent);
 }
 
-/* Tech pills — warm accent instead of green-dim */
-.tech-pill {
-  background: var(--nova-accent-dim);
-  color: var(--nova-accent);
-}
-
-[data-theme="dark"] .tech-pill {
-  background: var(--nova-accent-dim);
-  color: var(--nova-accent);
-}
-
 /* ============================================================
    EXPERIENCE PAGE — warm accents
    ============================================================ */
-
-/* Exp entry — warm left-border on hover */
-.exp-entry {
-  transition: border-color var(--nova-duration-hover) ease;
-  position: relative;
-}
-
-.exp-entry::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--nova-accent);
-  opacity: 0;
-  transition: opacity var(--nova-duration-hover) ease;
-  border-radius: 1px;
-}
-
-.exp-entry:hover::before {
-  opacity: 1;
-}
 
 /* Experience remote tag — warm instead of green */
 .exp-tag.remote {
@@ -427,22 +376,9 @@ em.italic-accent {
   color: var(--nova-accent);
 }
 
-/* Inline links in experience descriptions */
-.inline-link {
-  color: var(--nova-accent);
-}
-
-.inline-link:hover {
-  opacity: 0.75;
-}
-
 /* ============================================================
    EDUCATION — cert items warm dash
    ============================================================ */
-
-.cert-item::before {
-  color: var(--nova-accent);
-}
 
 .edu-note {
   color: var(--nova-accent) !important;
@@ -465,11 +401,6 @@ em.italic-accent {
 }
 
 /* ============================================================
-   SCROLL REVEAL — keep existing but add warm to visible state
-   No change to layout, just ensure .reveal.visible looks clean.
-   ============================================================ */
-
-/* ============================================================
    FOOTER — warm name accent
    ============================================================ */
 
@@ -485,31 +416,12 @@ em.italic-accent {
   color: var(--nova-accent);
 }
 
-/* hover handled by the underline rules (LINK HOVER) */
-
 /* ============================================================
    ABOUT PAGE — warm accents carried through
    ============================================================ */
 
-/* Currently-into tags — warm border/accent on hover */
-.c-tag:hover {
-  border-color: var(--nova-accent);
-  color: var(--nova-accent);
-  background: var(--nova-accent-dim);
-}
-
 /* Toolkit label */
 .toolkit-label {
-  color: var(--nova-accent);
-}
-
-/* Currently label */
-.currently-label {
-  color: var(--nova-accent);
-}
-
-/* About email link */
-.about-email-link {
   color: var(--nova-accent);
 }
 
@@ -555,6 +467,7 @@ em.italic-accent {
 
 .project-outcome .outcome-star {
   flex: none;
+  color: var(--nova-gold);
   width: 9px;
   height: 9px;
   position: relative;
@@ -587,7 +500,6 @@ em.italic-accent {
     clip-path: inset(0 0 0 0);
   }
 }
-
 
 /* ============================================================
    RESPONSIVE PASS (responsive-design skill)
@@ -697,8 +609,6 @@ em.italic-accent {
 @media (max-width: 480px) {
   .home-tools .toolkit-label { font-size: 0.75rem; }
 }
-
-/* ── Roast fixes ────────────────────────────────────────────── */
 
 /* Home GTM card: image on the right so it doesn't mirror the card above */
 @media (min-width: 769px) {

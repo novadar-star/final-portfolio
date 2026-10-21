@@ -289,10 +289,6 @@ button:focus-visible {
   margin-bottom: 12px;
 }
 
-.hero-sub:last-of-type {
-  margin-bottom: 24px;
-}
-
 /* Single unobtrusive link, not a button pair */
 .hero-link {
   font-size: 0.84rem;
@@ -307,28 +303,6 @@ button:focus-visible {
 
 .hero-link:hover {
   gap: 8px;
-}
-
-/* ===========================
-   HERO PHOTO
-   =========================== */
-
-.hero-photo {
-  flex-shrink: 0;
-}
-
-.photo-frame {
-  width: 148px;
-  aspect-ratio: 3/4;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-}
-
-.photo-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ===========================
@@ -388,18 +362,6 @@ button:focus-visible {
   direction: ltr;
 }
 
-.home-project-visual {
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-}
-
-.home-project-visual img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* n8n workflow screenshots — dark canvas */
 .workflow-bg {
   background: #181818;
@@ -408,11 +370,6 @@ button:focus-visible {
 }
 
 /* Two-photo grid inside a project visual (e.g. community entry) */
-.home-project-photos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
 
 .project-video {
   width: 100%;
@@ -476,27 +433,10 @@ button:focus-visible {
 }
 
 /* ===========================
-   HOME — ABOUT
-   =========================== */
-
-.home-about .about-text {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.home-about .about-text p {
-  font-size: 0.9rem;
-  color: var(--ink-2);
-  line-height: 1.7;
-  max-width: 58ch;
-}
-
-/* ===========================
    HOME — CONTACT
    =========================== */
 
-.home-contact {
+.say-hi {
   padding-bottom: 64px;
   padding-top: 32px;
 }
@@ -519,26 +459,6 @@ button:focus-visible {
 /* ===========================
    TOOLS INLINE — stripped-down single line
    =========================== */
-
-.tools-inline {
-  padding: 40px 0 8px;
-  border-top: 1px solid var(--hairline);
-}
-
-.tools-inline-text {
-  font-size: 0.82rem;
-  color: var(--ink-3);
-  line-height: 1.8;
-}
-
-.tools-inline-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--nova-accent, var(--ink-3));
-  margin-right: 8px;
-}
 
 .contact-text {
   font-size: 0.9rem;
@@ -620,31 +540,6 @@ button:focus-visible {
   margin-bottom: 0;
 }
 
-/* ---- Project type: no visual (code-only, academic) ---- */
-.project-case--text-only {
-  border-left: 2px solid var(--green-dim);
-  padding-left: 20px;
-  padding-right: 0;
-}
-
-[data-theme="dark"] .project-case--text-only {
-  border-left-color: var(--green-dim);
-}
-
-/* Video in project case */
-.project-video-wrap {
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  margin-bottom: 18px;
-}
-
-.project-video-wrap video {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* Case content */
 .case-label {
   font-size: 0.67rem;
@@ -675,13 +570,6 @@ button:focus-visible {
 
 .project-link:hover { opacity: 1; }
 
-.case-context {
-  font-size: 0.78rem;
-  color: var(--green);
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
 .case-desc {
   font-size: 0.865rem;
   color: var(--ink-2);
@@ -689,115 +577,13 @@ button:focus-visible {
   margin-bottom: 14px;
 }
 
-/* Tech tags — kept minimal, project-context only */
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.tech-pill {
-  font-size: 0.63rem;
-  font-weight: 500;
-  padding: 3px 9px;
-  background: var(--green-dim);
-  color: var(--green);
-  border-radius: var(--radius-pill);
-  letter-spacing: 0.01em;
-}
-
 /* ===========================
    EXPERIENCE PAGE
    =========================== */
 
-.exp-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.exp-entry {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 24px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--hairline);
-}
-
-.exp-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 3px;
-}
-
-.exp-date {
-  font-size: 0.7rem;
-  color: var(--ink-3);
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-}
-
-.exp-tag {
-  font-size: 0.6rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: var(--radius-pill);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  width: fit-content;
-}
-
 .exp-tag.remote {
   background: var(--green-dim);
   color: var(--green);
-}
-
-.exp-body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.exp-role {
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.exp-org {
-  font-size: 0.75rem;
-  color: var(--ink-3);
-  font-weight: 500;
-}
-
-.exp-desc {
-  font-size: 0.855rem;
-  color: var(--ink-2);
-  line-height: 1.7;
-  max-width: 58ch;
-  margin-top: 4px;
-}
-
-/* Inline tech stack — plain text, not pills */
-.exp-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.exp-stack span {
-  font-size: 0.67rem;
-  color: var(--ink-3);
-  letter-spacing: 0.02em;
-}
-
-.exp-stack span + span::before {
-  content: '·';
-  margin-right: 8px;
-  opacity: 0.4;
 }
 
 /* ===========================
@@ -833,25 +619,6 @@ button:focus-visible {
   margin-top: 3px;
 }
 
-/* Certs — plain text list, not pill wall */
-.cert-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 8px;
-}
-
-.cert-item {
-  font-size: 0.75rem;
-  color: var(--ink-2);
-  line-height: 1.45;
-}
-
-.cert-item::before {
-  content: '— ';
-  color: var(--ink-3);
-}
-
 /* ===========================
    WORKING STYLE (experience page)
    =========================== */
@@ -865,27 +632,6 @@ button:focus-visible {
   color: var(--ink-2);
   line-height: 1.75;
   max-width: 56ch;
-}
-
-/* ===========================
-   TIMELINE PHOTOS
-   (used in experience entry)
-   =========================== */
-
-.timeline-photos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 10px 0;
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.timeline-photo {
-  width: 100%;
-  height: 110px;
-  object-fit: cover;
-  border-radius: var(--radius);
 }
 
 /* ===========================
@@ -996,55 +742,9 @@ button:focus-visible {
    about.css extends this with about-page–specific states
    =========================== */
 
-body.cursor-active { cursor: none; }
-body.cursor-active a,
-body.cursor-active button { cursor: none; }
-
-.nova-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-  z-index: 9999;
-  /* translate3d — position driven entirely by JS transform, no left/top updates */
-  transform: translate3d(-200px, -200px, 0);
-  transition: width 0.12s ease, height 0.12s ease;
-  display: none;
-}
-
-.cursor-star {
-  width: 100%;
-  height: 100%;
-  color: var(--nova-accent, #8B0020);
-  opacity: 0.9;
-  filter: drop-shadow(0 0 3px var(--nova-accent, #8B0020));
-  transition: transform 0.2s ease;
-}
-
-.nova-cursor[data-state="hover"] { width: 26px; height: 26px; }
-.nova-cursor[data-state="hover"] .cursor-star {
-  animation: cursorPulse 0.55s ease infinite alternate;
-}
-
-.nova-cursor[data-state="press"] {
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
-}
-
 @keyframes cursorPulse {
   from { transform: scale(1); }
   to   { transform: scale(1.3); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cursor-star    { animation: none !important; }
-  .nova-cursor    { display: none !important; }
-  body.cursor-active,
-  body.cursor-active a,
-  body.cursor-active button { cursor: auto; }
 }
 
 /* ===========================
@@ -1081,15 +781,6 @@ body.cursor-active button { cursor: none; }
     gap: 0;
   }
 
-  .hero-photo {
-    order: -1;
-    margin-bottom: 24px;
-  }
-
-  .photo-frame {
-    width: 108px;
-  }
-
   .hero-heading { font-size: clamp(1.7rem, 6vw, 2.2rem); }
 
   .home-project,
@@ -1107,26 +798,9 @@ body.cursor-active button { cursor: none; }
     grid-template-columns: 1fr;
   }
 
-  .exp-entry {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .exp-meta {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-
   .edu-grid {
     grid-template-columns: 1fr;
   }
-
-  .timeline-photos {
-    grid-template-columns: 1fr;
-  }
-
-  .timeline-photo { height: 160px; }
 
   .nav-left  { gap: 20px; }
   .nav-right { gap: 16px; }
@@ -1158,7 +832,6 @@ body.cursor-active button { cursor: none; }
 
   .home-project { padding: 28px 0; }
   .project-case { padding: 28px 0; }
-  .exp-entry    { padding: 24px 0; }
 
   .heart-float  { bottom: 16px; right: 16px; padding: 8px 12px; }
 
@@ -1184,7 +857,6 @@ body.cursor-active button { cursor: none; }
   .nav-left  { gap: 10px; }
   .nav-right { gap: 10px; }
   .nav-link  { font-size: 0.8rem; }
-  .photo-frame { width: 90px; }
 }
 
 /* ===========================
@@ -1300,27 +972,6 @@ body.cursor-active button { cursor: none; }
   }
 }
 
-/* ===========================
-   INLINE LINK
-   (used within body text, e.g. "the org website is one of the projects")
-   =========================== */
-
-.inline-link {
-  color: var(--green);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-  transition: opacity 0.15s;
-}
-
-.inline-link:hover {
-  opacity: 0.75;
-}
-
-/* ===========================
-   PHASE 8 — RESPONSIVE + ACCESSIBILITY ADDITIONS
-   =========================== */
-
 /* ------------------------------------------
    Reduced motion — disable reveal transition
    (content stays visible, animation skipped)
@@ -1395,11 +1046,6 @@ body.cursor-active button { cursor: none; }
    Forced colors (high contrast mode)
    ------------------------------------------ */
 @media (forced-colors: active) {
-  .tech-pill,
-  .exp-tag,
-  .cert-item::before {
-    forced-color-adjust: none;
-  }
   .heart-float {
     border: 2px solid ButtonText;
   }
@@ -1417,46 +1063,6 @@ body.cursor-active button { cursor: none; }
 
   .case-desc {
     font-size: 0.875rem;
-  }
-
-  .exp-desc {
-    font-size: 0.875rem;
-  }
-}
-
-/* ------------------------------------------
-   Experience page — exp-entry date on mobile:
-   make date readable without being too wide
-   ------------------------------------------ */
-@media (max-width: 480px) {
-  .exp-date {
-    font-size: 0.68rem;
-  }
-  .exp-role {
-    font-size: 0.9rem;
-  }
-}
-
-/* ------------------------------------------
-   Photo frame — don't let it shrink to nothing
-   on 320px screens
-   ------------------------------------------ */
-@media (max-width: 375px) {
-  .photo-frame {
-    width: 90px;
-  }
-}
-
-/* ------------------------------------------
-   Timeline photos — single column on small screens
-   (already in base CSS at 768px, guard for 480px)
-   ------------------------------------------ */
-@media (max-width: 480px) {
-  .timeline-photos {
-    grid-template-columns: 1fr;
-  }
-  .timeline-photo {
-    height: 180px;
   }
 }
 
@@ -1578,43 +1184,6 @@ body.cursor-active button { cursor: none; }
   max-width: 34ch;
 }
 
-/* .slice--belief is full-width, outside .slice-row — see appended rules below */
-
-/* Legacy — hide old grid so it doesn't interfere if present */
-.slices-grid { display: none; }
-
-/* ===========================
-   TOOLS SECTION
-   Quick reference, plain text groupings.
-   No logos. No pills. No grid.
-   =========================== */
-
-.tools-section {
-  padding-bottom: 16px;
-}
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 40px;
-}
-
-.tool-group-label {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 5px;
-}
-
-.tool-list {
-  font-size: 0.84rem;
-  color: var(--ink-2);
-  line-height: 1.6;
-}
-
 /* ===========================
    RESPONSIVE — slices + tools
    =========================== */
@@ -1631,20 +1200,10 @@ body.cursor-active button { cursor: none; }
     padding-bottom: 24px;
   }
 
-  .slice--belief {
-    padding-left: 0;
-    padding-top: 24px;
-  }
-
   .slice--credentials p,
   .slice--personal p,
   .slice--belief p {
     max-width: 100%;
-  }
-
-  .tools-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
   }
 }
 
@@ -1652,20 +1211,6 @@ body.cursor-active button { cursor: none; }
   .slice--credentials p {
     max-width: 100%;
   }
-}
-
-/* ===========================
-   PAGE INTRO
-   Single line of context below a page heading.
-   Used on experience page.
-   =========================== */
-
-.page-intro {
-  font-size: 0.8rem;
-  color: var(--ink-3);
-  margin-top: -28px;
-  margin-bottom: 40px;
-  letter-spacing: 0.02em;
 }
 
 /* ===========================
@@ -1697,8 +1242,6 @@ body.cursor-active button { cursor: none; }
     padding: 52px 0 40px;
   }
 
-  .photo-frame { width: 128px; }
-
   .home-project { gap: 24px; padding: 30px 0; }
   .home-project-text p { font-size: 0.875rem; }
 
@@ -1707,13 +1250,6 @@ body.cursor-active button { cursor: none; }
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
-
-  .exp-entry {
-    grid-template-columns: 100px 1fr;
-    gap: 20px;
-  }
-
-  .tools-grid { gap: 16px 32px; }
 
   .page-heading    { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 40px; }
   .section-heading { padding-top: 40px; }
@@ -1772,32 +1308,6 @@ body.cursor-active button { cursor: none; }
   object-position: center top;
 }
 
-/* Annotation — overlays bottom-left of the diagram */
-.artifact-annotation {
-  position: absolute;
-  bottom: 14px;
-  left: 16px;
-  font-size: 0.71rem;
-  color: rgba(255, 240, 200, 0.80);
-  line-height: 1.5;
-  max-width: 36ch;
-  pointer-events: none;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  display: flex;
-  gap: 6px;
-  align-items: flex-start;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-.annotation-marker {
-  font-style: normal;
-  color: var(--nova-star-gold, #FFD580);
-  flex-shrink: 0;
-  margin-top: 1px;
-  font-size: 0.9rem;
-}
-
 /* Footer below the diagram */
 .home-project-artifact-footer {
   display: grid;
@@ -1833,61 +1343,6 @@ body.cursor-active button { cursor: none; }
   .home-project-artifact-visual img {
     max-height: 240px;
   }
-  .artifact-annotation {
-    display: none; /* too cramped on mobile */
-  }
-}
-
-/* ===========================
-   HOME PROJECT — COMMUNITY (task 1)
-   Photos 55%, text 45%. Photos stack vertically — primary taller.
-   =========================== */
-
-.home-project--community {
-  padding: 36px 0;
-  border-bottom: 1px solid var(--hairline);
-  display: grid;
-  grid-template-columns: 55fr 45fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.home-project-photos-pair {
-  display: grid;
-  grid-template-rows: auto auto;
-  gap: 6px;
-}
-
-.community-photo {
-  width: 100%;
-  display: block;
-  border-radius: var(--radius);
-  object-fit: cover;
-}
-
-.community-photo--primary  { height: 220px; }
-.community-photo--secondary { height: 138px; }
-
-.home-project-text--community {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 4px;
-}
-
-.home-project-text--community p {
-  font-size: 0.855rem;
-  color: var(--ink-2);
-  line-height: 1.7;
-}
-
-@media (max-width: 768px) {
-  .home-project--community {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .community-photo--primary  { height: 180px; }
-  .community-photo--secondary { height: 116px; }
 }
 
 /* ===========================
@@ -2084,62 +1539,6 @@ body.cursor-active button { cursor: none; }
   max-width: 34ch;
 }
 
-/* Photo slot beside personal text */
-.slice-photo-slot {
-  padding: 28px 0 28px 24px;
-  display: flex;
-  align-items: center;
-}
-
-.slice-photo {
-  width: 100%;
-  max-height: 160px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--hairline);
-  display: block;
-}
-
-/* PLACEHOLDER STYLE — remove when real photo added to slice-photo-slot */
-.slice-photo-placeholder {
-  width: 100%;
-  height: 120px;
-  background: var(--hairline-2);
-  border-radius: var(--radius);
-  border: 1px dashed var(--hairline);
-  position: relative;
-}
-
-.slice-photo-placeholder::after {
-  content: 'photo';
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.62rem;
-  color: var(--ink-3);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* Belief — full-width, Playfair italic, visual weight of a statement */
-.slice--belief {
-  border-top: 1px solid var(--hairline);
-  padding: 32px 0;
-}
-
-.slice--belief p {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  color: var(--ink);
-  line-height: 1.55;
-  max-width: 52ch;
-  letter-spacing: -0.01em;
-}
-
 /* ===========================
    COMMUNITY PHOTOS in project-case
    Stacked above the video on the awssbg project page.
@@ -2206,18 +1605,12 @@ body.cursor-active button { cursor: none; }
     border-bottom: 1px solid var(--hairline);
     padding-bottom: 22px;
   }
-  .slice-photo-slot {
-    padding: 20px 0 22px 0;
-  }
-  .slice-photo-placeholder { height: 140px; }
-  .slice--belief p { max-width: 100%; }
 
   .case-community-photos { grid-template-columns: 1fr; }
   .case-community-photo  { height: 140px; }
 }
 
 @media (max-width: 480px) {
-  .slice--belief p { font-size: 1rem; }
   .about-tagline { font-size: 1rem; }
 }
 
@@ -2247,101 +1640,6 @@ body.cursor-active button { cursor: none; }
   color: var(--nova-accent, var(--ink-3));
   text-transform: uppercase;
   letter-spacing: 0.1em;
-}
-
-.home-tools .dock {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 14px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--hairline);
-  border-radius: 20px;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.home-tools .dock-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: default;
-}
-
-.home-tools .dock-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow:
-    0 1px 3px rgba(0,0,0,0.18),
-    0 4px 12px rgba(0,0,0,0.10);
-  transition:
-    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-.home-tools .dock-icon img,
-.home-tools .dock-icon svg {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  display: block;
-}
-
-.home-tools .dock-label {
-  font-size: 0.62rem;
-  font-weight: 500;
-  color: var(--ink-3);
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(3px);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  pointer-events: none;
-  letter-spacing: 0.01em;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .home-tools .dock-item:hover .dock-icon {
-    transform: translateY(-8px) scale(1.12);
-    box-shadow:
-      0 6px 20px rgba(0,0,0,0.18),
-      0 2px 6px rgba(0,0,0,0.10);
-  }
-  .home-tools .dock-item:hover .dock-label {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .home-tools .dock-item:has(+ .dock-item:hover) .dock-icon,
-  .home-tools .dock-item:hover + .dock-item .dock-icon {
-    transform: translateY(-4px) scale(1.06);
-  }
-}
-
-[data-theme="dark"] .home-tools .dock {
-  background: rgba(255,255,255,0.04);
-}
-
-[data-theme="dark"] .home-tools .dock-icon {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-tools .dock-icon,
-  .home-tools .dock-item:hover .dock-icon { transform: none !important; }
-  .home-tools .dock-label { transition: opacity 0.18s ease; }
-}
-
-@media (max-width: 480px) {
-  .home-tools .dock { padding: 10px 12px; gap: 8px; border-radius: 16px; }
-  .home-tools .dock-icon { width: 44px; height: 44px; border-radius: 11px; }
-  .home-tools .dock-icon img,
-  .home-tools .dock-icon svg { width: 26px; height: 26px; }
 }
 
 /* ===========================
@@ -2430,46 +1728,6 @@ body.cursor-active button { cursor: none; }
    --below:   sits under the image as a plain note (mobile only)
    =========================== */
 
-/* Desktop: show overlay, hide below-image note */
-.artifact-annotation--overlay {
-  display: flex;
-}
-
-.artifact-annotation--below {
-  display: none;
-}
-
-/* Mobile: hide overlay, show below-image note */
-@media (max-width: 768px) {
-  .artifact-annotation--overlay {
-    display: none;
-  }
-
-  .artifact-annotation--below {
-    display: flex;
-    gap: 6px;
-    align-items: flex-start;
-    font-size: 0.75rem;
-    color: var(--ink-3);
-    line-height: 1.5;
-    font-style: italic;
-    letter-spacing: 0.01em;
-    padding: 8px 0 4px;
-    /* undo the overlay positioning inherited from .artifact-annotation,
-       which made this note float over the "the writeup" link on phones */
-    position: static;
-    max-width: none;
-    text-shadow: none;
-  }
-
-  .artifact-annotation--below .annotation-marker {
-    color: var(--nova-accent);
-    font-style: normal;
-    flex-shrink: 0;
-  }
-}
-
-
 /* ===========================
    MUSIC TOGGLE — injected by music.js beside the theme toggle
    Reads like a nav link: quiet, lowercase, no pill.
@@ -2491,15 +1749,18 @@ body.cursor-active button { cursor: none; }
   transition: color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-.music-toggle:hover,
 .music-toggle.is-on {
   color: var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .music-toggle:hover { color: var(--ink); }
 }
 
 .music-note {
   display: inline-block;
   margin-right: 6px;
-  color: var(--nova-accent, var(--ink-3));
+  color: var(--nova-ember, var(--nova-accent));
 }
 
 .music-word {
@@ -2533,7 +1794,7 @@ body.cursor-active button { cursor: none; }
    Phones: sits in the flow above "say hi."
    =========================== */
 
-.home-contact {
+.say-hi {
   position: relative;
   min-height: 460px;
   display: flex;
@@ -2543,7 +1804,7 @@ body.cursor-active button { cursor: none; }
   padding-bottom: 88px;
 }
 
-.home-contact > :not(.glyph-nova):not(.glyph-nova-hint) {
+.say-hi > :not(.glyph-nova):not(.glyph-nova-hint) {
   position: relative;
   z-index: 1;
 }
@@ -2598,7 +1859,7 @@ body.cursor-active button { cursor: none; }
 }
 
 @media (max-width: 860px) {
-  .home-contact {
+  .say-hi {
     min-height: 0;
     display: block;
     padding-top: 24px;
@@ -2703,15 +1964,6 @@ body.cursor-active button { cursor: none; }
 .glyph-art--nebula .glyph-art-btn { aspect-ratio: 1.3; }
 .glyph-art--crux .glyph-art-btn { aspect-ratio: 1.25; }
 
-.cm-close { position: relative; }
-
-.glyph-art--cluster {
-  position: absolute;
-  top: -60px;
-  left: calc(-1 * clamp(0px, (100vw - 100%) / 2 - 24px, 110px));
-  width: 300px;
-}
-
 @media (max-width: 860px) {
   .glyph-art--crux,
   .glyph-art--nebula,
@@ -2730,4 +1982,13 @@ body.cursor-active button { cursor: none; }
   }
 
   .glyph-art figcaption { text-align: left; }
+}
+
+/* ===========================
+   SELECTION — a browser surface the design should own
+   =========================== */
+
+::selection {
+  background: var(--nova-select);
+  color: var(--ink);
 }

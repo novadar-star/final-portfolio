@@ -35,7 +35,7 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="nova-phase3.css">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
   <style>
     /* ================================================================
@@ -1221,6 +1221,27 @@
 
   </main>
 
+  <div class="container">
+    <!-- say hi: the same closing on every page, with the glyph nova (glyphs.js) -->
+    <section class="say-hi" aria-labelledby="contact-heading">
+      <!-- the glyph nova: a star drawn in characters. click it. (glyphs.js) -->
+      <button class="glyph-nova" type="button" data-glyph="nova" data-hint=".glyph-nova-hint" aria-label="Set off the star">
+        <canvas aria-hidden="true"></canvas>
+      </button>
+      <p class="glyph-nova-hint" aria-hidden="true">click the star</p>
+      <p class="contact-display" id="contact-heading">say hi.</p>
+      <p class="contact-text">
+        i take on freelance builds: web apps, automations, and the glue between them.
+        if you made it all the way down here, tell me what you're trying to build.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:darlanovasumanting06@gmail.com" class="contact-link">email</a>
+        <a href="https://linkedin.com/in/darla-nova" target="_blank" rel="noopener noreferrer" class="contact-link">linkedin</a>
+        <a href="https://github.com/novadar-star" target="_blank" rel="noopener noreferrer" class="contact-link">github</a>
+      </div>
+    </section>
+  </div>
+
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-name">nova. / darla sumanting</span>
@@ -1231,6 +1252,7 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <script src="main.js"></script>
   <script src="music.js"></script>
+  <script src="glyphs.js"></script>
   <script>
   // ================================================================
   // EXPERIENCE DATA

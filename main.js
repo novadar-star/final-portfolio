@@ -1,79 +1,16 @@
 // ===========================
 // nova. — main.js
 //
-// 1. Theme toggle (localStorage + prefers-color-scheme fallback)
-// 2. Heart counter (Supabase, localStorage fallback)
-// 3. Scroll reveal — targets .reveal only, used sparingly
-// 4. Lazy video — play/pause on viewport entry
+// Theme toggle, phone nav, plain photo slots, footer date, lazy video,
+// scroll reveal, section heading lines, the hero "run the pipeline"
+// interaction, and the nav state over the hero.
 // ===========================
-
-// ===========================
-// Supabase
-// ===========================
-const SUPABASE_URL = 'https://lbmplqohcuthpgrnljxy.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxibXBscW9oY3V0aHBncm5sanh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNzUwNzMsImV4cCI6MjA5OTc1MTA3M30.sRmRnyQAcuywBrtUqA6Nggac2Aj0Wvx3B7ViAHWWb7U';
-
-async function getHeartCount() {
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/hearts?id=eq.1&select=count`,
-      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-    );
-    const data = await res.json();
-    return data[0]?.count || 0;
-  } catch {
-    return parseInt(localStorage.getItem('heartCount') || '0', 10);
-  }
-}
-
-async function incrementHeart() {
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/rpc/increment_heart`,
-      {
-        method: 'POST',
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-      }
-    );
-    if (!res.ok) {
-      const current = await getHeartCount();
-      await fetch(`${SUPABASE_URL}/rest/v1/hearts?id=eq.1`, {
-        method: 'PATCH',
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
-          Prefer: 'return=representation'
-        },
-        body: JSON.stringify({ count: current + 1 })
-      });
-      return current + 1;
-    }
-    return await res.json();
-  } catch {
-    const count = parseInt(localStorage.getItem('heartCount') || '0', 10) + 1;
-    localStorage.setItem('heartCount', String(count));
-    return count;
-  }
-}
 
 // ===========================
 // DOM ready
 // ===========================
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-  // ===========================
-  // PLAIN PHOTO SLOTS
-  // Some photos carry event artwork (Cloud9 clouds, mascot, lettering)
-  // that clashes with the site palette. Drop a plain version into
-  // pics/plain/ with the same file name and it replaces the event
-  // version everywhere. Until the file exists, nothing changes.
-  // ===========================
   // ===========================
   // PHONE NAV — one scrollable row (see nova-phase3.css)
   // Opens with the current page in view; the edge fade goes away
@@ -96,6 +33,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener('resize', updateNavFade, { passive: true });
   }
 
+  // ===========================
+  // PLAIN PHOTO SLOTS
+  // Some photos carry event artwork (Cloud9 clouds, mascot, lettering)
+  // that clashes with the site palette. Drop a plain version into
+  // pics/plain/ with the same file name and it replaces the event
+  // version everywhere. Until the file exists, nothing changes.
+  // ===========================
   const PLAIN_SLOTS = ['cloud9-workshop.jpg', 'cloud9-team.jpg'];
   PLAIN_SLOTS.forEach(name => {
     const imgs = Array.from(document.querySelectorAll('img'))
@@ -147,31 +91,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const month = months[now.getMonth()];
     const year  = now.getFullYear();
     liveDateEl.textContent = `${day}, ${date} ${month} ${year}`;
-  }
-
-  // ===========================
-  // Heart counter
-  // ===========================
-  const heartBtn   = document.querySelector('.heart-float');
-  const heartCount = document.querySelector('.heart-count');
-
-  if (heartBtn && heartCount) {
-    // Don't block the rest of the page scripts on a network call
-    getHeartCount().then(c => { heartCount.textContent = c; }).catch(() => {});
-
-    heartBtn.addEventListener('click', async () => {
-      // Optimistic update
-      heartCount.textContent = parseInt(heartCount.textContent, 10) + 1;
-      heartBtn.classList.add('liked');
-
-      // Pop animation
-      heartBtn.classList.remove('pop');
-      void heartBtn.offsetWidth;
-      heartBtn.classList.add('pop');
-
-      const actual = await incrementHeart();
-      if (typeof actual === 'number') heartCount.textContent = actual;
-    });
   }
 
   // ===========================
@@ -238,37 +157,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
     sectionHeadings.forEach(el => hObs.observe(el));
   }
-
-  // ===========================
-  // Film strip drag-to-scroll
-  // ===========================
-  document.querySelectorAll('.film-track').forEach(track => {
-    let isDragging = false;
-    let startX     = 0;
-    let scrollLeft = 0;
-
-    track.addEventListener('mousedown', e => {
-      isDragging = true;
-      track.classList.add('is-dragging');
-      startX     = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-      e.preventDefault();
-    });
-
-    const stopDrag = () => {
-      isDragging = false;
-      track.classList.remove('is-dragging');
-    };
-    document.addEventListener('mouseup',    stopDrag);
-    document.addEventListener('mouseleave', stopDrag);
-
-    document.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      const x    = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.4;
-      track.scrollLeft = scrollLeft - walk;
-    });
-  });
 
   // ===========================
   // RUN THE PIPELINE — hero
@@ -482,49 +370,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLinks);
     drawLinks();
   })();
-
-  // ===========================
-  // Rotating identity word — hero
-  // Fades between identity descriptors in the hero sentence.
-  // Inspired by Daisy Fernandez's identity sentence mechanic.
-  // Words are in Nova's voice: lowercase, honest, specific.
-  // ===========================
-  const rotatingWord = document.getElementById('heroRotatingWord');
-  if (rotatingWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const words = [
-      'curiosity',
-      'community',
-      'automation',
-      'stubbornness',
-    ];
-    let current = 0;
-
-    function cycleWord() {
-      const el = rotatingWord;
-
-      // Fade out
-      el.classList.add('is-leaving');
-
-      setTimeout(() => {
-        // Swap word
-        current = (current + 1) % words.length;
-        el.textContent = words[current];
-
-        // Brief pause while invisible, then fade in
-        el.classList.remove('is-leaving');
-        el.classList.add('is-entering');
-
-        // RAF ensures the browser registers the opacity:0 class before removing it
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            el.classList.remove('is-entering');
-          });
-        });
-      }, 300); // matches transition duration in CSS
-    }
-
-    setInterval(cycleWord, 2200); // swap every 2.2 seconds
-  }
 
   // ===========================
   // Hero nav — transparent until scrolled past hero

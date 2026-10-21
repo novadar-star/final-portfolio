@@ -81,6 +81,11 @@
   margin-bottom: clamp(104px, 12vw, 168px);
 }
 
+/* the say-hi closing follows, so the last chapter needs less room */
+.cm > .cm-chapter:last-child {
+  margin-bottom: 24px;
+}
+
 /* ---------- figures ---------- */
 
 .cm-fig {
@@ -376,39 +381,6 @@
 }
 
 /* ============================================================
-   CLOSING
-   ============================================================ */
-
-.cm-close {
-  padding: 0 0 clamp(96px, 12vw, 144px) 25%;
-}
-
-.cm-close-line {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-size: clamp(1.25rem, 2.3vw, 1.7rem);
-  line-height: 1.4;
-  color: var(--ink);
-  max-width: 34ch;
-  margin: 0;
-}
-
-.cm-close-mail {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 0;
-  font-size: 1rem;
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--nova-accent);
-  text-underline-offset: 4px;
-}
-
-.cm-close-mail:hover {
-  color: var(--nova-accent);
-}
-
-/* ============================================================
    PHOTO VIEWER
    ============================================================ */
 
@@ -594,8 +566,6 @@
   }
 
   .cm-index-line { grid-column: 2; }
-
-  .cm-close { padding-left: 0; }
 
   .cm-chapter { margin-bottom: 96px; }
 }

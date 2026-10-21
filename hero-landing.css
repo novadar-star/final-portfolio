@@ -169,14 +169,6 @@
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.50);
 }
 
-/* Second subline slightly dimmer */
-.hero-sub--detail {
-  color: rgba(255, 225, 205, 0.78);
-  font-size: clamp(0.78rem, 1.3vw, 0.88rem);
-  margin-bottom: 28px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.40);
-}
-
 /* ============================================================
    HERO ENTRANCE — single orchestrated load-in
    Eyebrow → Name → Sub → CTA. One moment, no loop.
@@ -200,10 +192,6 @@
 
   .hero-landing .hero-sub:first-of-type {
     animation: hero-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 420ms both;
-  }
-
-  .hero-sub--detail {
-    animation: hero-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
   }
 
   .hero-landing .hero-link {
@@ -271,23 +259,6 @@
    Easing: ease-out curve so the pop feels energetic.
    ============================================================ */
 
-.hero-sparkle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  will-change: transform, opacity;
-  animation: sparkle-pulse var(--nova-duration-sparkle) cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
-}
-
-/* Each sparkle gets its own scale range for variety */
-.hero-sparkle--a { top: 15%; left: 12%;  width: 6px; height: 6px; background: var(--nova-star-yellow); box-shadow: 0 0 14px 5px var(--nova-glow-gold);   animation-delay: 0s;     animation-name: sparkle-a; }
-.hero-sparkle--b { top: 62%; left: 58%;  width: 5px; height: 5px; background: var(--nova-star-cream);  box-shadow: 0 0 12px 4px var(--nova-glow-cream);  animation-delay: 1200ms; animation-name: sparkle-b; }
-.hero-sparkle--c { top: 22%; right: 14%; width: 4px; height: 4px; background: var(--nova-star-gold);   box-shadow: 0 0 10px 3px var(--nova-glow-orange); animation-delay: 600ms;  animation-name: sparkle-a; }
-.hero-sparkle--d { top: 75%; left: 10%;  width: 4px; height: 4px; background: var(--nova-star-cream);  box-shadow: 0 0 9px  3px var(--nova-glow-peach);  animation-delay: 1800ms; animation-name: sparkle-c; }
-.hero-sparkle--e { top:  8%; right: 22%; width: 5px; height: 5px; background: var(--nova-star-yellow); box-shadow: 0 0 12px 4px var(--nova-glow-cream);  animation-delay: 2400ms; animation-name: sparkle-b; }
-.hero-sparkle--f { top: 45%; left:  5%;  width: 3px; height: 3px; background: var(--nova-star-cream);  box-shadow: 0 0 8px  2px var(--nova-glow-peach);  animation-delay: 900ms;  animation-name: sparkle-c; }
-
 /* Subtle pulser — barely moves */
 @keyframes sparkle-a {
   0%   { opacity: 0.35; transform: scale(0.82); }
@@ -302,10 +273,6 @@
 @keyframes sparkle-c {
   0%   { opacity: 0.15; transform: scale(0.55); }
   100% { opacity: 0.95; transform: scale(1.80); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-sparkle { animation: none; opacity: 0.6; }
 }
 
 /* ============================================================
@@ -400,15 +367,6 @@
 }
 
 /* ============================================================
-   CURSOR — warm gold on hero
-   ============================================================ */
-
-.hero-landing-page .cursor-star {
-  color: var(--nova-star-gold);
-  filter: drop-shadow(0 0 4px var(--nova-glow-gold));
-}
-
-/* ============================================================
    RESPONSIVE
    ============================================================ */
 
@@ -420,7 +378,6 @@
   .hero-landing-inner       { padding: 0 24px; }
   .hero-eyebrow             { font-size: 0.65rem; letter-spacing: 0.16em; margin-bottom: 12px; }
   .hero-landing .hero-sub   { font-size: 0.875rem; max-width: 100%; }
-  .hero-sub--detail         { display: none; } /* trim on small screens */
 }
 
 @media (max-width: 480px) {
@@ -488,29 +445,6 @@
    .hero-rotating-word.is-entering — fading in
    ============================================================ */
 
-.hero-sub--rotating {
-  font-size: clamp(1rem, 2.2vw, 1.3rem);
-  font-weight: 400;
-  color: rgba(255, 240, 228, 0.92);
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
-}
-
-.hero-rotating-sentence {
-  display: inline;
-}
-
-.hero-rotating-word {
-  color: var(--nova-star-gold, #FFD580);
-  font-style: italic;
-  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
-  display: inline-block;
-  transition: opacity 240ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity;
-}
-
 .hero-rotating-word.is-leaving {
   opacity: 0;
 }
@@ -532,7 +466,6 @@
 
 /* Reduced-motion: skip animation, show first word only */
 @media (prefers-reduced-motion: reduce) {
-  .hero-rotating-word { transition: none; }
   .hero-rotating-word.is-leaving  { display: none; }
   .hero-rotating-word.is-entering { opacity: 1; }
 }
@@ -611,7 +544,7 @@
 }
 
 .wf-node-dot--in  { margin-left: -4px; }  /* left side connector */
-.wf-node-dot--out { margin-right: -4px; } /* right side connector */
+.wf-node-dot--out { margin-right: -4px; }
 
 /* Initial natural scatter — each node has its own slight rotation */
 .wf-node:nth-child(1) { --nr: -2deg; }
@@ -934,7 +867,6 @@
     animation: hero-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
   }
 }
-
 
 /* ── Responsive pass: home-only small text + touch targets ── */
 .hero-pipe-mini { min-height: 44px; }

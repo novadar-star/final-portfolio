@@ -11,10 +11,11 @@
 //                                where you clicked. it stays.
 //   constellation  (projects)   the real Southern Cross; a pulse travels
 //                                star to star along the lines
-//   cluster        (community)  stars that formed together; a twinkle
-//                                ripples through them from your click
 //
-// Markup: <button data-glyph="nova|nebula|constellation|cluster"><canvas>
+// The nova is the say-hi closing on every page; the others sit near the
+// top of their page.
+//
+// Markup: <button data-glyph="nova|nebula|constellation"><canvas>
 // Optional data-hint="<selector>" fades a hint out after the first click.
 //
 // Only animates while visible; stops completely when scrolled away.
@@ -260,51 +261,6 @@
         },
         settle: function () { runs = []; }
       };
-    },
-
-    cluster: function (g) {
-      // an open cluster: stars born from the same cloud, still close together
-      var rand = seeded(29), members = [];
-      for (var i = 0; i < 34; i++) {
-        // gaussian-ish spread, a little wider than tall
-        var a = rand() * Math.PI * 2, r = Math.sqrt(-2 * Math.log(rand() * 0.98 + 0.02)) * 0.17;
-        members.push({ x: 0.5 + Math.cos(a) * r * 1.15, y: 0.5 + Math.sin(a) * r * 0.9, m: 1.2 + rand() * 4.2 });
-      }
-      var waves = [];
-      return {
-        field: function (px, py, t, now, out) {
-          var S = Math.min(g.W, g.H), v = 0;
-          // faint haze still hanging around the brightest members
-          var cx = px / g.W - 0.5, cy = py / g.H - 0.5;
-          v = Math.exp(-(cx * cx + cy * cy) / 0.04) * 0.3;
-          for (var i = 0; i < members.length; i++) {
-            var m = members[i], mx = m.x * g.W, my = m.y * g.H;
-            var dx = px - mx, dy = py - my;
-            var b = 0;
-            for (var w = 0; w < waves.length; w++) {
-              var wt = (now - waves[w].t0) / 1000;
-              var dw = Math.sqrt((mx - waves[w].x) * (mx - waves[w].x) + (my - waves[w].y) * (my - waves[w].y));
-              b += Math.exp(-Math.pow((dw - wt * 260) / 30, 2)) * Math.max(0, 1 - wt / 1.6);
-            }
-            var r = S * (0.14 - m.m * 0.02) * (1 + b * 0.9);
-            if (m.m < 2.6 || b > 0.05) {
-              v = Math.max(v, starShape(dx, dy, Math.max(r, g.cell)) * (1 + b * 0.4));
-            } else {
-              v = Math.max(v, Math.exp(-(dx * dx + dy * dy) / (g.cell * g.cell * 0.8)) * (1 - m.m * 0.1));
-            }
-          }
-          out.v = v;
-        },
-        activate: function (x, y, now) {
-          if (waves.length >= 3) waves.shift();
-          waves.push({ t0: now, x: x, y: y });
-        },
-        busy: function (now) {
-          waves = waves.filter(function (w) { return now - w.t0 < 1800; });
-          return waves.length > 0;
-        },
-        settle: function () { waves = []; }
-      };
     }
   };
 
@@ -328,8 +284,9 @@
       var cs = getComputedStyle(document.documentElement);
       var dark = document.documentElement.getAttribute('data-theme') === 'dark';
       colors.body = (cs.getPropertyValue('--nova-accent') || '#C2607A').trim();
-      colors.core = dark ? '#FFD580' : '#B0405E';
-      colors.faint = (cs.getPropertyValue('--ink-3') || '#8A8A84').trim();
+      colors.core = dark ? '#FFD580' : (cs.getPropertyValue('--nova-ember') || '#D9702A').trim();
+      colors.gold = (cs.getPropertyValue('--nova-gold') || '#C98A12').trim();
+      colors.faint = colors.gold;
     }
 
     function resize() {
@@ -369,7 +326,9 @@
           if (v < 0.06) continue;
           var level = Math.min(RAMP.length - 1, Math.floor(v * (RAMP.length - 1) * 1.05));
           ctx.globalAlpha = Math.min(1, 0.22 + v * 0.85);
-          ctx.fillStyle = v > 0.82 ? colors.core : colors.body;
+          // mostly rose, with about one in eight brighter glyphs in gold
+          var speck = level >= 4 && phases[j * cols + i] < 0.8;
+          ctx.fillStyle = v > 0.82 ? colors.core : (speck ? colors.gold : colors.body);
           ctx.fillText(RAMP[level], px + out.ox, py + out.oy);
         }
       }
