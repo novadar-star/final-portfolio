@@ -1,10 +1,7 @@
 // music.js — a small "♪ music off / on" button beside the theme toggle.
 //
-// Track: "Cosmic Navigation" by Synth-thetic, CC0 / public domain
-// https://opengameart.org/content/cosmic-navigation
-// (the loop version, rotated to open at 1:50.4, its fullest stretch, then
-// wrapping through the start; the original loop point stays seamless.
-// Normalized to -14 LUFS, peaks at -1 dB, 128 kbps.)
+// Track: "Satellites" by James Blunt
+// (Normalized to -14 LUFS, peaks at -1 dB, 128 kbps.)
 //
 // How it behaves:
 // - Off by default. Nothing downloads until someone turns it on.
@@ -17,8 +14,8 @@
 // - Browsers sometimes block sound on a fresh page load. If that happens,
 //   the music resumes on the visitor's next click or key press.
 (function () {
-  var SRC = 'audio/cosmic-navigation.mp3';
-  var CREDIT = 'Cosmic Navigation, by Synth-thetic (CC0)';
+  var SRC = 'audio/satellites.mp3';
+  var CREDIT = 'Satellites, by James Blunt';
   var VOLUME = 0.85;         // file is loudness-normalized; this keeps it present but under speech
   var FADE_IN = 0.9;         // seconds: swells in rather than ticking on
   var FADE = 0.45;           // seconds: exits faster than it enters
