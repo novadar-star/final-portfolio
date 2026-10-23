@@ -1,6 +1,6 @@
 // music.js — a small "♪ music off / on" button beside the theme toggle.
 //
-// Track: "Satellites" by James Blunt
+// Track: "Satellites" by Sunmoonstar
 // (Normalized to -14 LUFS, peaks at -1 dB, 128 kbps.)
 //
 // How it behaves:
@@ -15,7 +15,7 @@
 //   the music resumes on the visitor's next click or key press.
 (function () {
   var SRC = 'audio/satellites.mp3';
-  var CREDIT = 'Satellites, by James Blunt';
+  var CREDIT = 'Satellites, by Sunmoonstar';
   var VOLUME = 0.85;         // file is loudness-normalized; this keeps it present but under speech
   var FADE_IN = 0.9;         // seconds: swells in rather than ticking on
   var FADE = 0.45;           // seconds: exits faster than it enters
