@@ -1,6 +1,6 @@
 /* ===========================
    nova. — personal site
-   Space Grotesk (body/headings) + Playfair Display (italic accent)
+   Space Grotesk (body/headings) + Ibarra Real Nova (italic accent)
    Palette: off-white base, near-black ink, warm crimson accent
    Principle: authored, not systematized
    =========================== */
@@ -21,7 +21,7 @@
   --card-bg:     #FFFFFF;
 
   --font:        'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-italic: 'Playfair Display', Georgia, serif;
+  --font-italic: 'Ibarra Real Nova', Georgia, serif;
 
   --radius:      4px;
   --radius-pill: 100px;
@@ -112,7 +112,7 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-/* The italic accent — Playfair, used sparingly */
+/* The italic accent — Ibarra Real Nova, used sparingly */
 .italic-accent, em.italic-accent {
   font-family: var(--font-italic);
   font-style: italic;
@@ -441,7 +441,7 @@ button:focus-visible {
   padding-top: 32px;
 }
 
-/* Display-sized "say hi." — Playfair italic, not a section heading */
+/* Display-sized "say hi." — italic accent, not a section heading */
 .contact-display {
   font-family: var(--font-italic);
   font-style: italic;
@@ -1332,7 +1332,7 @@ button:focus-visible {
 }
 
 /* ===========================
-   ABOUT PAGE — tagline as Playfair italic
+   ABOUT PAGE — tagline in the italic accent
    "i build things because wondering how something works
     is usually not enough."
    Best sentence on the site — give it the weight it earns.

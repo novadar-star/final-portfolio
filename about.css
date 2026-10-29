@@ -33,7 +33,7 @@
 }
 
 .about-tagline {
-  /* Styling moved to styles.css — Playfair italic, larger.
+  /* Styling moved to styles.css — italic accent, larger.
      This overrides any leftover rule here. */
   font-family: var(--font-italic);
   font-style: italic;

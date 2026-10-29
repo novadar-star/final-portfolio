@@ -303,24 +303,29 @@
 }
 
 .story-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 30px;
-  min-height: 44px;
-  padding: 0 20px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 240, 238, 0.45);
-  background: rgba(96, 4, 38, 0.3);
-  color: var(--hero-ink);
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background-color 180ms var(--ease-out), transform 160ms var(--ease-out);
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 0;   /* keeps the tap area at least 44px tall */
+  color: var(--nova-star-gold, #FFD580);
+  /* 19px+ bold counts as large text, which needs 3:1 contrast */
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+  text-decoration-color: rgba(255, 213, 128, 0.55);
+  transition: text-decoration-color 180ms var(--ease-out), text-underline-offset 180ms var(--ease-out);
 }
 
-.story-hero-cta:hover { background: rgba(96, 4, 38, 0.45); }
-.story-hero-cta:active { transform: scale(0.97); }
+/* the arrow sits outside the underline */
+.story-hero-cta span { display: inline-block; margin-left: 6px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .story-hero-cta:hover {
+    text-decoration-color: var(--nova-star-gold, #FFD580);
+    text-underline-offset: 8px;
+  }
+}
 
 /* ============================================================
    THE NOVA MOMENT — a star lands on the name once, then twinkles.
@@ -491,13 +496,16 @@
 
 .chapter {
   display: grid;
+  /* columns may shrink below their content, so large phone text wraps
+     instead of running off the screen */
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   padding: 72px 24px;
   max-width: 1180px;
   margin: 0 auto;
 }
 
-.chapter-text { order: -1; }
+.chapter-text { order: -1; min-width: 0; overflow-wrap: break-word; }
 
 .chapter h2 {
   font-size: clamp(2rem, 3.6vw, 3.1rem);
@@ -658,7 +666,7 @@
   max-width: none;
   height: 100%;
   margin: 0;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(40px, 6vw, 96px);
   padding: calc(var(--nav-h, 80px) + 56px) max(48px, calc((100vw - 1180px) / 2)) 40px;
@@ -676,18 +684,19 @@
 .snag {
   margin-top: 24px;
   max-width: 46ch;
-  padding-left: 14px;
-  border-left: 2px solid var(--accent-soft);
   font-size: 0.97rem;
   line-height: 1.55;
   color: var(--ink);
 }
 
+/* wrapped lines line up with the text, not under the mark */
+.snag p { padding-left: 1.4em; text-indent: -1.4em; }
 .snag p + p { margin-top: 6px; }
 
 .snag-mark {
   display: inline-block;
   width: 1.4em;
+  text-indent: 0;
   font-weight: 600;
   color: var(--accent);
 }

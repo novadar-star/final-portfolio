@@ -641,7 +641,7 @@ em.italic-accent {
 .tool-row:first-child { border-top: 0; padding-top: 4px; }
 
 .tool-row-label {
-  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-family: var(--font-italic, 'Ibarra Real Nova', Georgia, serif);
   font-style: italic;
   font-size: 0.98rem;
   color: var(--ink-3);

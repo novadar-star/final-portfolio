@@ -560,7 +560,7 @@
    ============================================================ */
 
 .hero-kw {
-  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-family: var(--font-italic, 'Ibarra Real Nova', Georgia, serif);
   font-style: italic;
   color: var(--nova-star-gold, #FFD580);
 }
@@ -575,7 +575,7 @@
 }
 
 .hero-previously-label {
-  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-family: var(--font-italic, 'Ibarra Real Nova', Georgia, serif);
   font-style: italic;
   margin-right: 6px;
   color: rgba(255, 225, 205, 0.5);
@@ -693,7 +693,7 @@
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  font-family: var(--font-italic, 'Playfair Display', Georgia, serif);
+  font-family: var(--font-italic, 'Ibarra Real Nova', Georgia, serif);
   font-style: italic;
   font-size: 0.72rem;
   color: rgba(255, 244, 236, 0.96);
