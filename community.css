@@ -275,7 +275,7 @@
 }
 
 .cm-webinar-shot {
-  grid-column: 1 / -1;
+  grid-column: 1 / 6;
   position: relative;
 }
 
@@ -301,8 +301,8 @@
 }
 
 .cm-webinar-body {
-  grid-column: 6 / 12;
-  margin-top: 64px;
+  grid-column: 7 / 12;
+  align-self: center;
 }
 
 /* ============================================================

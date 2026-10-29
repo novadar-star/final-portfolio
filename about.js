@@ -57,6 +57,17 @@ const PHOTO_DATA = [
     caption: 'it\'s still day one',
     meta:    'aws office',
   },
+  {
+    src:     'life/img9.webp', w: 900, h: 600,
+    alt:     'Darla and friends squeezed into a photo booth, one wearing an n8n cap',
+    caption: 'one booth, seven people',
+  },
+  {
+    src:     'life/img10.webp', w: 900, h: 506,
+    alt:     'Darla listening closely during a table conversation at AWSpeak Victory',
+    caption: 'awspeak victory',
+    meta:    'pcu cavite',
+  },
 ];
 
 // ===========================
