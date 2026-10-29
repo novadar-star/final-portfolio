@@ -190,7 +190,7 @@
     var ctx = canvas.getContext('2d');
     drawStar(ctx, Object.assign({}, s, { x: 0.5, y: 0.5, r: 0.36 }), W);
     blur(ctx, Math.round(W / 36));
-    grain(ctx, 26);
+    grain(ctx, 46);
   }
 
   // the sky first, right after the page first shows; the remnants later,
