@@ -175,7 +175,7 @@
     // on tall (phone) screens the stars stack instead of sitting side by side
     var stars = aspect > 1.1 ? [
       Object.assign({}, STARS[0], { x: 0.22, y: 0.86, r: 0.6 }),
-      Object.assign({}, STARS[1], { x: 0.9,  y: 0.13, r: 0.5 }),
+      Object.assign({}, STARS[1], { x: 0.96, y: 0.06, r: 0.48 }),
       Object.assign({}, STARS[2], { x: 0.0,  y: 0.04, r: 0.2 }),
     ] : STARS;
     stars.forEach(function (s) { drawStar(ctx, s, W); });

@@ -67,8 +67,8 @@
 .story-page .nav:not(.nav--scrolled) .nav-link,
 .story-page .nav:not(.nav--scrolled) .theme-toggle,
 .story-page .nav:not(.nav--scrolled) .music-toggle {
-  color: rgba(255, 240, 238, 0.82);
-  border-color: rgba(255, 240, 238, 0.35);
+  color: var(--hero-ink);
+  border-color: rgba(255, 240, 238, 0.5);
 }
 
 .story-page .nav:not(.nav--scrolled) .nav-link:hover,
@@ -133,6 +133,10 @@
 /* the sky itself (starsky.js draws it small; the browser scales it up soft) */
 .story-hero { isolation: isolate; }
 
+@media (max-width: 1100px) {
+  .story-hero { --shade-w: 62%; --shade-h: 30%; }
+}
+
 .sky-canvas {
   position: absolute;
   inset: 0;
@@ -167,7 +171,16 @@
 }
 
 .sky-shade {
-  background: linear-gradient(to bottom,
+  /* a soft dark glow behind the text only, so it passes contrast
+     while the stars at the edges stay bright */
+  background:
+    radial-gradient(ellipse var(--shade-w, 40%) var(--shade-h, 34%) at 50% 50%,
+      rgba(96, 4, 38, 0.66) 0%,
+      rgba(96, 4, 38, 0.54) 50%,
+      rgba(96, 4, 38, 0) 100%),
+    /* and a band under the nav, so the links stay readable */
+    linear-gradient(to bottom, rgba(96, 4, 38, 0.7) 0, rgba(96, 4, 38, 0.6) calc(var(--nav-h, 80px) - 8px), rgba(96, 4, 38, 0) calc(var(--nav-h, 80px) + 90px)),
+    linear-gradient(to bottom,
     rgba(80, 5, 20, 0.16) 0%,
     rgba(50, 0, 12, 0.04) 40%,
     rgba(40, 0, 10, 0.08) 70%,
@@ -271,7 +284,7 @@
 .story-roles-word {
   font-size: 1.02rem;
   font-weight: 500;
-  color: var(--nova-star-gold, #FFD580);
+  color: var(--hero-ink);
   transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
 }
 
@@ -289,7 +302,7 @@
   padding: 0 20px;
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 240, 238, 0.45);
-  background: rgba(255, 240, 238, 0.12);
+  background: rgba(96, 4, 38, 0.3);
   color: var(--hero-ink);
   font-size: 0.9rem;
   font-weight: 500;
@@ -297,7 +310,7 @@
   transition: background-color 180ms var(--ease-out), transform 160ms var(--ease-out);
 }
 
-.story-hero-cta:hover { background: rgba(255, 240, 238, 0.22); }
+.story-hero-cta:hover { background: rgba(96, 4, 38, 0.45); }
 .story-hero-cta:active { transform: scale(0.97); }
 
 /* ============================================================
@@ -806,6 +819,7 @@
    ============================================================ */
 
 @media (max-width: 600px) {
+  .story-hero { --shade-w: 86%; --shade-h: 42%; }
   .story-intro { padding: 72px 20px 64px; }
   .chapter { padding: 56px 20px; gap: 32px; }
   .story-close { padding-top: 80px; }
