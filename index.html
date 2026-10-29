@@ -67,19 +67,18 @@
     </div>
   </nav>
 
-  <div class="story-progress" aria-hidden="true"><i></i></div>
+  <!-- one star per chapter; they light up as you reach each one (story.js) -->
+  <svg class="story-sky" viewBox="0 0 400 28" aria-hidden="true"></svg>
 
   <main id="main">
 
     <!-- HERO: the star sky. fades into the page as you scroll. -->
     <section class="story-hero" aria-labelledby="hero-heading">
+      <!-- the nova moment: a small star lands on "Nova" once, then twinkles -->
       <div class="story-hero-fade" aria-hidden="true"></div>
       <div class="story-hero-inner">
-        <h1 class="story-hero-name" id="hero-heading">hi, i'm <em>Nova</em></h1>
-        <p class="story-hero-line">
-          <span class="sr-only">a CS student who automates the boring parts</span>
-          <span class="type" aria-hidden="true" data-type="a CS student who automates the boring parts"></span><span class="type-caret" aria-hidden="true"></span>
-        </p>
+        <h1 class="story-hero-name" id="hero-heading">hi, i'm <em>Nova<svg class="nova-spark" viewBox="0 0 24 24" aria-hidden="true"><circle class="nova-spark-ring" cx="12" cy="12" r="6"/><path class="nova-spark-star" d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z"/></svg></em></h1>
+        <p class="story-hero-line">a CS student who automates the boring parts</p>
         <div class="story-roles">
           <p class="story-roles-also" aria-hidden="true">also…</p>
           <p class="sr-only">also a DOST scholar, a dean's lister, a cloud club president, an AWS Solutions Architect, a freelance web dev, a manga reader, and a cat app maker.</p>
@@ -178,7 +177,10 @@
                 <li>workshops where you <em class="hl">deploy something real</em></li>
                 <li>led the rebrand from AWS Cloud Club AdU</li>
               </ul>
-              <p class="beat">it's a <em class="hl">120+ member</em> community now.</p>
+              <div class="snag">
+                <p><span class="snag-mark" aria-hidden="true">✕</span>when i started, i didn't have many women in tech to look up to.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i try to make that space for other people.</p>
+              </div>
             </div>
             <div class="chapter-photos chapter-photos--grid">
               <figure class="pol" style="--r:-2deg">
@@ -224,9 +226,12 @@
               <p class="beat">so i started building automations in <em class="hl">n8n</em>.</p>
               <ul class="beat-list">
                 <li>a job scraper that scores listings against my resume</li>
-                <li>a JSON parser that now lives in <em class="hl">every AI workflow</em> i build</li>
                 <li>an email check that swapped a paid API for a <em class="hl">free MX lookup</em></li>
               </ul>
+              <div class="snag">
+                <p><span class="snag-mark" aria-hidden="true">✕</span>the AI kept sending back broken JSON.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i wrote a parser. it now lives in <em class="hl">every AI workflow</em> i build.</p>
+              </div>
             </div>
             <div class="chapter-photos chapter-photos--papers">
               <a class="paper" href="projects.html#ai-job-scraper" style="--r:-3deg">
@@ -257,7 +262,10 @@
             <div class="chapter-text">
               <h2 id="ch7">then i wrote about AI for <em>other people.</em></h2>
               <p class="beat">as an IT intern at Tutorials Dojo, i wrote a <em class="hl">published article</em> on Amazon Bedrock's LLM-as-a-Judge.</p>
-              <p class="beat">i had to <em class="hl">run the evaluations</em>, not just write about them.</p>
+<div class="snag">
+                <p><span class="snag-mark" aria-hidden="true">✕</span>i couldn't write about evaluations i hadn't run.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i <em class="hl">ran them on Bedrock</em> first.</p>
+              </div>
             </div>
           </article>
 
@@ -267,10 +275,12 @@
               <p class="beat">i was an AI solutions development intern. what i built:</p>
               <ul class="beat-list">
                 <li>an internal AI advisor with <em class="hl">three personas</em> streaming Gemini</li>
-                <li>Google sign-in with a domain allowlist and Supabase row-level security</li>
                 <li>a <em class="hl">public n8n webinar</em> with Cine. i demoed it live.</li>
               </ul>
-              <p class="beat">the intern cohort used the advisor <em class="hl">every day</em>.</p>
+              <div class="snag">
+                <p><span class="snag-mark" aria-hidden="true">✕</span>getting the login token through to Supabase. a simple idea that was annoying to get right.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>i debugged it until it held. the intern cohort used the advisor <em class="hl">every day</em>.</p>
+              </div>
             </div>
             <div class="chapter-photos chapter-photos--grid">
               <figure class="pol pol--wide" style="--r:2deg">
@@ -299,6 +309,10 @@
               <h2 id="ch9">then the campus cats needed a <em>Catdex.</em></h2>
               <p class="beat">i built a shared record of Adamson's campus cats. students log where they saw a cat and get a <em class="hl">guardian card</em>.</p>
               <p class="beat">it launched on <em class="hl">October 28, 2026</em>. it runs on <em class="hl">free tiers only</em>.</p>
+              <div class="snag">
+                <p><span class="snag-mark" aria-hidden="true">✕</span>someone uploaded a meme.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>now a phone's first photo waits for my approval. after that it posts right away.</p>
+              </div>
             </div>
           </article>
 

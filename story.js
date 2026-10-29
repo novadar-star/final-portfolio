@@ -1,11 +1,11 @@
 // story.js — motion for the story home page (index.html)
 //
-// 1. hero: types the one-liner once, cycles the "also…" roles,
-//    and fades the star sky into the page as you scroll
+// 1. hero: the nova moment (a star lands on the name once, then twinkles),
+//    the "also…" roles, and the star sky fading into the page
 // 2. intro: the photo drops in once
 // 3. chapters: on wide screens they pin and slide sideways with the
-//    scroll, resting on each chapter for a moment. a thin line under
-//    the nav shows how far through you are. each chapter's photos
+//    scroll, resting on each chapter for a moment. a small
+//    constellation under the nav lights one star per chapter. photos
 //    settle and its lines come in the first time it's on screen.
 //
 // Phones, short screens and reduced motion get a plain vertical stack
@@ -22,7 +22,7 @@
   var section = document.querySelector('.chapters');
   var track = section && section.querySelector('.chapters-track');
   var chapters = section ? Array.prototype.slice.call(section.querySelectorAll('.chapter')) : [];
-  var bar = document.querySelector('.story-progress');
+  var sky = document.querySelector('.story-sky');
   var n = chapters.length;
 
   if (!reduced) root.classList.add('motion-ok');
@@ -35,23 +35,12 @@
   }
   measureNav();
 
-  // ---- 1a. type the one-liner ----
-  var typeEl = document.querySelector('.type');
-  var caret = document.querySelector('.type-caret');
-  if (typeEl) {
-    var full = typeEl.getAttribute('data-type') || '';
-    if (reduced) {
-      typeEl.textContent = full;
-      if (caret) caret.classList.add('is-done');
-    } else {
-      var k = 0;
-      setTimeout(function step() {
-        k++;
-        typeEl.textContent = full.slice(0, k);
-        if (k < full.length) setTimeout(step, 48 + Math.random() * 40);
-        else setTimeout(function () { if (caret) caret.classList.add('is-done'); }, 1400);
-      }, 450);
-    }
+  // ---- 1a. the nova moment ----
+  // the star on "Nova" lands once after first paint (story.css)
+  if (hero) {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { hero.classList.add('is-lit'); });
+    });
   }
 
   // ---- 1b. cycle the roles, only while the hero is on screen ----
@@ -76,6 +65,13 @@
     heroObs.observe(hero);
   }
 
+  // idle loops in the hero pause while it's off screen
+  if (hero) {
+    new IntersectionObserver(function (entries) {
+      hero.classList.toggle('is-away', !entries[0].isIntersecting);
+    }).observe(hero);
+  }
+
   // ---- 2. intro photo ----
   var intro = document.querySelector('.pol--intro');
   if (intro && !reduced) {
@@ -91,7 +87,7 @@
   // ---- 3. chapters ----
   // number the lines inside each chapter so they come in one after another
   chapters.forEach(function (ch) {
-    var lines = ch.querySelectorAll('h2, .beat, .beat-list li');
+    var lines = ch.querySelectorAll('h2, .beat, .beat-list li, .snag p');
     Array.prototype.forEach.call(lines, function (el, i) {
       el.classList.add('reveal-line');
       el.style.setProperty('--i', i);
@@ -110,6 +106,48 @@
     if (i >= n - 1) return n - 1;
     var t = clamp((x - i - 0.2) / 0.6, 0, 1);
     return i + t * t * (3 - 2 * t);
+  }
+
+  // ---- the constellation: one star per chapter ----
+  var STAR = 'M0,-7 L1.4,-1.4 L7,0 L1.4,1.4 L0,7 L-1.4,1.4 L-7,0 L-1.4,-1.4 Z';
+  var LIFT = [-5, 3, -2, 6, -6, 1, -3, 5, 0, -4, 2, -1];   // fixed, so it's the same sky every time
+  var pts = [], cum = [0], skyLit = null, skyStars = [];
+  if (sky && n > 1) {
+    var ns = 'http://www.w3.org/2000/svg';
+    for (var s = 0; s < n; s++) pts.push([14 + s * (372 / (n - 1)), 14 + LIFT[s % LIFT.length]]);
+    for (var q = 1; q < n; q++) cum.push(cum[q - 1] + Math.hypot(pts[q][0] - pts[q - 1][0], pts[q][1] - pts[q - 1][1]));
+    var line = pts.map(function (pt) { return pt.join(','); }).join(' ');
+    var base = document.createElementNS(ns, 'polyline');
+    base.setAttribute('points', line);
+    base.setAttribute('class', 'sky-path');
+    skyLit = base.cloneNode();
+    skyLit.setAttribute('class', 'sky-path sky-path--lit');
+    skyLit.style.strokeDasharray = cum[n - 1];
+    skyLit.style.strokeDashoffset = cum[n - 1];
+    sky.appendChild(base);
+    sky.appendChild(skyLit);
+    pts.forEach(function (pt) {
+      var gEl = document.createElementNS(ns, 'g');
+      gEl.setAttribute('transform', 'translate(' + pt[0] + ' ' + pt[1] + ')');
+      var star = document.createElementNS(ns, 'path');
+      star.setAttribute('d', STAR);
+      star.setAttribute('class', 'sky-star');
+      gEl.appendChild(star);
+      sky.appendChild(gEl);
+      skyStars.push(star);
+    });
+  }
+
+  function drawSky(pos) {
+    if (!skyLit) return;
+    var i = Math.min(Math.floor(pos), n - 2);
+    var len = cum[i] + (pos - i) * (cum[i + 1] - cum[i]);
+    skyLit.style.strokeDashoffset = (cum[n - 1] - len).toFixed(2);
+    var here = Math.round(pos);
+    skyStars.forEach(function (st, k) {
+      st.classList.toggle('is-lit', k <= pos + 0.02);
+      st.classList.toggle('is-here', k === here);
+    });
   }
 
   var horizontal = false;
@@ -133,10 +171,8 @@
     var pos = dwell(p * (n - 1));
     track.style.transform = 'translate3d(' + (-pos * window.innerWidth).toFixed(1) + 'px,0,0)';
     activate(chapters[Math.round(pos)]);
-    if (bar) {
-      bar.style.setProperty('--p', p.toFixed(4));
-      bar.classList.toggle('is-on', rect.top <= 1 && rect.bottom >= window.innerHeight - 1);
-    }
+    drawSky(pos);
+    if (sky) sky.classList.toggle('is-on', rect.top <= 1 && rect.bottom >= window.innerHeight - 1);
   }
 
   function onScroll() {
@@ -150,7 +186,7 @@
     section.classList.toggle('is-horizontal', horizontal);
     if (!horizontal) {
       track.style.transform = '';
-      if (bar) bar.classList.remove('is-on');
+      if (sky) sky.classList.remove('is-on');
       if (!vObs) {
         vObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (e) { if (e.isIntersecting) activate(e.target); });

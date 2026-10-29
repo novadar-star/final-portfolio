@@ -17,6 +17,7 @@
   --pol-bg: #FFFFFF;
   --pol-shadow: 0 1px 2px rgba(60, 10, 25, 0.08), 0 14px 34px -10px rgba(60, 10, 25, 0.28);
   --hero-ink: #FFF0EE;
+  --ok: #4F6B37;            /* the check mark in a snag */
   --muted: #6F6A67;         /* 5.1:1 on --page, for small italic notes */
   background-color: var(--page);
 }
@@ -28,6 +29,7 @@
   --pol-bg: #24221E;
   --pol-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 34px -10px rgba(0, 0, 0, 0.6);
   --muted: #9A968E;
+  --ok: #8FBF65;
   background-color: var(--page);
 }
 
@@ -74,28 +76,41 @@
   color: var(--hero-ink);
 }
 
-/* thin line under the nav: how far through the chapters you are */
-.story-progress {
+
+/* one star per chapter, under the nav (story.js draws it).
+   a star lights up when you reach its chapter; the line between
+   stars draws on as you travel. */
+.story-sky {
   position: fixed;
-  left: 0;
-  right: 0;
-  top: var(--nav-h, 80px);
-  height: 2px;
+  top: calc(var(--nav-h, 80px) + 4px);
+  left: 50%;
   z-index: 101;
+  width: min(440px, 46vw);
+  height: auto;
+  overflow: visible;
+  transform: translateX(-50%);
   pointer-events: none;
   opacity: 0;
   transition: opacity 200ms var(--ease-out);
 }
 
-.story-progress.is-on { opacity: 1; }
+.story-sky.is-on { opacity: 1; }
 
-.story-progress i {
-  display: block;
-  height: 100%;
-  background: var(--accent);
-  transform-origin: left center;
-  transform: scaleX(var(--p, 0));
+.sky-path { fill: none; stroke: var(--hairline); stroke-width: 1; }
+.sky-path--lit { stroke: var(--accent); stroke-opacity: 0.55; }
+
+.sky-star {
+  fill: var(--muted);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.5);
+  transition:
+    transform 280ms var(--ease-out),
+    fill 280ms var(--ease-out);
 }
+
+.sky-star.is-lit { fill: var(--accent); transform: scale(0.85); }
+.sky-star.is-here { transform: scale(1.15); }
 
 /* ============================================================
    HERO — the star sky
@@ -130,12 +145,12 @@
   background: var(--page);
   opacity: var(--fade, 0);
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .story-hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   opacity: calc(1 - var(--fade, 0));
 }
 
@@ -159,19 +174,6 @@
   font-weight: 400;
 }
 
-.type-caret {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  margin-left: 3px;
-  vertical-align: -0.15em;
-  background: currentColor;
-  animation: caret 1s steps(1) infinite;
-}
-
-.type-caret.is-done { visibility: hidden; animation: none; }
-
-@keyframes caret { 50% { opacity: 0; } }
 
 .story-roles {
   margin-top: 26px;
@@ -216,6 +218,63 @@
 
 .story-hero-cta:hover { background: rgba(255, 240, 238, 0.22); }
 .story-hero-cta:active { transform: scale(0.97); }
+
+/* ============================================================
+   THE NOVA MOMENT — a star lands on the name once, then twinkles.
+   A nova is a star that suddenly gets brighter, so the motion
+   explains the name. story.js adds .is-lit after first paint
+   and .is-away while the hero is off screen (idle loops pause).
+   Reduced motion: the star shows its resting frame.
+   ============================================================ */
+
+.story-hero.is-away * { animation-play-state: paused !important; }
+
+/* a small star lands on the name and twinkles */
+.story-hero-name em { position: relative; }
+
+.nova-spark {
+  position: absolute;
+  top: -0.14em;
+  right: -0.5em;
+  width: 0.5em;
+  height: 0.5em;
+  overflow: visible;
+}
+
+.nova-spark-star { fill: #FFD580; }
+.nova-spark-ring { fill: none; stroke: #FFF0EE; stroke-width: 1; opacity: 0; }
+
+.nova-spark-star,
+.nova-spark-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.nova-spark-star { opacity: 0; transform: scale(0.3) rotate(-45deg); }
+
+.story-hero.is-lit .nova-spark-star {
+  animation:
+    spark-in 700ms cubic-bezier(0.23, 1, 0.32, 1) 300ms both,
+    spark-twinkle 3200ms cubic-bezier(0.77, 0, 0.175, 1) 1000ms infinite alternate;
+}
+
+.story-hero.is-lit .nova-spark-ring {
+  animation: spark-ring 900ms cubic-bezier(0.23, 1, 0.32, 1) 420ms both;
+}
+
+@keyframes spark-in {
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes spark-twinkle {
+  from { opacity: 1; transform: scale(1) rotate(0deg); }
+  to   { opacity: 1; transform: scale(1.06) rotate(8deg); }
+}
+
+@keyframes spark-ring {
+  0%   { opacity: 0.9; transform: scale(0.4); }
+  100% { opacity: 0;   transform: scale(2.6); }
+}
 
 /* ============================================================
    POLAROIDS — every photo on this page
@@ -499,7 +558,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(40px, 6vw, 96px);
-  padding: calc(var(--nav-h, 80px) + 24px) max(48px, calc((100vw - 1180px) / 2)) 40px;
+  padding: calc(var(--nav-h, 80px) + 56px) max(48px, calc((100vw - 1180px) / 2)) 40px;
 }
 
 .chapters.is-horizontal .chapter-text { order: 0; }
@@ -509,6 +568,28 @@
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
 .chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }
+
+/* the snag: what went wrong, then what i did about it */
+.snag {
+  margin-top: 24px;
+  max-width: 46ch;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent-soft);
+  font-size: 0.97rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.snag p + p { margin-top: 6px; }
+
+.snag-mark {
+  display: inline-block;
+  width: 1.4em;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.snag-mark--ok { color: var(--ok); }
 
 /* ============================================================
    REVEALS — only when motion is on (story.js adds .motion-ok)
