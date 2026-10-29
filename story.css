@@ -1,0 +1,653 @@
+/* ============================================================
+   story.css — the home page as a story (index.html)
+
+   Structure, after Sunny Wu's landing page:
+   star sky hero → one-breath intro → chapters that slide
+   sideways on wide screens → close → links to the long pages.
+
+   Motion lives in story.js. Without JS, on phones, and with
+   reduced motion, every chapter is a plain vertical stack
+   with everything visible.
+   ============================================================ */
+
+.story-page {
+  --page: #FFF5F6;
+  --accent: #A8405C;        /* 5.6:1 on --page, for text */
+  --accent-soft: rgba(194, 96, 122, 0.22);
+  --pol-bg: #FFFFFF;
+  --pol-shadow: 0 1px 2px rgba(60, 10, 25, 0.08), 0 14px 34px -10px rgba(60, 10, 25, 0.28);
+  --hero-ink: #FFF0EE;
+  --muted: #6F6A67;         /* 5.1:1 on --page, for small italic notes */
+  background-color: var(--page);
+}
+
+[data-theme="dark"] .story-page {
+  --page: var(--paper);
+  --accent: #E8929F;
+  --accent-soft: rgba(232, 146, 159, 0.22);
+  --pol-bg: #24221E;
+  --pol-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  --muted: #9A968E;
+  background-color: var(--page);
+}
+
+/* the italic accent used inside sentences */
+.story-page .hl,
+.story-page h1 em,
+.story-page h2 em {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* ============================================================
+   NAV — clear over the sky, solid once you're past it
+   ============================================================ */
+
+.story-page .nav {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.story-page .nav.nav--scrolled {
+  background: rgba(255, 245, 246, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .story-page .nav.nav--scrolled {
+  background: rgba(19, 19, 16, 0.88);
+}
+
+.story-page .nav:not(.nav--scrolled) .nav-link,
+.story-page .nav:not(.nav--scrolled) .theme-toggle,
+.story-page .nav:not(.nav--scrolled) .music-toggle {
+  color: rgba(255, 240, 238, 0.82);
+  border-color: rgba(255, 240, 238, 0.35);
+}
+
+.story-page .nav:not(.nav--scrolled) .nav-link:hover,
+.story-page .nav:not(.nav--scrolled) .nav-link.active {
+  color: var(--hero-ink);
+}
+
+/* thin line under the nav: how far through the chapters you are */
+.story-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--nav-h, 80px);
+  height: 2px;
+  z-index: 101;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.story-progress.is-on { opacity: 1; }
+
+.story-progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0));
+}
+
+/* ============================================================
+   HERO — the star sky
+   ============================================================ */
+
+.story-hero {
+  position: relative;
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--nav-h, 80px));
+  padding: var(--nav-h, 80px) 24px 48px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--hero-ink);
+  overflow: hidden;
+  background-color: #2D0012;
+  background-image:
+    linear-gradient(to bottom,
+      rgba(80, 5, 20, 0.34) 0%,
+      rgba(50, 0, 12, 0.22) 40%,
+      rgba(40, 0, 10, 0.26) 70%,
+      rgba(20, 0, 6, 0.5) 100%),
+    url('background-image.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* fades the sky into the page as you scroll (story.js sets --fade) */
+.story-hero-fade {
+  position: absolute;
+  inset: 0;
+  background: var(--page);
+  opacity: var(--fade, 0);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.story-hero-inner {
+  position: relative;
+  z-index: 2;
+  opacity: calc(1 - var(--fade, 0));
+}
+
+.story-hero-name {
+  font-size: clamp(3rem, 9vw, 6.4rem);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--hero-ink);
+}
+
+.story-hero .story-hero-name em {
+  color: var(--nova-star-gold, #FFD580);
+  padding-left: 0.04em;
+}
+
+.story-hero-line {
+  margin-top: 22px;
+  min-height: 1.5em;
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  font-weight: 400;
+}
+
+.type-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret 1s steps(1) infinite;
+}
+
+.type-caret.is-done { visibility: hidden; animation: none; }
+
+@keyframes caret { 50% { opacity: 0; } }
+
+.story-roles {
+  margin-top: 26px;
+  min-height: 3.2em;
+}
+
+.story-roles-also {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+.story-roles-word {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--nova-star-gold, #FFD580);
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+
+.story-roles-word.is-out {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.story-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 240, 238, 0.45);
+  background: rgba(255, 240, 238, 0.12);
+  color: var(--hero-ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 180ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.story-hero-cta:hover { background: rgba(255, 240, 238, 0.22); }
+.story-hero-cta:active { transform: scale(0.97); }
+
+/* ============================================================
+   POLAROIDS — every photo on this page
+   ============================================================ */
+
+.pol {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 10px 10px 36px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
+  transform: rotate(var(--r, 0deg));
+  text-decoration: none;
+  color: inherit;
+}
+
+.pol img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pol figcaption,
+.pol .pol-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  text-align: center;
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--ink-2);
+}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+
+.story-intro {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 96px 24px 112px;
+  text-align: center;
+}
+
+.pol--intro {
+  width: 180px;
+  margin: 0 auto 44px;
+  padding-bottom: 12px;
+  --r: -4deg;
+}
+
+.pol--intro img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.story-intro-lead {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.story-schools {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 36px;
+  margin-top: 36px;
+  font-size: 0.9rem;
+}
+
+.story-schools b { display: block; font-weight: 500; }
+.story-schools span { font-family: var(--font-italic); font-style: italic; color: var(--muted); }
+
+.story-stats {
+  list-style: none;
+  display: inline-block;
+  text-align: left;
+  margin-top: 32px;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+.story-stats li,
+.beat-list li {
+  position: relative;
+  padding-left: 22px;
+  margin-top: 6px;
+}
+
+/* the site's four-point star, as the bullet */
+.story-stats li::before,
+.beat-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  font-size: 0.75em;
+  color: var(--accent);
+}
+
+/* ============================================================
+   CHAPTERS — vertical by default
+   ============================================================ */
+
+.chapter {
+  display: grid;
+  gap: 40px;
+  padding: 72px 24px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.chapter-text { order: -1; }
+
+.chapter h2 {
+  font-size: clamp(2rem, 3.6vw, 3.1rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  max-width: 15ch;
+}
+
+.beat {
+  margin-top: 18px;
+  max-width: 44ch;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.beat-list {
+  list-style: none;
+  margin-top: 10px;
+  max-width: 46ch;
+  color: var(--ink-2);
+}
+
+.chapter-photos {
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+.chapter-photos > .pol { width: min(100%, 320px); }
+.chapter-photos > .pol--wide { width: min(100%, 540px); }
+
+/* collage of three */
+.chapter-photos--grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.chapter-photos--grid > .pol { width: 100%; }
+.chapter-photos--grid > .pol:first-child { grid-column: 1 / -1; width: 86%; }
+
+/* the dance photo with a second one tucked over its corner */
+.pol--over {
+  position: absolute;
+  right: 0;
+  bottom: -28px;
+  width: 34%;
+  padding-bottom: 10px;
+}
+
+.chapter-photos > .pol--over { width: 34%; }
+
+.pol--small img { aspect-ratio: 3 / 4; object-fit: cover; }
+
+/* school cards: CS & DOST */
+.chapter-photos--cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.school-card {
+  width: min(42%, 220px);
+  padding: 22px 20px 24px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
+  transform: rotate(var(--r, 0deg));
+}
+
+.school-card-big {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 26px;
+}
+
+.school-card-name { font-weight: 500; line-height: 1.3; }
+.school-card-where { font-family: var(--font-italic); font-style: italic; font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+
+.school-amp {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 2.2rem;
+  color: var(--accent);
+}
+
+/* workflow papers: they open the project */
+.chapter-photos--papers { gap: 0; }
+
+.paper {
+  display: block;
+  width: min(100%, 500px);
+  padding: 12px 12px 14px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
+  color: inherit;
+  text-decoration: none;
+  transform: rotate(var(--r, 0deg));
+}
+
+.paper + .paper { margin-top: -6px; }
+
+.paper img { display: block; width: 100%; height: auto; margin-bottom: 10px; }
+.paper-title { display: block; font-weight: 500; }
+.paper-note { display: block; font-family: var(--font-italic); font-style: italic; font-size: 0.88rem; color: var(--muted); }
+
+@media (hover: hover) and (pointer: fine) {
+  .paper,
+  .pol--link {
+    transition: transform 200ms var(--ease-out);
+  }
+  .paper:hover,
+  .pol--link:hover {
+    transform: translateY(-4px) rotate(0deg);
+  }
+}
+
+.paper:focus-visible,
+.pol--link:focus-visible,
+.longer a:focus-visible,
+.story-hero-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.story-hero-cta:focus-visible { outline-color: var(--nova-star-gold, #FFD580); }
+
+/* ============================================================
+   CHAPTERS — sideways on wide screens (story.js adds .is-horizontal)
+   ============================================================ */
+
+.chapters.is-horizontal {
+  height: calc(var(--n) * 100vh);
+}
+
+.chapters.is-horizontal .chapters-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chapters.is-horizontal .chapters-track {
+  display: flex;
+  height: 100%;
+  width: calc(var(--n) * 100vw);
+  will-change: transform;
+}
+
+.chapters.is-horizontal .chapter {
+  flex: none;
+  width: 100vw;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+  padding: calc(var(--nav-h, 80px) + 24px) max(48px, calc((100vw - 1180px) / 2)) 40px;
+}
+
+.chapters.is-horizontal .chapter-text { order: 0; }
+
+.chapters.is-horizontal .chapter-photos { max-height: calc(100vh - var(--nav-h, 80px) - 80px); }
+.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide):not(.pol--over) { width: min(100%, 300px); }
+.chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
+.chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
+.chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }
+
+/* ============================================================
+   REVEALS — only when motion is on (story.js adds .motion-ok)
+   A chapter's photos settle and its lines come in once,
+   the first time it's on screen.
+   ============================================================ */
+
+.motion-ok .chapter .pol,
+.motion-ok .chapter .paper,
+.motion-ok .chapter .school-card {
+  opacity: 0;
+  transform: translateY(20px) rotate(calc(var(--r, 0deg) * 2.5));
+  transition:
+    opacity 360ms var(--ease-out) calc(var(--d, 0) * 90ms + 120ms),
+    transform 700ms var(--ease-out) calc(var(--d, 0) * 90ms + 120ms);
+}
+
+.motion-ok .chapter.is-active .pol,
+.motion-ok .chapter.is-active .paper,
+.motion-ok .chapter.is-active .school-card {
+  opacity: 1;
+  transform: rotate(var(--r, 0deg));
+}
+
+.motion-ok .chapter .reveal-line {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 320ms var(--ease-out) calc(var(--i, 0) * 70ms),
+    transform 420ms var(--ease-out) calc(var(--i, 0) * 70ms);
+}
+
+.motion-ok .chapter.is-active .reveal-line {
+  opacity: 1;
+  transform: none;
+}
+
+/* intro photo drops in once */
+.motion-ok .pol--intro {
+  opacity: 0;
+  transform: translateY(-28px) rotate(-11deg);
+  transition: opacity 360ms var(--ease-out), transform 800ms var(--ease-out);
+}
+
+.motion-ok .pol--intro.is-in {
+  opacity: 1;
+  transform: rotate(var(--r));
+}
+
+/* once settled, hover can take over transform without a delay */
+.motion-ok .chapter.is-settled .paper,
+.motion-ok .chapter.is-settled .pol--link {
+  transition-delay: 0ms;
+}
+
+/* ============================================================
+   CLOSE + THE LONGER VERSION
+   ============================================================ */
+
+.story-close {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 120px 24px 24px;
+  text-align: center;
+}
+
+.story-close h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.story-close > p {
+  margin: 20px auto 0;
+  max-width: 48ch;
+  color: var(--ink-2);
+  font-size: 1.02rem;
+}
+
+.longer-label {
+  margin-top: 88px;
+  text-align: left;
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.longer {
+  list-style: none;
+  margin-top: 12px;
+  text-align: left;
+}
+
+.longer li + li { margin-top: 10px; }
+
+.longer a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out);
+}
+
+[data-theme="dark"] .longer a { background: rgba(255, 255, 255, 0.03); }
+
+.longer span { font-size: 1.35rem; letter-spacing: -0.02em; }
+
+.longer small {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .longer a:hover {
+    border-color: var(--accent-soft);
+    background: var(--pol-bg);
+  }
+}
+
+/* ============================================================
+   PHONES
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .story-intro { padding: 72px 20px 64px; }
+  .chapter { padding: 56px 20px; gap: 32px; }
+  .story-close { padding-top: 80px; }
+  .longer a { flex-direction: column; gap: 2px; }
+  .longer small { text-align: left; }
+  .pol--over { bottom: -20px; }
+}
