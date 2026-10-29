@@ -1,6 +1,6 @@
 // story.js — motion for the story home page (index.html)
 //
-// 1. hero: the nova moment (a star lands on the name once, then twinkles),
+// 1. hero: the nova moment (a hand-drawn star draws itself once),
 //    the "also…" roles, and the star sky fading into the page
 // 2. intro: the photo drops in once
 // 3. chapters: on wide screens they pin and slide sideways with the
@@ -64,13 +64,6 @@
       if (!on && timer) { clearInterval(timer); timer = null; }
     });
     heroObs.observe(hero);
-  }
-
-  // idle loops in the hero pause while it's off screen
-  if (hero) {
-    new IntersectionObserver(function (entries) {
-      hero.classList.toggle('is-away', !entries[0].isIntersecting);
-    }).observe(hero);
   }
 
   // ---- 2. intro photo ----

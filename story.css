@@ -328,60 +328,36 @@
 }
 
 /* ============================================================
-   THE NOVA MOMENT — a star lands on the name once, then twinkles.
-   A nova is a star that suddenly gets brighter, so the motion
-   explains the name. story.js adds .is-lit after first paint
-   and .is-away while the hero is off screen (idle loops pause).
-   Reduced motion: the star shows its resting frame.
+   THE NOVA MOMENT — a hand-drawn star next to the name draws
+   itself once, like a pen stroke, then stays still.
+   story.js adds .is-lit after first paint.
+   Reduced motion: the star is simply there, fully drawn.
    ============================================================ */
 
-.story-hero.is-away * { animation-play-state: paused !important; }
-
-/* a small star lands on the name and twinkles */
 .story-hero-name em { position: relative; }
 
-.nova-spark {
+.nova-doodle {
   position: absolute;
-  top: -0.14em;
-  right: -0.5em;
-  width: 0.5em;
-  height: 0.5em;
+  top: -0.2em;
+  right: -0.6em;
+  width: 0.52em;
+  height: 0.52em;
   overflow: visible;
+  fill: none;
+  stroke: #FFD580;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.nova-spark-star { fill: #FFD580; }
-.nova-spark-ring { fill: none; stroke: #FFF0EE; stroke-width: 1; opacity: 0; }
-
-.nova-spark-star,
-.nova-spark-ring {
-  transform-box: fill-box;
-  transform-origin: center;
+.motion-ok .nova-doodle path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
-.nova-spark-star { opacity: 0; transform: scale(0.3) rotate(-45deg); }
-
-.story-hero.is-lit .nova-spark-star {
-  animation:
-    spark-in 700ms cubic-bezier(0.23, 1, 0.32, 1) 300ms both,
-    spark-twinkle 3200ms cubic-bezier(0.77, 0, 0.175, 1) 1000ms infinite alternate;
-}
-
-.story-hero.is-lit .nova-spark-ring {
-  animation: spark-ring 900ms cubic-bezier(0.23, 1, 0.32, 1) 420ms both;
-}
-
-@keyframes spark-in {
-  to { opacity: 1; transform: scale(1) rotate(0deg); }
-}
-
-@keyframes spark-twinkle {
-  from { opacity: 1; transform: scale(1) rotate(0deg); }
-  to   { opacity: 1; transform: scale(1.06) rotate(8deg); }
-}
-
-@keyframes spark-ring {
-  0%   { opacity: 0.9; transform: scale(0.4); }
-  100% { opacity: 0;   transform: scale(2.6); }
+.motion-ok .story-hero.is-lit .nova-doodle path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.77, 0, 0.175, 1) 450ms;
 }
 
 /* ============================================================
@@ -406,8 +382,7 @@
   height: auto;
 }
 
-.pol figcaption,
-.pol .pol-cap {
+.pol figcaption {
   position: absolute;
   left: 0;
   right: 0;
@@ -479,15 +454,18 @@
   margin-top: 6px;
 }
 
-/* the site's four-point star, as the bullet */
+/* a small hand-drawn star as the bullet (same pen as the one next to "Nova") */
 .story-stats li::before,
 .beat-list li::before {
-  content: "✦";
+  content: "";
   position: absolute;
   left: 0;
-  top: 0.05em;
-  font-size: 0.75em;
-  color: var(--accent);
+  top: 0.32em;
+  width: 0.9em;
+  height: 0.9em;
+  background: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.4 3.2 Q12.8 6.1 14.2 9.1 Q17.4 9.2 20.6 9.2 Q18.4 11.4 16.2 13.6 Q17.0 16.7 18.1 19.7 Q15.3 18.2 12.6 16.7 Q9.8 19.0 6.7 20.9 Q8.0 17.4 8.5 13.8 Q5.9 11.6 2.8 10.1 Q6.1 10.1 9.2 9.6 Q11.1 7.4 12.8 5.1'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.4 3.2 Q12.8 6.1 14.2 9.1 Q17.4 9.2 20.6 9.2 Q18.4 11.4 16.2 13.6 Q17.0 16.7 18.1 19.7 Q15.3 18.2 12.6 16.7 Q9.8 19.0 6.7 20.9 Q8.0 17.4 8.5 13.8 Q5.9 11.6 2.8 10.1 Q6.1 10.1 9.2 9.6 Q11.1 7.4 12.8 5.1'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* ============================================================
@@ -618,18 +596,15 @@
 .paper-note { display: block; font-family: var(--font-italic); font-style: italic; font-size: 0.88rem; color: var(--muted); }
 
 @media (hover: hover) and (pointer: fine) {
-  .paper,
-  .pol--link {
+  .paper {
     transition: transform 200ms var(--ease-out);
   }
-  .paper:hover,
-  .pol--link:hover {
+  .paper:hover {
     transform: translateY(-4px) rotate(0deg);
   }
 }
 
 .paper:focus-visible,
-.pol--link:focus-visible,
 .longer a:focus-visible,
 .story-hero-cta:focus-visible {
   outline: 2px solid var(--accent);
@@ -637,6 +612,18 @@
 }
 
 .story-hero-cta:focus-visible { outline-color: var(--nova-star-gold, #FFD580); }
+
+/* catdex: the phone, with a handwritten link under it */
+.chapter-photos .phone { --w: min(250px, 62vw); }
+
+.phone-cap {
+  margin-top: 18px;
+  font-family: 'Caveat', var(--font-italic), cursive;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--ink-2);
+  text-decoration: none;
+}
 
 /* ============================================================
    CHAPTERS — sideways on wide screens (story.js adds .is-horizontal)
@@ -675,6 +662,7 @@
 .chapters.is-horizontal .chapter-text { order: 0; }
 
 .chapters.is-horizontal .chapter-photos { max-height: calc(100vh - var(--nav-h, 80px) - 80px); }
+.chapters.is-horizontal .chapter-photos .phone { --w: min(250px, calc((100vh - var(--nav-h, 80px) - 190px) * 0.45)); }
 .chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide):not(.pol--over) { width: min(100%, 300px); }
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
@@ -711,6 +699,7 @@
 
 .motion-ok .chapter .pol,
 .motion-ok .chapter .paper,
+.motion-ok .chapter .phone,
 .motion-ok .chapter .school-card {
   opacity: 0;
   transform: translateY(20px) rotate(calc(var(--r, 0deg) * 2.5));
@@ -721,6 +710,7 @@
 
 .motion-ok .chapter.is-active .pol,
 .motion-ok .chapter.is-active .paper,
+.motion-ok .chapter.is-active .phone,
 .motion-ok .chapter.is-active .school-card {
   opacity: 1;
   transform: rotate(var(--r, 0deg));
@@ -753,7 +743,7 @@
 
 /* once settled, hover can take over transform without a delay */
 .motion-ok .chapter.is-settled .paper,
-.motion-ok .chapter.is-settled .pol--link {
+.motion-ok .chapter.is-settled .phone {
   transition-delay: 0ms;
 }
 

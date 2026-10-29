@@ -452,10 +452,10 @@ em.italic-accent {
 .project-outcome .outcome-star {
   flex: none;
   color: var(--nova-gold);
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
   position: relative;
-  top: 1px;
+  top: 2px;
 }
 
 /* The home cards set p sizes broadly — keep the outcome line small */
@@ -693,4 +693,92 @@ em.italic-accent {
 
 .about-email-link {
   color: var(--nova-accent);
+}
+
+/* ============================================================
+   PHONE — an app shown inside an iPhone-style frame
+   (Catdex on the home and projects pages). The screenshot sits
+   under a status bar, so the camera cutout never covers the app.
+   ============================================================ */
+
+.phone {
+  --w: 250px;
+  position: relative;
+  display: block;
+  width: var(--w);
+  padding: calc(var(--w) * 0.032);
+  border-radius: calc(var(--w) * 0.17);
+  background: #1C1B1E;
+  box-shadow:
+    inset 0 0 0 1.5px #3B3A3F,
+    0 1px 2px rgba(40, 10, 20, 0.12),
+    0 24px 50px -18px rgba(40, 10, 20, 0.45);
+  transform: rotate(var(--r, 0deg));
+  color: #111;
+  text-decoration: none;
+}
+
+.phone-screen {
+  position: relative;
+  display: block;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+  border-radius: calc(var(--w) * 0.14);
+  background: #FFF9F0;
+}
+
+.phone-status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5.6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8% 0 12%;
+  font: 600 calc(var(--w) * 0.048) / 1 -apple-system, "SF Pro Text", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.phone-status svg { width: 17%; height: auto; fill: currentColor; }
+
+.phone-island {
+  position: absolute;
+  top: 1.4%;
+  left: 50%;
+  width: 31%;
+  height: 3.5%;
+  border-radius: 999px;
+  background: #050505;
+  transform: translateX(-50%);
+}
+
+.phone-screen img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .phone { transition: transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)); }
+  .phone:hover { transform: translateY(-4px) rotate(0deg); }
+}
+
+.phone:focus-visible {
+  outline: 2px solid var(--nova-accent);
+  outline-offset: 6px;
+}
+
+/* projects page: centred in its column */
+.phone--case { margin: 0 auto; --w: 240px; }
+
+/* no box around the phone: the frame is the edge */
+.case-visual:has(.phone) {
+  border: 0;
+  overflow: visible;
+  background: none;
+  padding: 8px 0 16px;
 }
