@@ -23,6 +23,7 @@
   var track = section && section.querySelector('.chapters-track');
   var chapters = section ? Array.prototype.slice.call(section.querySelectorAll('.chapter')) : [];
   var sky = document.querySelector('.story-sky');
+  var remnants = document.querySelector('.sky-remnants');
   var n = chapters.length;
 
   if (!reduced) root.classList.add('motion-ok');
@@ -157,10 +158,19 @@
     ticking = false;
     var y = window.scrollY;
 
-    // hero: sky fades out, nav turns solid once the hero has passed under it
+    // hero: sky fades out, nav turns solid once the hero has passed under it.
+    // the remnants fade in as the sky goes, and drift across the whole page
     if (hero) {
       var h = hero.offsetHeight;
-      if (!reduced) hero.style.setProperty('--fade', clamp(y / (h * 0.75), 0, 1).toFixed(3));
+      var fade = clamp(y / (h * 0.75), 0, 1);
+      if (!reduced) hero.style.setProperty('--fade', fade.toFixed(3));
+      if (remnants) {
+        remnants.style.setProperty('--fade', fade.toFixed(3));
+        if (!reduced) {
+          var maxY = document.documentElement.scrollHeight - window.innerHeight;
+          remnants.style.setProperty('--pp', clamp(y / (maxY || 1), 0, 1).toFixed(4));
+        }
+      }
       if (nav) nav.classList.toggle('nav--scrolled', y > h - nav.offsetHeight - 1);
     }
 

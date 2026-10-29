@@ -126,17 +126,96 @@
   text-align: center;
   color: var(--hero-ink);
   overflow: hidden;
-  background-color: #2D0012;
-  background-image:
-    linear-gradient(to bottom,
-      rgba(80, 5, 20, 0.34) 0%,
-      rgba(50, 0, 12, 0.22) 40%,
-      rgba(40, 0, 10, 0.26) 70%,
-      rgba(20, 0, 6, 0.5) 100%),
-    url('background-image.jpg');
-  background-size: cover;
-  background-position: center;
+  /* shown for a moment before the canvas paints */
+  background: linear-gradient(160deg, #D62C78, #E8384F 55%, #E58AA6);
 }
+
+/* the sky itself (starsky.js draws it small; the browser scales it up soft) */
+.story-hero { isolation: isolate; }
+
+.sky-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.sky-canvas.is-painted { opacity: 1; }
+
+/* grain and print dots blend into the sky; the shade keeps the name readable.
+   no z-index on these, so they blend with the canvas under them */
+.sky-grain,
+.sky-dots,
+.sky-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sky-grain {
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.6 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.sky-dots {
+  mix-blend-mode: multiply;
+  opacity: 0.1;
+  background: radial-gradient(circle at center, rgb(160, 40, 30) 0.9px, transparent 1.4px) 0 0 / 4px 4px;
+}
+
+.sky-shade {
+  background: linear-gradient(to bottom,
+    rgba(80, 5, 20, 0.16) 0%,
+    rgba(50, 0, 12, 0.04) 40%,
+    rgba(40, 0, 10, 0.08) 70%,
+    rgba(20, 0, 6, 0.26) 100%);
+}
+
+/* ============================================================
+   REMNANTS — two of the hero's stars stay behind the page
+   once you scroll past it (two of them, at the edges). They fade in as the sky fades out
+   (--fade) and drift a little over the whole page (--pp, 0 to 1).
+   Reduced motion: they sit still.
+   ============================================================ */
+
+.sky-remnants {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: calc(var(--fade, 0) * var(--remnant-strength, 0.5));
+}
+
+.remnant {
+  position: absolute;
+  width: clamp(240px, 42vmin, 520px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.remnant--a {
+  top: -14%;
+  right: -10%;
+  transform: translateY(calc(var(--pp, 0) * 90px)) rotate(calc(8deg + var(--pp, 0) * 22deg));
+}
+
+.remnant--b {
+  bottom: -18%;
+  left: -12%;
+  width: clamp(280px, 52vmin, 640px);
+  transform: translateY(calc(var(--pp, 0) * -120px)) rotate(calc(-12deg - var(--pp, 0) * 18deg));
+}
+
+/* the page sits above the remnants */
+.story-page main,
+.story-page .site-footer { position: relative; z-index: 1; }
+
+[data-theme="dark"] .story-page { --remnant-strength: 0.42; }
+[data-theme="dark"] .sky-remnants { mix-blend-mode: screen; }
 
 /* fades the sky into the page as you scroll (story.js sets --fade) */
 .story-hero-fade {
@@ -151,6 +230,8 @@
 .story-hero-inner {
   position: relative;
   z-index: 3;
+  /* soft shade so the text holds up over the bright star bands */
+  text-shadow: 0 1px 2px rgba(110, 10, 40, 0.25), 0 2px 24px rgba(110, 10, 40, 0.35);
   opacity: calc(1 - var(--fade, 0));
 }
 

@@ -36,8 +36,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Preload LCP assets — hero bg image paints before CSS is fully parsed -->
-  <link rel="preload" href="background-image.jpg" as="image" fetchpriority="high">
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="nova-phase3.css">
@@ -70,10 +68,21 @@
   <!-- one star per chapter; they light up as you reach each one (story.js) -->
   <svg class="story-sky" viewBox="0 0 400 28" aria-hidden="true"></svg>
 
+  <!-- what's left of the hero's stars once you scroll past it (starsky.js) -->
+  <div class="sky-remnants" aria-hidden="true">
+    <canvas class="remnant remnant--a" data-starsky="remnant" data-star="1"></canvas>
+    <canvas class="remnant remnant--b" data-starsky="remnant" data-star="0"></canvas>
+  </div>
+
   <main id="main">
 
     <!-- HERO: the star sky. fades into the page as you scroll. -->
     <section class="story-hero" aria-labelledby="hero-heading">
+      <!-- the star sky, drawn in code (starsky.js), with grain and dots on top -->
+      <canvas class="sky-canvas" data-starsky="hero" aria-hidden="true"></canvas>
+      <div class="sky-grain" aria-hidden="true"></div>
+      <div class="sky-dots" aria-hidden="true"></div>
+      <div class="sky-shade" aria-hidden="true"></div>
       <!-- the nova moment: a small star lands on "Nova" once, then twinkles -->
       <div class="story-hero-fade" aria-hidden="true"></div>
       <div class="story-hero-inner">
@@ -366,6 +375,7 @@
   <script src="main.js"></script>
   <script src="music.js"></script>
   <script src="glyphs.js"></script>
+  <script src="starsky.js"></script>
   <script src="story.js"></script>
 </body>
 </html>
