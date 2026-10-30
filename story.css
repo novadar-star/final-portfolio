@@ -461,9 +461,8 @@
 
 .chapter-text { order: -1; min-width: 0; overflow-wrap: break-word; }
 
-/* story.js zooms each chapter while scrolling */
-.motion-ok .chapters.is-horizontal .chapter { will-change: transform; transform-origin: center; }
-.motion-ok .chapter-photos { transform-origin: center; }
+/* story.js zooms each chapter's photos while scrolling */
+.motion-ok .chapter-photos { will-change: transform; transform-origin: center; }
 
 .chapter h2 {
   font-size: clamp(2rem, 3.6vw, 3.1rem);
@@ -718,8 +717,17 @@
   transform: none;
 }
 
-/* intro: story.js zooms the photo down into place while scrolling */
-.motion-ok .pol--intro { position: relative; z-index: 2; transform-origin: center top; will-change: transform; }
+/* intro photo settles in once */
+.motion-ok .pol--intro {
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 360ms var(--ease-out), transform 600ms var(--ease-out);
+}
+
+.motion-ok .pol--intro.is-in {
+  opacity: 1;
+  transform: none;
+}
 
 /* once settled, hover can take over transform without a delay */
 .motion-ok .chapter.is-settled .paper,
