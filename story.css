@@ -464,6 +464,11 @@
 /* story.js zooms each chapter's photos while scrolling */
 .motion-ok .chapter-photos { will-change: transform; transform-origin: center; }
 
+/* each slide is its own frame: zoomed photos spill off the screen edge,
+   never into the slide next to it. the words stay above the photos. */
+.chapters.is-horizontal .chapter { overflow: hidden; }
+.chapters.is-horizontal .chapter-text { position: relative; z-index: 1; }
+
 .chapter h2 {
   font-size: clamp(2rem, 3.6vw, 3.1rem);
   font-weight: 400;
