@@ -1,8 +1,9 @@
 /* ============================================================
    story.css — the home page as a story (index.html)
 
-   star sky hero → the path so far and a dated log → chapters
-   that slide sideways on wide screens → the full constellation.
+   Structure, after Sunny Wu's landing page:
+   star sky hero → one-breath intro → chapters that slide
+   sideways on wide screens → close → links to the long pages.
 
    Motion lives in story.js. Without JS, on phones, and with
    reduced motion, every chapter is a plain vertical stack
@@ -15,7 +16,6 @@
   --accent-soft: rgba(194, 96, 122, 0.22);
   --pol-bg: #FFFFFF;
   --pol-shadow: 0 1px 2px rgba(60, 10, 25, 0.08), 0 14px 34px -10px rgba(60, 10, 25, 0.28);
-  --line: rgba(28, 28, 26, 0.12);
   --hero-ink: #FFF0EE;
   --ok: #4F6B37;            /* the check mark in a snag */
   --muted: #6F6A67;         /* 5.1:1 on --page, for small italic notes */
@@ -28,14 +28,15 @@
   --accent-soft: rgba(232, 146, 159, 0.22);
   --pol-bg: #24221E;
   --pol-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 34px -10px rgba(0, 0, 0, 0.6);
-  --line: rgba(236, 234, 228, 0.12);
   --muted: #9A968E;
   --ok: #8FBF65;
   background-color: var(--page);
 }
 
-/* the italic accent: only on "Nova" in the hero */
-.story-page h1 em {
+/* the italic accent used inside sentences */
+.story-page .hl,
+.story-page h1 em,
+.story-page h2 em {
   font-family: var(--font-italic);
   font-style: italic;
   font-weight: 400;
@@ -99,21 +100,17 @@
 .sky-path--lit { stroke: var(--accent); stroke-opacity: 0.55; }
 
 .sky-star {
-  fill: none;
-  stroke: var(--muted);
-  stroke-width: 1.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: var(--muted);
   transform-box: fill-box;
   transform-origin: center;
-  transform: scale(0.7);
+  transform: scale(0.5);
   transition:
     transform 280ms var(--ease-out),
-    stroke 280ms var(--ease-out);
+    fill 280ms var(--ease-out);
 }
 
-.sky-star.is-lit { stroke: var(--accent); transform: scale(0.9); }
-.sky-star.is-here { transform: scale(1.25); }
+.sky-star.is-lit { fill: var(--accent); transform: scale(0.85); }
+.sky-star.is-here { transform: scale(1.15); }
 
 /* ============================================================
    HERO — the star sky
@@ -186,9 +183,9 @@
   /* a soft dark glow behind the text only, so it passes contrast
      while the stars at the edges stay bright */
   background:
-    radial-gradient(ellipse var(--shade-w, 58%) var(--shade-h, 32%) at 50% 50%,
-      rgba(96, 4, 38, 0.8) 0%,
-      rgba(96, 4, 38, 0.7) 55%,
+    radial-gradient(ellipse var(--shade-w, 40%) var(--shade-h, 34%) at 50% 50%,
+      rgba(96, 4, 38, 0.72) 0%,
+      rgba(96, 4, 38, 0.6) 50%,
       rgba(96, 4, 38, 0) 100%),
     /* and a band under the nav, so the links stay readable */
     linear-gradient(to bottom, rgba(96, 4, 38, 0.7) 0, rgba(96, 4, 38, 0.6) calc(var(--nav-h, 80px) - 8px), rgba(96, 4, 38, 0) calc(var(--nav-h, 80px) + 90px)),
@@ -261,8 +258,7 @@
 }
 
 .story-hero-name {
-  font-size: clamp(2.6rem, 7.4vw, 5.6rem);
-  text-wrap: balance;
+  font-size: clamp(3rem, 9vw, 6.4rem);
   font-weight: 300;
   letter-spacing: -0.045em;
   line-height: 1;
@@ -276,14 +272,39 @@
 
 .story-hero-line {
   margin-top: 22px;
+  min-height: 1.5em;
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   font-weight: 400;
 }
 
 
+.story-roles {
+  margin-top: 26px;
+  min-height: 3.2em;
+}
+
+.story-roles-also {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+.story-roles-word {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--hero-ink);
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+
+.story-roles-word.is-out {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
 .story-hero-cta {
   display: inline-block;
-  margin-top: 28px;
+  margin-top: 14px;
   padding: 10px 0;   /* keeps the tap area at least 44px tall */
   color: var(--nova-star-gold, #FFD580);
   /* 19px+ bold counts as large text, which needs 3:1 contrast */
@@ -317,10 +338,10 @@
 
 .nova-doodle {
   position: absolute;
-  top: -0.42em;
-  right: -0.52em;
-  width: 0.46em;
-  height: 0.46em;
+  top: -0.2em;
+  right: -0.6em;
+  width: 0.52em;
+  height: 0.52em;
   overflow: visible;
   fill: none;
   stroke: #FFD580;
@@ -340,24 +361,33 @@
 }
 
 /* ============================================================
-   PHOTOS — plain and upright, with a short caption underneath
+   POLAROIDS — every photo on this page
    ============================================================ */
 
 .pol {
   position: relative;
   display: block;
   margin: 0;
+  padding: 10px 10px 36px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
+  transform: rotate(var(--r, 0deg));
+  text-decoration: none;
+  color: inherit;
 }
 
 .pol img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 6px;
 }
 
 .pol figcaption {
-  margin-top: 6px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  text-align: center;
   font-family: 'Caveat', var(--font-italic), cursive;
   font-weight: 500;
   font-size: 1.15rem;
@@ -366,76 +396,58 @@
 }
 
 /* ============================================================
-   INTRO — the path so far, then a dated log (each row opens the
-   page with the details)
+   INTRO
    ============================================================ */
 
 .story-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
-  gap: 40px;
-  align-items: start;
-  max-width: 860px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 104px 24px 112px;
+  padding: 96px 24px 112px;
+  text-align: center;
 }
 
-.intro-photo {
-  width: 100%;
+.pol--intro {
+  width: 180px;
+  margin: 0 auto 44px;
+  padding-bottom: 12px;
+  --r: -4deg;
+}
+
+.pol--intro img {
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: 6px;
 }
 
 .story-intro-lead {
-  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
   line-height: 1.5;
   font-weight: 400;
   letter-spacing: -0.01em;
 }
 
-.story-intro-lead .arrow { color: var(--accent); }
-
-.log {
+.story-schools {
   list-style: none;
-  margin-top: 32px;
-  border-top: 1px solid var(--line);
-}
-
-.log a {
-  display: grid;
-  grid-template-columns: 7.5em minmax(0, 1fr);
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 160ms var(--ease-out);
-}
-
-.log-when {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.log-what { font-size: 0.98rem; }
-
-@media (hover: hover) and (pointer: fine) {
-  .log a:hover { color: var(--accent); }
-}
-
-.log a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.log-note {
-  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 36px;
+  margin-top: 36px;
   font-size: 0.9rem;
-  color: var(--muted);
 }
 
+.story-schools b { display: block; font-weight: 500; }
+.story-schools span { font-family: var(--font-italic); font-style: italic; color: var(--muted); }
+
+.story-stats {
+  list-style: none;
+  display: inline-block;
+  text-align: left;
+  margin-top: 32px;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+.story-stats li,
 .beat-list li {
   position: relative;
   padding-left: 22px;
@@ -443,6 +455,7 @@
 }
 
 /* a small hand-drawn star as the bullet (same pen as the one next to "Nova") */
+.story-stats li::before,
 .beat-list li::before {
   content: "";
   position: absolute;
@@ -501,7 +514,7 @@
   justify-items: center;
 }
 
-.chapter-photos > .pol { width: min(100%, 300px); }
+.chapter-photos > .pol { width: min(100%, 320px); }
 .chapter-photos > .pol--wide { width: min(100%, 540px); }
 
 /* collage of three */
@@ -514,40 +527,85 @@
 .chapter-photos--grid > .pol { width: 100%; }
 .chapter-photos--grid > .pol:first-child { grid-column: 1 / -1; width: 86%; }
 
-.pol--small img { aspect-ratio: 3 / 4; object-fit: cover; }
-
-/* two photos side by side, a wide one and a tall one */
-.chapter-photos--pair {
-  grid-template-columns: 1.6fr 1fr;
-  gap: 14px;
-  align-items: end;
+/* the dance photo with a second one tucked over its corner */
+.pol--over {
+  position: absolute;
+  right: 0;
+  bottom: -28px;
+  width: 34%;
+  padding-bottom: 10px;
 }
 
-.chapter-photos--pair > .pol { width: 100%; }
+.chapter-photos > .pol--over { width: 34%; }
+
+.pol--small img { aspect-ratio: 3 / 4; object-fit: cover; }
+
+/* school cards: CS & DOST */
+.chapter-photos--cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.school-card {
+  width: min(42%, 220px);
+  padding: 22px 20px 24px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
+  transform: rotate(var(--r, 0deg));
+}
+
+.school-card-big {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 26px;
+}
+
+.school-card-name { font-weight: 500; line-height: 1.3; }
+.school-card-where { font-family: var(--font-italic); font-style: italic; font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+
+.school-amp {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 2.2rem;
+  color: var(--accent);
+}
 
 /* workflow papers: they open the project */
-.chapter-photos--papers { gap: 12px; }
+.chapter-photos--papers { gap: 0; }
 
 .paper {
   display: block;
   width: min(100%, 500px);
-  padding: 10px 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  padding: 12px 12px 14px;
+  background: var(--pol-bg);
+  box-shadow: var(--pol-shadow);
   color: inherit;
   text-decoration: none;
+  transform: rotate(var(--r, 0deg));
 }
 
-.paper img { display: block; width: 100%; height: auto; margin-bottom: 10px; border-radius: 4px; }
+.paper + .paper { margin-top: -6px; }
+
+.paper img { display: block; width: 100%; height: auto; margin-bottom: 10px; }
 .paper-title { display: block; font-weight: 500; }
-.paper-note { display: block; font-size: 0.88rem; color: var(--muted); }
+.paper-note { display: block; font-family: var(--font-italic); font-style: italic; font-size: 0.88rem; color: var(--muted); }
 
 @media (hover: hover) and (pointer: fine) {
-  .paper { transition: border-color 160ms var(--ease-out); }
-  .paper:hover { border-color: var(--accent); }
+  .paper {
+    transition: transform 200ms var(--ease-out);
+  }
+  .paper:hover {
+    transform: translateY(-4px) rotate(0deg);
+  }
 }
 
 .paper:focus-visible,
+.longer a:focus-visible,
 .story-hero-cta:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
@@ -605,9 +663,7 @@
 
 .chapters.is-horizontal .chapter-photos { max-height: calc(100vh - var(--nav-h, 80px) - 80px); }
 .chapters.is-horizontal .chapter-photos .phone { --w: min(250px, calc((100vh - var(--nav-h, 80px) - 190px) * 0.45)); }
-.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) { width: min(100%, 280px); }
-.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) img { max-height: 52vh; object-fit: cover; }
-.chapters.is-horizontal .chapter-photos--pair { width: min(100%, 540px); justify-self: center; }
+.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide):not(.pol--over) { width: min(100%, 300px); }
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
 .chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }
@@ -643,19 +699,21 @@
 
 .motion-ok .chapter .pol,
 .motion-ok .chapter .paper,
-.motion-ok .chapter .phone {
+.motion-ok .chapter .phone,
+.motion-ok .chapter .school-card {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(20px) rotate(calc(var(--r, 0deg) * 2.5));
   transition:
     opacity 360ms var(--ease-out) calc(var(--d, 0) * 90ms + 120ms),
-    transform 600ms var(--ease-out) calc(var(--d, 0) * 90ms + 120ms);
+    transform 700ms var(--ease-out) calc(var(--d, 0) * 90ms + 120ms);
 }
 
 .motion-ok .chapter.is-active .pol,
 .motion-ok .chapter.is-active .paper,
-.motion-ok .chapter.is-active .phone {
+.motion-ok .chapter.is-active .phone,
+.motion-ok .chapter.is-active .school-card {
   opacity: 1;
-  transform: none;
+  transform: rotate(var(--r, 0deg));
 }
 
 .motion-ok .chapter .reveal-line {
@@ -671,6 +729,18 @@
   transform: none;
 }
 
+/* intro photo drops in once */
+.motion-ok .pol--intro {
+  opacity: 0;
+  transform: translateY(-28px) rotate(-11deg);
+  transition: opacity 360ms var(--ease-out), transform 800ms var(--ease-out);
+}
+
+.motion-ok .pol--intro.is-in {
+  opacity: 1;
+  transform: rotate(var(--r));
+}
+
 /* once settled, hover can take over transform without a delay */
 .motion-ok .chapter.is-settled .paper,
 .motion-ok .chapter.is-settled .phone {
@@ -678,8 +748,7 @@
 }
 
 /* ============================================================
-   CLOSE — the whole constellation, with the next star still
-   faint. Shown on every screen size, so phones see it too.
+   CLOSE + THE LONGER VERSION
    ============================================================ */
 
 .story-close {
@@ -688,27 +757,6 @@
   padding: 120px 24px 24px;
   text-align: center;
 }
-
-.close-sky {
-  display: block;
-  width: min(420px, 100%);
-  height: auto;
-  margin: 0 auto 36px;
-  overflow: visible;
-}
-
-.cs-line { fill: none; stroke: var(--accent); stroke-opacity: 0.45; stroke-width: 1; }
-.cs-next-line { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.6; }
-
-.cs-star {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.cs-star--next { stroke: var(--muted); opacity: 0.6; }
 
 .story-close h2 {
   font-size: clamp(2rem, 3.6vw, 3rem);
@@ -724,19 +772,66 @@
   font-size: 1.02rem;
 }
 
+.longer-label {
+  margin-top: 88px;
+  text-align: left;
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.longer {
+  list-style: none;
+  margin-top: 12px;
+  text-align: left;
+}
+
+.longer li + li { margin-top: 10px; }
+
+.longer a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out);
+}
+
+[data-theme="dark"] .longer a { background: rgba(255, 255, 255, 0.03); }
+
+.longer span { font-size: 1.35rem; letter-spacing: -0.02em; }
+
+.longer small {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .longer a:hover {
+    border-color: var(--accent-soft);
+    background: var(--pol-bg);
+  }
+}
+
 /* ============================================================
    PHONES
    ============================================================ */
-
-@media (max-width: 760px) {
-  .story-intro { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .intro-photo { width: 150px; }
-}
 
 @media (max-width: 600px) {
   .story-hero { --shade-w: 86%; --shade-h: 42%; }
   .story-intro { padding: 72px 20px 64px; }
   .chapter { padding: 56px 20px; gap: 32px; }
   .story-close { padding-top: 80px; }
-  .log a { grid-template-columns: 6.4em minmax(0, 1fr); }
+  .longer a { flex-direction: column; gap: 2px; }
+  .longer small { text-align: left; }
+  .pol--over { bottom: -20px; }
 }

@@ -87,76 +87,104 @@
       <!-- the nova moment: a hand-drawn star draws itself next to "Nova" once -->
       <div class="story-hero-fade" aria-hidden="true"></div>
       <div class="story-hero-inner">
-        <h1 class="story-hero-name" id="hero-heading">Darla “<em>Nova<svg class="nova-doodle" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M11.5 2.6 Q14.1 12.1 18.4 20.9 Q9.7 16.3 1.9 10.2 Q11.7 9.6 21.6 9.1 Q14.6 15.5 7.0 21.0 Q9.3 11.9 11.5 2.6 Q12.3 3.8 13.1 4.8"/></svg></em>” Sumanting</h1>
-        <p class="story-hero-line">a CS student in Manila who automates the boring parts</p>
+        <h1 class="story-hero-name" id="hero-heading">hi, i'm <em>Nova<svg class="nova-doodle" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M11.5 2.6 Q14.1 12.1 18.4 20.9 Q9.7 16.3 1.9 10.2 Q11.7 9.6 21.6 9.1 Q14.6 15.5 7.0 21.0 Q9.3 11.9 11.5 2.6 Q12.3 3.8 13.1 4.8"/></svg></em></h1>
+        <p class="story-hero-line">a CS student who automates the boring parts</p>
+        <div class="story-roles">
+          <p class="story-roles-also" aria-hidden="true">also…</p>
+          <p class="sr-only">also a DOST scholar, a dean's lister, a cloud club president, an AWS Solutions Architect, a freelance web dev, a manga reader, and a cat app maker.</p>
+          <p class="story-roles-word" aria-hidden="true" data-roles="a DOST scholar|a dean's lister|a cloud club president|an AWS Solutions Architect|a freelance web dev|a manga reader|a cat app maker">a DOST scholar</p>
+        </div>
         <a href="#story" class="story-hero-cta">see what i've built <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
-    <!-- INTRO: the path so far, then a dated log that links to the long pages -->
+    <!-- INTRO: who, in one breath -->
     <section class="story-intro" aria-label="Introduction">
-      <img class="intro-photo" src="pics/pic.jpg" alt="Darla smiling outside on campus, wearing an ID lace" width="1169" height="1820">
-      <div class="intro-text">
-        <p class="story-intro-lead">
-          biology competitions <span class="arrow" aria-hidden="true">→</span><span class="sr-only">, then</span>
-          UAAP street dancing <span class="arrow" aria-hidden="true">→</span><span class="sr-only">, then</span>
-          computer science at Adamson. now i build web apps and the automations behind them.
-        </p>
-        <ol class="log">
-          <li><a href="projects.html#catdex"><span class="log-when">2026</span><span class="log-what">built and launched Campus Catdex</span></a></li>
-          <li><a href="experience.html"><span class="log-when">2026</span><span class="log-what">AI solutions development intern, Eskwelabs</span></a></li>
-          <li><a href="experience.html"><span class="log-when">2026</span><span class="log-what">IT intern, Tutorials Dojo</span></a></li>
-          <li><a href="community.html#sbg"><span class="log-when">2025 – now</span><span class="log-what">president, AWS Student Builder Group Adamson</span></a></li>
-          <li><a href="community.html#sugph"><span class="log-when">2025 – 26</span><span class="log-what">executive secretary, AWS Student User Groups PH</span></a></li>
-        </ol>
-        <p class="log-note">DOST-SEI scholar · dean's lister · AWS Solutions Architect Associate</p>
-      </div>
+      <figure class="pol pol--intro">
+        <img src="pics/pic.jpg" alt="Darla smiling outside on campus, wearing an ID lace" width="1169" height="1820">
+      </figure>
+      <p class="story-intro-lead">
+        i was a <em class="hl">biology</em> kid who found <em class="hl">code</em> in an Arduino class.
+        now i build <em class="hl">web apps</em> and the <em class="hl">automations</em> behind them.
+      </p>
+      <ul class="story-schools">
+        <li><b>Computer science</b> <span>Adamson University</span></li>
+        <li><b>DOST-SEI scholar</b> <span>dean's lister</span></li>
+      </ul>
+      <ul class="story-stats">
+        <li>president of a <em class="hl">120+</em> member cloud club</li>
+        <li>coordinated <em class="hl">40+</em> chapters @ AWS SUG PH</li>
+        <li>built an AI advisor with <em class="hl">3</em> personas @ eskwelabs</li>
+        <li><em class="hl">5</em> certs, including AWS Solutions Architect</li>
+      </ul>
     </section>
 
     <!-- CHAPTERS: wide screens pin this and slide sideways (story.js).
          phones and reduced motion: a plain vertical stack. -->
-    <section class="chapters" id="story" aria-label="My story so far" style="--n: 8">
+    <section class="chapters" id="story" aria-label="My story so far" style="--n: 9">
       <div class="chapters-pin">
         <div class="chapters-track">
 
           <article class="chapter" aria-labelledby="ch1">
             <div class="chapter-photos">
-              <figure class="pol">
+              <figure class="pol" style="--r:-3deg">
                 <img src="pics/nova-photo.jpg" alt="Darla on campus at golden hour, in her school uniform" width="1536" height="2048" loading="lazy">
                 <figcaption>still that kid</figcaption>
               </figure>
             </div>
             <div class="chapter-text">
-              <h2 id="ch1">a biology kid who got pulled into code.</h2>
-              <p class="beat">growing up in Romblon, i liked biology, environmental science and the humanities. i was also the kid who spent way too long on why the printer stopped working.</p>
-              <p class="beat">then a classmate showed off a robotics and IoT project. an Arduino class gave me my first real taste. now i study computer science at Adamson as a DOST scholar.</p>
+              <h2 id="ch1">i was a <em>biology</em> kid first.</h2>
+              <p class="beat">growing up in Romblon, i liked biology, environmental science and the humanities. i joined <em class="hl">biology competitions</em>.</p>
+              <p class="beat">i was also the kid who spent way too long on <em class="hl">why the printer stopped working</em>.</p>
             </div>
           </article>
 
           <article class="chapter chapter--flip" aria-labelledby="ch2">
             <div class="chapter-text">
-              <h2 id="ch2">i also street danced for the UAAP.</h2>
+              <h2 id="ch2">i also <em>danced.</em></h2>
+              <p class="beat">i competed in <em class="hl">street dancing for the UAAP</em>.</p>
               <p class="beat">looking back, all of it shaped how i work now.</p>
             </div>
-            <div class="chapter-photos chapter-photos--pair">
-              <figure class="pol">
+            <div class="chapter-photos">
+              <figure class="pol pol--wide" style="--r:2deg">
                 <img src="pics/dance.jpg" alt="Darla competing in street dancing for the UAAP" width="2048" height="1365" loading="lazy">
                 <figcaption>uaap street dancing</figcaption>
               </figure>
-              <figure class="pol" style="--d:1">
+              <figure class="pol pol--small pol--over" style="--r:-5deg;--d:1">
                 <img src="dance-photoshoot.jpg" alt="Darla posing under pink stage light for a dance photoshoot" width="1365" height="2048" loading="lazy">
               </figure>
             </div>
           </article>
 
+          <article class="chapter" aria-labelledby="ch3">
+            <div class="chapter-photos chapter-photos--cards">
+              <div class="school-card" style="--r:-3deg">
+                <p class="school-card-big">CS</p>
+                <p class="school-card-name">Computer science</p>
+                <p class="school-card-where">Adamson University</p>
+              </div>
+              <span class="school-amp" aria-hidden="true">&amp;</span>
+              <div class="school-card" style="--r:3deg;--d:1">
+                <p class="school-card-big">SEI</p>
+                <p class="school-card-name">DOST scholar</p>
+                <p class="school-card-where">and a dean's lister</p>
+              </div>
+            </div>
+            <div class="chapter-text">
+              <h2 id="ch3">then a classmate showed off a <em>robot.</em></h2>
+              <p class="beat">it was a robotics and IoT project. i thought it was so cool that people could <em class="hl">build things</em> like that.</p>
+              <p class="beat">an <em class="hl">Arduino class</em> gave me my first real taste. now i study computer science at Adamson.</p>
+            </div>
+          </article>
+
           <article class="chapter chapter--flip" aria-labelledby="ch4">
             <div class="chapter-text">
-              <h2 id="ch4">i found my people in a cloud club.</h2>
-              <p class="beat">i joined the AWS Student Builder Group to learn and meet other builders. Kate Callao recruited me and helped me grow into leading it. now i'm the president.</p>
+              <h2 id="ch4">i found my people in a <em>cloud club.</em></h2>
+              <p class="beat">i joined the AWS Student Builder Group to learn and meet other builders. Kate Callao recruited me and helped me grow into leading it. now i'm the <em class="hl">president</em>.</p>
               <p class="beat">what i changed:</p>
               <ul class="beat-list">
-                <li>joining is one form and ₱100. no interview.</li>
-                <li>workshops where you deploy something real</li>
+                <li>joining is one form and ₱100. <em class="hl">no interview.</em></li>
+                <li>workshops where you <em class="hl">deploy something real</em></li>
                 <li>led the rebrand from AWS Cloud Club AdU</li>
               </ul>
               <div class="snag">
@@ -165,15 +193,15 @@
               </div>
             </div>
             <div class="chapter-photos chapter-photos--grid">
-              <figure class="pol">
+              <figure class="pol" style="--r:-2deg">
                 <img src="pics/community/sbg-hearts.webp" alt="AWS Student Builder Group Adamson members making heart hands in a conference room" width="1267" height="657" loading="lazy">
                 <figcaption>hearts up</figcaption>
               </figure>
-              <figure class="pol" style="--d:1">
+              <figure class="pol" style="--r:3deg;--d:1">
                 <img src="pics/community/sbg-session.webp" alt="Darla in an AWS hoodie beside a speaker at the front of a classroom" width="717" height="676" loading="lazy">
                 <figcaption>in front of the room</figcaption>
               </figure>
-              <figure class="pol" style="--d:2">
+              <figure class="pol" style="--r:-4deg;--d:2">
                 <img src="life/img3.webp" alt="Darla and a friend at the Soar Through AWS booth at Adamson" width="900" height="473" loading="lazy">
                 <figcaption>soar through aws</figcaption>
               </figure>
@@ -182,51 +210,51 @@
 
           <article class="chapter" aria-labelledby="ch5">
             <div class="chapter-photos chapter-photos--grid">
-              <figure class="pol">
+              <figure class="pol" style="--r:2deg">
                 <img src="pics/community/community-day-summit.webp" alt="Darla with four student leaders at the Student Community Day Summit 2026" width="1400" height="786" loading="lazy">
                 <figcaption>community day summit</figcaption>
               </figure>
-              <figure class="pol" style="--d:1">
+              <figure class="pol" style="--r:-3deg;--d:1">
                 <img src="life/img8.webp" alt="Darla and a friend at an AWS office, in front of the It's still Day One wall" width="900" height="675" loading="lazy">
                 <figcaption>it's still day one</figcaption>
               </figure>
-              <figure class="pol" style="--d:2">
+              <figure class="pol" style="--r:4deg;--d:2">
                 <img src="life/img10.webp" alt="Darla listening closely during a table conversation at AWSpeak Victory" width="900" height="506" loading="lazy">
                 <figcaption>awspeak victory</figcaption>
               </figure>
             </div>
             <div class="chapter-text">
-              <h2 id="ch5">i helped run it nationally, too.</h2>
+              <h2 id="ch5">then i helped run it <em>nationally.</em></h2>
               <p class="beat">i was executive secretary of AWS Student User Groups Philippines, from October 2025 to June 2026.</p>
-              <p class="beat">that meant 40+ chapters, a lot of meeting minutes, and keeping everyone in the same loop.</p>
+              <p class="beat">that meant <em class="hl">40+ chapters</em>, a lot of meeting minutes, and keeping everyone in the same loop.</p>
             </div>
           </article>
 
           <article class="chapter chapter--flip" aria-labelledby="ch6">
             <div class="chapter-text">
-              <h2 id="ch6">i got tired of doing things twice.</h2>
-              <p class="beat">so i started building automations in n8n.</p>
+              <h2 id="ch6">i got tired of doing things <em>twice.</em></h2>
+              <p class="beat">so i started building automations in <em class="hl">n8n</em>.</p>
               <ul class="beat-list">
                 <li>a job scraper that scores listings against my resume</li>
-                <li>an email check that swapped a paid API for a free MX lookup</li>
+                <li>an email check that swapped a paid API for a <em class="hl">free MX lookup</em></li>
               </ul>
               <div class="snag">
                 <p><span class="snag-mark" aria-hidden="true">✕</span>the AI kept sending back broken JSON.</p>
-                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i wrote a parser. it now lives in every AI workflow i build.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i wrote a parser. it now lives in <em class="hl">every AI workflow</em> i build.</p>
               </div>
             </div>
             <div class="chapter-photos chapter-photos--papers">
-              <a class="paper" href="projects.html#ai-job-scraper">
+              <a class="paper" href="projects.html#ai-job-scraper" style="--r:-3deg">
                 <img src="pics/ai-research-workflow.png" alt="" width="1267" height="256" loading="lazy">
                 <span class="paper-title">AI job scraper</span>
                 <span class="paper-note">Slack in, ranked jobs out</span>
               </a>
-              <a class="paper" href="projects.html#gtm-outbound" style="--d:1">
+              <a class="paper" href="projects.html#gtm-outbound" style="--r:2deg;--d:1">
                 <img src="pics/gtm-signal-workflow.png" alt="" width="1275" height="275" loading="lazy">
                 <span class="paper-title">GTM signal pipeline</span>
                 <span class="paper-note">buying signals to first email</span>
               </a>
-              <a class="paper" href="projects.html#attendee-pipeline" style="--d:2">
+              <a class="paper" href="projects.html#attendee-pipeline" style="--r:-1deg;--d:2">
                 <img src="pics/aws-community-day.png" alt="" width="1362" height="527" loading="lazy">
                 <span class="paper-title">attendee pipeline</span>
                 <span class="paper-note">one email per attendee, no duplicates</span>
@@ -236,28 +264,28 @@
 
           <article class="chapter" aria-labelledby="ch7">
             <div class="chapter-photos">
-              <figure class="pol pol--wide">
+              <figure class="pol pol--wide" style="--r:-2deg">
                 <img src="pics/llm-as-a-judge.png" alt="Cover of Darla's Tutorials Dojo article: Amazon Bedrock's LLM-as-a-Judge" width="738" height="415" loading="lazy">
                 <figcaption>published @ tutorials dojo</figcaption>
               </figure>
             </div>
             <div class="chapter-text">
-              <h2 id="ch7">i wrote about AI for Tutorials Dojo.</h2>
-              <p class="beat">as an IT intern at Tutorials Dojo, i wrote a published article on Amazon Bedrock's LLM-as-a-Judge.</p>
+              <h2 id="ch7">then i wrote about AI for <em>other people.</em></h2>
+              <p class="beat">as an IT intern at Tutorials Dojo, i wrote a <em class="hl">published article</em> on Amazon Bedrock's LLM-as-a-Judge.</p>
 <div class="snag">
                 <p><span class="snag-mark" aria-hidden="true">✕</span>i couldn't write about evaluations i hadn't run.</p>
-                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i ran them on Bedrock first.</p>
+                <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>so i <em class="hl">ran them on Bedrock</em> first.</p>
               </div>
             </div>
           </article>
 
           <article class="chapter chapter--flip" aria-labelledby="ch8">
             <div class="chapter-text">
-              <h2 id="ch8">a summer of building at Eskwelabs.</h2>
+              <h2 id="ch8">next came a summer of building at <em>Eskwelabs.</em></h2>
               <p class="beat">i was an AI solutions development intern. what i built:</p>
               <ul class="beat-list">
-                <li>an internal AI advisor with three personas streaming Gemini</li>
-                <li>a public n8n webinar with Cine. i demoed it live.</li>
+                <li>an internal AI advisor with <em class="hl">three personas</em> streaming Gemini</li>
+                <li>a <em class="hl">public n8n webinar</em> with Cine. i demoed it live.</li>
               </ul>
               <div class="snag">
                 <p><span class="snag-mark" aria-hidden="true">✕</span>getting the login token through to Supabase. a simple idea that was annoying to get right.</p>
@@ -265,15 +293,15 @@
               </div>
             </div>
             <div class="chapter-photos chapter-photos--grid">
-              <figure class="pol pol--wide">
+              <figure class="pol pol--wide" style="--r:2deg">
                 <img src="pics/ai-advisor.png" alt="The Eskwelabs internal AI advisor chat screen" width="1458" height="810" loading="lazy">
                 <figcaption>the advisor</figcaption>
               </figure>
-              <figure class="pol" style="--d:1">
+              <figure class="pol" style="--r:-3deg;--d:1">
                 <img src="pics/community/webinar-poster.webp" alt="Eskwelabs poster for Building AI-Powered Workflows with n8n, with Francine Ysabel Dalida and Darla Nova Sumanting" width="1080" height="1080" loading="lazy">
                 <figcaption>live, in front of strangers</figcaption>
               </figure>
-              <figure class="pol pol--small" style="--d:2">
+              <figure class="pol pol--small" style="--r:4deg;--d:2">
                 <img src="life/img5.webp" alt="Darla next to an n8n event sign that says Node thyself, go with the flow" width="900" height="1200" loading="lazy">
                 <figcaption>node thyself</figcaption>
               </figure>
@@ -282,7 +310,7 @@
 
           <article class="chapter" aria-labelledby="ch9">
             <div class="chapter-photos">
-<a class="phone" href="https://campus-catdex.vercel.app" target="_blank" rel="noopener noreferrer">
+<a class="phone" href="https://campus-catdex.vercel.app" target="_blank" rel="noopener noreferrer" style="--r:-3deg">
                 <span class="phone-screen">
                   <span class="phone-status" aria-hidden="true">
                     <span>9:41</span>
@@ -295,9 +323,9 @@
               <a class="phone-cap" href="https://campus-catdex.vercel.app" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">open the catdex ↗</a>
             </div>
             <div class="chapter-text">
-              <h2 id="ch9">the campus cats needed a Catdex.</h2>
-              <p class="beat">i built a shared record of Adamson's campus cats. students log where they saw a cat and get a guardian card.</p>
-              <p class="beat">it launched on October 28, 2026. it runs on free tiers only.</p>
+              <h2 id="ch9">then the campus cats needed a <em>Catdex.</em></h2>
+              <p class="beat">i built a shared record of Adamson's campus cats. students log where they saw a cat and get a <em class="hl">guardian card</em>.</p>
+              <p class="beat">it launched on <em class="hl">October 28, 2026</em>. it runs on <em class="hl">free tiers only</em>.</p>
               <div class="snag">
                 <p><span class="snag-mark" aria-hidden="true">✕</span>someone uploaded a meme.</p>
                 <p><span class="snag-mark snag-mark--ok" aria-hidden="true">✓</span>now a phone's first photo waits for my approval. after that it posts right away.</p>
@@ -309,11 +337,18 @@
       </div>
     </section>
 
-    <!-- CLOSE: the full constellation, with the next star still faint -->
+    <!-- CLOSE -->
     <section class="story-close" aria-labelledby="close-heading">
-      <svg class="close-sky" viewBox="0 0 400 44" aria-hidden="true"><polyline class="cs-line" points="14.0,17.0 60.5,25.0 107.0,20.0 153.5,28.0 200.0,16.0 246.5,23.0 293.0,19.0 339.5,27.0"/><line class="cs-next-line" x1="339.5" y1="27.0" x2="386.0" y2="22.0"/><path class="cs-star" transform="translate(14.0 17.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(60.5 25.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(107.0 20.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(153.5 28.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(200.0 16.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(246.5 23.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(293.0 19.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star" transform="translate(339.5 27.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/><path class="cs-star cs-star--next" transform="translate(386.0 22.0)" d="M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28"/></svg>
-      <h2 id="close-heading">still adding stars.</h2>
-      <p>right now i'm in my 3rd year of CS, running the cloud club and taking freelance builds.</p>
+      <h2 id="close-heading">whatever comes next, i want to build it <em>with other people.</em></h2>
+      <p>right now i'm in my <em class="hl">3rd year of CS</em>, running the cloud club, and taking <em class="hl">freelance builds</em>.</p>
+
+      <p class="longer-label">want the longer version?</p>
+      <ul class="longer">
+        <li><a href="projects.html"><span>projects</span><small>pipelines, an advisor, a cat app</small></a></li>
+        <li><a href="experience.html"><span>experience</span><small>where i've worked</small></a></li>
+        <li><a href="community.html"><span>community</span><small>the club and the people</small></a></li>
+        <li><a href="about.html"><span>about me</span><small>the long version</small></a></li>
+      </ul>
     </section>
 
     <div class="container">

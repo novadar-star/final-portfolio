@@ -1,8 +1,9 @@
 // story.js — motion for the story home page (index.html)
 //
-// 1. hero: the nova moment (a hand-drawn star draws itself once)
-//    and the star sky fading into the page
-// 2. chapters: on wide screens they pin and slide sideways with the
+// 1. hero: the nova moment (a hand-drawn star draws itself once),
+//    the "also…" roles, and the star sky fading into the page
+// 2. intro: the photo drops in once
+// 3. chapters: on wide screens they pin and slide sideways with the
 //    scroll, resting on each chapter for a moment. a small
 //    constellation under the nav lights one star per chapter. photos
 //    settle and its lines come in the first time it's on screen.
@@ -35,7 +36,7 @@
   }
   measureNav();
 
-  // ---- 1. the nova moment ----
+  // ---- 1a. the nova moment ----
   // the star on "Nova" lands once after first paint (story.css)
   if (hero) {
     requestAnimationFrame(function () {
@@ -43,7 +44,41 @@
     });
   }
 
-  // ---- 2. chapters ----
+  // ---- 1b. cycle the roles, only while the hero is on screen ----
+  var roleEl = document.querySelector('.story-roles-word');
+  if (roleEl && !reduced) {
+    var roles = (roleEl.getAttribute('data-roles') || '').split('|');
+    var r = 0;
+    var timer = null;
+    var swap = function () {
+      roleEl.classList.add('is-out');
+      setTimeout(function () {
+        r = (r + 1) % roles.length;
+        roleEl.textContent = roles[r];
+        roleEl.classList.remove('is-out');
+      }, 180);
+    };
+    var heroObs = new IntersectionObserver(function (entries) {
+      var on = entries[0].isIntersecting && !document.hidden;
+      if (on && !timer) timer = setInterval(swap, 1800);
+      if (!on && timer) { clearInterval(timer); timer = null; }
+    });
+    heroObs.observe(hero);
+  }
+
+  // ---- 2. intro photo ----
+  var intro = document.querySelector('.pol--intro');
+  if (intro && !reduced) {
+    var introObs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        intro.classList.add('is-in');
+        introObs.disconnect();
+      }
+    }, { threshold: 0.4 });
+    introObs.observe(intro);
+  }
+
+  // ---- 3. chapters ----
   // number the lines inside each chapter so they come in one after another
   chapters.forEach(function (ch) {
     var lines = ch.querySelectorAll('h2, .beat, .beat-list li, .snag p');
@@ -68,8 +103,7 @@
   }
 
   // ---- the constellation: one star per chapter ----
-  // the same hand-drawn star as the bullets, small and centred on 0,0
-  var STAR = 'M-0.19 -5.46 Q0.68 -3.66 1.55 -1.80 Q3.53 -1.74 5.52 -1.74 Q4.15 -0.37 2.79 0.99 Q3.29 2.91 3.97 4.77 Q2.23 3.84 0.56 2.91 Q-1.18 4.34 -3.10 5.52 Q-2.29 3.35 -1.98 1.12 Q-3.60 -0.25 -5.52 -1.18 Q-3.47 -1.18 -1.55 -1.49 Q-0.37 -2.85 0.68 -4.28';
+  var STAR = 'M0,-7 L1.4,-1.4 L7,0 L1.4,1.4 L0,7 L-1.4,1.4 L-7,0 L-1.4,-1.4 Z';
   var LIFT = [-5, 3, -2, 6, -6, 1, -3, 5, 0, -4, 2, -1];   // fixed, so it's the same sky every time
   var pts = [], cum = [0], skyLit = null, skyStars = [];
   if (sky && n > 1) {
