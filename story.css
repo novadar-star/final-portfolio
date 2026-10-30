@@ -361,33 +361,24 @@
 }
 
 /* ============================================================
-   POLAROIDS — every photo on this page
+   PHOTOS — plain and upright, with a handwritten caption under them
    ============================================================ */
 
 .pol {
   position: relative;
   display: block;
   margin: 0;
-  padding: 10px 10px 36px;
-  background: var(--pol-bg);
-  box-shadow: var(--pol-shadow);
-  transform: rotate(var(--r, 0deg));
-  text-decoration: none;
-  color: inherit;
 }
 
 .pol img {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 6px;
 }
 
 .pol figcaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 6px;
-  text-align: center;
+  margin-top: 6px;
   font-family: 'Caveat', var(--font-italic), cursive;
   font-weight: 500;
   font-size: 1.15rem;
@@ -407,10 +398,8 @@
 }
 
 .pol--intro {
-  width: 180px;
+  width: 170px;
   margin: 0 auto 44px;
-  padding-bottom: 12px;
-  --r: -4deg;
 }
 
 .pol--intro img {
@@ -527,16 +516,14 @@
 .chapter-photos--grid > .pol { width: 100%; }
 .chapter-photos--grid > .pol:first-child { grid-column: 1 / -1; width: 86%; }
 
-/* the dance photo with a second one tucked over its corner */
-.pol--over {
-  position: absolute;
-  right: 0;
-  bottom: -28px;
-  width: 34%;
-  padding-bottom: 10px;
+/* two photos side by side: a wide one and a tall one */
+.chapter-photos--pair {
+  grid-template-columns: 1.6fr 1fr;
+  gap: 14px;
+  align-items: end;
 }
 
-.chapter-photos > .pol--over { width: 34%; }
+.chapter-photos--pair > .pol { width: 100%; }
 
 .pol--small img { aspect-ratio: 3 / 4; object-fit: cover; }
 
@@ -663,7 +650,9 @@
 
 .chapters.is-horizontal .chapter-photos { max-height: calc(100vh - var(--nav-h, 80px) - 80px); }
 .chapters.is-horizontal .chapter-photos .phone { --w: min(250px, calc((100vh - var(--nav-h, 80px) - 190px) * 0.45)); }
-.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide):not(.pol--over) { width: min(100%, 300px); }
+.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) { width: min(100%, 280px); }
+.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) img { max-height: 52vh; object-fit: cover; }
+.chapters.is-horizontal .chapter-photos--pair { width: min(100%, 540px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
 .chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }
@@ -729,16 +718,16 @@
   transform: none;
 }
 
-/* intro photo drops in once */
+/* intro photo settles in once */
 .motion-ok .pol--intro {
   opacity: 0;
-  transform: translateY(-28px) rotate(-11deg);
-  transition: opacity 360ms var(--ease-out), transform 800ms var(--ease-out);
+  transform: translateY(-16px);
+  transition: opacity 360ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
 .motion-ok .pol--intro.is-in {
   opacity: 1;
-  transform: rotate(var(--r));
+  transform: none;
 }
 
 /* once settled, hover can take over transform without a delay */
@@ -833,5 +822,4 @@
   .story-close { padding-top: 80px; }
   .longer a { flex-direction: column; gap: 2px; }
   .longer small { text-align: left; }
-  .pol--over { bottom: -20px; }
 }
