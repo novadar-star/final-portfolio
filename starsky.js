@@ -34,9 +34,9 @@
   // the stars: x, y and size as parts of the sky's width; turn in degrees.
   // puff = how round the points are; lean = per-point jitter (fixed).
   var STARS = [
-    { x: 0.13, y: 0.66, r: 0.34, turn: -26, inner: 0.44, centre: '#EA92AE',
+    { x: 0.08, y: 0.76, r: 0.34, turn: -26, inner: 0.44, centre: '#EA92AE',
       lean: [1.16, 0.94, 1.08, 0.9, 1.04] },
-    { x: 0.87, y: 0.34, r: 0.3,  turn: 8,   inner: 0.48, centre: '#E8607C',
+    { x: 0.9,  y: 0.3,  r: 0.3,  turn: 8,   inner: 0.48, centre: '#E8607C',
       lean: [1.02, 1.12, 0.92, 1.08, 0.96] },
     { x: 0.5,  y: 1.02, r: 0.1,  turn: 30,  inner: 0.46, centre: '#E8708E',
       lean: [1, 1, 1, 1, 1] },
