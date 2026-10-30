@@ -592,7 +592,6 @@
 }
 
 .paper:focus-visible,
-.longer a:focus-visible,
 .story-hero-cta:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
@@ -737,7 +736,7 @@
 }
 
 /* ============================================================
-   CLOSE + THE LONGER VERSION
+   CLOSE
    ============================================================ */
 
 .story-close {
@@ -761,54 +760,113 @@
   font-size: 1.02rem;
 }
 
-.longer-label {
-  margin-top: 88px;
-  text-align: left;
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.longer {
-  list-style: none;
-  margin-top: 12px;
+/* the other pages as a constellation: four stars joined by a line,
+   with a dashed line running off to the next one. on phones the map
+   turns tall so the labels have room. */
+.star-map {
+  position: relative;
+  margin: 64px auto 0;
+  width: min(100%, 860px);
+  aspect-ratio: 860 / 300;
   text-align: left;
 }
 
-.longer li + li { margin-top: 10px; }
+.sm-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
 
-.longer a {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px 22px;
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.5);
+.sm-lines polyline,
+.sm-lines line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: 0.45;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.sm-lines .sm-next { stroke: var(--muted); stroke-dasharray: 2 5; }
+.sm-tall { display: none; }
+
+.star-map ol { list-style: none; }
+
+.star-map li {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-14px, -14px);   /* the star's centre sits on the point */
+}
+
+.sm-1 { --x: 12%; --y: 62%; }
+.sm-2 { --x: 38%; --y: 26%; }
+.sm-3 { --x: 64%; --y: 70%; }
+.sm-4 { --x: 88%; --y: 34%; }
+
+.star-map a {
+  display: grid;
+  grid-template-columns: 28px auto;
+  column-gap: 10px;
+  align-items: start;
+  min-height: 44px;
   color: var(--ink);
   text-decoration: none;
-  transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out);
 }
 
-[data-theme="dark"] .longer a { background: rgba(255, 255, 255, 0.03); }
-
-.longer span { font-size: 1.35rem; letter-spacing: -0.02em; }
-
-.longer small {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-size: 0.88rem;
-  color: var(--muted);
-  text-align: right;
+.sm-icon {
+  grid-row: 1 / span 2;
+  align-self: start;   /* keeps the star on its point when a label wraps */
+  width: 28px;
+  height: 28px;
+  fill: var(--page);
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: fill 180ms var(--ease-out), transform 220ms var(--ease-out);
 }
+
+.sm-name { font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.2; }
+
+/* a halo in the page colour, so the lines pass behind the words */
+.sm-name,
+.sm-note { text-shadow: 0 0 3px var(--page), 0 0 8px var(--page), 0 0 14px var(--page); }
+.sm-note { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
 
 @media (hover: hover) and (pointer: fine) {
-  .longer a:hover {
-    border-color: var(--accent-soft);
-    background: var(--pol-bg);
-  }
+  .star-map a:hover .sm-icon { fill: var(--accent); transform: scale(1.12) rotate(8deg); }
+  .star-map a:hover .sm-name { color: var(--accent); }
+}
+
+.star-map a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* the last star's label would run off the right edge: put it on the left */
+.sm-4 a { grid-template-columns: auto 28px; text-align: right; }
+.sm-4 .sm-icon { grid-column: 2; grid-row: 1 / span 2; }
+.sm-4 .sm-name,
+.sm-4 .sm-note { grid-column: 1; }
+.star-map .sm-4 { transform: translate(calc(-100% + 14px), -14px); }
+
+@media (max-width: 600px) {
+  .star-map { aspect-ratio: 360 / 520; margin-top: 44px; }
+  .sm-wide { display: none; }
+  .sm-tall { display: inline; }
+  .sm-1 { --x: 10%; --y: 10%; }
+  .sm-2 { --x: 52%; --y: 36%; }
+  .sm-3 { --x: 14%; --y: 62%; }
+  .sm-4 { --x: 60%; --y: 88%; }
+  .sm-4 a { grid-template-columns: 28px auto; text-align: left; }
+  .sm-4 .sm-icon { grid-column: 1; }
+  .sm-4 .sm-name,
+  .sm-4 .sm-note { grid-column: 2; }
+  .star-map .sm-4 { transform: translate(-14px, -14px); }
+  .sm-note { white-space: normal; max-width: 15ch; }
 }
 
 /* ============================================================
@@ -820,6 +878,4 @@
   .story-intro { padding: 72px 20px 64px; }
   .chapter { padding: 56px 20px; gap: 32px; }
   .story-close { padding-top: 80px; }
-  .longer a { flex-direction: column; gap: 2px; }
-  .longer small { text-align: left; }
 }
