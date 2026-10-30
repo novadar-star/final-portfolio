@@ -8,7 +8,7 @@
   /* flex column so about-layout can grow to fill all available height */
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100svh - 60px);
   min-height: calc(100dvh - 60px);  /* mobile toolbars */
 }
 
@@ -201,15 +201,24 @@
   letter-spacing: 0.1em;
 }
 
-/* Hover state — lift icon, show label.
-   Gated behind hover: hover so touch devices don't get stuck.
-   Emil: ungated :hover on touch = stuck state = bug. */
-@media (hover: hover) and (pointer: fine) {
+/* Hover state — lift icon {
 
   /* Neighbour magnification via :has */
   .dock:has(.dock-item:hover) .dock-item:not(:hover) .dock-icon {
     transform: scale(1);
   }
+
+@media (hover: hover) and (pointer: fine) {
+  show label.
+   Gated behind hover: hover so touch devices don't get stuck.
+   Emil: ungated :hover on touch = stuck state = bug. */
+@media (hover: hover) and (pointer: fine) {
+  
+    /* Neighbour magnification via :has */
+    .dock:has(.dock-item:hover) .dock-item:not(:hover) .dock-icon {
+      transform: scale(1);
+    }
+}
 }
 
 /* ===========================
@@ -717,7 +726,9 @@
   transition: opacity 0.15s;
 }
 
-.about-email-link:hover { opacity: 0.7; }
+@media (hover: hover) and (pointer: fine) {
+  .about-email-link:hover { opacity: 0.7; }
+}
 
 /* ===========================
    SHORT INTRO, TOOLS, INTERESTS

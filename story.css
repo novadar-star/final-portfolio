@@ -71,9 +71,14 @@
   border-color: rgba(255, 240, 238, 0.5);
 }
 
-.story-page .nav:not(.nav--scrolled) .nav-link:hover,
 .story-page .nav:not(.nav--scrolled) .nav-link.active {
   color: var(--hero-ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .story-page .nav:not(.nav--scrolled) .nav-link:hover {
+    color: var(--hero-ink);
+  }
 }
 
 
@@ -620,13 +625,13 @@
    ============================================================ */
 
 .chapters.is-horizontal {
-  height: calc(var(--n) * 100vh);
+  height: calc(var(--n) * 100svh);
 }
 
 .chapters.is-horizontal .chapters-pin {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
 }
 
@@ -651,15 +656,15 @@
 
 .chapters.is-horizontal .chapter-text { order: 0; }
 
-.chapters.is-horizontal .chapter-photos { max-height: calc(100vh - var(--nav-h, 80px) - 80px); }
-.chapters.is-horizontal .chapter-photos .phone { --w: min(250px, calc((100vh - var(--nav-h, 80px) - 190px) * 0.45)); }
+.chapters.is-horizontal .chapter-photos { max-height: calc(100svh - var(--nav-h, 80px) - 80px); }
+.chapters.is-horizontal .chapter-photos .phone { --w: min(250px, calc((100svh - var(--nav-h, 80px) - 190px) * 0.45)); }
 .chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) { width: min(100%, 280px); }
-.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) img { max-height: 52vh; object-fit: cover; }
+.chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) img { max-height: 52svh; object-fit: cover; }
 .chapters.is-horizontal .chapter-photos--pair { width: min(100%, 540px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--two { width: min(100%, 600px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
-.chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
-.chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }
+.chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30svh; object-fit: cover; }
+.chapters.is-horizontal .paper img { max-height: 13svh; object-fit: cover; object-position: left center; }
 
 /* the snag: what went wrong, then what i did about it */
 .snag {

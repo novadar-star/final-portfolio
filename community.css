@@ -65,8 +65,10 @@
   text-underline-offset: 3px;
 }
 
-.cm a:not(.cm-close-mail):hover {
-  color: var(--nova-accent);
+@media (hover: hover) and (pointer: fine) {
+  .cm a:not(.cm-close-mail):hover {
+    color: var(--nova-accent);
+  }
 }
 
 .cm-note {
@@ -176,8 +178,10 @@
   transition: color 180ms var(--ease-out);
 }
 
-.cm-toc a:hover {
-  color: var(--nova-accent);
+@media (hover: hover) and (pointer: fine) {
+  .cm-toc a:hover {
+    color: var(--nova-accent);
+  }
 }
 
 .cm-toc-when {
@@ -362,7 +366,7 @@
   padding: 0;
   background: transparent;
   max-width: min(92vw, 1400px);
-  max-height: 92vh;
+  max-height: 92dvh;
   overflow: visible;
 }
 
@@ -377,7 +381,7 @@
 .cm-viewer img {
   display: block;
   max-width: 100%;
-  max-height: 82vh;
+  max-height: 82dvh;
   width: auto;
   height: auto;
   margin: 0 auto;
@@ -415,8 +419,10 @@
   cursor: pointer;
 }
 
-.cm-viewer-close:hover {
-  background: rgba(255, 240, 238, 0.16);
+@media (hover: hover) and (pointer: fine) {
+  .cm-viewer-close:hover {
+    background: rgba(255, 240, 238, 0.16);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -557,8 +563,10 @@
   text-underline-offset: 4px;
 }
 
-.cm-close-mail:hover {
-  color: var(--nova-accent);
+@media (hover: hover) and (pointer: fine) {
+  .cm-close-mail:hover {
+    color: var(--nova-accent);
+  }
 }
 
 @media (max-width: 860px) {

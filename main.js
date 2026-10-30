@@ -76,10 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // browser toolbar colour on phones matches the page behind it
   function setThemeColor(theme) {
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (!meta) return;
+    const metas = document.querySelectorAll('meta[name="theme-color"]');
+    if (!metas.length) return;
+    if (document.body.classList.contains('story-page') && window.scrollY < 200) return; // story.js sets the sky colour
     const bg = getComputedStyle(document.body).backgroundColor;
-    meta.setAttribute('content', bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : (theme === 'dark' ? '#131310' : '#F7F6F2'));
+    const color = bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : (theme === 'dark' ? '#131310' : '#F7F6F2');
+    // the site's own toggle beats the phone's light/dark setting, so every tag gets the same colour
+    metas.forEach(m => m.setAttribute('content', color));
   }
 
   function setIcon(theme) {

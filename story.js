@@ -25,6 +25,9 @@
   var chapters = section ? Array.prototype.slice.call(section.querySelectorAll('.chapter')) : [];
   var sky = document.querySelector('.story-sky');
   var remnants = document.querySelector('.sky-remnants');
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var SKY_TOP = '#7D0C31';   // the top of the hero sky, under the nav's dark band
+  var lastPast = null;
   var n = chapters.length;
 
   if (!reduced) root.classList.add('motion-ok');
@@ -208,7 +211,15 @@
           remnants.style.setProperty('--pp', clamp(y / (maxY || 1), 0, 1).toFixed(4));
         }
       }
-      if (nav) nav.classList.toggle('nav--scrolled', y > h - nav.offsetHeight - 1);
+      if (nav) {
+        var past = y > h - nav.offsetHeight - 1;
+        nav.classList.toggle('nav--scrolled', past);
+        // phone status bar: sky colour over the hero, page colour after it
+        if (themeMeta && past !== lastPast) {
+          lastPast = past;
+          themeMeta.setAttribute('content', past ? getComputedStyle(document.body).backgroundColor : SKY_TOP);
+        }
+      }
     }
 
     if (!horizontal) { zoomVertical(); return; }

@@ -99,9 +99,11 @@ button:focus-visible {
   border-radius: 1px;
 }
 
-/* Nav link hover — warm colour + subtle underline slides in from left */
+@media (hover: hover) and (pointer: fine) {
+  /* Nav link hover — warm colour + subtle underline slides in from left */
 .nav-link:hover {
-  color: var(--nova-accent);
+    color: var(--nova-accent);
+  }
 }
 
 /* Underline slides in from left on hover — 1px, quiet, intentional */
@@ -138,10 +140,12 @@ button:focus-visible {
   transition: color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-/* Theme toggle — warm accent on hover (replaces green) */
+@media (hover: hover) and (pointer: fine) {
+  /* Theme toggle — warm accent on hover (replaces green) */
 .theme-toggle:hover {
-  background: var(--nova-accent-dim);
-  border-color: var(--nova-accent);
+    background: var(--nova-accent-dim);
+    border-color: var(--nova-accent);
+  }
 }
 
 /* ============================================================
@@ -189,7 +193,8 @@ button:focus-visible {
   }
 }
 
-/* ============================================================
+@media (hover: hover) and (pointer: fine) {
+  /* ============================================================
    PROJECT VISUALS — hover lift + warm border glow
    Skill audit: hover states should give clear visual change.
    The project visual currently has no hover feedback at all.
@@ -197,8 +202,9 @@ button:focus-visible {
 
 /* Project title — warm on parent hover */
 .home-project:hover .home-project-title {
-  color: var(--ink);
-  transition: color var(--nova-duration-hover) ease;
+    color: var(--ink);
+    transition: color var(--nova-duration-hover) ease;
+  }
 }
 
 /* Project link inline — hover handled by the underline rules below */
@@ -340,8 +346,10 @@ em.italic-accent {
   transition: border-color var(--nova-duration-hover) ease;
 }
 
-.project-case:hover {
-  border-bottom-color: var(--nova-accent-mid);
+@media (hover: hover) and (pointer: fine) {
+  .project-case:hover {
+    border-bottom-color: var(--nova-accent-mid);
+  }
 }
 
 .case-visual {
@@ -350,15 +358,19 @@ em.italic-accent {
     border-color  var(--nova-duration-hover) ease;
 }
 
-.project-case:hover .case-visual {
-  border-color: var(--nova-accent-mid);
-  box-shadow: 0 4px 20px var(--nova-accent-dim);
+@media (hover: hover) and (pointer: fine) {
+  .project-case:hover .case-visual {
+    border-color: var(--nova-accent-mid);
+    box-shadow: 0 4px 20px var(--nova-accent-dim);
+  }
 }
 
-/* Project external link — warm on hover */
+@media (hover: hover) and (pointer: fine) {
+  /* Project external link — warm on hover */
 .project-link:hover {
-  opacity: 1;
-  color: var(--nova-accent);
+    opacity: 1;
+    color: var(--nova-accent);
+  }
 }
 
 /* ============================================================
