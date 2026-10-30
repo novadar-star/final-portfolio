@@ -461,6 +461,10 @@
 
 .chapter-text { order: -1; min-width: 0; overflow-wrap: break-word; }
 
+/* story.js scales these while scrolling (zoom in and out) */
+.motion-ok .chapter-photos,
+.motion-ok .chapter-text { will-change: transform; transform-origin: center; }
+
 .chapter h2 {
   font-size: clamp(2rem, 3.6vw, 3.1rem);
   font-weight: 400;
@@ -502,6 +506,15 @@
 
 .chapter-photos--grid > .pol { width: 100%; }
 .chapter-photos--grid > .pol:first-child { grid-column: 1 / -1; width: 86%; }
+
+/* two photos of the same shape, side by side */
+.chapter-photos--two {
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.chapter-photos--two > .pol { width: 100%; }
 
 /* two photos side by side: a wide one and a tall one */
 .chapter-photos--pair {
@@ -639,6 +652,7 @@
 .chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) { width: min(100%, 280px); }
 .chapters.is-horizontal .chapter-photos > .pol:not(.pol--wide) img { max-height: 52vh; object-fit: cover; }
 .chapters.is-horizontal .chapter-photos--pair { width: min(100%, 540px); justify-self: center; }
+.chapters.is-horizontal .chapter-photos--two { width: min(100%, 600px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid { width: min(100%, 520px); justify-self: center; }
 .chapters.is-horizontal .chapter-photos--grid > .pol img { max-height: 30vh; object-fit: cover; }
 .chapters.is-horizontal .paper img { max-height: 13vh; object-fit: cover; object-position: left center; }

@@ -6,7 +6,8 @@
 // 3. chapters: on wide screens they pin and slide sideways with the
 //    scroll, resting on each chapter for a moment. a small
 //    constellation under the nav lights one star per chapter. photos
-//    settle and its lines come in the first time it's on screen.
+//    settle and its lines come in the first time it's on screen, and
+//    each chapter zooms in as it arrives and shrinks back as it leaves.
 //
 // Phones, short screens and reduced motion get a plain vertical stack
 // with everything already visible. Only transform and opacity animate.
@@ -144,6 +145,47 @@
     });
   }
 
+  // ---- zoom: depth while the chapters move ----
+  // sideways: the chapter you leave shrinks back and drifts out, the next
+  // one zooms in. photos travel further than the text, which reads as depth.
+  // phones: photos grow a little as they reach the middle of the screen.
+  var parts = chapters.map(function (ch) {
+    return { photos: ch.querySelector('.chapter-photos'), text: ch.querySelector('.chapter-text') };
+  });
+
+  function zoomHorizontal(pos) {
+    if (reduced) return;
+    parts.forEach(function (pt, k) {
+      var d = k - pos, a = Math.min(Math.abs(d), 1);
+      if (Math.abs(d) > 1.5) return;               // far away: leave it
+      var e = a * a * (3 - 2 * a);                  // smooth in and out
+      if (pt.photos) pt.photos.style.transform =
+        'translate3d(' + (d * 140).toFixed(1) + 'px,0,0) scale(' + (1 - 0.2 * e).toFixed(4) + ')';
+      if (pt.text) pt.text.style.transform =
+        'translate3d(' + (d * 50).toFixed(1) + 'px,0,0) scale(' + (1 - 0.08 * e).toFixed(4) + ')';
+    });
+  }
+
+  function zoomVertical() {
+    if (reduced) return;
+    var vh = window.innerHeight;
+    parts.forEach(function (pt) {
+      if (!pt.photos) return;
+      var r = pt.photos.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > 2 * vh) return;
+      var d = (r.top + r.height / 2 - vh / 2) / vh;
+      var a = Math.min(Math.abs(d) * 1.4, 1);
+      pt.photos.style.transform = 'scale(' + (1 - 0.1 * a * a).toFixed(4) + ')';
+    });
+  }
+
+  function clearZoom() {
+    parts.forEach(function (pt) {
+      if (pt.photos) pt.photos.style.transform = '';
+      if (pt.text) pt.text.style.transform = '';
+    });
+  }
+
   var horizontal = false;
   var ticking = false;
 
@@ -167,13 +209,14 @@
       if (nav) nav.classList.toggle('nav--scrolled', y > h - nav.offsetHeight - 1);
     }
 
-    if (!horizontal) return;
+    if (!horizontal) { zoomVertical(); return; }
     var rect = section.getBoundingClientRect();
     var total = section.offsetHeight - window.innerHeight;
     var p = clamp(-rect.top / total, 0, 1);
     var pos = dwell(p * (n - 1));
     track.style.transform = 'translate3d(' + (-pos * window.innerWidth).toFixed(1) + 'px,0,0)';
     activate(chapters[Math.round(pos)]);
+    zoomHorizontal(pos);
     drawSky(pos);
     if (sky) sky.classList.toggle('is-on', rect.top <= 1 && rect.bottom >= window.innerHeight - 1);
   }
@@ -189,6 +232,7 @@
     section.classList.toggle('is-horizontal', horizontal);
     if (!horizontal) {
       track.style.transform = '';
+      clearZoom();
       if (sky) sky.classList.remove('is-on');
       if (!vObs) {
         vObs = new IntersectionObserver(function (entries) {
