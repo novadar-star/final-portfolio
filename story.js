@@ -67,16 +67,28 @@
     heroObs.observe(hero);
   }
 
-  // ---- 2. intro photo ----
+  // ---- 2. intro: the photo starts big in the middle of the screen and
+  // shrinks into its place as you scroll; the words fade in under it ----
   var intro = document.querySelector('.pol--intro');
-  if (intro && !reduced) {
-    var introObs = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        intro.classList.add('is-in');
-        introObs.disconnect();
-      }
-    }, { threshold: 0.4 });
-    introObs.observe(intro);
+  var introText = Array.prototype.slice.call(document.querySelectorAll('.story-intro-lead, .story-stats'));
+
+  function zoomIntro() {
+    if (reduced || !intro) return;
+    var vh = window.innerHeight;
+    var r = intro.getBoundingClientRect();
+    // 0 while the photo is low on the screen, 1 once it reaches its spot near the top
+    var t = clamp((vh * 0.92 - r.top) / (vh * 0.62), 0, 1);
+    var e = 1 - Math.pow(1 - t, 3);                       // ease out
+    var big = Math.min(3.2, (vh * 0.62) / (r.height || 1)); // how big it starts
+    var s = 1 + (big - 1) * (1 - e);
+    // while big, pull it up so it sits in the middle of the screen
+    var lift = (1 - e) * (r.top + r.height / 2 - vh / 2) * -0.6;
+    intro.style.transform = 'translate3d(0,' + lift.toFixed(1) + 'px,0) scale(' + s.toFixed(4) + ')';
+    var textT = clamp((t - 0.55) / 0.45, 0, 1);
+    introText.forEach(function (el) {
+      el.style.opacity = textT.toFixed(3);
+      el.style.transform = 'translate3d(0,' + ((1 - textT) * 18).toFixed(1) + 'px,0)';
+    });
   }
 
   // ---- 3. chapters ----
@@ -145,9 +157,9 @@
     });
   }
 
-  // ---- zoom: depth while the chapters move ----
-  // sideways: the chapter you leave shrinks back and drifts out, the next
-  // one zooms in. photos travel further than the text, which reads as depth.
+  // ---- zoom: the whole chapter zooms as one piece ----
+  // sideways: the next chapter arrives zoomed in (close) and settles to its
+  // normal size; the chapter you leave zooms out (small) as it slides away.
   // phones: photos grow a little as they reach the middle of the screen.
   var parts = chapters.map(function (ch) {
     return { photos: ch.querySelector('.chapter-photos'), text: ch.querySelector('.chapter-text') };
@@ -155,14 +167,13 @@
 
   function zoomHorizontal(pos) {
     if (reduced) return;
-    parts.forEach(function (pt, k) {
-      var d = k - pos, a = Math.min(Math.abs(d), 1);
-      if (Math.abs(d) > 1.5) return;               // far away: leave it
-      var e = a * a * (3 - 2 * a);                  // smooth in and out
-      if (pt.photos) pt.photos.style.transform =
-        'translate3d(' + (d * 140).toFixed(1) + 'px,0,0) scale(' + (1 - 0.2 * e).toFixed(4) + ')';
-      if (pt.text) pt.text.style.transform =
-        'translate3d(' + (d * 50).toFixed(1) + 'px,0,0) scale(' + (1 - 0.08 * e).toFixed(4) + ')';
+    chapters.forEach(function (ch, k) {
+      var d = k - pos;
+      if (Math.abs(d) > 1.5) { ch.style.transform = ''; return; }
+      var a = Math.min(Math.abs(d), 1);
+      var e = a * a * (3 - 2 * a);                 // smooth in and out
+      var s = d > 0 ? 1 + 0.26 * e : 1 - 0.25 * e; // coming: close. going: far.
+      ch.style.transform = 'scale(' + s.toFixed(4) + ')';
     });
   }
 
@@ -180,6 +191,7 @@
   }
 
   function clearZoom() {
+    chapters.forEach(function (ch) { ch.style.transform = ''; });
     parts.forEach(function (pt) {
       if (pt.photos) pt.photos.style.transform = '';
       if (pt.text) pt.text.style.transform = '';
@@ -209,6 +221,7 @@
       if (nav) nav.classList.toggle('nav--scrolled', y > h - nav.offsetHeight - 1);
     }
 
+    zoomIntro();
     if (!horizontal) { zoomVertical(); return; }
     var rect = section.getBoundingClientRect();
     var total = section.offsetHeight - window.innerHeight;
