@@ -718,3 +718,33 @@
 }
 
 .about-email-link:hover { opacity: 0.7; }
+
+/* ===========================
+   SHORT INTRO, TOOLS, INTERESTS
+   (the long story now lives on the home page)
+   =========================== */
+
+.about-lead {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+  max-width: 54ch;
+}
+
+.about-tools {
+  padding-top: 32px;
+}
+
+.about-tools .toolkit-label {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.about-also {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
