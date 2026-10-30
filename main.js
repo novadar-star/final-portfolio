@@ -90,7 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lazy video — play only when in viewport
   // ===========================
   const videos = document.querySelectorAll('video.project-video');
-  if (videos.length) {
+  // reduced motion: the video stays on its poster frame and never plays by itself
+  if (videos.length && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    videos.forEach(v => { v.removeAttribute('autoplay'); v.pause(); });
+  } else if (videos.length) {
     const vObs = new IntersectionObserver(
       entries => entries.forEach(e => e.isIntersecting
         ? e.target.play().catch(() => {})

@@ -6,6 +6,7 @@
 
   // the viewer's image is made here so the page never ships an <img> without a source
   var img = document.createElement('img');
+  img.alt = '';
   viewer.querySelector('figure').insertBefore(img, viewer.querySelector('figcaption'));
   var cap = document.getElementById('cmViewerCap');
   var closeBtn = viewer.querySelector('.cm-viewer-close');

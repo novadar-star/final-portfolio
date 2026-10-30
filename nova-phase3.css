@@ -782,3 +782,37 @@ em.italic-accent {
   background: none;
   padding: 8px 0 16px;
 }
+
+/* ============================================================
+   READABILITY + TOUCH (Vercel web interface guidelines audit)
+   - no text under 12px
+   - every link and button at least 24px tall to tap
+   - no double-tap zoom delay on taps
+   ============================================================ */
+
+.footer-credit,
+.case-label,
+.archive-stack,
+.archive-heading,
+.xp-accordion-trigger-meta,
+.section-heading,
+.cert-badge__name,
+.cert-badge__level {
+  font-size: max(0.75rem, 12px) !important;
+}
+
+a, button, summary, label { touch-action: manipulation; }
+
+/* small text links next to project titles ("writeup", "live") */
+.project-link {
+  display: inline-block;
+  padding-block: 4px;
+  min-height: 24px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.about-email-link {
+  display: inline-block;
+  padding-block: 4px;
+}
