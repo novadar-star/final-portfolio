@@ -41,7 +41,8 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="nova-phase3.css">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Ibarra+Real+Nova:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="community.css">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&family=Ibarra+Real+Nova:ital@1&display=swap" rel="stylesheet">
 
   <style>
     /* ================================================================
@@ -1066,14 +1067,12 @@
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <div class="nav-left">
-        <a href="index.html" class="nav-link">home</a>
+        <a href="index.html" class="nav-home" aria-label="Darla Nova, home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.5 2.6 Q14.1 12.1 18.4 20.9 Q9.7 16.3 1.9 10.2 Q11.7 9.6 21.6 9.1 Q14.6 15.5 7.0 21.0 Q9.3 11.9 11.5 2.6 Q12.3 3.8 13.1 4.8"/></svg></a>
         <a href="projects.html" class="nav-link">projects</a>
         <a href="experience.html" class="nav-link active" aria-current="page">experience</a>
-        <a href="community.html" class="nav-link">community</a>
+        <a href="about.html" class="nav-link">about</a>
       </div>
       <div class="nav-right">
-        <a href="about.html" class="nav-link">about me</a>
-        <a href="mailto:darlanovasumanting06@gmail.com" class="nav-link" data-copy-email>email</a>
         <a href="https://drive.google.com/file/d/137IS31NlbIqjs85KDE-_3SsgmqmhkQnN/view" target="_blank" rel="noopener noreferrer" class="nav-link">resume</a>
         <button class="theme-toggle" aria-label="Toggle dark mode">
           <span class="toggle-icon" aria-hidden="true">&#9790;</span>
@@ -1081,6 +1080,7 @@
       </div>
     </div>
   </nav>
+  <div class="page-star" aria-hidden="true"><img src="pics/star-mark.webp" alt="" width="280" height="280"></div>
 
   <main class="container page-section" id="main">
 
@@ -1155,6 +1155,125 @@
       </ul>
 
     </section>
+
+    <!-- Community: the club, the national org, the webinar -->
+    <section class="cm-intro" id="community" aria-labelledby="community-heading">
+      <h2 class="section-heading" id="community-heading">the people part.</h2>
+      <p class="cm-lede">most of what i know, someone in a room showed me first. this part is the stuff i do to return the favor.</p>
+    </section>
+
+    <div class="cm cm--wide">
+
+    <!-- 1. AWS SBG — the flagship. Big photo breaks left, portrait drops right. -->
+    <section class="cm-chapter cm-sbg" id="sbg" aria-labelledby="sbg-title">
+
+      <div class="cm-sbg-photos">
+        <figure class="cm-fig cm-sbg-launch">
+          <button class="cm-inspect" type="button" aria-label="View larger: hearts up">
+            <img src="pics/community/sbg-hearts.webp" alt="AWS Student Builder Group Adamson members making heart hands in a conference room" width="1267" height="657">
+          </button>
+          <figcaption>hearts up</figcaption>
+        </figure>
+
+        <figure class="cm-fig cm-sbg-workshop">
+          <button class="cm-inspect" type="button" aria-label="View larger: in front of the room">
+            <img src="pics/community/sbg-session.webp" alt="Darla in an AWS hoodie standing beside a speaker at the front of a classroom" width="717" height="676" loading="lazy">
+          </button>
+          <figcaption>in front of the room</figcaption>
+        </figure>
+      </div>
+
+      <div class="cm-sbg-body">
+        <h3 class="cm-h2" id="sbg-title">AWS Student Builder Group, Adamson</h3>
+        <p class="cm-role">president, since 2025</p>
+
+        <p>
+          a 120+ member cloud community at Adamson. we used to be AWS Cloud Club AdU.
+          when we rebranded, i went through the constitution and by-laws, flagged what
+          needed fixing, and rebuilt how people actually get in.
+        </p>
+        <p>
+          i ran on four ideas: zero-barrier onboarding, build-first workshops, a career
+          launchpad, and community-always. the first one is the easiest to show.
+          joining is one form and &#8369;100, open to every year and every course,
+          approved automatically. no interview.
+        </p>
+        <p>
+          the workshops are on real AWS services. you leave having deployed something,
+          not having watched slides about it.
+        </p>
+      </div>
+
+      <aside class="cm-sbg-margin">
+        <figure class="cm-fig cm-sbg-team">
+          <button class="cm-inspect" type="button" aria-label="View larger: the officers">
+            <img src="pics/cloud9-team.jpg" alt="The AWS SBG Adamson officers standing together at the Cloud9 workshop" width="2000" height="1125" loading="lazy">
+          </button>
+        </figure>
+        <p class="cm-note">
+          the officers. none of the workshops happen without them.
+        </p>
+      </aside>
+    </section>
+
+
+    <!-- 2. AWS SUG PH — quieter. Year in the gutter, text, small photo. -->
+    <section class="cm-chapter cm-sugph" id="sugph" aria-labelledby="sugph-title">
+
+      <div class="cm-sugph-body">
+        <h3 class="cm-h2" id="sugph-title">AWS Student User Groups Philippines</h3>
+        <p class="cm-role">executive secretary, october 2025 to june 2026</p>
+        <p>
+          the national network that campus AWS groups belong to, 40+ chapters across
+          the country. the job was the unglamorous side of running a student org at
+          that size: meetings, minutes, and keeping chapters in the same loop.
+        </p>
+      </div>
+
+      <figure class="cm-fig cm-sugph-photo">
+        <button class="cm-inspect" type="button" aria-label="View larger: student community day summit 2026">
+          <img src="pics/community/community-day-summit.webp" alt="Darla with four student leaders at the Student Community Day Summit 2026" width="1400" height="786" loading="lazy">
+        </button>
+        <figcaption>student community day summit 2026</figcaption>
+      </figure>
+    </section>
+
+
+    <!-- 3. Webinar — one wide image, the note sits on it (desktop) or under it (mobile). -->
+    <section class="cm-chapter cm-webinar" id="webinar" aria-labelledby="webinar-title">
+      <figure class="cm-fig cm-webinar-shot">
+        <button class="cm-inspect" type="button" aria-label="View larger: the webinar demo">
+          <img src="pics/community/webinar-poster.webp" alt="Eskwelabs poster for Building AI-Powered Workflows with n8n, with Francine Ysabel Dalida and Darla Nova Sumanting" width="1080" height="1080" loading="lazy">
+        </button>
+        <p class="cm-note cm-webinar-note">n8n, live, in front of strangers</p>
+      </figure>
+
+      <div class="cm-webinar-body">
+        <h3 class="cm-h2" id="webinar-title">a public webinar at Eskwelabs</h3>
+        <p>
+          co-presented with Cine. she took harness engineering and ui/ux, i took
+          n8n and automation, and demoed the workflows live.
+          if a node failed, everyone would have seen it.
+        </p>
+        <p>
+          the workflows are on the <a href="projects.html">projects page</a>.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- 4. Smaller things — a typeset index, not more cards. -->
+    <section class="cm-chapter cm-smaller" id="smaller" aria-labelledby="smaller-title">
+      <h3 class="cm-hand cm-smaller-title" id="smaller-title">smaller things</h3>
+      <ul class="cm-index">
+        <li>
+          <span class="cm-index-when">2026</span>
+          <span class="cm-index-what">hack and yap</span>
+          <span class="cm-index-line">won first place with my team. the theme was anti-brainrot, so we pitched Meowtervention: cats that meow at you when you doomscroll.</span>
+        </li>
+      </ul>
+    </section>
+    </div>
 
     <!-- Working style -->
     <section class="collab-section" aria-labelledby="collab-heading">
@@ -1238,6 +1357,14 @@
 
   </main>
 
+  <!-- Photo inspection: the one interaction on this page -->
+  <dialog class="cm-viewer" id="cmViewer" aria-label="Photo">
+    <figure>
+      <figcaption id="cmViewerCap"></figcaption>
+    </figure>
+    <button class="cm-viewer-close" type="button" aria-label="Close photo">close</button>
+  </dialog>
+
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-name">nova. / darla sumanting</span>
@@ -1252,6 +1379,7 @@
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script src="main.js"></script>
   <script src="music.js"></script>
+  <script src="community.js"></script>
   <script>
   // ================================================================
   // EXPERIENCE DATA

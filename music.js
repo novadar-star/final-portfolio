@@ -38,16 +38,13 @@
   btn.className = 'music-toggle';
   btn.title = CREDIT;
   btn.innerHTML =
-    '<span class="music-note" aria-hidden="true">&#9834;</span>' +
-    '<span class="music-word">music</span><span class="music-state">off</span>';
+    '<span class="music-note" aria-hidden="true">&#9834;</span>';
   themeToggle.parentNode.insertBefore(btn, themeToggle);
 
-  var stateEl = btn.querySelector('.music-state');
   function setUI(on) {
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     btn.setAttribute('aria-label', on ? 'Turn music off' : 'Turn music on');
     btn.classList.toggle('is-on', on);
-    stateEl.textContent = on ? 'on' : 'off';
   }
 
   function savedOffset() {

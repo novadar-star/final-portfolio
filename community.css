@@ -572,3 +572,20 @@
 @media (max-width: 860px) {
   .cm-close { padding-left: 0; }
 }
+
+/* inside the experience page: the chapters get their full width back,
+   wider than the page's text column */
+.cm-intro { margin: clamp(56px, 8vw, 96px) 0 clamp(48px, 7vw, 88px); }
+.cm-intro .cm-lede { margin-top: 0; }
+.container > .cm--wide {
+  max-width: none;
+  padding: 0;
+  width: min(1056px, calc(100vw - 64px));
+  margin-left: calc(50% - min(528px, 50vw - 32px));
+}
+@media (max-width: 600px) {
+  .container > .cm--wide {
+    width: calc(100vw - 40px);
+    margin-left: calc(50% - (50vw - 20px));
+  }
+}
