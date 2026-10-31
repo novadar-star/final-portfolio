@@ -4,13 +4,13 @@
 
 // ===========================
 // PHOTO DATA
-// caption  — short personal label (shown on hover desktop, always on mobile)
+// caption  — short personal label (a small box on hover; tap on phones)
 // meta     — optional location · year line shown below caption
 // alt      — descriptive alt text for accessibility + SEO
 // ===========================
 const PHOTO_DATA = [
-  // Captions are visible under each photo now, so they describe what's
-  // actually in the frame. Meta is only set where the photo itself shows it.
+  // Only photos that aren't already in the home page story.
+  // Captions describe what's in the frame; meta only where the photo shows it.
   {
     src:     'life/img1.webp', w: 900, h: 600,
     alt:     'Darla with friends at a photo booth, wearing party glasses and headbands',
@@ -23,22 +23,10 @@ const PHOTO_DATA = [
     caption: 'snack break',
   },
   {
-    src:     'life/img3.webp', w: 900, h: 473,
-    alt:     'Darla and a friend at the Soar Through AWS booth at Adamson',
-    caption: 'soar through aws',
-    meta:    'adamson · 2026',
-  },
-  {
     src:     'life/img4.webp', w: 900, h: 506,
     alt:     'Large group photo at a cloud community event in a function hall',
     caption: 'community day',
     meta:    'somewhere in ph',
-  },
-  {
-    src:     'life/img5.webp', w: 900, h: 1200,
-    alt:     'Darla next to an n8n "Node thyself, go with the flow" event sign',
-    caption: 'node thyself',
-    meta:    'an n8n event',
   },
   {
     src:     'life/img6.webp', w: 900, h: 411,
@@ -52,21 +40,9 @@ const PHOTO_DATA = [
     caption: 'heads down',
   },
   {
-    src:     'life/img8.webp', w: 900, h: 675,
-    alt:     'Darla and a friend at an AWS office, in front of the "It\'s still Day One" wall',
-    caption: 'it\'s still day one',
-    meta:    'aws office',
-  },
-  {
     src:     'life/img9.webp', w: 900, h: 600,
     alt:     'Darla and friends squeezed into a photo booth, one wearing an n8n cap',
     caption: 'one booth, seven people',
-  },
-  {
-    src:     'life/img10.webp', w: 900, h: 506,
-    alt:     'Darla listening closely during a table conversation at AWSpeak Victory',
-    caption: 'awspeak victory',
-    meta:    'pcu cavite',
   },
 ];
 
@@ -88,6 +64,18 @@ let scrollRafId = null;
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
   buildGallery();
+
+  // phones have no hover: a tap shows that photo's label, a second tap hides it
+  const track = document.getElementById('galleryTrack');
+  if (track) {
+    track.addEventListener('click', e => {
+      const item = e.target.closest('.gallery-item');
+      if (!item) return;
+      const showing = item.classList.contains('is-shown');
+      track.querySelectorAll('.is-shown').forEach(el => el.classList.remove('is-shown'));
+      if (!showing) item.classList.add('is-shown');
+    });
+  }
 });
 
 // ===========================

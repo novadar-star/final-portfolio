@@ -82,41 +82,6 @@
 }
 
 
-/* one star per chapter, under the nav (story.js draws it).
-   a star lights up when you reach its chapter; the line between
-   stars draws on as you travel. */
-.story-sky {
-  position: fixed;
-  top: calc(var(--nav-h, 80px) + 4px);
-  left: 50%;
-  z-index: 101;
-  width: min(440px, 46vw);
-  height: auto;
-  overflow: visible;
-  transform: translateX(-50%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 200ms var(--ease-out);
-}
-
-.story-sky.is-on { opacity: 1; }
-
-.sky-path { fill: none; stroke: var(--hairline); stroke-width: 1; }
-.sky-path--lit { stroke: var(--accent); stroke-opacity: 0.55; }
-
-.sky-star {
-  fill: var(--muted);
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(0.5);
-  transition:
-    transform 280ms var(--ease-out),
-    fill 280ms var(--ease-out);
-}
-
-.sky-star.is-lit { fill: var(--accent); transform: scale(0.85); }
-.sky-star.is-here { transform: scale(1.15); }
-
 /* ============================================================
    HERO — the star sky
    ============================================================ */

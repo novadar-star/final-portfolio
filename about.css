@@ -289,28 +289,35 @@
   }
 }
 
-/* Caption — always visible, under the photo, as a ↳ note.
-   Same voice as the story figcaptions and the project annotations.
-   (Was a hover-only overlay; on a strip that keeps moving, almost
-   nobody saw it.) */
+/* Caption — a small box over the photo's corner. Shows on hover with a
+   mouse, and on tap on phones (about.js toggles .is-shown). */
 .gallery-caption {
-  padding: 7px 2px 0;
-  font-size: 0.72rem;
-  line-height: 1.4;
-  color: var(--ink-3);
-  font-style: italic;
-  letter-spacing: 0.02em;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  max-width: calc(100% - 20px);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(20, 16, 18, 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #FFF5F6;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-.gallery-caption__primary {
-  color: var(--ink-2);
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: none; }
 }
 
-.gallery-caption__primary::before {
-  content: "\21B3\00a0";        /* ↳ + nbsp */
-  font-style: normal;
-  color: var(--nova-accent);
-}
+.gallery-item.is-shown .gallery-caption { opacity: 1; transform: none; }
+
+.gallery-caption__meta { color: rgba(255, 245, 246, 0.7); }
 
 .gallery-caption__meta::before {
   content: "\00a0\00b7\00a0";
@@ -700,7 +707,7 @@
 @media (max-width: 480px) {
   .milestone-meta,
   .story-editorial figcaption,
-  .gallery-caption { font-size: 0.75rem; }
+  .gallery-caption { font-size: 0.78rem; }
 }
 
 /* ===========================
