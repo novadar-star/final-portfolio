@@ -24,7 +24,7 @@
   var chapters = section ? Array.prototype.slice.call(section.querySelectorAll('.chapter')) : [];
   var remnants = document.querySelector('.sky-remnants');
   var themeMeta = document.querySelector('meta[name="theme-color"]');
-  var SKY_TOP = '#7D0C31';   // the top of the hero sky, under the nav's dark band
+  var SKY_TOP = function () { return window.NOVA_SKY_TOP || '#7D0C31'; };   // set by starsky.js for the time of day
   var lastPast = null;
   var n = chapters.length;
 
@@ -173,7 +173,7 @@
         // phone status bar: sky colour over the hero, page colour after it
         if (themeMeta && past !== lastPast) {
           lastPast = past;
-          themeMeta.setAttribute('content', past ? getComputedStyle(document.body).backgroundColor : SKY_TOP);
+          themeMeta.setAttribute('content', past ? getComputedStyle(document.body).backgroundColor : SKY_TOP());
         }
       }
     }

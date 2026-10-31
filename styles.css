@@ -1916,3 +1916,8 @@ body {
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
 }
+
+/* copy-email: the link briefly reads "copied" */
+[data-copy-email] { display: inline-block; }
+.nav-link[data-copy-email] { display: inline-flex; }
+[data-copy-email].is-copied { color: var(--nova-accent, var(--green)) !important; }

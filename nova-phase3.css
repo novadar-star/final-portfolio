@@ -828,3 +828,74 @@ a, button, summary, label { touch-action: manipulation; }
   display: inline-block;
   padding-block: 4px;
 }
+
+/* ============================================================
+   EVERYTHING I'VE BUILT — one dated row per project (projects page)
+   ============================================================ */
+
+.project-dir {
+  margin-top: 24px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline);
+}
+
+.dir-heading {
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+
+.dir-list { list-style: none; margin: 0; padding: 0; }
+
+.dir-list li {
+  display: grid;
+  grid-template-columns: 5.5em minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.92rem;
+}
+
+.dir-when {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+  font-size: 0.85rem;
+}
+
+.dir-what { color: var(--ink); font-weight: 500; }
+
+.dir-what a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  min-height: 24px;
+}
+
+.dir-what a span { color: var(--nova-accent); font-weight: 400; }
+
+.dir-note {
+  display: block;
+  font-weight: 400;
+  color: var(--ink-2);
+  font-size: 0.86rem;
+}
+
+.dir-stack {
+  color: var(--ink-3);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dir-what a { transition: color 160ms var(--ease-out, ease); }
+  .dir-what a:hover { color: var(--nova-accent); }
+}
+
+.dir-what a:active { opacity: 0.6; }
+
+@media (max-width: 600px) {
+  .dir-list li { grid-template-columns: 4.6em minmax(0, 1fr); }
+  .dir-stack { grid-column: 2; text-align: left; margin-top: -8px; }
+}

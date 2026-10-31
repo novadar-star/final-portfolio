@@ -104,7 +104,7 @@
 .story-hero { isolation: isolate; }
 
 @media (max-width: 1100px) {
-  .story-hero { --shade-w: 62%; --shade-h: 30%; }
+  .story-hero { --shade-w: 66%; --shade-h: 40%; }
 }
 
 .sky-canvas {
@@ -153,9 +153,9 @@
   /* a soft dark glow behind the text only, so it passes contrast
      while the stars at the edges stay bright */
   background:
-    radial-gradient(ellipse var(--shade-w, 40%) var(--shade-h, 34%) at 50% 50%,
-      rgba(96, 4, 38, 0.72) 0%,
-      rgba(96, 4, 38, 0.6) 50%,
+    radial-gradient(ellipse var(--shade-w, 48%) var(--shade-h, 46%) at 50% 50%,
+      rgba(96, 4, 38, 0.74) 0%,
+      rgba(96, 4, 38, 0.66) 55%,
       rgba(96, 4, 38, 0) 100%),
     /* and a band under the nav, so the links stay readable */
     linear-gradient(to bottom, rgba(96, 4, 38, 0.7) 0, rgba(96, 4, 38, 0.6) calc(var(--nav-h, 80px) - 8px), rgba(96, 4, 38, 0) calc(var(--nav-h, 80px) + 90px)),
@@ -285,6 +285,40 @@
   text-underline-offset: 6px;
   text-decoration-color: rgba(255, 213, 128, 0.55);
   transition: text-decoration-color 180ms var(--ease-out), text-underline-offset 180ms var(--ease-out);
+}
+
+/* a quiet line in the corner: the sky follows the time in Manila */
+.sky-time {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 3;
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(50, 2, 22, 0.78);
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--hero-ink);
+  opacity: calc(1 - var(--fade, 0));
+}
+
+/* proof in the first screen: where she's been */
+.story-previously {
+  margin-top: 22px;
+  font-size: 0.92rem;
+  color: var(--hero-ink);
+  opacity: 0.92;
+}
+
+.story-previously span {
+  font-family: var(--font-italic);
+  font-style: italic;
+  margin-right: 4px;
+  opacity: 0.85;
 }
 
 /* the arrow sits outside the underline */
@@ -849,7 +883,7 @@
    ============================================================ */
 
 @media (max-width: 600px) {
-  .story-hero { --shade-w: 86%; --shade-h: 42%; }
+  .story-hero { --shade-w: 100%; --shade-h: 56%; }
   .story-intro { padding: 72px 20px 64px; }
   .chapter { padding: 56px 20px; gap: 32px; }
   .story-close { padding-top: 80px; }

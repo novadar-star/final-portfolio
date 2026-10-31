@@ -12,6 +12,37 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ===========================
+  // COPY EMAIL — a click copies the address and the link says "copied".
+  // If the browser won't copy, the mailto link opens the mail app as usual.
+  // ===========================
+  const copyLinks = document.querySelectorAll('[data-copy-email]');
+  if (copyLinks.length && navigator.clipboard && window.isSecureContext) {
+    const live = document.createElement('p');
+    live.className = 'sr-only';
+    live.setAttribute('aria-live', 'polite');
+    document.body.appendChild(live);
+    copyLinks.forEach(link => {
+      const original = link.innerHTML;
+      let timer = null;
+      link.addEventListener('click', e => {
+        const address = link.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+        e.preventDefault();
+        navigator.clipboard.writeText(address).then(() => {
+          link.style.minWidth = link.offsetWidth + 'px';   // the word changes, the layout doesn't
+          link.classList.add('is-copied');
+          link.textContent = 'copied';
+          live.textContent = 'Email address copied';
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            link.innerHTML = original;
+            link.classList.remove('is-copied');
+          }, 1600);
+        }).catch(() => { window.location.href = link.getAttribute('href'); });
+      });
+    });
+  }
+
+  // ===========================
   // PHONE NAV — one scrollable row (see nova-phase3.css)
   // Opens with the current page in view; the edge fade goes away
   // once there's nothing more to scroll to.

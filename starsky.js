@@ -17,13 +17,39 @@
 (function () {
   'use strict';
 
-  // ---- palette, sampled from the original photo ----
-  var SKY = [
-    [0.00, 0.00, '#E02A82'],   // top left: magenta
-    [1.00, 0.00, '#EE3346'],   // top right: hot red-pink
-    [0.00, 1.00, '#F6D6DA'],   // bottom left: pale pink
-    [1.00, 1.00, '#EC7C9C'],   // bottom right: pink
-  ];
+  // ---- the sky follows the time in Manila ----
+  // four corners per part of the day: top left, top right, bottom left, bottom right.
+  // day is the palette sampled from the original photo.
+  var PALETTES = {
+    night:  ['#1E0A2E', '#3A0C3A', '#5C1A4E', '#2A0F3F'],
+    dawn:   ['#5B3A8C', '#C7508A', '#FFD3C2', '#F2A0B8'],
+    day:    ['#E02A82', '#EE3346', '#F6D6DA', '#EC7C9C'],
+    sunset: ['#C2245E', '#E8452E', '#FFC48A', '#F27A6A'],
+  };
+  // the phone status bar colour on top of each sky (sky + the dark band under the nav)
+  var TOP = { night: '#1A0624', dawn: '#55234F', day: '#7D0C31', sunset: '#741237' };
+
+  function manilaNow() {
+    var parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Manila', hour: 'numeric', minute: 'numeric', hourCycle: 'h23'
+    }).formatToParts(new Date());
+    var get = function (t) { return +(parts.filter(function (p) { return p.type === t; })[0] || {}).value || 0; };
+    return get('hour') + get('minute') / 60;
+  }
+
+  function phaseFor(h) {
+    if (h >= 19 || h < 5) return 'night';
+    if (h < 7) return 'dawn';
+    if (h < 16) return 'day';
+    return 'sunset';
+  }
+
+  // ?sky=night (or dawn, day, sunset) shows that sky, to preview it
+  var forced = (location.search.match(/[?&]sky=(night|dawn|day|sunset)/) || [])[1];
+  var phase = forced || phaseFor(manilaNow());
+  var SKY = PALETTES[phase].map(function (c, i) { return [i % 2, i < 2 ? 0 : 1, c]; });
+  window.NOVA_SKY_TOP = TOP[phase];
+  document.documentElement.setAttribute('data-sky', phase);
   var BANDS = {
     rim:    '#F03C24',   // red-orange outer glow
     gold:   '#F7BE2C',   // yellow
@@ -180,7 +206,43 @@
     ] : STARS;
     stars.forEach(function (s) { drawStar(ctx, s, W); });
     blur(ctx, Math.max(3, Math.round(W / 110)));
+    if (phase === 'night') tinyStars(ctx, W, H);
   }
+
+  // night only: faint far-away stars, always in the same places
+  function tinyStars(ctx, W, H) {
+    var seed = 11;
+    var rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    for (var i = 0; i < 70; i++) {
+      var x = rnd() * W, y = rnd() * H, r = 0.35 + rnd() * 0.7, a = 0.35 + rnd() * 0.5;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 244, 230, ' + a.toFixed(2) + ')';
+      ctx.fill();
+    }
+  }
+
+  // the little line on the hero: the time in Manila, kept current
+  function writeTime() {
+    var el = document.querySelector('[data-manila-time]');
+    if (!el) return;
+    el.textContent = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Manila', hour: 'numeric', minute: '2-digit', hour12: true
+    }).format(new Date());
+  }
+  writeTime();
+  setInterval(writeTime, 30000);
+
+  // if the page stays open into the next part of the day, repaint the sky
+  if (!forced) setInterval(function () {
+    var next = phaseFor(manilaNow());
+    if (next === phase) return;
+    phase = next;
+    SKY = PALETTES[phase].map(function (c, i) { return [i % 2, i < 2 ? 0 : 1, c]; });
+    window.NOVA_SKY_TOP = TOP[phase];
+    document.documentElement.setAttribute('data-sky', phase);
+    paintSkyNow();
+  }, 300000);
 
   // ---- one star on a clear background ----
   function paintRemnant(canvas) {
